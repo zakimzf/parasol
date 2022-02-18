@@ -9,6 +9,8 @@
 /node_modules
 /.pnp
 .pnp.js
+.pnp.cjs
+.pnp.loader.mjs
 
 # testing
 /coverage
@@ -45,3 +47,7 @@ yarn-error.log*
 
 *.lock
 *-lock.json
+
+.yarnrc.yml
+
+.editorconfig

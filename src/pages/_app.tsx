@@ -16,7 +16,7 @@ import {AppProps} from 'next/app';
 import React, {FC, useMemo} from 'react';
 import Head from "next/head";
 import Header from "../components/header";
-import AnnounceBar from "../components/slices/announce-bar";
+import AnnounceBar from "../components/announce-bar";
 import Footer from "../components/footer";
 
 const App: FC<AppProps> = ({Component, pageProps}) => {
