@@ -1,7 +1,7 @@
 import {useRouter} from 'next/router'
-import Container from "../../components/utils/container";
-import ProjectCard from "../../components/cards/ProjectCard";
+import Container from "../../components/container";
 import {useEffect, useState} from "react";
+import {BadgeCheckIcon} from "@heroicons/react/solid";
 
 const project =
 	{
@@ -11,6 +11,8 @@ const project =
 		logo: 'https://storage.googleapis.com/polkastarter-production-assets/aovnyvd72hvhc5l8ab2e9404jq0h',
 		cover: 'https://storage.googleapis.com/polkastarter-production-assets/nfy5nnqh2v55q1dbfcynrqeipzcb'
 	};
+
+let amount = 300000;
 
 const ProjectDetails = function () {
 	const router = useRouter()
@@ -73,26 +75,107 @@ const ProjectDetails = function () {
 								<path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
 							</svg>
 							<a href="#" className="ml-4 text-sm font-medium text-gray-300 hover:text-gray-700" aria-current="page">Project
-								Nero</a>
+								Nero
+							</a>
 						</div>
 					</li>
 				</ol>
 			</nav>
-			<div className="flex gap-x-6">
-				<img className="rounded-full h-20" src="https://storage.googleapis.com/polkastarter-production-assets/aovnyvd72hvhc5l8ab2e9404jq0h" alt="" />
-				<div>
-					<h1 className="text-4xl font-medium mb-2">Parasol Finance</h1>
-					<p className="text-xl font-light text-gray-300 mb-12">We bring new technologies to our community</p>
-					{/*<h1>Ark Rivals</h1>*/}
-					{/*<h2>An NFT P2E Metaverse with unique microverses & living NFT pets</h2>*/}
+			<div className="grid grid-cols-9">
+				<div className="prose prose-lg prose-invert col-span-6">
+					<div className="flex items-center gap-x-6">
+						<img className="rounded-full h-16 mb-2 m-0" src="https://storage.googleapis.com/polkastarter-production-assets/aovnyvd72hvhc5l8ab2e9404jq0h" alt="" />
+						<div>
+							<h1 className="text-4xl- mb-0">Mecha Morphing</h1>
+							<p className={"my-2 font-semibold"}>We bring new technologies to our community.</p>
+						</div>
+					</div>
+					<figure>
+						<img className="w-full rounded-lg" src="https://storage.googleapis.com/polkastarter-production-assets/h3bth4ctn32w62tmrk7a9cewyxn8" />
+						<figcaption>Sagittis scelerisque nulla cursus in enim consectetur quam.</figcaption>
+					</figure>
+					<p>Faucibus commodo massa rhoncus, volutpat. <strong>Dignissim</strong> sed <strong>eget risus
+						enim</strong>. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec
+						est. Odio penatibus risus viverra tellus varius sit neque erat velit. Faucibus commodo massa
+						rhoncus, volutpat. Dignissim sed eget risus enim. <a href="#">Mattis mauris semper</a> sed
+						amet vitae sed turpis id.
+					</p>
+					<ul role="list">
+						<li>Quis elit egestas venenatis mattis dignissim.</li>
+						<li>Cras cras lobortis vitae vivamus ultricies facilisis tempus.</li>
+						<li>Orci in sit morbi dignissim metus diam arcu pretium.</li>
+					</ul>
+					<p>Quis semper vulputate aliquam venenatis egestas sagittis quisque orci. Donec commodo sit
+						viverra aliquam porttitor ultrices gravida eu. Tincidunt leo, elementum mattis elementum ut
+						nisl, justo, amet, mattis. Nunc purus, diam commodo tincidunt turpis. Amet, duis sed elit
+						interdum dignissim.
+					</p>
+					<h2>From beginner to expert in 30 days</h2>
+					<p>Id orci tellus laoreet id ac. Dolor, aenean leo, ac etiam consequat in. Convallis arcu ipsum
+						urna nibh. Pharetra, euismod vitae interdum mauris enim, consequat vulputate nibh. Maecenas
+						pellentesque id sed tellus mauris, ultrices mauris. Tincidunt enim cursus ridiculus mi.
+						Pellentesque nam sed nullam sed diam turpis ipsum eu a sed convallis diam.
+					</p>
+					<blockquote>
+						<p>Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur
+							neque tristique pellentesque. Blandit amet, sed aenean erat arcu morbi.
+						</p>
+					</blockquote>
+					<p>Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper
+						sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra
+						tellus varius sit neque erat velit.
+					</p>
+					<h2>Everything you need to get up and running</h2>
+					<p>Purus morbi dignissim senectus mattis <a href="#">adipiscing</a>. Amet, massa quam varius
+						orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed
+						tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor
+						dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis
+						quam.
+					</p>
+					<p>Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper
+						sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra
+						tellus varius sit neque erat velit.
+					</p>
 				</div>
-			</div>
-			<div className="grid grid-cols- gap-12">
-				<div className="col-span-7">
-					<img className="w-full" src="https://storage.googleapis.com/polkastarter-production-assets/h3bth4ctn32w62tmrk7a9cewyxn8" alt={"hero"} />
-				</div>
-				<div className="col-span-5">
-					<ProjectCard Id={project.id} Name={project.name} Description={project.description} />
+				<div className="col-span-3">
+					<div className="sticky flex flex-col gap-y-6 top-20">
+						<div className="relative bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg">
+							<div className={`relative px-6 pt-6 pb-6`}>
+								<h2 className="flex gap-x-2 items-center text-2xl font-bold">
+									Mecha Morphing
+									<BadgeCheckIcon className={"h-7 text-purple-2"} />
+								</h2>
+								<div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
+									<img className="h-8" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
+									<div className="flex items-end gap-x-2 text-4xl font-bold">
+										{ amount.toLocaleString('en-US', {minimumFractionDigits: 0}) }
+										<span>USDC</span>
+									</div>
+								</div>
+								<div className="prose prose-lg prose-invert">
+									<p>The allowlist for Orbitau is now available and you can apply for it below.</p>
+									<p>Note that you need to have at least 250 POLS Power to qualify for this allowlist.
+										Learn more.
+									</p>
+								</div>
+								<div className="flex-col space-y-3 mt-6">
+									<div className="flex font-medium items-center text-gray-300 gap-x-3">
+										<span>Hard Cap</span>
+										<span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+										<span>$500,000</span>
+									</div>
+									<div className="flex font-medium items-center text-gray-300 gap-x-3">
+										<span>Price per Token</span>
+										<span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+										<span>$0.21</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<button className={"bg-gradient-to-r from-purple-1 to-purple-2 shadow-lg px-5 py-4 text-lg font-medium rounded-lg"}>
+							Apply Now
+						</button>
+					</div>
 				</div>
 			</div>
 		</Container>
