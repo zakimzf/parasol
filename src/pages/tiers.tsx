@@ -1,12 +1,12 @@
-import Container from "../components/utils/container";
+import Container from "../components/container";
 import NftCard from "../components/cards/NftCard";
 import Heading from "../components/slices/heading";
 
 const Tiers = function () {
 	return (
 		<>
-			<section className="mt-12">
-				<Heading tagline="An Unique System" title="Our NFT Access Keys" description="Ready to Buy your NFT Access Key using $PSOL token?" />
+			<Heading tagline="An Unique System" title="Our NFT Access Keys" description="Ready to Buy your NFT Access Key using $PSOL token?" />
+			<section>
 				<Container fluid={false}>
 					{/*<div className="text-center mb-12">*/}
 					{/*	<h2 className="text-base font-semibold tracking-wider mb-2 text-purple-400 uppercase">An Unique System</h2>*/}
@@ -34,9 +34,9 @@ const Tiers = function () {
 				<div className="max-w-max lg:max-w-7xl mx-auto">
 					<div className="relative z-10 text-center py-10 mb-8 md:mb-2 md:px-6">
 						<div className="text-base max-w-prose lg:max-w-none">
-							<h2 className="leading-6 text-purple-400 font-semibold tracking-wide uppercase">Transactions</h2>
-							<p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight sm:text-4xl">
-								A better way to send money</p>
+							<h2 className="leading-6 text-purple-400 font-semibold tracking-wide uppercase">NFTs as Tiers System</h2>
+							<p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight sm:text-4xl">The Vital Concepts Behind Parasol
+							</p>
 						</div>
 					</div>
 					<div className="relative">

@@ -1,4 +1,4 @@
-import Container from "../components/utils/container";
+import Container from "../components/container";
 
 const Governance = () =>
 	<section className="pt-10">
