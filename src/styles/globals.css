@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background: url('/ellipses.svg') no-repeat top -200px center #17122b;
+    color: theme('colors.white');
+    min-height: 100vh;
+}
