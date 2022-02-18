@@ -1,6 +1,6 @@
-import Container from "../utils/container";
+import Container from "../container";
 
-const EyeCatcher = () => (
+export default () =>
 	<section className="mt-20 mb-16">
 		<Container>
 			<div
@@ -36,6 +36,3 @@ const EyeCatcher = () => (
 			</div>
 		</Container>
 	</section>
-)
-
-export default EyeCatcher;

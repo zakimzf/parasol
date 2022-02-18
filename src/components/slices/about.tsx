@@ -1,4 +1,4 @@
-const AboutParasol = () =>
+export default () =>
 	<section className="mt-64 mb-20 py-15 lg:mt-10">
 		<div className="mx-auto max-w-7xl px-5 text-center">
 			<h2 className="text-base font-semibold tracking-wider text-purple-400 uppercase">Discover Parasol</h2>
@@ -94,4 +94,3 @@ const AboutParasol = () =>
 		</div>
 	</section>
 
-export default AboutParasol;

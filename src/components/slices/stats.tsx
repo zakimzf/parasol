@@ -1,6 +1,6 @@
-import Container from "../utils/container";
+import Container from "../container";
 
-const Stats = () =>
+export default () =>
 	<section>
 		<Container>
 			<div className="max-w-4xl pt-10 pb-20 mx-auto">
@@ -24,5 +24,3 @@ const Stats = () =>
 			</div>
 		</Container>
 	</section>
-
-export default Stats;

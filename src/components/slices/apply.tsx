@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Button, {ButtonType} from "../utils/button";
 
 export default () =>
-	<section className="pt-24 pb-20">
+	<section className="pt-24 pb-12">
 		<div className="max-w-7xl mx-auto text-center">
 			<h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
 				<span className="block">Want to Launch your Project?</span>

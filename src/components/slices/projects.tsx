@@ -1,4 +1,4 @@
-import Container from "../utils/container";
+import Container from "../container";
 import ProjectCard from "../cards/ProjectCard";
 import {ChevronDownIcon} from "@heroicons/react/outline";
 
