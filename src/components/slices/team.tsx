@@ -1,7 +1,7 @@
 import Container from "../container";
 import Image from "next/image";
 
-let Clint = require('/public/images/team/Clint.jpg');
+let Clint = require('/public/images/team/Clint.png');
 let Alex = require('/public/images/team/Alex.png');
 let Anthony = require('/public/images/team/Anthony.png');
 let Tom = require('/public/images/team/Tom.png');
