@@ -1,6 +1,6 @@
 import Container from "../components/container";
 import NftCard from "../components/cards/NftCard";
-import Heading from "../components/slices/heading";
+import Heading from "../components/utils/heading";
 
 const Tiers = function () {
 	return (
@@ -42,41 +42,22 @@ const Tiers = function () {
 					<div className="relative">
 						<div className="relative md:p-6">
 							<div className="lg:grid lg:grid-cols-2 lg:gap-6">
-								<div className="prose prose-indigo prose-lg text-gray-300 lg:max-w-none">
-									<p>Ultrices ultricies a in odio consequat egestas rutrum. Ut vitae aliquam in ipsum.
-										Duis nullam placerat cursus risus ultrices nisi, vitae tellus in. Qui non fugiat
-										aut minus aut rerum. Perspiciatis iusto mollitia iste minima soluta id.</p>
-									<p>Erat pellentesque dictumst ligula porttitor risus eget et eget. Ultricies tellus
-										felis id dignissim eget. Est augue <a href="#">maecenas</a> risus nulla ultrices
-										congue nunc tortor. Eu leo risus porta integer suspendisse sed sit ligula elit.
-									</p>
-									<ol role="list">
-										<li>Integer varius imperdiet sed interdum felis cras in nec nunc.</li>
-										<li>Quam malesuada odio ut sit egestas. Elementum at porta vitae.</li>
-									</ol>
-									<p>Amet, eu nulla id molestie quis tortor. Auctor erat justo, sed pellentesque
-										scelerisque interdum blandit lectus. Nec viverra amet ac facilisis vestibulum.
-										Vestibulum purus nibh ac ultricies congue.</p>
+								<div className="prose prose-invert prose-lg lg:max-w-none">
+									{/*<h2>What is an NFT?</h2>*/}
+									<p>Non-fungible tokens, or NFTs, are the latest cryptocurrency phenomenon to go mainstream in the industry. Non-fungible tokens, or NFTs, are pieces of digital content directly stored to the blockchain.</p>
+									<p>They are unique, non-interchangeable, and can represent real-world objects like art, music, video games, and much more. NFTs cannot be replicated on a whim.</p>
+									<p>They can be traded on a marketplace, staked on a platform, or utilized for many interesting purposes. Which brings us to Parasol Finance’s utility NFTs.</p>
 								</div>
-								<div className="mt-6 prose prose-indigo prose-lg text-gray-300 lg:mt-0">
-									<p>Erat pellentesque dictumst ligula porttitor risus eget et eget. Ultricies tellus
-										felis id dignissim eget. Est augue maecenas risus nulla ultrices congue nunc
-										tortor.</p>
-									<p>Eu leo risus porta integer suspendisse sed sit ligula elit. Elit egestas lacinia
-										sagittis pellentesque neque dignissim vulputate sodales. Diam sed mauris felis
-										risus, ultricies mauris netus tincidunt. Mauris sit eu ac tellus nibh non eget
-										sed accumsan. Viverra ac sed venenatis pulvinar elit. Cras diam quis tincidunt
-										lectus. Non mi vitae, scelerisque felis nisi, netus amet nisl.</p>
-									<p>Eu eu mauris bibendum scelerisque adipiscing et. Justo, elementum consectetur
-										morbi eros, posuere ipsum tortor. Eget cursus massa sed velit feugiat sed ut.
-										Faucibus eros mauris morbi aliquam nullam. Scelerisque elementum sit magna
-										ullamcorper dignissim pretium.</p>
+								<div className="prose prose-invert prose-lg lg:mt-0">
+									{/*<h2>NFT’s as Key access</h2>*/}
+									<p>Parasol Finance is adopting a unique and never-before-seen mechanism for our upcoming IDO launchpad.</p>
+									<p>One of the first use cases we are currently planning with Parasol NFTs is that they will act as keys that unlock access to exclusive communities, events, and most importantly, IDO allocations. These NFTs will represent a user’s share of upcoming IDO sales and will be directly used to purchase IDO tokens based on the user’s NFT.</p>
+									<p>This distinctive feature will set Parasol Finance apart from the crowd by providing the Parasol community with unparalleled utility for NFTs.</p>
 								</div>
 							</div>
-							<div className="mt-8 inline-flex rounded-md shadow">
-								<a href="#" className="flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"> Contact
-									sales </a>
-							</div>
+							{/*<div className="mt-12 flex justify-center rounded-md shadow">*/}
+							{/*	<Button value="Read More" />*/}
+							{/*</div>*/}
 						</div>
 					</div>
 				</div>

@@ -1,6 +1,6 @@
 import {Disclosure} from '@headlessui/react'
 import {ChevronDownIcon} from '@heroicons/react/outline'
-import Heading from "../components/slices/heading";
+import Heading from "../components/utils/heading";
 
 const faqs = [
     {

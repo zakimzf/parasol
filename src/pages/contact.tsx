@@ -1,4 +1,4 @@
-import Heading from "../components/slices/heading";
+import Heading from "../components/utils/heading";
 
 export default () =>
     <>
