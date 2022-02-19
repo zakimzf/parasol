@@ -18,6 +18,7 @@ import Head from "next/head";
 import Header from "../components/header";
 import AnnounceBar from "../components/announce-bar";
 import Footer from "../components/footer";
+import SimpleReactLightbox from 'simple-react-lightbox'
 
 const App: FC<AppProps> = ({Component, pageProps}) => {
 	const network = WalletAdapterNetwork.Devnet;
@@ -49,7 +50,9 @@ const App: FC<AppProps> = ({Component, pageProps}) => {
 					<AnnounceBar />
 					<Header />
 					<main role="main">
-						<Component {...pageProps} />
+						<SimpleReactLightbox>
+							<Component {...pageProps} />
+						</SimpleReactLightbox>
 					</main>
 					<Footer />
 				</WalletModalProvider>
