@@ -1,7 +1,7 @@
 import Container from "../container";
 
 export default () =>
-	<section className="mt-20 mb-16">
+	<section>
 		<Container>
 			<div
 				className="relative rounded-2xl px-6 py-10 bg-gradient-to-r from-purple-1 to-purple-2 overflow-hidden shadow-xl sm:px-12 sm:py-14">

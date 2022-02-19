@@ -24,7 +24,11 @@ const ProjectCard = ({Id, Name, Description, Logo, Cover}: ProjectDetails) => (
 			{Logo &&
 				<img className="absolute w-20 h-20 border-4 border-gray-700 bg-gray-700 -top-10 rounded-xl" src={Logo} alt={`${Id}-logo`} />}
 			<h2 className="flex gap-x-2 items-center text-2xl mb-2 font-bold">
-				{Name}
+				<Link href={`/projects/${Id}`}>
+					<a>
+						{Name}
+					</a>
+				</Link>
 				<BadgeCheckIcon className={"h-7 text-purple-2"} />
 			</h2>
 			<p className="text text-gray-300 font-extralight">{Description}</p>

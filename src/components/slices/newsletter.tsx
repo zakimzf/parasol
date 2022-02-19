@@ -1,7 +1,7 @@
 import Container from "../container";
 
 export default () =>
-	<div className="mt-28 mb-20">
+	<section>
 		<Container>
 			<div className="relative py-10 px-6 bg-gradient-to-r from-purple-1 to-purple-2 rounded-3xl sm:py-16 sm:px-12 lg:p-20 lg:flex lg:items-center">
 				<div aria-hidden="true" className="absolute inset-0 -mt-72 sm:-mt-32 md:mt-0">
@@ -36,4 +36,4 @@ export default () =>
 				</div>
 			</div>
 		</Container>
-	</div>
+	</section>

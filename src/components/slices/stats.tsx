@@ -3,7 +3,7 @@ import Container from "../container";
 export default () =>
 	<section>
 		<Container>
-			<div className="max-w-4xl pt-10 pb-20 mx-auto">
+			<div className="max-w-4xl mx-auto">
 				<dl className="sm:grid sm:grid-cols-3">
 					<div
 						className="flex flex-col text-center">

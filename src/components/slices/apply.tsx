@@ -12,7 +12,7 @@ export default () =>
 			</p>
 			<div className="mt-8 flex justify-center">
 				<div className="inline-flex rounded-md shadow">
-					<Link href={"/projects/apply"}>
+					<Link href={"/projects/submit"}>
 						<Button type={ButtonType.Primary} value={"Apply For IDO"} />
 					</Link>
 				</div>

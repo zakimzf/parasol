@@ -4,7 +4,7 @@ import Link from 'next/link';
 const Logo = require('/public/images/logos/parasol-logo-inverted-rgb.svg')
 
 export default () =>
-    <footer className="bg-[#231f38]-bg-opacity-40 mt-12">
+    <footer className="bg-[#231f38]-bg-opacity-40-pt-10 mt-12">
         <div className={"mx-auto max-w-7xl px-5 py-5 lg:py-10 grid grid-cols-3"}>
             <div
                 className="space-y-8 col-span-12 lg:col-span-1 justify-center items-center lg:items-start flex flex-col">
@@ -68,49 +68,49 @@ export default () =>
             <div className="mt-12 grid-cols-2 hidden lg:grid gap-8 xl:mt-0 lg:col-span-2 xl:col-span-2 text-right">
                 <div className="md:grid md:grid-cols-2 md:gap-8">
                     <div>
-                        <h3 className="text-sm font-bold text-gray-300 tracking-wider uppercase">Parasol Finance</h3>
+                        <h3 className="text-sm font-bold  tracking-wider uppercase">Parasol Finance</h3>
                         <ul role="list" className="mt-4 space-y-4">
                             <li>
                                 <Link href={"/about"}>
-                                    <a className="text-base hover:text-gray-300">About Parasol</a>
+                                    <a className="text-base  hover:">About Parasol</a>
                                 </Link>
                             </li>
                             <li>
                                 <a href="https://docs.parasol.finance" target="_blank"
-                                   className="text-base hover:text-gray-300">Documentation</a>
+                                   className="text-base  hover:">Documentation</a>
                             </li>
                             <li>
                                 <a href="https://github.com/parasol-finance" target="_blank"
-                                   className="text-base hover:text-gray-300">Github Organization</a>
+                                   className="text-base  hover:">Github Organization</a>
                             </li>
                             <li>
                                 <a href="https://explorer.solana.com/address/Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ"
-                                   target="_blank" className="text-base hover:text-gray-300">Token
+                                   target="_blank" className="text-base  hover:">Token
                                     Address</a>
                             </li>
                         </ul>
                     </div>
                     <div className="mt-12 md:mt-0">
-                        <h3 className="text-sm font-bold text-gray-300 tracking-wider uppercase">Useful
+                        <h3 className="text-sm font-bold  tracking-wider uppercase">Useful
                             Links</h3>
                         <ul role="list" className="mt-4 space-y-4">
                             <li>
                                 <a href="https://forms.gle/jypcaJgvPgrkYmRDA" target="_blank"
-                                   className="text-base hover:text-gray-300">Apply for IDO</a>
+                                   className="text-base  hover:">Apply for IDO</a>
                             </li>
                             <li>
-                                <a href="/whitepaper.pdf" className="text-base hover:text-gray-300">
+                                <a href="/whitepaper.pdf" className="text-base  hover:">
                                     White
                                     Paper</a>
                             </li>
                             <li>
                                 <Link href={"/roadmap"}>
-                                    <a className="text-base hover:text-gray-300">Roadmap</a>
+                                    <a className="text-base  hover:">Roadmap</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href={"/tiers"}>
-                                    <a className="text-base hover:text-gray-300">Tiers System</a>
+                                    <a className="text-base  hover:">Tiers System</a>
                                 </Link>
                             </li>
                         </ul>
@@ -118,43 +118,43 @@ export default () =>
                 </div>
                 <div className="md:grid md:grid-cols-2 md:gap-8">
                     <div>
-                        <h3 className="text-sm font-bold text-gray-300 tracking-wider uppercase">Social
+                        <h3 className="text-sm font-bold  tracking-wider uppercase">Social
                             Links</h3>
                         <ul role="list" className="mt-4 space-y-4">
                             <li>
                                 <a href="https://twitter.com/parasol_finance"
-                                   className="text-base hover:text-gray-300">Twitter</a>
+                                   className="text-base  hover:">Twitter</a>
                             </li>
                             <li>
                                 <a href="https://t.me/parasolfinance"
-                                   className="text-base hover:text-gray-300">Telegram</a>
+                                   className="text-base  hover:">Telegram</a>
                             </li>
                             <li>
                                 <a href="https://discord.gg/JBzVvUVZPn"
-                                   className="text-base hover:text-gray-300">Discord</a>
+                                   className="text-base  hover:">Discord</a>
                             </li>
                             <li>
                                 <a href="https://parasol-finance.medium.com/"
-                                   className="text-base hover:text-gray-300">Medium</a>
+                                   className="text-base  hover:">Medium</a>
                             </li>
                         </ul>
                     </div>
                     <div className="mt-12 md:mt-0">
-                        <h3 className="text-sm font-bold text-gray-300 tracking-wider uppercase">Legal</h3>
+                        <h3 className="text-sm font-bold  tracking-wider uppercase">Legal</h3>
                         <ul role="list" className="mt-4 space-y-4">
                             <li>
                                 <Link href={"/contact"}>
-                                    <a className="text-base hover:text-gray-300">Contact Us</a>
+                                    <a className="text-base  hover:">Contact Us</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href={"/terms-of-service"}>
-                                    <a className="text-base hover:text-gray-300">Terms of Service</a>
+                                    <a className="text-base  hover:">Terms of Service</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href={"/privacy-policy"}>
-                                    <a className="text-base hover:text-gray-300">Privacy Policy</a>
+                                    <a className="text-base  hover:">Privacy Policy</a>
                                 </Link>
                             </li>
                         </ul>

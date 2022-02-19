@@ -6,5 +6,5 @@ type LayoutProps = {
 };
 
 export default ({children, gap}: LayoutProps) =>
-    <div className={`flex flex-col ${(gap == undefined ? 'gap-y-24' : `gap-y-${gap}`)}`}>{children}</div>
+    <div className={`flex flex-col ${(gap === undefined ? 'gap-y-24' : `gap-y-${gap}`)}`}>{children}</div>
 

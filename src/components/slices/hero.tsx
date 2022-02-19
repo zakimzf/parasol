@@ -1,28 +1,12 @@
+import Link from 'next/link';
 import FloatingParasol from "../utils/FloatingParasol";
+import {CollectionIcon} from "@heroicons/react/outline";
 
 // const ParasolLogo = require('../public/images/logos/parasol-logo-mark-reverse-rgb.svg')
 
 export default () =>
     <section id="hero" className="mt-6">
         <div className="mx-auto max-w-7xl px-5 py-6 grid grid-cols-12 gap-0">
-            {/*<div className="hidden absolute inset-0 overflow-hidden rounded-3xl lg:block">*/}
-            {/*	<svg className="absolute bottom-full left-full transform translate-y-1/3 -translate-x-2/3 xl:bottom-auto xl:top-0 xl:translate-y-0" width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">*/}
-            {/*		<defs>*/}
-            {/*			<pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">*/}
-            {/*				<rect x="0" y="0" width="4" height="4" className="text-purple-2" fill="currentColor" />*/}
-            {/*			</pattern>*/}
-            {/*		</defs>*/}
-            {/*		<rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />*/}
-            {/*	</svg>*/}
-            {/*	<svg className="absolute top-full transform -translate-y-1/3 -translate-x-1/3 xl:-translate-y-1/2" width="404" height="384" fill="none" viewBox="0 0 404 384" aria-hidden="true">*/}
-            {/*		<defs>*/}
-            {/*			<pattern id="64e643ad-2176-4f86-b3d7-f2c5da3b6a6d" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">*/}
-            {/*				<rect x="0" y="0" width="4" height="4" className="text-purple-2 text-opacity-90" fill="currentColor" />*/}
-            {/*			</pattern>*/}
-            {/*		</defs>*/}
-            {/*		<rect width="404" height="384" fill="url(#64e643ad-2176-4f86-b3d7-f2c5da3b6a6d)" />*/}
-            {/*	</svg>*/}
-            {/*</div>*/}
             <div className="col-span-12 lg:col-span-6 text-center lg:text-left lg:flex lg:items-center">
                 <div className="pb-3">
                     <a href="https://solana.com/" target="_blank"
@@ -56,39 +40,39 @@ export default () =>
                         </p>
                     </div>
                     <div className="mt-8 grid lg:flex gap-3 grid-cols-1 lg:grid-cols-2 justify-start">
-                        <a href="https://jup.ag/swap/USDC-PSOL" target="_blank"
-                           className="flex items-center justify-center px-10 bg-purple-2 py-3 text-base font-medium rounded-lg shadow-lg text-white bg-gradient-primary hover:from-pink-600 hover:to-purple-500">
-                            <svg className="h-5 mr-2" xmlns="http://www.w3.org/2000/svg"
-                                 viewBox="0 0 125.5752 144.6496">
-                                <g>
-                                    <path fill="currentColor"
-                                          d="M82.861,51.8818V35.9594L41.3622,12.0413,1.7115,34.8831A3.4155,3.4155,0,0,0,0,37.8557V51.8134l41.362-23.9179Z"/>
-                                    <path fill="currentColor"
-                                          d="M90.3565,80.8225l13.81-8.2182V23.3165L64.5161.4578a3.4274,3.4274,0,0,0-3.4226,0L49.0118,7.4965,90.3565,31.3289Z"/>
-                                    <path fill="currentColor"
-                                          d="M43.1591,35.7714,1.6944,59.6894A3.42,3.42,0,0,0,.4622,60.9367,3.2583,3.2583,0,0,0,0,62.6451V144.65H13.7761V68.6929l43.6894-25.131Z"/>
-                                    <path fill="currentColor"
-                                          d="M35.2015,128.5042V64.729l-13.793,8.0469V144.53h13.793Z"/>
-                                    <path fill="currentColor"
-                                          d="M84.059,107.44l41.499-23.9181V37.7533a3.257,3.257,0,0,0-.462-1.7085,3.3151,3.3151,0,0,0-1.2323-1.2471L111.765,27.7419V75.424L70.2831,99.3421Z"/>
-                                    <path fill="currentColor"
-                                          d="M41.3623,91.5344l.1369,15.9223,42.697,24.6527,39.6675-22.8416a3.4142,3.4142,0,0,0,1.7115-2.9556V92.3548L84.2134,116.2722Z"/>
-                                    <path fill="currentColor"
-                                          d="M41.3623,116.3066v15.94L61.0764,143.59a3.4042,3.4042,0,0,0,3.4226,0l12.0988-6.8334Z"/>
-                                </g>
-                            </svg>
-                            {/*<Image src={ParasolLogo} />*/}
-                            Buy Parasol ($PSOL)
-                        </a>
-                        <button type="button"
-                                className="flex items-center justify-center px-7 py-3 text-base font-medium border border-white hover:bg-white hover:text-purple-600 rounded-lg shadow-lg text-white hover:to-purple-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none"
-                                 viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
-                            </svg>
-                            Join The Community
-                        </button>
+                        <Link href={"/projects"}>
+                            <a
+                               className="flex items-center justify-center gap-x-2 px-10 bg-purple-2 py-3 text-base font-medium rounded-lg shadow-lg text-white bg-gradient-primary hover:from-pink-600 hover:to-purple-500">
+                                <CollectionIcon className={"w-5 h-5"} />
+                                View Upcoming IDOs
+                            </a>
+                        </Link>
+                        <Link href={"/swap"}>
+                            <a
+                                className="flex items-center justify-center gap-x-2 px-7 py-3 text-base font-medium border border-white hover:bg-white hover:text-purple-600 rounded-lg shadow-lg text-white hover:to-purple-500">
+                                <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
+                                     viewBox="0 0 125.5752 144.6496">
+                                    <g>
+                                        <path fill="currentColor"
+                                              d="M82.861,51.8818V35.9594L41.3622,12.0413,1.7115,34.8831A3.4155,3.4155,0,0,0,0,37.8557V51.8134l41.362-23.9179Z"/>
+                                        <path fill="currentColor"
+                                              d="M90.3565,80.8225l13.81-8.2182V23.3165L64.5161.4578a3.4274,3.4274,0,0,0-3.4226,0L49.0118,7.4965,90.3565,31.3289Z"/>
+                                        <path fill="currentColor"
+                                              d="M43.1591,35.7714,1.6944,59.6894A3.42,3.42,0,0,0,.4622,60.9367,3.2583,3.2583,0,0,0,0,62.6451V144.65H13.7761V68.6929l43.6894-25.131Z"/>
+                                        <path fill="currentColor"
+                                              d="M35.2015,128.5042V64.729l-13.793,8.0469V144.53h13.793Z"/>
+                                        <path fill="currentColor"
+                                              d="M84.059,107.44l41.499-23.9181V37.7533a3.257,3.257,0,0,0-.462-1.7085,3.3151,3.3151,0,0,0-1.2323-1.2471L111.765,27.7419V75.424L70.2831,99.3421Z"/>
+                                        <path fill="currentColor"
+                                              d="M41.3623,91.5344l.1369,15.9223,42.697,24.6527,39.6675-22.8416a3.4142,3.4142,0,0,0,1.7115-2.9556V92.3548L84.2134,116.2722Z"/>
+                                        <path fill="currentColor"
+                                              d="M41.3623,116.3066v15.94L61.0764,143.59a3.4042,3.4042,0,0,0,3.4226,0l12.0988-6.8334Z"/>
+                                    </g>
+                                </svg>
+                                {/*<Image src={ParasolLogo} />*/}
+                                Buy $PSOL With USDC
+                            </a>
+                        </Link>
                     </div>
                 </div>
             </div>
