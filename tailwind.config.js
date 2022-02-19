@@ -3,6 +3,9 @@ module.exports = {
 		"./src/pages/**/*.{js,ts,jsx,tsx}",
 		"./src/components/**/*.{js,ts,jsx,tsx}",
 	],
+	variants: {
+		scrollbar: ['rounded']
+	},
 	theme: {
 		extend: {
 			colors: {
@@ -18,6 +21,6 @@ module.exports = {
 	},
 	plugins: [
 		require('@tailwindcss/typography'),
-		require('@tailwindcss/aspect-ratio')
+		require('tailwind-scrollbar'),
 	],
 }
