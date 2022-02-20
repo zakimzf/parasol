@@ -1,45 +1,16 @@
 import {ChevronDownIcon} from "@heroicons/react/outline";
 import React, {useEffect, useState} from 'react'
-import {RadioGroup} from '@headlessui/react'
-import {JupiterProvider} from "@jup-ag/react-hook";
+import {JupiterProvider, useJupiter} from "@jup-ag/react-hook";
 import {useConnection, useWallet} from "@solana/wallet-adapter-react";
 import {TokenChooserMode, useTokenModal} from "../components/token-chooser/useTokenModal";
 import {TOKEN_LIST_URL} from "@jup-ag/core";
-import {Token} from "../components/token-chooser/TokenModal";
-
-const routes = [
-    {
-        name: 'Raydium (95%) + Cropper (5%)',
-        amount: 87.6359447,
-        route: {
-            from: 'USDC',
-            to: 'PSOL'
-        }
-    },
-    {
-        name: 'Raydium',
-        amount: 87.4460887,
-        route: {
-            from: 'USDC',
-            to: 'PSOL'
-        }
-    }
-]
-
-const JupiterWrapper: React.FC = ({children}) => {
-    const {connection} = useConnection();
-    const wallet = useWallet();
-    return <JupiterProvider
-        cluster="mainnet-beta"
-        connection={connection}
-        userPublicKey={wallet.publicKey || undefined}
-        routeCacheDuration={5000}>
-        {children}
-    </JupiterProvider>;
-};
+import {Token, UseJupiterProps} from "../components/token-chooser/constants";
+import {RadioGroup} from "@headlessui/react";
 
 export default () => {
-    const [selected, setSelected] = useState(routes[0]);
+    const {connection} = useConnection();
+    const wallet = useWallet();
+    const [selected, setSelected] = useState();
     const {setVisible, setMode, input, output} = useTokenModal();
     const [tokens, setTokens] = useState<Token[]>([])
     useEffect(() => {
@@ -49,8 +20,45 @@ export default () => {
     }, [])
     const chosenInput = tokens.find(x => x.address === input.toString());
     const chosenOutput = tokens.find(x => x.address === output.toString());
+
+    const [formValue, setFormValue] = useState<UseJupiterProps>({
+        amount: 1 * (10 ** 6), // unit in lamports (Decimals)
+        inputMint: input,
+        outputMint: output,
+        slippage: 1, // 0.1%
+    });
+    const {routeMap, allTokenMints, routes, loading, exchange, error, refresh} =
+        useJupiter({
+            ...formValue,
+            amount: 50000,
+        });
+    const swap = function () {
+        if (wallet.connected) {
+            return <button
+                // onClick={test}
+                className={"flex items-center justify-center w-full gap-x-2 bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 text-lg font-medium rounded-lg"}>
+                {/*<RefreshIcon className={"w-5 h-5"} />*/}
+                Swap {chosenInput && chosenInput.symbol} to {chosenOutput && chosenOutput.symbol}
+            </button>
+        } else {
+            return <button
+                className="flex items-center justify-center w-full bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 gap-x-2 text-lg font-medium rounded-lg">
+                <svg className="w-4 h-4" viewBox="0 0 96 86" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M95.5053 67.8049L79.658 84.8288C79.3134 85.1986 78.8966 85.4934 78.4334 85.6949C77.9703 85.8964 77.4706 86.0003 76.9656 86H1.8398C1.48134 86 1.13068 85.8951 0.830924 85.6982C0.531164 85.5013 0.295357 85.221 0.152475 84.8917C0.00959266 84.5624 -0.03414 84.1985 0.0266501 83.8446C0.0874403 83.4908 0.250105 83.1624 0.494658 82.8999L16.3543 65.876C16.6979 65.5072 17.1134 65.2129 17.5751 65.0115C18.0368 64.81 18.5349 64.7056 19.0385 64.7048H94.1602C94.5187 64.7048 94.8693 64.8097 95.1691 65.0066C95.4688 65.2035 95.7046 65.4838 95.8475 65.8131C95.9904 66.1424 96.0341 66.5063 95.9734 66.8601C95.9126 67.214 95.7499 67.5423 95.5053 67.8049ZM79.658 33.5236C79.3134 33.1538 78.8966 32.859 78.4334 32.6575C77.9703 32.456 77.4706 32.3521 76.9656 32.3524H1.8398C1.48134 32.3524 1.13068 32.4573 0.830924 32.6542C0.531164 32.8511 0.295357 33.1314 0.152475 33.4607C0.00959266 33.79 -0.03414 34.1539 0.0266501 34.5078C0.0874403 34.8616 0.250105 35.19 0.494658 35.4525L16.3543 52.4764C16.6979 52.8452 17.1134 53.1394 17.5751 53.3409C18.0368 53.5424 18.5349 53.6468 19.0385 53.6476H94.1602C94.5187 53.6476 94.8693 53.5427 95.1691 53.3458C95.4688 53.1489 95.7046 52.8686 95.8475 52.5393C95.9904 52.21 96.0341 51.8461 95.9734 51.4922C95.9126 51.1384 95.7499 50.81 95.5053 50.5475L79.658 33.5236ZM1.8398 21.2952H76.9656C77.4706 21.2955 77.9703 21.1917 78.4334 20.9902C78.8966 20.7887 79.3134 20.4938 79.658 20.124L95.5053 3.1001C95.7499 2.83758 95.9126 2.50922 95.9734 2.15538C96.0341 1.80153 95.9904 1.4376 95.8475 1.10831C95.7046 0.779013 95.4688 0.498699 95.1691 0.301804C94.8693 0.10491 94.5187 1.21255e-05 94.1602 0L19.0385 0C18.5349 0.000858433 18.0368 0.105251 17.5751 0.306715C17.1134 0.508179 16.6979 0.802426 16.3543 1.17124L0.498747 18.1951C0.25443 18.4574 0.0918367 18.7854 0.0309086 19.1389C-0.0300194 19.4923 0.0133662 19.8559 0.155745 20.1851C0.298123 20.5142 0.533305 20.7945 0.832447 20.9918C1.13159 21.189 1.48169 21.2944 1.8398 21.2952Z"
+                        fill="currentColor"/>
+                </svg>
+                Connect Wallet
+            </button>
+            // return <WalletConnect />
+        }
+    }
     return (
-        <JupiterWrapper>
+        <JupiterProvider
+            cluster="mainnet-beta"
+            connection={connection}
+            userPublicKey={wallet.publicKey || undefined}
+            routeCacheDuration={5000}>
             <section className="pt-6 pb-20">
                 <div className="flex flex-col gap-y-6 max-w-md mx-auto mt-6">
                     <div
@@ -76,7 +84,8 @@ export default () => {
                                 }}
                                 type="button"
                                 className="flex gap-x-2 py-2 px-2 rounded-lg flex items-center hover:bg-gray-500 hover:bg-opacity-10">
-                                <img src={chosenInput.logoURI} className="w-5 h-5 rounded-full" alt={chosenInput.symbol}/>
+                                <img src={chosenInput.logoURI} className="w-5 h-5 rounded-full"
+                                     alt={chosenInput.symbol}/>
                                 <div className="font-semibold" translate={"no"}>{chosenInput.symbol}</div>
                                 <ChevronDownIcon className={"h-5"}/>
                             </button>}
@@ -97,32 +106,34 @@ export default () => {
                         </div>
                         <div className="relative flex justify-between items-center py-3">
                             {chosenOutput && <button type="button"
-                                             onClick={() => {
-                                                 setMode(TokenChooserMode.Output)
-                                                 setVisible(true)
-                                             }}
-                                             className="flex gap-x-2 px-4 py-3 rounded-lg flex items-center bg-gray-500 bg-opacity-10 hover:bg-opacity-20">
-                                <img src={chosenOutput.logoURI} className="w-5 h-5 rounded-full" alt={chosenOutput.symbol}/>
+                                                     onClick={() => {
+                                                         setMode(TokenChooserMode.Output)
+                                                         setVisible(true)
+                                                     }}
+                                                     className="flex gap-x-2 px-4 py-3 rounded-lg flex items-center bg-gray-500 bg-opacity-10 hover:bg-opacity-20">
+                                <img src={chosenOutput.logoURI} className="w-5 h-5 rounded-full"
+                                     alt={chosenOutput.symbol}/>
                                 <div className="font-semibold" translate={"no"}>{chosenOutput.symbol}</div>
                                 <ChevronDownIcon className={"h-5"}/>
                             </button>}
                             <div className="font-semibold mr-3 text-gray-300 text-lg">
-                                87.6359447
+                                0.00
                             </div>
                         </div>
-                        <div className={"text-center text-gray-500 text-xs my-4"}>
-                            5 routes found!
-                        </div>
-                        <RadioGroup className={"mt-6"} value={selected} onChange={setSelected}>
+                        {routes && <div className={"text-center text-gray-500 text-xs my-4"}>{routes?.length} routes
+                            found!</div>}
+                        <RadioGroup
+                            className={"mt-6 max-h-[11rem] -mx-4 px-4 scrollbar-thin scrollbar-thumb-purple-2 scrollbar-thumb-rounded-full"}
+                            value={selected} onChange={setSelected}>
                             <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
                             <div className="space-y-4">
-                                {routes.map((route) => (
+                                {routes?.map((route) => (
                                     <RadioGroup.Option
-                                        key={route.name}
+                                        // key={route.name}
                                         value={route}
                                         className={({active, checked}) =>
-                                            `${active ? 'ring-2 ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60' : ''}
-                                        ${checked ? 'border-2 border-purple-2 bg-white bg-opacity-5' : 'border-2 border-transparent bg-white bg-opacity-5'} relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`}>
+                                            `${active ? 'ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60' : ''}
+                                        ${checked ? 'border-2 border-purple-2 bg-purple-2 bg-opacity-5' : 'border-2 border-transparent bg-white bg-opacity-5'} relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`}>
                                         {({active, checked}) => (
                                             <>
                                                 <div
@@ -131,20 +142,20 @@ export default () => {
                                                         <RadioGroup.Label
                                                             as="p"
                                                             className={`font-medium ${checked ? 'text-white' : ''}`}>
-                                                            {route.name}
+                                                            {route.marketInfos[0].marketMeta.amm.label}
                                                         </RadioGroup.Label>
                                                         <RadioGroup.Description
                                                             as="span"
                                                             className={"inline text-gray-400"}>
                                                        <span>
-                                                           {route.route.from}
+                                                           {chosenInput && chosenInput.symbol}
                                                            <span className={"px-2"}>&rarr;</span>
-                                                           {route.route.to}
+                                                           {chosenOutput && chosenOutput.symbol}
                                                        </span>
                                                         </RadioGroup.Description>
                                                     </div>
                                                     <div>
-                                                        {route.amount}
+                                                        {chosenOutput && route.outAmount / 10 ** chosenOutput.decimals}{" "}
                                                     </div>
                                                 </div>
                                             </>
@@ -153,16 +164,8 @@ export default () => {
                                 ))}
                             </div>
                         </RadioGroup>
-
-                        <button
-                            className={"w-full bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 text-lg font-medium rounded-lg"}>
-                            Swap USD to PSOL
-                        </button>
+                        {swap()}
                     </div>
-                    {/*<button*/}
-                    {/*    className={"bg-gradient-to-r from-purple-1 to-purple-2 shadow-lg px-5 py-4 text-lg font-medium rounded-lg"}>*/}
-                    {/*    Swap USD to PSOL*/}
-                    {/*</button>*/}
                     <div>
                         <div className="space-y-2 md:space-y-4">
                             <div className="flex items-center justify-between text-xs">
@@ -172,10 +175,6 @@ export default () => {
                                <span
                                    className="min-w-[9.5rem] max-w-full whitespace-nowrap">1 USDC ≈ 8.763594 PSOL</span>
                                 </div>
-                            </div>
-                            <div className="flex text-xs text-black-50 dark:text-white-50 justify-end">
-                                <span className="text-[#24AE8F]">Within 0.3%</span>
-                                <span className="ml-1" translate="no">CoinGecko</span>
                             </div>
                             <div className="flex items-center justify-between text-xs">
                                 <div className="text-black-50 dark:text-white-50">Price Impact</div>
@@ -213,5 +212,6 @@ export default () => {
                     </div>
                 </div>
             </section>
-        </JupiterWrapper>)
+            )
+        </JupiterProvider>)
 }
