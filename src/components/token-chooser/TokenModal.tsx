@@ -4,16 +4,7 @@ import {TokenChooserMode, useTokenModal} from "./useTokenModal";
 import {TOKEN_LIST_URL} from "@jup-ag/core";
 import {SearchIcon} from "@heroicons/react/outline";
 import {PublicKey} from "@solana/web3.js";
-
-export interface Token {
-    chainId: number;
-    address: string;
-    symbol: string;
-    name: string;
-    decimals: number;
-    logoURI: string;
-    tags: string[];
-}
+import {Token} from "./constants";
 
 export const TokenModal: FC = () => {
     const {visible, setVisible, mode, setInput, setOutput} = useTokenModal();
@@ -35,6 +26,24 @@ export const TokenModal: FC = () => {
         setVisible(false)
         setValue('')
     };
+    let featuredTokens = [
+        {
+            name: 'SOL',
+            icon: tokens.find(x => x.symbol === "SOL")?.logoURI
+        },
+        {
+            name: 'PSOL',
+            icon: tokens.find(x => x.symbol === "PSOL")?.logoURI
+        },
+        {
+            name: 'USDC',
+            icon: tokens.find(x => x.symbol === "USDC")?.logoURI
+        },
+        {
+            name: 'USDT',
+            icon: tokens.find(x => x.symbol === "USDT")?.logoURI
+        }
+    ]
     return (
         <Transition.Root show={visible} as={Fragment}>
             <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={close}>
@@ -72,6 +81,14 @@ export const TokenModal: FC = () => {
                                            className={"w-full bg-transparent p-1 border-0 outline-0"}
                                            placeholder={"Search by token or address"}/>
                                 </div>
+                                {/*<div className={"flex gap-x-2 justify-around mb-4"}>*/}
+                                {/*    {featuredTokens.map(token => (*/}
+                                {/*        <button className={"flex items-center text-xs gap-x-2 p-2 border border-white border-opacity-20 bg-white bg-opacity-5 rounded-lg hover:border-purple-2 hover:bg-purple-2 hover:bg-opacity-5"}>*/}
+                                {/*            <img className={"w-4"} src={token?.icon} alt={token.name} />*/}
+                                {/*            {token.name}*/}
+                                {/*        </button>*/}
+                                {/*    ))}*/}
+                                {/*</div>*/}
                                 <div
                                     className={"max-h-[30rem] scrollbar-thin scrollbar-thumb-purple-2 scrollbar-thumb-rounded-full"}>
                                     <div className="relative grid gap-y-2">

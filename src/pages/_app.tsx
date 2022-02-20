@@ -1,7 +1,6 @@
 import '../styles/globals.css'
 import {WalletAdapterNetwork} from '@solana/wallet-adapter-base';
-import {ConnectionProvider, WalletProvider} from '@solana/wallet-adapter-react';
-import {WalletModalProvider} from "../components/wallet-connector";
+import {ConnectionProvider, useConnection, useWallet, WalletProvider} from '@solana/wallet-adapter-react';
 import {
     LedgerWalletAdapter,
     PhantomWalletAdapter,
@@ -11,19 +10,35 @@ import {
     SolletWalletAdapter,
     TorusWalletAdapter,
 } from '@solana/wallet-adapter-wallets';
-import {clusterApiUrl} from '@solana/web3.js';
 import {AppProps} from 'next/app';
 import React, {FC, useMemo} from 'react';
 import Head from "next/head";
+import {JupiterProvider} from "@jup-ag/react-hook";
+import {TokenModalProvider} from "../components/token-chooser/TokenModalProvider";
 import Header from "../components/header";
+import {WalletModalProvider} from "../components/wallet-connector";
 import AnnounceBar from "../components/announce-bar";
 import Footer from "../components/footer";
 import SimpleReactLightbox from 'simple-react-lightbox'
-import {TokenModalProvider} from "../components/token-chooser/TokenModalProvider";
+
+const JupiterWrapper: React.FC = ({children}) => {
+    const {connection} = useConnection();
+    const wallet = useWallet();
+    return (
+        <JupiterProvider
+            cluster="mainnet-beta"
+            connection={connection}
+            userPublicKey={wallet.publicKey || undefined}
+            routeCacheDuration={5000}
+        >
+            {children}
+        </JupiterProvider>
+    );
+};
 
 const App: FC<AppProps> = ({Component, pageProps}) => {
-    const network = WalletAdapterNetwork.Devnet;
-    const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+    const network = WalletAdapterNetwork.Mainnet;
+    const endpoint = "https://solana-api.projectserum.com" // useMemo(() => clusterApiUrl(network, true), [network]);
     const wallets = useMemo(
         () => [
             new PhantomWalletAdapter(),
@@ -47,18 +62,20 @@ const App: FC<AppProps> = ({Component, pageProps}) => {
                 wallets={wallets}
                 // onError={(messages) => alert(messages.error)}
                 autoConnect={true}>
-                <WalletModalProvider>
-                    <AnnounceBar/>
-                    <Header/>
-                    <main role="main">
-                        <SimpleReactLightbox>
-                            <TokenModalProvider>
-                                <Component {...pageProps} />
-                            </TokenModalProvider>
-                        </SimpleReactLightbox>
-                    </main>
-                    <Footer/>
-                </WalletModalProvider>
+                <JupiterWrapper>
+                    <TokenModalProvider>
+                        <AnnounceBar/>
+                        <WalletModalProvider>
+                            <Header/>
+                            <main role={"main"}>
+                                <SimpleReactLightbox>
+                                    <Component {...pageProps} />
+                                </SimpleReactLightbox>
+                            </main>
+                            <Footer/>
+                        </WalletModalProvider>
+                    </TokenModalProvider>
+                </JupiterWrapper>
             </WalletProvider>
         </ConnectionProvider>
         </body>
