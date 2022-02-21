@@ -175,20 +175,20 @@ const ProjectDetails = () => {
 								</button>
 							</div>
 						</div>
-						<div className={"flex gap-x-6"}>
-							<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>
-								<FaFacebookF size={25} />
-							</button>
-							<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>
-								<FaTwitter size={25} />
-							</button>
-							<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>
-								<FaTelegramPlane size={25} />
-							</button>
-							<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>
-								<FaDiscord size={25} />
-							</button>
-						</div>
+						{/*<div className={"flex gap-x-6"}>*/}
+						{/*	<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>*/}
+						{/*		<FaFacebookF size={25} />*/}
+						{/*	</button>*/}
+						{/*	<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>*/}
+						{/*		<FaTwitter size={25} />*/}
+						{/*	</button>*/}
+						{/*	<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>*/}
+						{/*		<FaTelegramPlane size={25} />*/}
+						{/*	</button>*/}
+						{/*	<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>*/}
+						{/*		<FaDiscord size={25} />*/}
+						{/*	</button>*/}
+						{/*</div>*/}
 						{/*<button className={"bg-gradient-to-r from-purple-1 to-purple-2 shadow-lg px-5 py-4 text-lg font-medium rounded-lg"}>*/}
 						{/*	Apply Now*/}
 						{/*</button>*/}

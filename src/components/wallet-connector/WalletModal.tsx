@@ -44,11 +44,12 @@ export const WalletModal: FC = () => {
 						enterTo="opacity-100"
 						leave="ease-in duration-200"
 						leaveFrom="opacity-100"
-						leaveTo="opacity-0"
-					>
-						<Dialog.Overlay className="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-30 transition-opacity" />
+						leaveTo="opacity-0">
+						<Dialog.Overlay
+							className="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-30 transition-opacity"/>
 					</Transition.Child>
-					<span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+					<span className="hidden sm:inline-block sm:align-middle sm:h-screen"
+						  aria-hidden="true">&#8203;</span>
 					<Transition.Child
 						as={Fragment}
 						enter="ease-out duration-300"
@@ -56,9 +57,9 @@ export const WalletModal: FC = () => {
 						enterTo="opacity-100 translate-y-0 sm:scale-100"
 						leave="ease-in duration-200"
 						leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-						leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-					>
-						<div className="inline-block align-bottom rounded-xl text-left overflow-hidden shadow-strong transform transition-all sm:align-middle sm:max-w-sm sm:w-full">
+						leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
+						<div
+							className="inline-block align-bottom rounded-xl text-left overflow-hidden shadow-strong transform transition-all sm:align-middle sm:max-w-sm sm:w-full">
 							<div className="bg-[#231f38] text-gray-100 px-5 py-6 sm:p-8">
 								<div className="mb-8">
 									<h1 className="mb-1 font-bold text-2xl">Connect a Wallet</h1>
