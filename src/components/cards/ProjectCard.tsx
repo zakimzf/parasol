@@ -13,7 +13,7 @@ type ProjectDetails = {
 
 const ProjectCard = ({Id, Name, Description, Logo, Cover}: ProjectDetails) => (
 	<div
-		className="relative bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg">
+		className="relative bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg transition duration-300 hover:-translate-y-3 hover:shadow hover:shadow-gray-800">
 		{Cover && <Link href={`/projects/${Id}`}>
 			<a>
 				<img className="w-full rounded-t-lg" src={Cover} alt={`${Id}-cover`} />
