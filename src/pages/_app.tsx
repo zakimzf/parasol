@@ -13,7 +13,7 @@ import {
 } from '@solana/wallet-adapter-wallets';
 import {clusterApiUrl} from '@solana/web3.js';
 import {AppProps} from 'next/app';
-import React, {FC, useMemo} from 'react';
+import React, {FC, useEffect, useMemo} from 'react';
 import Head from "next/head";
 import Header from "../components/header";
 import AnnounceBar from "../components/announce-bar";
@@ -36,6 +36,17 @@ const App: FC<AppProps> = ({Component, pageProps}) => {
         ],
         [network]
     );
+    useEffect(() => {
+        (window as any).$crisp = [];
+        (window as any).CRISP_WEBSITE_ID = "212516d5-ff63-4686-a490-d9f77ff93710";
+        (() => {
+            const d = document;
+            const s = d.createElement("script");
+            s.src = "https://client.crisp.chat/l.js";
+            s.async = Boolean(1);
+            d.getElementsByTagName("body")[0].appendChild(s);
+        })();
+    });
     return <>
         <Head>
             <title>Parasol Finance ($PSOL) | Community Governed Launchpad on Solana</title>
