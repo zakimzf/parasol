@@ -1,8 +1,6 @@
 import {useRef} from "react";
 import {ShoppingBagIcon} from "@heroicons/react/outline";
 
-// const ParasolLogo = require('/public/images/logos/parasol-logo-mark-reverse-rgb.svg');
-
 type NftDetails = {
 	poster?: string,
 	video: string,
@@ -19,7 +17,7 @@ const NftCard = ({name, amount, poster, video, vestingPeriod, offset}: NftDetail
 	return <article
 		onMouseOver={playVideo}
 		onMouseOut={pauseVideo}
-		className={`mt-${offset} cursor-pointer relative mx-4 lg:mx-0 flex-col bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg overflow-hidden`}>
+		className={`mt-${offset} cursor-pointer relative mx-4 lg:mx-0 flex-col bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg overflow-hidden transition duration-300 hover:-translate-y-3 hover:shadow hover:shadow-gray-800`}>
 		<div className="">
 			<div className="relative">
 				<span className="absolute top-0 right-0 m-3 items-center justify-center px-2 py-1 font-medium leading-none indigo-500 bg-purple-500 bg-opacity-50 rounded">8/12</span>
@@ -70,7 +68,7 @@ const NftCard = ({name, amount, poster, video, vestingPeriod, offset}: NftDetail
 				<button className="flex gap-x-2 items-center justify-center w-full whitespace-nowrap bg-gradient-to-r from-purple-1 to-purple-2 font-medium rounded-md p-3 hover:bg-white hover:text-purple-2">
 					<ShoppingBagIcon className="h-5" />
 					{/*<img className="h-4" src="/images/logos/parasol-logo-mark-reverse-rgb.svg" alt="psol" />*/}
-					Buy NFT Access Key
+					Purchase NFT Access Key
 				</button>
 				{/*<button className="bg-purple-2 rounded-lg w-full py-3">ds</button>*/}
 			</div>
