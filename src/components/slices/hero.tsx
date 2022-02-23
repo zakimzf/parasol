@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import FloatingParasol from "../utils/FloatingParasol";
+ import FloatingParasol from "../utils/floating-illustration";
 import {CollectionIcon} from "@heroicons/react/outline";
 
 // const ParasolLogo = require('../public/images/logos/parasol-logo-mark-reverse-rgb.svg')

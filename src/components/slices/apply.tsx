@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Button, {ButtonType} from "../utils/button";
+import Button, {ButtonType} from "../button";
 
 export default () =>
 	<section className="pt-24 pb-12">
