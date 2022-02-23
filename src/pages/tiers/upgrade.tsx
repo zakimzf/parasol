@@ -1,7 +1,9 @@
 import React, {Fragment, useState} from "react";
 import CardHost from "../../components/cards/base-card";
 import {Listbox, Transition} from '@headlessui/react'
-import {CheckIcon, SelectorIcon} from '@heroicons/react/solid'
+import {SelectorIcon} from '@heroicons/react/solid'
+import {ArrowLeftIcon} from "@heroicons/react/outline";
+import Link from 'next/link';
 
 const people = [
 	{name: 'Wade Cooper'},
@@ -14,13 +16,21 @@ const people = [
 
 export default () => {
 	const [selected, setSelected] = useState(people[0])
-	return <section className={"py-12"}>
-		<div className={"mx-auto max-w-md"}>
+	return <section className={"py-6"}>
+		<div className={"mx-auto max-w-md space-y-6"}>
+			<Link href={"/tiers"}>
+				<a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
+					<ArrowLeftIcon className={"w-4"}/>
+					Back
+				</a>
+			</Link>
 			<CardHost hoverEffect={false} classes={"space-y-6"}>
 				<div className={"prose prose-lg prose-invert"}>
 					<h2>Upgrade NFT</h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-					<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+						labore et dolore magna aliqua.</p>
+					<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat.</p>
 				</div>
 				<Listbox value={selected} onChange={setSelected}>
 					<div className=" mt-1">
