@@ -1,4 +1,4 @@
-import Heading from "../components/utils/heading";
+import Heading from "../components/heading";
 import Markdown from 'markdown-to-jsx';
 
 import PRIVACY_POLICY from '../content/privacy-policy.md';

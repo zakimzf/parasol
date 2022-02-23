@@ -1,77 +1,32 @@
 import Container from "../container";
 import Image from "next/image";
-
-let Clint = require('/public/images/team/Clint.png');
-let Alex = require('/public/images/team/Alex.png');
-let Anthony = require('/public/images/team/Anthony.png');
-let Tom = require('/public/images/team/Tom.png');
-
-const people = [
-    {
-        name: 'Alex Sadovskij',
-        role: 'Chief Executive Officer',
-        picture: Alex,
-        twitter: null,
-        linkedin: 'https://www.linkedin.com/in/sadovskij/',
-        github: 'https://github.com/litasio',
-        telegram: 'https://t.me/LITASio',
-        discord: null
-    },
-    {
-        name: 'Clint.Network',
-        role: 'Chief Technology Officer',
-        picture: Clint,
-        twitter: 'https://twitter.com/clint_network',
-        linkedin: 'https://www.linkedin.com/in/clintnetwork/',
-        github: 'https://github.com/clintnetwork',
-        telegram: 'https://t.me/clintnetwork'
-    },
-    {
-        name: 'Anthony C.',
-        role: 'Chief Marketing Officer',
-        picture: Anthony,
-        twitter: null,
-        linkedin: 'https://www.linkedin.com/in/ac011/',
-        github: 'https://github.com/t0nii4/',
-        telegram: 'https://t.me/X10011'
-    },
-    {
-        name: 'Tom P.',
-        role: 'Chief Marketing Officer',
-        picture: Tom,
-        twitter: null,
-        linkedin: null,
-        github: 'https://github.com/Leperle/',
-        telegram: 'https://t.me/BBRNetwork',
-        discord: 'https://discordapp.com/users/Parasol.Finance#8225'
-    },
-]
+import {people} from "../../constants";
 
 export default () =>
-    <section>
-        <Container>
-            <div className="space-y-12">
-                <div className="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
-                    <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Our Team</h2>
-                    <p className="text-xl text-gray-300">
-                        Here is our team composed of the most brilliant wankers
-                    </p>
-                </div>
-                <ul role="list"
-                    className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-4 lg:gap-x-8">
-                    {people.map((person) => (
-                        //.sort(() => (Math.random() > .5) ? 1 : -1)
-                        <li key={person.name}>
-                            <div className="space-y-4">
-                                <Image className="object-cover shadow-lg rounded-xl" src={person.picture}
-                                       alt={person.name}/>
-                                <div className="space-y-2">
-                                    <div className="text-lg leading-6 font-medium space-y-1 mb-3">
-                                        <h3>{person.name}</h3>
-                                        <p className="text-purple-2">{person.role}</p>
-                                    </div>
-                                    <ul role="list" className="flex space-x-5">
-                                        {person.twitter && <li>
+	<section>
+		<Container>
+			<div className="space-y-12">
+				<div className="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
+					<h2 className="text-3xl font-medium tracking-tight sm:text-4xl">Our Team</h2>
+					<p className="text-xl text-gray-300">
+						Here is our team composed of the most brilliant wankers
+					</p>
+				</div>
+				<ul role="list"
+				    className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-4 lg:gap-x-8">
+					{people.map((person) => (
+						//.sort(() => (Math.random() > .5) ? 1 : -1)
+						<li key={person.name}>
+							<div className="space-y-4">
+								<Image className="object-cover shadow-lg rounded-xl" src={person.picture}
+								       alt={person.name}/>
+								<div className="space-y-2">
+									<div className="text-lg leading-6 font-medium space-y-1 mb-3">
+										<h3>{person.name}</h3>
+										<p className="text-purple-2">{person.role}</p>
+									</div>
+									<ul role="list" className="flex space-x-5">
+										{person.twitter && <li>
                                             <a href={person.twitter}
                                                className="text-gray-400 hover:text-gray-500">
                                                 <span className="sr-only">Twitter</span>
@@ -82,7 +37,7 @@ export default () =>
                                                 </svg>
                                             </a>
                                         </li>}
-                                        {person.linkedin && <li>
+										{person.linkedin && <li>
                                             <a href={person.linkedin}
                                                className="text-gray-400 hover:text-gray-500">
                                                 <span className="sr-only">LinkedIn</span>
@@ -96,7 +51,7 @@ export default () =>
                                                 </svg>
                                             </a>
                                         </li>}
-                                        {person.github && <li>
+										{person.github && <li>
                                             <a href={person.github}
                                                className="text-gray-400 hover:text-gray-500">
                                                 <span className="sr-only">GitHub</span>
@@ -108,7 +63,7 @@ export default () =>
                                                 </svg>
                                             </a>
                                         </li>}
-                                        {person.telegram && <li>
+										{person.telegram && <li>
                                             <a href={person.telegram}
                                                className="text-gray-400 hover:text-gray-500">
                                                 <span className="sr-only">Telegram</span>
@@ -120,7 +75,7 @@ export default () =>
                                                 </svg>
                                             </a>
                                         </li>}
-                                        {person.discord && <li>
+										{person.discord && <li>
                                             <a href={person.discord}
                                                className="text-gray-400 hover:text-gray-500">
                                                 <span className="sr-only">Discord</span>
@@ -132,12 +87,12 @@ export default () =>
                                                 </svg>
                                             </a>
                                         </li>}
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </Container>
-    </section>
+									</ul>
+								</div>
+							</div>
+						</li>
+					))}
+				</ul>
+			</div>
+		</Container>
+	</section>

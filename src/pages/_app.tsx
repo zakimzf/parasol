@@ -16,7 +16,7 @@ import {AppProps} from 'next/app';
 import React, {FC, useEffect, useMemo} from 'react';
 import Head from "next/head";
 import Header from "../components/header";
-import AnnounceBar from "../components/announce-bar";
+import AnnounceBar from "../components/slices/announce-bar";
 import Footer from "../components/footer";
 import SimpleReactLightbox from 'simple-react-lightbox'
 import {TokenModalProvider} from "../components/token-chooser/TokenModalProvider";

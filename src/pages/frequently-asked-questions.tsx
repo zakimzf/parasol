@@ -1,6 +1,6 @@
 import {Disclosure} from '@headlessui/react'
 import {ChevronDoubleRightIcon, ChevronDownIcon} from '@heroicons/react/outline'
-import Heading from "../components/utils/heading";
+import Heading from "../components/heading";
 import Container from "../components/container";
 
 const faqs = [
