@@ -1,6 +1,6 @@
 import Container from "../../components/container";
-import ProjectCard from "../../components/cards/ProjectCard";
-import Heading from "../../components/utils/heading";
+import ProjectCard from "../../components/cards/project-card";
+import Heading from "../../components/heading";
 import Apply from "../../components/slices/apply";
 
 const projects = [

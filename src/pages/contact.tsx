@@ -1,4 +1,4 @@
-import Heading from "../components/utils/heading";
+import Heading from "../components/heading";
 
 export default () =>
   <>

@@ -9,9 +9,9 @@
     Community Governed IDO Platform on Solana. 🚀
   </p>
   <p align="center">
-    <!--<a href="https://github.com/parasol-finance/application/actions?workflow=Build"><img src="https://github.com/parasol-finance/application/workflows/Build/badge.svg" /></a>-->
+    <a href="https://github.com/parasol-finance/application"><img src="https://img.shields.io/badge/parasol-application-green?logo=vercel&style=plastic" /></a>
     <img src="https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white" />
-    <a href="https://www.rust-lang.org/"><img src="https://img.shields.io/badge/Made%20With-NextJS-CCCCCC" /></a>
+    <img src="https://img.shields.io/badge/Made%20With-NextJS-CCCCCC" />
     <a href="https://t.me/parasolfinance"><img src="https://img.shields.io/badge/Telegram-Channel-0088cc" /></a>
   </p>
 </p>
