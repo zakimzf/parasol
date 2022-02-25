@@ -1,15 +1,15 @@
-import {BadgeCheckIcon} from "@heroicons/react/solid";
+import { BadgeCheckIcon } from "@heroicons/react/solid";
 import Link from 'next/link'
 import BaseCard from "./base-card";
 
 // const UsdcLogo = require('/public/images/logos/usdc-logo.svg')
 
 type ProjectDetails = {
-	Id: String,
-	Logo?: string,
-	Cover?: string
-	Name: String,
-	Description: String
+  Id: String,
+  Logo?: string,
+  Cover?: string
+  Name: String,
+  Description: String
 }
 
 const ProjectCard = ({Id, Name, Description, Logo, Cover}: ProjectDetails) => (

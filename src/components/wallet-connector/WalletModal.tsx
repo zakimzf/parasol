@@ -1,9 +1,9 @@
-import React, {FC, Fragment, useCallback, useMemo} from 'react';
-import {Dialog, Transition} from "@headlessui/react";
-import {useWallet, Wallet} from "@solana/wallet-adapter-react";
-import {WalletName, WalletReadyState} from "@solana/wallet-adapter-base";
-import {WalletListItem} from "./WalletListItem";
-import {useWalletModal} from "./useWalletModal";
+import React, { FC, Fragment, useCallback, useMemo } from 'react';
+import { Dialog, Transition } from "@headlessui/react";
+import { useWallet, Wallet } from "@solana/wallet-adapter-react";
+import { WalletName, WalletReadyState } from "@solana/wallet-adapter-base";
+import { WalletListItem } from "./WalletListItem";
+import { useWalletModal } from "./useWalletModal";
 
 export const WalletModal: FC = () => {
 	const {wallets, select} = useWallet();

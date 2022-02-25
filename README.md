@@ -16,6 +16,7 @@
   </p>
 </p>
 
+
 ## Introduction
 
 Parasol Finance aims to be the first ever community-owned and governed IDO platform built on Solana that serves their community over everything else. They aim to provide that community all the control over which projects are put forward and which can participate in the IDO process. As opposed to the team having all the control over what projects are listed and which projects are allowed to raise money on the platform, the community will have all the power. What the community says, goes. The team believes that “Since the token holders and active community members are the ones most affected by management decisions and IDO listings, they should have the absolute say in what projects are allowed to list with us at Parasol.
@@ -30,3 +31,4 @@ Being a part of Parasol means being a part of the next-generation of technologic
 
 - https://t.me/parasolfinance
 - https://twitter.com/parasol_finance
+
