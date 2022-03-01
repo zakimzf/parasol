@@ -10,6 +10,10 @@ const nextConfig = {
 			config.resolve.fallback.fs = false;
 		}
 		return config;
+	},
+	env: {
+		NETWORK: process.env.NETWORK || "dev",
+		PLATFORM_FEE_ADDRESS: process.env.PLATFORM_FEE_ADDRESS || "",
 	}
 }
 

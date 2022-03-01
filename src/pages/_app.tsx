@@ -20,9 +20,11 @@ import AnnounceBar from "../components/slices/announce-bar";
 import Footer from "../components/footer";
 import SimpleReactLightbox from 'simple-react-lightbox'
 import {TokenModalProvider} from "../components/token-chooser/TokenModalProvider";
+import {getWalletAdapterNetwork} from "../core/solana-network";
 
 const App: FC<AppProps> = ({Component, pageProps}) => {
-    const network = WalletAdapterNetwork.Devnet;
+    const network: WalletAdapterNetwork = getWalletAdapterNetwork(process.env.NETWORK);
+
     const endpoint = useMemo(() => clusterApiUrl(network), [network]);
     const wallets = useMemo(
         () => [
