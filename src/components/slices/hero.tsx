@@ -19,9 +19,9 @@ export default () =>
                         <span className="ml-4 text-sm">Built on Solana Blockchain</span>
                         <svg className="ml-2 w-5 h-5 text-gray-500" xmlns="http://www.w3.org/2000/svg"
                              viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd"
+                            <path fillRule="evenodd"
                                   d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                  clip-rule="evenodd"/>
+                                  clipRule="evenodd"/>
                         </svg>
                     </a>
                     <h1 className="mt-4 text-3xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-7 lg:text-4xl xl:text-6xl">

@@ -15,6 +15,8 @@ import { Token } from "../components/token-chooser/constants";
 import { RadioGroup } from "@headlessui/react";
 import { PublicKey } from "@solana/web3.js";
 import { useWalletModal } from "../components/wallet-connector";
+import {WalletAdapterNetwork} from "@solana/wallet-adapter-base";
+import {getWalletAdapterNetwork} from "../core/solana-network";
 
 export default () => {
   const { connection } = useConnection();
@@ -35,13 +37,12 @@ export default () => {
   const [isPending, setPending] = useState(false);
   const [isRoutePending, setRoutePending] = useState(false);
 
-  const cluster = "mainnet-beta"; // Need to fetch this from the env
-  // const cluster = "testnet";
+  const cluster: WalletAdapterNetwork = getWalletAdapterNetwork(process.env.NETWORK);
 
   useEffect(() => {
     getPlatformFeeAccounts(
       connection,
-      new PublicKey("PaRaxU6dFX8ZeMPAvW7mXVhJ2UQokrqJhvY9hqyzRjA") // The platform fee account owner. Need to fetch this from the env
+      new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any) // The platform fee account owner. Need to fetch this from the env
     ).then((r) => {
       setPlatformFeeAndAccounts({
         feeBps: 50,
@@ -145,7 +146,6 @@ export default () => {
     if (selected) {
       chosenRoute = selected;
     }
-    console.log("Route", selected);
 
     if (
       wallet.publicKey &&
@@ -159,14 +159,14 @@ export default () => {
         user: wallet.publicKey as any,
         platformFeeAndAccounts,
       });
-      const { execute } = await jupiter.exchange({ route: chosenRoute });
+      const { execute } = await jupiter.exchange({ routeInfo: chosenRoute });
       const swapResult = await execute({
         wallet: {
           sendTransaction: wallet.sendTransaction,
           signAllTransactions: wallet.signAllTransactions,
           signTransaction: wallet.signTransaction,
         },
-        confirmationWaiterFactory: async (txid) => {
+        onTransaction: async (txid) => {
           console.log("sending transaction");
           await connection.confirmTransaction(txid);
           console.log("confirmed transaction");
@@ -178,7 +178,7 @@ export default () => {
       });
       console.log(swapResult);
       if ("error" in swapResult) {
-        console.log("Error:", swapResult.error);
+        alert(`Error:${swapResult.error}`);
       } else if ("txid" in swapResult) {
         console.log("Sucess:", swapResult.txid);
         console.log("Input:", swapResult.inputAmount);
