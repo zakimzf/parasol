@@ -1,4 +1,4 @@
-export default () =>
+const Notification = () => (
   <div aria-live="assertive" className="fixed inset-0 z-30 flex items-end px-4 py-6 pointer-events-none sm:p-6">
     <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
       <div className="max-w-sm w-full bg-[url('https://storage.googleapis.com/polkastarter-production-assets/jiq12ptcg86gphxhluu1b69sp33q')] rounded-xl pointer-events-auto ring-1 ring-black ring-opacity-5 overflow-hidden">
@@ -31,3 +31,6 @@ export default () =>
       </div>
     </div>
   </div>
+)
+
+export default Notification

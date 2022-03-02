@@ -1,6 +1,6 @@
 import Heading from "../components/heading";
 
-export default () =>
+const Contact = () => (
   <>
     <Heading tagline={"Get in Touch"} title={"Contact Parasol Finance"}
       description="Something to tell us, please use please the form below." />
@@ -69,10 +69,13 @@ export default () =>
                 name="message"
                 rows={4}
                 className="py-3 px-4 block w-full shadow-sm focus:ring-purple-2 focus:border-purple-2 border border-gray-300 rounded-md"
-                defaultValue={''} />
+                defaultValue={""} />
             </div>
           </div>
         </form>
       </div>
     </section>
   </>
+)
+
+export default Contact;

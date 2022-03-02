@@ -1,6 +1,8 @@
+import Link from "next/link"
+
 import Container from "../container";
 
-export default () =>
+const EyeCatcher = () =>
   <section>
     <Container>
       <div
@@ -23,12 +25,14 @@ export default () =>
               <p>
                 Parasol Finance adopting a unique and never before seen mechanism for our
                 upcoming IDO launchpad, we provide tiers system as NFT that
-                will represent a user's share of upcoming IDO sales and will be directly
-                used to purchase IDO tokens based on the user's NFT.
-                <a href="/" className="font-bold ml-3">
-                  <span className="underline">Get NFT Access Key Now</span>
-                  &rarr;
-                </a>
+                will represent a user&apos;s share of upcoming IDO sales and will be directly
+                used to purchase IDO tokens based on the user&apos;s NFT.
+                <Link href="/" passHref>
+                  <a className="font-bold ml-3">
+                    <span className="underline">Get NFT Access Key Now</span>
+                    &rarr;
+                  </a>
+                </Link>
               </p>
             </div>
           </div>
@@ -36,3 +40,5 @@ export default () =>
       </div>
     </Container>
   </section>
+
+export default EyeCatcher;

@@ -1,4 +1,4 @@
-export default () =>
+const MarketPlace = () => (
   <section>
     <div className="">
       <div aria-hidden="true" className="relative">
@@ -135,3 +135,6 @@ export default () =>
       </div>
     </div>
   </section>
+)
+
+export default MarketPlace;

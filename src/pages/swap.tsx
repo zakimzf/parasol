@@ -1,6 +1,10 @@
-import { ChevronDownIcon } from "@heroicons/react/outline";
 import React, { useEffect, useState } from "react";
+import { ChevronDownIcon } from "@heroicons/react/outline";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { RadioGroup } from "@headlessui/react";
+import { PublicKey } from "@solana/web3.js";
+import { WalletAdapterNetwork} from "@solana/wallet-adapter-base";
+
 import {
   TokenChooserMode,
   useTokenModal,
@@ -11,14 +15,12 @@ import {
   RouteInfo,
   TOKEN_LIST_URL,
 } from "@jup-ag/core";
-import { Token } from "../components/token-chooser/constants";
-import { RadioGroup } from "@headlessui/react";
-import { PublicKey } from "@solana/web3.js";
-import { useWalletModal } from "../components/wallet-connector";
-import {WalletAdapterNetwork} from "@solana/wallet-adapter-base";
-import {getWalletAdapterNetwork} from "../core/solana-network";
 
-export default () => {
+import { Token } from "../components/token-chooser/constants";
+import { useWalletModal } from "../components/wallet-connector";
+import { getWalletAdapterNetwork } from "../core/solana-network";
+
+const Swap = () => {
   const { connection } = useConnection();
   const wallet = useWallet();
   const [selected, setSelected] = useState();
@@ -52,16 +54,17 @@ export default () => {
     fetch(TOKEN_LIST_URL[cluster])
       .then((response) => response.json())
       .then((result) => setTokens(result));
-  }, []);
+  }, [cluster, connection]);
 
   useEffect(() => {
     if (wallet.publicKey) {
-      getIOBalance();
+      getIOBalance().then();
     } else {
       setIBalance(0);
       setOBalance(0);
     }
-    getRoutes();
+    getRoutes().then();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [input, output, wallet.publicKey]);
 
   useEffect(() => {
@@ -102,7 +105,7 @@ export default () => {
   };
   const getRoutes = async (am = 0) => {
     let initialAmount = inputAmount;
-
+    
     if (am !== 0) {
       initialAmount = am;
     }
@@ -121,6 +124,7 @@ export default () => {
       cluster,
       platformFeeAndAccounts,
     });
+
     const computeRoutes = await jupiter.computeRoutes({
       inputMint: input,
       outputMint: output,
@@ -128,6 +132,7 @@ export default () => {
       slippage: 1,
     });
 
+    setRoutes([]);
     setRoutes(computeRoutes.routesInfos);
 
     setRoutePending(false);
@@ -246,12 +251,12 @@ export default () => {
                 r="10"
                 stroke="#82D9FF"
                 strokeWidth="4"
-              ></circle>
+              />
               <path
                 className="opacity-75"
                 fill="currentColor"
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
+              />
             </svg>
           ) : (
             "Swap " +
@@ -282,12 +287,12 @@ export default () => {
                 r="10"
                 stroke="#82D9FF"
                 strokeWidth="4"
-              ></circle>
+              />
               <path
                 className="opacity-75"
                 fill="currentColor"
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              ></path>
+              />
             </svg>
           ) : (
             <svg
@@ -425,8 +430,8 @@ export default () => {
             {routes.length > 0 && !isRoutePending
               ? routes.length + " routes found!"
               : isRoutePending
-              ? "Finding routes..."
-              : "Please input the amount"}
+                ? "Finding routes..."
+                : "Please input the amount"}
           </div>
           <RadioGroup
             className={
@@ -449,10 +454,10 @@ export default () => {
                           : ""
                       }
                                         ${
-                                          checked
-                                            ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                                            : "border-2 border-transparent bg-white bg-opacity-5"
-                                        } relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
+                  checked
+                    ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                    : "border-2 border-transparent bg-white bg-opacity-5"
+                  } relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
                     }
                   >
                     {({ active, checked }) => (
@@ -505,12 +510,12 @@ export default () => {
                   r="10"
                   stroke="#82D9FF"
                   strokeWidth="4"
-                ></circle>
+                />
                 <path
                   className="opacity-75"
                   fill="currentColor"
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
+                />
               </svg>
             </div>
           )}
@@ -588,3 +593,5 @@ export default () => {
     </section>
   );
 };
+
+export default Swap

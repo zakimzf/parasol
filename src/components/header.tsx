@@ -1,8 +1,8 @@
-import * as React from 'react'
-import { Fragment } from 'react'
-import { Popover, Transition } from '@headlessui/react'
-import Link from 'next/link';
-import Image from 'next/image';
+import * as React from "react";
+import { Fragment } from "react";
+import { Popover, Transition } from "@headlessui/react";
+import Link from "next/link";
+import Image from "next/image";
 import {
   AnnotationIcon,
   BookOpenIcon,
@@ -11,23 +11,22 @@ import {
   InformationCircleIcon,
   MenuIcon,
   XIcon,
-} from '@heroicons/react/outline'
-import { ChevronDownIcon } from '@heroicons/react/solid'
+} from "@heroicons/react/outline";
+import { ChevronDownIcon } from "@heroicons/react/solid";
 import { WalletConnect } from "./wallet-connector";
 
-import { toolsMenu, resourcesMenu, recentPosts } from '../constants/header';
+import { toolsMenu, resourcesMenu, recentPosts } from "../constants/header";
 
-import Logo from '/public/images/logos/parasol-logo-inverted-rgb.svg';
-import LogoMarkReverse from '/public/images/logos/parasol-logo-mark-reverse-rgb.svg';
+import Logo from "/public/images/logos/parasol-logo-inverted-rgb.svg";
 
-export default () =>
+const Header = () => (
   <Popover className="relative">
     <div className="max-w-7xl mt-6 text-gray-200 mx-auto px-5">
       <div className="flex justify-between items-center py-6 md:justify-start md:space-x-10">
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link href={"/"}>
             <a>
-              <Image src={Logo} className="h-5" />
+              <Image src={Logo} className="h-5" alt="logo" />
             </a>
           </Link>
         </div>
@@ -50,8 +49,7 @@ export default () =>
                 <Popover.Button
                   className='group inline-flex gap-x-1 items-center font-bold text-sm hover:text-gray-300'>
                   <span>Launchpad</span>
-                  <ChevronDownIcon className={'h-5 w-5 group-hover:text-gray-300'}
-                    aria-hidden="true" />
+                  <ChevronDownIcon className={"h-5 w-5 group-hover:text-gray-300"} aria-hidden="true" />
                 </Popover.Button>
                 <Transition
                   as={Fragment}
@@ -97,9 +95,9 @@ export default () =>
                             <div className="ml-4"><p
                               className="text-base font-medium text-white">NFT Access
                               Keys</p>
-                              <p className="mt-1 text-sm text-gray-300">
+                            <p className="mt-1 text-sm text-gray-300">
                                 Our unique tiers system using NFTs
-                              </p>
+                            </p>
                             </div>
                           </a>
                         </Link>
@@ -118,26 +116,26 @@ export default () =>
                         {/*    </a>*/}
                         {/*))}*/}
                         <div className="w-full border-t border-white border-opacity-10" />
-                        <a href="/tiers"
-                          className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
-                          <img className="w-6 h-6 rounded-full" alt={"project"}
-                            src={"https://storage.googleapis.com/polkastarter-production-assets/tcwqly5amlb5m9b5uge0zfl4iwxm"} />
-                          <div className="ml-4">
-                            <p className="flex items-center text-base font-medium text-white">
-                              Tina Arena
-                              <label
-                                className={"bg-white bg-opacity-10 p-1 py-[2px] ml-2 rounded text-xs"}>Sponsored</label>
-                            </p>
-                            <p className="mt-1 text-sm text-gray-300">Thetan Arena is an
-                              esport game.
-                            </p>
-                          </div>
-                        </a>
+                        <Link href="/tiers" passHref>
+                          <a className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
+                            <img className="w-6 h-6 rounded-full" src="https://storage.googleapis.com/polkastarter-production-assets/tcwqly5amlb5m9b5uge0zfl4iwxm" width={0} height={0} alt="project"/>
+                            <div className="ml-4">
+                              <p className="flex items-center text-base font-medium text-white">
+                                Tina Arena
+                                <label
+                                  className={"bg-white bg-opacity-10 p-1 py-[2px] ml-2 rounded text-xs"}>Sponsored</label>
+                              </p>
+                              <p className="mt-1 text-sm text-gray-300">Thetan Arena is an
+                                esport game.
+                              </p>
+                            </div>
+                          </a>
+                        </Link>
                       </div>
                       <div className="px-5 py-4 bg-[#2a2542] sm:px-8 sm:py-6">
                         <div className="flow-root">
                           <a href="https://docs.parasol.finance/" target={"_blank"}
-                            className="flex items-center font-medium text-gray-200">
+                            className="flex items-center font-medium text-gray-200" rel="noreferrer">
                             <FolderAddIcon className="h-6 w-6 text-purple-2" />
                             <div className="ml-3">
                               <p className="text-base font-medium text-white">Submit your
@@ -181,7 +179,7 @@ export default () =>
                   className='group inline-flex gap-x-1 items-center font-bold text-sm hover:text-gray-300'
                 >
                   <span>Tools</span>
-                  <ChevronDownIcon className={'h-5 w-5 group-hover:text-gray-300'}
+                  <ChevronDownIcon className={"h-5 w-5 group-hover:text-gray-300"}
                     aria-hidden="true" />
                 </Popover.Button>
                 <Transition
@@ -228,9 +226,9 @@ export default () =>
           <Popover className="relative">
             {({ open }) => <>
               <Popover.Button
-                className={'group inline-flex items-center font-bold text-sm hover:text-gray-300'}>
+                className={"group inline-flex items-center font-bold text-sm hover:text-gray-300"}>
                 <span>More</span>
-                <ChevronDownIcon className={'ml-1 h-5 w-5 group-hover:text-gray-300'}
+                <ChevronDownIcon className={"ml-1 h-5 w-5 group-hover:text-gray-300"}
                   aria-hidden="true" />
               </Popover.Button>
               <Transition
@@ -342,8 +340,8 @@ export default () =>
                       </div>
                       <div className="mt-5 text-sm">
                         <a href="https://parasol-finance.medium.com/" target={"_blank"}
-                          className="font-medium text-purple-2 hover:text-purple-1">
-                          {' '}
+                          className="font-medium text-purple-2 hover:text-purple-1" rel="noreferrer">
+                          {" "}
                           View all posts <span aria-hidden="true">&rarr;</span>
                         </a>
                       </div>
@@ -426,7 +424,7 @@ export default () =>
                 Sign up
               </a>
               <p className="mt-6 text-center text-base font-medium text-gray-500">
-                Existing customer?{' '}
+                Existing customer?{" "}
                 <a href="#" className="text-indigo-600 hover:text-indigo-500">
                   Sign in
                 </a>
@@ -437,3 +435,6 @@ export default () =>
       </Popover.Panel>
     </Transition>
   </Popover>
+)
+
+export default Header

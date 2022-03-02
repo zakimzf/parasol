@@ -1,6 +1,6 @@
 import Container from "../container";
 
-export default () =>
+const Stats = () => (
   <section>
     <Container>
       <div className="max-w-4xl mx-auto">
@@ -24,3 +24,6 @@ export default () =>
       </div>
     </Container>
   </section>
+)
+
+export default Stats

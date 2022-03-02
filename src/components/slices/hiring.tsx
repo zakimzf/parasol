@@ -1,6 +1,6 @@
 import Container from "../container";
 
-export default () =>
+const Hiring = () => (
   <div className="relative">
     <div className="absolute inset-x-0 bottom-0 h-1/2 " />
     <Container>
@@ -19,7 +19,7 @@ export default () =>
             <span className="text-purple-2">Hiring</span>
           </h1>
           <p className="mt-6 max-w-lg mx-auto text-center text-xl sm:max-w-3xl">
-            We are always looking for new qualified people, so don't hesitate to contact us!
+            We are always looking for new qualified people, so don&apos;t hesitate to contact us!
           </p>
           <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
             <a href="mailto:contact@parasol.finance"
@@ -31,3 +31,6 @@ export default () =>
       </div>
     </Container>
   </div>
+)
+
+export default Hiring;

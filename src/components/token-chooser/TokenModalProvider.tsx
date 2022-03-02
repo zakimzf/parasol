@@ -1,7 +1,8 @@
-import React, { FC, useState } from 'react';
-import { TokenModal } from "./TokenModal";
-import { TokenChooserContext, TokenChooserMode } from './useTokenModal';
+import React, { FC, useState } from "react";
 import { PublicKey } from "@solana/web3.js";
+
+import { TokenModal } from "./TokenModal";
+import { TokenChooserContext, TokenChooserMode } from "./useTokenModal";
 
 export const TokenModalProvider: FC = ({ children }) => {
   const [visible, setVisible] = useState(false);

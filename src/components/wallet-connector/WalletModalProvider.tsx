@@ -1,6 +1,6 @@
-import React, { FC, useState } from 'react';
-import { WalletModalContext } from './useWalletModal';
-import { WalletModal } from './WalletModal';
+import React, { FC, useState } from "react";
+import { WalletModalContext } from "./useWalletModal";
+import { WalletModal } from "./WalletModal";
 
 export const WalletModalProvider: FC = ({ children }) => {
   const [visible, setVisible] = useState(false);

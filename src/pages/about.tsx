@@ -1,9 +1,10 @@
-import Container from "../components/container";
 import { DownloadIcon, MailOpenIcon } from "@heroicons/react/outline";
+import Link from "next/link";
+
+import Container from "../components/container";
 import Team from "../components/slices/team";
 import Layout from "../components/layout";
 import Hiring from "../components/slices/hiring";
-import Link from 'next/link'
 
 const About = () =>
   <Layout gap={24}>
