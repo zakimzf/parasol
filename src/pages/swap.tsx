@@ -250,6 +250,22 @@ const Swap = () => {
     setOutput(input);
   };
 
+  const getValidatedRouteText = () => {
+    if (inputAmount > 0) {
+      if (routes.length <= 0) {
+        return "Routes are not found!";
+      } else {
+        if (!isRoutePending) {
+          return routes.length + " routes found!";
+        } else {
+          return "Finding routes...";
+        }
+      }
+    } else {
+      return "Please input the amount";
+    }
+  };
+
   const swap = function () {
     if (wallet.connected) {
       return (
@@ -472,13 +488,7 @@ const Swap = () => {
             </div>
           </div>
           <div className={"text-center text-gray-500 text-xs my-4"}>
-            {routes.length <= 0 && inputAmount > 0
-              ? "Routes are not found!"
-              : routes.length > 0 && !isRoutePending
-              ? routes.length + " routes found!"
-              : isRoutePending
-              ? "Finding routes..."
-              : "Please input the amount"}
+            {getValidatedRouteText()}
           </div>
           <RadioGroup
             className={
@@ -499,12 +509,11 @@ const Swap = () => {
                         active
                           ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
                           : ""
-                      }
-                                        ${
-                                          checked
-                                            ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                                            : "border-2 border-transparent bg-white bg-opacity-5"
-                                        } relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
+                      } ${
+                        checked
+                          ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                          : "border-2 border-transparent bg-white bg-opacity-5"
+                      } relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
                     }
                   >
                     {({ active, checked }) => (
