@@ -3,7 +3,7 @@ import { ChevronDownIcon } from "@heroicons/react/outline";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react";
 import { PublicKey } from "@solana/web3.js";
-import { WalletAdapterNetwork} from "@solana/wallet-adapter-base";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
 import {
   TokenChooserMode,
@@ -17,6 +17,7 @@ import {
 } from "@jup-ag/core";
 
 import { Token } from "../components/token-chooser/constants";
+import Notification from "../components/slices/notification";
 import { useWalletModal } from "../components/wallet-connector";
 import { getWalletAdapterNetwork } from "../core/solana-network";
 
@@ -38,8 +39,14 @@ const Swap = () => {
   const [routes, setRoutes] = useState<RouteInfo[]>([]);
   const [isPending, setPending] = useState(false);
   const [isRoutePending, setRoutePending] = useState(false);
+  const [swapStatus, setSwapStatus] = useState(false);
+  const [swapResult, setSwapResult] = useState(false);
+  const [balanceAvailalbe, setBalanceAvailable] = useState(true);
+  const [showNotification, setShowNotification] = useState(false);
 
-  const cluster: WalletAdapterNetwork = getWalletAdapterNetwork(process.env.NETWORK);
+  const cluster: WalletAdapterNetwork = getWalletAdapterNetwork(
+    process.env.NETWORK
+  );
 
   useEffect(() => {
     getPlatformFeeAccounts(
@@ -105,7 +112,7 @@ const Swap = () => {
   };
   const getRoutes = async (am = 0) => {
     let initialAmount = inputAmount;
-    
+
     if (am !== 0) {
       initialAmount = am;
     }
@@ -113,6 +120,8 @@ const Swap = () => {
     const amount = initialAmount * 10 ** (chosenInput?.decimals || 6);
 
     if (amount === 0) {
+      setBalanceAvailable(true);
+      setSwapStatus(false);
       setRoutes([]);
       return;
     }
@@ -132,10 +141,22 @@ const Swap = () => {
       slippage: 1,
     });
 
+    if (computeRoutes.routesInfos.length > 0) setSwapStatus(true);
+    else {
+      setSwapStatus(false);
+    }
+
     setRoutes([]);
     setRoutes(computeRoutes.routesInfos);
 
     setRoutePending(false);
+
+    if (iBalance < inputAmount) {
+      setBalanceAvailable(false);
+      setSwapStatus(false);
+    } else {
+      setBalanceAvailable(true);
+    }
   };
 
   const startSwap = async () => {
@@ -183,8 +204,11 @@ const Swap = () => {
       });
       console.log(swapResult);
       if ("error" in swapResult) {
+        setSwapResult(false);
         alert(`Error:${swapResult.error}`);
       } else if ("txid" in swapResult) {
+        setSwapResult(true);
+        setShowNotification(true);
         console.log("Sucess:", swapResult.txid);
         console.log("Input:", swapResult.inputAmount);
         console.log("Output:", swapResult.outputAmount);
@@ -230,11 +254,12 @@ const Swap = () => {
     if (wallet.connected) {
       return (
         <button
+          id="swap-btn"
           onClick={startSwap}
-          className={
-            "flex items-center justify-center w-full gap-x-2 bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 text-lg font-medium rounded-lg"
-          }
-          disabled={isPending}
+          className={`flex items-center justify-center w-full gap-x-2 bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 text-lg font-medium rounded-lg ${
+            isPending || !swapStatus ? "opacity-50" : ""
+          }`}
+          disabled={isPending || !swapStatus}
         >
           {/*<RefreshIcon className={"w-5 h-5"} />*/}
           {isPending ? (
@@ -315,6 +340,15 @@ const Swap = () => {
   };
   return (
     <section className="pt-6 pb-20">
+      {showNotification ? (
+        <Notification
+          title={swapResult ? "Transaction Success!" : "Transaction Faild!"}
+          source={swapResult ? "Transaction Success!" : "Transaction Faild!"}
+          color={swapResult ? "bg-green-700" : "bg-red-700"}
+        />
+      ) : (
+        ""
+      )}
       <div className="flex flex-col gap-y-6 max-w-md mx-auto mt-6">
         <div className="bg-[#231f38] bg-opacity-80 shadow-xl rounded-xl shadow-half-strong border border-gray-800 p-8">
           <div className={"flex justify-between items-end mb-4"}>
@@ -344,7 +378,11 @@ const Swap = () => {
               </button>
             </div>
           </div>
-          <div className="flex justify-between items-stretch bg-white bg-opacity-5 rounded-xl px-4 py-3">
+          <div
+            className={`flex justify-between items-stretch bg-white bg-opacity-5 rounded-xl px-4 py-3 ${
+              balanceAvailalbe ? "outline-hidden" : "outline outline-red-700"
+            }`}
+          >
             {chosenInput && (
               <button
                 onClick={() => {
@@ -352,7 +390,7 @@ const Swap = () => {
                   setVisible(true);
                 }}
                 type="button"
-                className="flex gap-x-2 py-2 px-2 rounded-lg flex items-center hover:bg-gray-500 hover:bg-opacity-10"
+                className="gap-x-2 py-2 px-2 rounded-lg flex items-center hover:bg-gray-500 hover:bg-opacity-10"
               >
                 <img
                   src={chosenInput.logoURI}
@@ -376,6 +414,13 @@ const Swap = () => {
               }
             />
           </div>
+          {!balanceAvailalbe ? (
+            <div className="text-center text-red-500 text-xs my-4">
+              Your balance is not enough to swap this amount
+            </div>
+          ) : (
+            ""
+          )}
           <button className="flex mx-auto" onClick={onTokenChangeEvent}>
             <svg
               className={"h-4 mt-5 mb-2 text-gray-300"}
@@ -407,7 +452,7 @@ const Swap = () => {
                   setMode(TokenChooserMode.Output);
                   setVisible(true);
                 }}
-                className="flex gap-x-2 px-4 py-3 rounded-lg flex items-center bg-gray-500 bg-opacity-10 hover:bg-opacity-20"
+                className="flex gap-x-2 px-4 py-3 rounded-lg items-center bg-gray-500 bg-opacity-10 hover:bg-opacity-20"
               >
                 <img
                   src={chosenOutput.logoURI}
@@ -427,11 +472,13 @@ const Swap = () => {
             </div>
           </div>
           <div className={"text-center text-gray-500 text-xs my-4"}>
-            {routes.length > 0 && !isRoutePending
+            {routes.length <= 0 && inputAmount > 0
+              ? "Routes are not found!"
+              : routes.length > 0 && !isRoutePending
               ? routes.length + " routes found!"
               : isRoutePending
-                ? "Finding routes..."
-                : "Please input the amount"}
+              ? "Finding routes..."
+              : "Please input the amount"}
           </div>
           <RadioGroup
             className={
@@ -454,15 +501,15 @@ const Swap = () => {
                           : ""
                       }
                                         ${
-                  checked
-                    ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                    : "border-2 border-transparent bg-white bg-opacity-5"
-                  } relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
+                                          checked
+                                            ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                                            : "border-2 border-transparent bg-white bg-opacity-5"
+                                        } relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
                     }
                   >
                     {({ active, checked }) => (
                       <>
-                        <div className="flex justify-between items-center justify-between w-full">
+                        <div className="flex justify-between items-center w-full">
                           <div className="text-sm">
                             <RadioGroup.Label
                               as="p"
@@ -525,9 +572,15 @@ const Swap = () => {
           <div className="space-y-2 md:space-y-4">
             <div className="flex items-center justify-between text-xs">
               <div className="text-black-50 dark:text-white-50">Rate</div>
-              <div className="flex cursor-pointer text-black-50 dark:text-white-50 text-xs align-center">
+              <div className="flex cursor-pointer text-black-50 dark:text-white-50 text-xs align-center text-right">
                 <span className="min-w-[9.5rem] max-w-full whitespace-nowrap">
-                  1 USDC ≈ 8.763594 PSOL
+                  {inputAmount == 0 ? 0 : 1} {chosenInput?.symbol} ≈{" "}
+                  {routes.length > 0
+                    ? routes[0].outAmount /
+                      10 ** (chosenOutput as any).decimals /
+                      inputAmount
+                    : 0.0}{" "}
+                  {chosenOutput?.symbol}
                 </span>
               </div>
             </div>
@@ -542,7 +595,10 @@ const Swap = () => {
                 Minimum Received
               </div>
               <div className="text-black-50 dark:text-white-50">
-                87.197765 PSOL
+                {routes.length > 0
+                  ? routes[0].outAmount / 10 ** (chosenOutput as any).decimals
+                  : 0.0}{" "}
+                {chosenOutput?.symbol}
               </div>
             </div>
             <div className="flex items-center justify-between text-xs">
@@ -594,4 +650,4 @@ const Swap = () => {
   );
 };
 
-export default Swap
+export default Swap;

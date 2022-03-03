@@ -86,7 +86,7 @@ const FrequentlyAskedQuestion = () => (
       <Container>
         <div className={"flex justify-center pt-12"}>
           <a href={"https://docs.parasol.finance/parasol-ecosystem/frequently-asked-questions"}
-            className={"flex items-center justify-center items-center gap-x-1 g-purple-2 text-white bg-transparent border border-white px-7 py-3 text-base font-medium rounded-md"}>
+            className={"flex items-center justify-center gap-x-1 g-purple-2 text-white bg-transparent border border-white px-7 py-3 text-base font-medium rounded-md"}>
                         See The Full FAQ
             <ChevronDoubleRightIcon className={"w-4"}/>
           </a>
