@@ -1,4 +1,4 @@
-import React, { FC, Fragment, MouseEventHandler, useCallback, useMemo } from 'react';
+import React, { FC, Fragment, MouseEventHandler, useCallback, useMemo } from "react";
 import { useWalletModal } from "./useWalletModal";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Menu, Transition } from "@headlessui/react";
@@ -11,7 +11,7 @@ export const WalletConnect: FC = ({ children }) => {
   const content = useMemo(() => {
     if (children) return children;
     if (!wallet || !base58) return null;
-    return base58.slice(0, 7) + '..' + base58.slice(-5);
+    return base58.slice(0, 7) + ".." + base58.slice(-5);
   }, [children, wallet, base58]);
 
   const disconnectWallet: MouseEventHandler<HTMLAnchorElement> = useCallback((event) => {

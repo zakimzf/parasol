@@ -1,4 +1,4 @@
-import {useJupiter} from "@jup-ag/react-hook";
+import { useJupiter } from "@jup-ag/react-hook";
 
 export interface Token {
     chainId: number;

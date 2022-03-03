@@ -1,6 +1,6 @@
 import Container from "../container";
 
-export default () =>
+const NewsLetter = () => (
   <section>
     <Container>
       <div className="relative py-10 px-6 bg-gradient-to-r from-purple-1 to-purple-2 rounded-3xl sm:py-16 sm:px-12 lg:p-20 lg:flex lg:items-center">
@@ -37,3 +37,6 @@ export default () =>
       </div>
     </Container>
   </section>
+)
+
+export default NewsLetter;

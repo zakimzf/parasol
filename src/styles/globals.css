@@ -4,22 +4,51 @@
 @tailwind typography;
 
 body {
-    background: url('/ellipses.svg') no-repeat top -200px center #17122b;
-    color: theme('colors.white');
-    min-height: 100vh;
+  background: url("/ellipses.svg") no-repeat top -200px center #17122b;
+  color: theme("colors.white");
+  min-height: 100vh;
 }
 
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button
-{
-    -webkit-appearance: none;
-    margin: 0;
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-input[type=number] {
-    -moz-appearance:textfield;
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-    border-radius: 1rem;
+  border-radius: 1rem;
+}
+
+#swap-btn:disabled {
+  cursor: not-allowed;
+}
+
+#hideMe {
+  -moz-animation: cssAnimation 0s ease-in 5s forwards;
+  /* Firefox */
+  -webkit-animation: cssAnimation 0s ease-in 5s forwards;
+  /* Safari and Chrome */
+  -o-animation: cssAnimation 0s ease-in 5s forwards;
+  /* Opera */
+  animation: cssAnimation 0s ease-in 5s forwards;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+  to {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+}
+@-webkit-keyframes cssAnimation {
+  to {
+    width: 0;
+    height: 0;
+    visibility: hidden;
+  }
 }

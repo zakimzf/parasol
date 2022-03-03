@@ -1,9 +1,9 @@
+import Markdown from "markdown-to-jsx";
+
 import Heading from "../components/heading";
-import Markdown from 'markdown-to-jsx';
+import PRIVACY_POLICY from "../content/privacy-policy.md";
 
-import PRIVACY_POLICY from '../content/privacy-policy.md';
-
-export default () =>
+const PrivacyPolicy = () => (
   <>
     <Heading tagline={"Legal"} title={"Privacy Policy"}
       description={"How we collect and process your information."} />
@@ -13,4 +13,6 @@ export default () =>
       </div>
     </section>
   </>
+)
 
+export default PrivacyPolicy;

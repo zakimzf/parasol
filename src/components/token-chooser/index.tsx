@@ -1,1 +1,1 @@
-export default () => <h1>ds</h1>
+export const TokenChooser = () => {};

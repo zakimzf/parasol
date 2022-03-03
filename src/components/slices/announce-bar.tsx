@@ -1,9 +1,9 @@
-export default () =>
+const AnnounceBar = () => (
   <nav className="relative bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2">
     <div
       className="max-w-7xl mx-auto flex whitespace-nowrap justify-between justify-center gap-x-4 py-3 px-3 sm:px-6 lg:px-5">
       <a href="https://explorer.solana.com/address/Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ" target="_blank"
-        className="flex justify-center truncate items-center gap-1 font-bold text-sm text-white -bg-gray-900 border border-purple-200 rounded-full px-4 py-1">
+        className="flex justify-center truncate items-center gap-1 font-bold text-sm text-white -bg-gray-900 border border-purple-200 rounded-full px-4 py-1" rel="noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-5" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -41,7 +41,7 @@ export default () =>
         </span>
       </a>
       <a href="https://t.me/parasolfinance" target="_blank"
-        className="flex justify-center items-center gap-2 font-bold text-sm text-white border border-purple-200 rounded-full px-4 py-1">
+        className="flex justify-center items-center gap-2 font-bold text-sm text-white border border-purple-200 rounded-full px-4 py-1" rel="noreferrer">
         <svg className="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24">
           <path
             d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l.002.001-.314 4.692c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z" />
@@ -51,3 +51,6 @@ export default () =>
       </a>
     </div>
   </nav>
+)
+
+export default AnnounceBar;
