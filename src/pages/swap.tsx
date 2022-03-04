@@ -24,7 +24,7 @@ import { getWalletAdapterNetwork } from "../core/solana-network";
 const Swap = () => {
   const { connection } = useConnection();
   const wallet = useWallet();
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState<RouteInfo>();
   const { setVisible, setMode, input, output, setInput, setOutput } =
     useTokenModal();
   const walletModal = useWalletModal();
@@ -54,7 +54,7 @@ const Swap = () => {
       new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any) // The platform fee account owner. Need to fetch this from the env
     ).then((r) => {
       setPlatformFeeAndAccounts({
-        feeBps: 50,
+        feeBps: parseFloat(process.env.PLATFORM_FEE_PERCENTAGE as any) * 100,
         feeAccounts: r,
       });
     });
@@ -597,16 +597,21 @@ const Swap = () => {
               <div className="text-black-50 dark:text-white-50">
                 Price Impact
               </div>
-              <div className="text-black-50 dark:text-white-50">&lt; 0.1%</div>
+              <div className="text-black-50 dark:text-white-50">
+                {selected?.marketInfos[0].priceImpactPct
+                  ? selected?.marketInfos[0].priceImpactPct
+                  : 0}
+                %
+              </div>
             </div>
             <div className="flex items-center justify-between text-xs">
               <div className="text-black-50 dark:text-white-50">
                 Minimum Received
               </div>
               <div className="text-black-50 dark:text-white-50">
-                {routes.length > 0
-                  ? routes[0].outAmount / 10 ** (chosenOutput as any).decimals
-                  : 0.0}{" "}
+                {selected?.marketInfos[0].minOutAmount
+                  ? selected?.marketInfos[0].minOutAmount
+                  : 0}{" "}
                 {chosenOutput?.symbol}
               </div>
             </div>
@@ -633,23 +638,10 @@ const Swap = () => {
                 </span>
               </div>
               <div className="text-black-50 dark:text-white-50">
-                0.000005 SOL
-              </div>
-            </div>
-            <div className="flex items-center justify-between text-xs">
-              <div className="text-black-50 dark:text-white-50">
-                Deposit{" "}
-                <span
-                  id="popover-trigger-141"
-                  aria-haspopup="dialog"
-                  aria-expanded="false"
-                  aria-controls="popover-content-141"
-                >
-                  [?]
-                </span>
-              </div>
-              <div className="text-black-50 dark:text-white-50 text-xs text-right">
-                <p>0.00203928 SOL for 1 ATA account</p>
+                {selected?.marketInfos[0].lpFee.pct
+                  ? selected?.marketInfos[0].lpFee.pct
+                  : 0}{" "}
+                SOL
               </div>
             </div>
           </div>
