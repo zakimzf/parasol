@@ -89,4 +89,4 @@ const Migrate = () => {
   </section>;
 }
 
-export default Upgrade;
+export default Migrate;
