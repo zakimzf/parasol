@@ -25,7 +25,7 @@ const Upgrade = () => {
           Back
         </a>
       </Link>
-      <CardHost hoverEffect={false} classes={"space-y-6"}>
+      <CardHost hoverEffect={false} classes={"space-y-6"} padding={6}>
         <div className={"prose prose-lg prose-invert"}>
           <h2>Upgrade NFT</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
