@@ -54,7 +54,7 @@ const Swap = () => {
       new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any) // The platform fee account owner. Need to fetch this from the env
     ).then((r) => {
       setPlatformFeeAndAccounts({
-        feeBps: parseFloat(process.env.PLATFORM_FEE_PERCENTAGE as any) * 100,
+        feeBps: +(process.env.PLATFORM_FEE_PERCENTAGE as any) * 100,
         feeAccounts: r,
       });
     });
