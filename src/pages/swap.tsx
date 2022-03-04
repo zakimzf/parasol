@@ -148,6 +148,7 @@ const Swap = () => {
 
     setRoutes([]);
     setRoutes(computeRoutes.routesInfos);
+    setSelected(computeRoutes.routesInfos[0] || undefined);
 
     setRoutePending(false);
 
@@ -167,12 +168,6 @@ const Swap = () => {
 
     setPending(true);
 
-    let chosenRoute = routes[0];
-
-    if (selected) {
-      chosenRoute = selected;
-    }
-
     if (
       wallet.publicKey &&
       wallet.signAllTransactions &&
@@ -185,7 +180,9 @@ const Swap = () => {
         user: wallet.publicKey as any,
         platformFeeAndAccounts,
       });
-      const { execute } = await jupiter.exchange({ routeInfo: chosenRoute });
+      const { execute } = await jupiter.exchange({
+        routeInfo: selected as any,
+      });
       const swapResult = await execute({
         wallet: {
           sendTransaction: wallet.sendTransaction,
