@@ -116,7 +116,7 @@ const ProjectDetails = () => {
       <div className="grid grid-cols-9">
         <div className="prose markdown prose-lg prose-invert col-span-6">
           <div className="flex items-center gap-x-6">
-            <img className="rounded-full h-16 mb-2 m-0" src="https://storage.googleapis.com/polkastarter-production-assets/aovnyvd72hvhc5l8ab2e9404jq0h" alt="" width={0} height={0} />
+            <img className="rounded-full h-16 mb-2 m-0" src="https://storage.googleapis.com/polkastarter-production-assets/aovnyvd72hvhc5l8ab2e9404jq0h" alt="" />
             <div>
               <h1 className="text-4xl mb-0">Mecha Morphing</h1>
               <p className={"my-2 font-semibold"}>We bring new technologies to our community.</p>
@@ -143,7 +143,7 @@ const ProjectDetails = () => {
                   <BadgeCheckIcon className={"h-7 text-purple-2"} />
                 </h2>
                 <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
-                  <img className="h-8" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" width={0} height={0} />
+                  <img className="h-8" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
                   <div className="flex items-end gap-x-2 text-4xl font-bold">
                     { amount.toLocaleString("en-US", {minimumFractionDigits: 0}) }
                     <span>USDC</span>
