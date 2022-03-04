@@ -15,7 +15,7 @@ const people = [
   {name: "Hellen Schmidt"},
 ]
 
-const Upgrade = () => {
+const Migrate = () => {
   const [selected, setSelected] = useState(people[0])
   return <section className={"py-6"}>
     <div className={"mx-auto max-w-md space-y-6"}>
@@ -27,7 +27,7 @@ const Upgrade = () => {
       </Link>
       <CardHost hoverEffect={false} classes={"space-y-6"} padding={6}>
         <div className={"prose prose-lg prose-invert"}>
-          <h2>Upgrade NFT</h2>
+          <h2>Migrate NFT</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
 						labore et dolore magna aliqua.</p>
           <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo

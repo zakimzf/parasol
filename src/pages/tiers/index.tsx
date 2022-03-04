@@ -24,10 +24,10 @@ const Tiers = function () {
               </div>
             </div>
             <div className={"flex gap-x-2 justify-end items-center"}>
-              <Link href={"/tiers/upgrade"}>
+              <Link href={"/tiers/migrate"}>
                 <a className="inline-flex relative gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-300">
                   <UploadIcon className={"w-4"}/>
-                    Upgrade
+                    Migrate
                 </a>
               </Link>
               <Link href={"/tiers/redeem"}>
