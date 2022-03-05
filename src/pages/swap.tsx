@@ -263,7 +263,7 @@ const Swap = () => {
     }
   };
 
-  const swap = function () {
+  const swap = () => {
     if (wallet.connected) {
       return (
         <button
@@ -351,6 +351,17 @@ const Swap = () => {
       // return <WalletConnect />
     }
   };
+
+  const calcRate = () => {
+    if (routes.length > 0)
+      return (
+        routes[0].outAmount /
+        10 ** (chosenOutput as any).decimals /
+        inputAmount
+      ).toFixed(6);
+    else return 0.0 + " ";
+  };
+
   return (
     <section className="pt-6 pb-20">
       {showNotification ? (
@@ -581,11 +592,7 @@ const Swap = () => {
               <div className="flex cursor-pointer text-black-50 dark:text-white-50 text-xs align-center text-right">
                 <span className="min-w-[9.5rem] max-w-full whitespace-nowrap">
                   {inputAmount == 0 ? 0 : 1} {chosenInput?.symbol} ≈{" "}
-                  {routes.length > 0
-                    ? routes[0].outAmount /
-                      10 ** (chosenOutput as any).decimals /
-                      inputAmount
-                    : 0.0}{" "}
+                  {calcRate()}
                   {chosenOutput?.symbol}
                 </span>
               </div>
@@ -596,7 +603,7 @@ const Swap = () => {
               </div>
               <div className="text-black-50 dark:text-white-50">
                 {selected?.marketInfos[0].priceImpactPct
-                  ? selected?.marketInfos[0].priceImpactPct
+                  ? (selected?.marketInfos[0].priceImpactPct).toFixed(4)
                   : 0}
                 %
               </div>
@@ -619,7 +626,8 @@ const Swap = () => {
                 </span>
               </div>
               <div className="text-black-50 dark:text-white-50">
-                0.025 USDC (0.25%)
+                0.5 {chosenInput?.symbol} (
+                {process.env.PLATFORM_FEE_PERCENTAGE as any}%)
               </div>
             </div>
             <div className="flex items-center justify-between text-xs">
@@ -630,9 +638,7 @@ const Swap = () => {
                   aria-haspopup="dialog"
                   aria-expanded="false"
                   aria-controls="popover-content-7"
-                >
-                  [?]
-                </span>
+                ></span>
               </div>
               <div className="text-black-50 dark:text-white-50">
                 {selected?.marketInfos[0].lpFee.pct
