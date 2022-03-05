@@ -24,7 +24,7 @@ import { getWalletAdapterNetwork } from "../core/solana-network";
 const Swap = () => {
   const { connection } = useConnection();
   const wallet = useWallet();
-  const [selected, setSelected] = useState();
+  const [selected, setSelected] = useState<RouteInfo>();
   const { setVisible, setMode, input, output, setInput, setOutput } =
     useTokenModal();
   const walletModal = useWalletModal();
@@ -54,7 +54,7 @@ const Swap = () => {
       new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any) // The platform fee account owner. Need to fetch this from the env
     ).then((r) => {
       setPlatformFeeAndAccounts({
-        feeBps: 50,
+        feeBps: +(process.env.PLATFORM_FEE_PERCENTAGE as any) * 100,
         feeAccounts: r,
       });
     });
@@ -148,6 +148,7 @@ const Swap = () => {
 
     setRoutes([]);
     setRoutes(computeRoutes.routesInfos);
+    setSelected(computeRoutes.routesInfos[0] || undefined);
 
     setRoutePending(false);
 
@@ -167,12 +168,6 @@ const Swap = () => {
 
     setPending(true);
 
-    let chosenRoute = routes[0];
-
-    if (selected) {
-      chosenRoute = selected;
-    }
-
     if (
       wallet.publicKey &&
       wallet.signAllTransactions &&
@@ -185,7 +180,9 @@ const Swap = () => {
         user: wallet.publicKey as any,
         platformFeeAndAccounts,
       });
-      const { execute } = await jupiter.exchange({ routeInfo: chosenRoute });
+      const { execute } = await jupiter.exchange({
+        routeInfo: selected as any,
+      });
       const swapResult = await execute({
         wallet: {
           sendTransaction: wallet.sendTransaction,
@@ -266,7 +263,7 @@ const Swap = () => {
     }
   };
 
-  const swap = function () {
+  const swap = () => {
     if (wallet.connected) {
       return (
         <button
@@ -354,6 +351,17 @@ const Swap = () => {
       // return <WalletConnect />
     }
   };
+
+  const calcRate = () => {
+    if (routes.length > 0)
+      return (
+        routes[0].outAmount /
+        10 ** (chosenOutput as any).decimals /
+        inputAmount
+      ).toFixed(6);
+    else return 0.0 + " ";
+  };
+
   return (
     <section className="pt-6 pb-20">
       {showNotification ? (
@@ -584,11 +592,7 @@ const Swap = () => {
               <div className="flex cursor-pointer text-black-50 dark:text-white-50 text-xs align-center text-right">
                 <span className="min-w-[9.5rem] max-w-full whitespace-nowrap">
                   {inputAmount == 0 ? 0 : 1} {chosenInput?.symbol} ≈{" "}
-                  {routes.length > 0
-                    ? routes[0].outAmount /
-                      10 ** (chosenOutput as any).decimals /
-                      inputAmount
-                    : 0.0}{" "}
+                  {calcRate()}
                   {chosenOutput?.symbol}
                 </span>
               </div>
@@ -597,16 +601,21 @@ const Swap = () => {
               <div className="text-black-50 dark:text-white-50">
                 Price Impact
               </div>
-              <div className="text-black-50 dark:text-white-50">&lt; 0.1%</div>
+              <div className="text-black-50 dark:text-white-50">
+                {selected?.marketInfos[0].priceImpactPct
+                  ? (selected?.marketInfos[0].priceImpactPct).toFixed(4)
+                  : 0}
+                %
+              </div>
             </div>
             <div className="flex items-center justify-between text-xs">
               <div className="text-black-50 dark:text-white-50">
                 Minimum Received
               </div>
               <div className="text-black-50 dark:text-white-50">
-                {routes.length > 0
-                  ? routes[0].outAmount / 10 ** (chosenOutput as any).decimals
-                  : 0.0}{" "}
+                {selected?.marketInfos[0].minOutAmount
+                  ? selected?.marketInfos[0].minOutAmount
+                  : 0}{" "}
                 {chosenOutput?.symbol}
               </div>
             </div>
@@ -617,7 +626,8 @@ const Swap = () => {
                 </span>
               </div>
               <div className="text-black-50 dark:text-white-50">
-                0.025 USDC (0.25%)
+                0.5 {chosenInput?.symbol} (
+                {process.env.PLATFORM_FEE_PERCENTAGE as any}%)
               </div>
             </div>
             <div className="flex items-center justify-between text-xs">
@@ -628,28 +638,13 @@ const Swap = () => {
                   aria-haspopup="dialog"
                   aria-expanded="false"
                   aria-controls="popover-content-7"
-                >
-                  [?]
-                </span>
+                ></span>
               </div>
               <div className="text-black-50 dark:text-white-50">
-                0.000005 SOL
-              </div>
-            </div>
-            <div className="flex items-center justify-between text-xs">
-              <div className="text-black-50 dark:text-white-50">
-                Deposit{" "}
-                <span
-                  id="popover-trigger-141"
-                  aria-haspopup="dialog"
-                  aria-expanded="false"
-                  aria-controls="popover-content-141"
-                >
-                  [?]
-                </span>
-              </div>
-              <div className="text-black-50 dark:text-white-50 text-xs text-right">
-                <p>0.00203928 SOL for 1 ATA account</p>
+                {selected?.marketInfos[0].lpFee.pct
+                  ? selected?.marketInfos[0].lpFee.pct
+                  : 0}{" "}
+                SOL
               </div>
             </div>
           </div>
