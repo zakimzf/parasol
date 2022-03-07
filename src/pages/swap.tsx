@@ -41,8 +41,9 @@ const Swap = () => {
   const [isRoutePending, setRoutePending] = useState(false);
   const [swapStatus, setSwapStatus] = useState(false);
   const [swapResult, setSwapResult] = useState(false);
-  const [balanceAvailalbe, setBalanceAvailable] = useState(true);
+  const [balanceAvailable, setBalanceAvailable] = useState(true);
   const [showNotification, setShowNotification] = useState(false);
+  const [rate, setRate] = useState("0");
 
   const cluster: WalletAdapterNetwork = getWalletAdapterNetwork(
     process.env.NETWORK
@@ -82,6 +83,10 @@ const Swap = () => {
     setPending(isRoutePending);
   }, [isRoutePending]);
 
+  useEffect(() => {
+    isSwapAvailable();
+  }, [inputAmount, input]);
+
   const chosenInput = tokens.find((x) => x.address === input.toString());
   const chosenOutput = tokens.find((x) => x.address === output.toString());
 
@@ -118,11 +123,11 @@ const Swap = () => {
     }
 
     const amount = initialAmount * 10 ** (chosenInput?.decimals || 6);
-
     if (amount === 0) {
       setBalanceAvailable(true);
       setSwapStatus(false);
       setRoutes([]);
+      setRate("0");
       return;
     }
 
@@ -141,9 +146,13 @@ const Swap = () => {
       slippage: 1,
     });
 
-    if (computeRoutes.routesInfos.length > 0) setSwapStatus(true);
-    else {
+    if (computeRoutes.routesInfos.length > 0) {
+      setSwapStatus(true);
+      const rate = calcRate(computeRoutes.routesInfos);
+      setRate(rate);
+    } else {
       setSwapStatus(false);
+      setRate("0");
     }
 
     setRoutes([]);
@@ -151,13 +160,6 @@ const Swap = () => {
     setSelected(computeRoutes.routesInfos[0] || undefined);
 
     setRoutePending(false);
-
-    if (iBalance < inputAmount) {
-      setBalanceAvailable(false);
-      setSwapStatus(false);
-    } else {
-      setBalanceAvailable(true);
-    }
   };
 
   const startSwap = async () => {
@@ -352,14 +354,28 @@ const Swap = () => {
     }
   };
 
-  const calcRate = () => {
-    if (routes.length > 0)
+  const calcRate = (allRoutes: any) => {
+    if (allRoutes.length > 0) {
       return (
-        routes[0].outAmount /
-        10 ** (chosenOutput as any).decimals /
-        inputAmount
-      ).toFixed(6);
-    else return 0.0 + " ";
+        (
+          allRoutes[0].outAmount /
+          10 ** (chosenOutput as any).decimals /
+          inputAmount
+        ).toFixed(6) + " "
+      );
+    } else {
+      return 0.0 + " ";
+    }
+  };
+
+  const isSwapAvailable = () => {
+    if (iBalance < inputAmount) {
+      setBalanceAvailable(false);
+      setSwapStatus(false);
+    } else {
+      setBalanceAvailable(true);
+      setSwapStatus(true);
+    }
   };
 
   return (
@@ -404,7 +420,7 @@ const Swap = () => {
           </div>
           <div
             className={`flex justify-between items-stretch bg-white bg-opacity-5 rounded-xl px-4 py-3 ${
-              balanceAvailalbe ? "outline-hidden" : "outline outline-red-700"
+              balanceAvailable ? "outline-hidden" : "outline outline-red-700"
             }`}
           >
             {chosenInput && (
@@ -438,7 +454,7 @@ const Swap = () => {
               }
             />
           </div>
-          {!balanceAvailalbe ? (
+          {!balanceAvailable ? (
             <div className="text-center text-red-500 text-xs my-4">
               Your balance is not enough to swap this amount
             </div>
@@ -591,8 +607,7 @@ const Swap = () => {
               <div className="text-black-50 dark:text-white-50">Rate</div>
               <div className="flex cursor-pointer text-black-50 dark:text-white-50 text-xs align-center text-right">
                 <span className="min-w-[9.5rem] max-w-full whitespace-nowrap">
-                  {inputAmount == 0 ? 0 : 1} {chosenInput?.symbol} ≈{" "}
-                  {calcRate()}
+                  {rate == "0" ? 0 : 1} {chosenInput?.symbol} ≈ {rate}
                   {chosenOutput?.symbol}
                 </span>
               </div>
