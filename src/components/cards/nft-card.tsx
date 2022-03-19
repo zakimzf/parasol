@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/outline";
+import { addAbortSignal } from "stream";
 
 // const ParasolLogo = require('/public/images/logos/parasol-logo-mark-reverse-rgb.svg');
 
@@ -9,13 +10,16 @@ type NftDetails = {
   name: string,
   amount: number,
   vestingPeriod: number,
-  offset?: number
+  offset?: number,
+  index: number,
+  buyNFT: any
 }
 
-const NftCard = ({ name, amount, poster, video, vestingPeriod, offset }: NftDetails) => {
+const NftCard = ({ name, amount, poster, video, vestingPeriod, offset, index, buyNFT }: NftDetails) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const playVideo = () => videoRef.current && videoRef.current.play();
   const pauseVideo = () => videoRef.current && videoRef.current.pause();
+
   return <article
     onMouseOver={playVideo}
     onMouseOut={pauseVideo}
@@ -67,7 +71,7 @@ const NftCard = ({ name, amount, poster, video, vestingPeriod, offset }: NftDeta
             </p>
           </li>
         </ul>
-        <button className="flex gap-x-2 items-center justify-center w-full whitespace-nowrap bg-gradient-to-r from-purple-1 to-purple-2 font-medium rounded-md p-3 hover:bg-white hover:text-purple-2">
+        <button className="flex gap-x-2 items-center justify-center w-full whitespace-nowrap bg-gradient-to-r from-purple-1 to-purple-2 font-medium rounded-md p-3 hover:bg-white hover:text-purple-2" onClick={() => buyNFT(index)}>
           <ShoppingBagIcon className="h-5" />
           {/*<img className="h-4" src="/images/logos/parasol-logo-mark-reverse-rgb.svg" alt="psol" />*/}
           Buy NFT Access Key

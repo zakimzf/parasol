@@ -1,10 +1,40 @@
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
+import { Program, Provider } from "@project-serum/anchor";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 import Container from "../../components/container";
 import NftCard from "../../components/cards/nft-card";
+import { NftStore, ProgramAdapter, ProgramConfig, User } from "parasol-finance-sdk";
+import { PublicKey } from "@solana/web3.js";
 
 const Tiers = function () {
+  const { connection } = useConnection();
+  const { publicKey, sendTransaction } = useWallet();
+
+  const config: ProgramConfig = {
+    mint: new PublicKey(process.env.NEXT_PUBLIC_MINT as any),
+  }
+  
+  const provider = new Provider(connection, useWallet() as any, {
+    preflightCommitment: "confirmed",
+  });
+
+  const buyNFT = async (index: number) => {
+
+    const adapter = new ProgramAdapter(provider, config);
+    const nftStore = await new NftStore(adapter.config.mint).build();
+    const user = await new User(adapter.program.provider, nftStore).build();
+
+    try {
+      const tx = await user.purchase(adapter.program, 1);
+      let signature = await sendTransaction(tx, connection);
+      await connection.confirmTransaction(signature, "processed");
+    } catch (err) {
+    }
+  }
+
   return (
     <>
       <section>
@@ -43,14 +73,14 @@ const Tiers = function () {
       <section>
         <Container fluid={false}>
           <div className="grid grid-cols-4 gap-x-7">
-            <NftCard name="Dreamer" amount={210} poster="/images/tiers/covers/Dreamer.png"
-						         video="https://parasol.finance/_nuxt/videos/1.4914065.mp4" vestingPeriod={12}/>
-            <NftCard name="Rider" amount={2100} poster="/images/tiers/covers/Rider.png"
-						         video="https://parasol.finance/_nuxt/videos/2.b97bbf5.mp4" vestingPeriod={8}/>
-            <NftCard name="Chiller" amount={21000} poster="/images/tiers/covers/Chiller.png"
-						         video="https://parasol.finance/_nuxt/videos/3.7803a7c.mp4" vestingPeriod={6}/>
-            <NftCard name="MoonWalker" amount={210000} poster="/images/tiers/covers/MoonWalker.png"
-						         video="https://parasol.finance/_nuxt/videos/4.93829ce.mp4" vestingPeriod={4}/>
+            <NftCard name="Dreamer" amount={210} index={1} poster="/images/tiers/covers/Dreamer.png"
+						         video="https://parasol.finance/_nuxt/videos/1.4914065.mp4" vestingPeriod={12} buyNFT = {buyNFT}/>
+            <NftCard name="Rider" amount={2100} index={2} poster="/images/tiers/covers/Rider.png"
+						         video="https://parasol.finance/_nuxt/videos/2.b97bbf5.mp4" vestingPeriod={8} buyNFT = {buyNFT}/>
+            <NftCard name="Chiller" amount={21000} index={3} poster="/images/tiers/covers/Chiller.png"
+						         video="https://parasol.finance/_nuxt/videos/3.7803a7c.mp4" vestingPeriod={6} buyNFT = {buyNFT}/>
+            <NftCard name="MoonWalker" amount={210000} index={4} poster="/images/tiers/covers/MoonWalker.png"
+						         video="https://parasol.finance/_nuxt/videos/4.93829ce.mp4" vestingPeriod={4} buyNFT = {buyNFT}/>
           </div>
         </Container>
       </section>
