@@ -134,16 +134,16 @@ const Header = () => (
                       </div>
                       <div className="px-5 py-4 bg-[#2a2542] sm:px-8 sm:py-6">
                         <div className="flow-root">
-                          <a href="https://docs.parasol.finance/" target={"_blank"}
-                            className="flex items-center font-medium text-gray-200" rel="noreferrer">
-                            <FolderAddIcon className="h-6 w-6 text-purple-2" />
-                            <div className="ml-3">
-                              <p className="text-base font-medium text-white">Submit your
-                                Project</p>
-                              {/*<p className="mt-1 text-sm text-gray-300">You can launch your project in a few clicks</p>*/}
-                            </div>
-                            {/*<span className="ml-2">Submit Your Project?</span>*/}
-                          </a>
+                          <Link href={"/projects/submit"}>
+                            <a className="flex items-start font-medium text-gray-200" rel="noreferrer">
+                              <FolderAddIcon className="h-6 w-6 text-purple-2" />
+                              <div className="ml-3">
+                                <p className="text-base font-medium text-white">Submit Your
+                                  Project</p>
+                                <p className="mt-1 text-sm text-gray-300">You can launch your project in a few clicks</p>
+                              </div>
+                            </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
