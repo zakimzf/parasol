@@ -134,24 +134,14 @@ const NftCard = ({
             {connected ? (
               <>
                 <ShoppingBagIcon className="h-5" />
-                {/*<img className="h-4" src="/images/logos/parasol-logo-mark-reverse-rgb.svg" alt="psol" />*/}
                 Buy NFT Access Key
               </>
             ) : (
               <>Connect Wallet</>
             )}
           </button>
-          {/*<button className="bg-purple-2 rounded-lg w-full py-3">ds</button>*/}
         </div>
       </div>
-      {/*<div className="flex-1 flex flex-col justify-between px-6 gap-y-4">*/}
-      {/*	*/}
-      {/*	<div className="rounded-md shadow">*/}
-      {/*		/!*<OrderButton v-if="bonusLevel === 1" :name="name" :amount="price / 1.05"/>*!/*/}
-      {/*		/!*<OrderButton v-else-if="bonusLevel === 2" :name="name" :amount="price * 0.85"/>*!/*/}
-      {/*		/!*<OrderButton v-else :name="name" :amount="price"/>*!/*/}
-      {/*	</div>*/}
-      {/*</div>*/}
     </article>
   );
 };
