@@ -22,8 +22,6 @@ import {
 
 import CardHost from "../../components/cards/base-card";
 
-const people = [];
-
 const Migrate = () => {
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
@@ -181,7 +179,7 @@ const Migrate = () => {
             <div className={"prose prose-lg prose-invert"}>
               <Link href={"/tiers"}>
                 <a className="inline-flex gap-x-2 items-centertext-gray-200">
-                  No NFT access key. Please buy NFTs in this page
+                  No NFT Access Key. Please buy your NFT here.
                 </a>
               </Link>
             </div>

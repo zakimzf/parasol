@@ -159,6 +159,7 @@ const Tiers = function () {
                 video={t.video}
                 vestingPeriod={t.vestingPeriod}
                 buyNFT={buyNFT}
+                connected={wallet.connected}
               />
             ))}
           </div>

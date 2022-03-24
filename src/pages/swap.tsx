@@ -97,10 +97,10 @@ const Swap = () => {
   const getIOBalance = async () => {
     const [iResult, oResult] = await Promise.all([
       connection.getParsedTokenAccountsByOwner(wallet.publicKey as any, {
-        mint: input,
+        mint: input
       }),
       connection.getParsedTokenAccountsByOwner(wallet.publicKey as any, {
-        mint: output,
+        mint: output
       }),
     ]);
 
@@ -391,7 +391,7 @@ const Swap = () => {
     } else if (iBalance == inputAmount) {
       if (inputAmount === 0) {
         setSwapStatus(false);
-        setBalanceAvailable(false);
+        setBalanceAvailable(true);
       } else {
         setBalanceAvailable(true);
         setSwapStatus(true);
@@ -399,7 +399,7 @@ const Swap = () => {
     } else {
       if (inputAmount === 0) {
         setSwapStatus(false);
-        setBalanceAvailable(false);
+        setBalanceAvailable(true);
       } else {
         setSwapStatus(true);
         setBalanceAvailable(true);
