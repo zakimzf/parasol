@@ -1,8 +1,9 @@
-import {Fragment, useState} from "react"
+import {Fragment, useEffect, useState} from "react"
 import {Listbox, Transition} from "@headlessui/react"
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid"
 import Container from "../../components/container";
 import Heading from "../../components/heading";
+import axios from "axios";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -13,8 +14,10 @@ const SubmitProject = () => {
 
   const [values, setValues] = useState({
     splToken : "",
+    projectIcon: "",
     projectCover : "",
     projectName : "",
+    symbol: "",
     description : "",
     websiteUrl : "",
     whitepaperUrl : "",
@@ -24,7 +27,7 @@ const SubmitProject = () => {
     twitter : "",
     telegram : ""
   });
-
+  
   const handleChange = (e:any) => {
     let { name, value } = e.target
     
@@ -34,7 +37,32 @@ const SubmitProject = () => {
     
     setValues({...values, [name]: value})
   }
+
+  useEffect(() => {
+    const address = values.splToken;
+    if(address){
+      axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then((res)=>{
+        const {data} = res;
+        if(data){
+          const obj = values;
+          obj.projectName = data.name || "";
+          obj.symbol = data.symbol || "";
+          obj.projectIcon = data.icon || "";
+          obj.websiteUrl = data.website || "";
+          obj.twitter = data.twitter || "";
+          obj.telegram = data.telegram || "";
   
+          setValues((preValues) => ({...preValues, ...obj}));
+        }
+        
+      }).catch(error => {
+        console.log(error)
+      });
+    }
+  
+  }, [values.splToken])
+  
+  console.log(values)
   
   return (
     <section>
@@ -112,11 +140,23 @@ const SubmitProject = () => {
                   </p>
                 </div>
 
-                <div className="sm:col-span-6">
+                <div className="sm:col-span-4">
                   <label htmlFor="project-name" className="block text-sm font-medium text-blue-gray-900">
                     Project Name
                   </label>
                   <input onChange={handleChange} value={values.projectName}
+                    type="text"
+                    name="projectName"
+                    id="project-name"
+                    className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                  />
+                </div>
+
+                <div className="sm:col-span-2">
+                  <label htmlFor="project-name" className="block text-sm font-medium text-blue-gray-900">
+                    Symbol
+                  </label>
+                  <input onChange={handleChange} value={values.symbol}
                     type="text"
                     name="projectName"
                     id="project-name"
