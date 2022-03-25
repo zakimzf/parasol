@@ -84,7 +84,7 @@ const SubmitProject = () => {
 
                 <div className="sm:col-span-6">
                   <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
-                    Enter your Token Address
+                    Enter your Token Address <span className="text-red-500">*</span>
                   </label>
                   <input onChange={handleChange} value={values.splToken}
                     type="text"
@@ -104,7 +104,7 @@ const SubmitProject = () => {
 
                 <div className="sm:col-span-6">
                   <label htmlFor="project-cover" className="block text-sm font-medium text-blue-gray-900">
-                    Project Cover
+                    Project Cover <span className="text-red-500">*</span>
                   </label>
                   <div
                     className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">
@@ -143,7 +143,7 @@ const SubmitProject = () => {
 
                 <div className="sm:col-span-4">
                   <label htmlFor="project-name" className="block text-sm font-medium text-blue-gray-900">
-                    Project Name
+                    Project Name <span className="text-red-500">*</span>
                   </label>
                   <input onChange={handleChange} value={values.projectName}
                     type="text"
@@ -155,7 +155,7 @@ const SubmitProject = () => {
 
                 <div className="sm:col-span-2">
                   <label htmlFor="project-name" className="block text-sm font-medium text-blue-gray-900">
-                    Symbol
+                    Symbol <span className="text-red-500">*</span>
                   </label>
                   <input onChange={handleChange} value={values.symbol}
                     type="text"
@@ -167,7 +167,7 @@ const SubmitProject = () => {
 
                 <div className="sm:col-span-6">
                   <label htmlFor="description" className="block text-sm font-medium text-blue-gray-900">
-                    Short Description
+                    Short Description <span className="text-red-500">*</span>
                   </label>
                   <div className="mt-1">
                     <textarea onChange={handleChange} value={values.description}
@@ -185,7 +185,7 @@ const SubmitProject = () => {
 
                 <div className="sm:col-span-6">
                   <label htmlFor="website-url" className="block text-sm font-medium text-blue-gray-900">
-                    Website URL
+                    Website URL <span className="text-red-500">*</span>
                   </label>
                   <input onChange={handleChange} value={values.websiteUrl}
                     type="text"
