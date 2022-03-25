@@ -1,6 +1,9 @@
 import React, { FC, useEffect, useMemo } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import {
+  ConnectionProvider,
+  WalletProvider,
+} from "@solana/wallet-adapter-react";
 import {
   LedgerWalletAdapter,
   PhantomWalletAdapter,
@@ -13,7 +16,7 @@ import {
 import { clusterApiUrl } from "@solana/web3.js";
 import { AppProps } from "next/app";
 import Head from "next/head";
-import SimpleReactLightbox from "simple-react-lightbox"
+import SimpleReactLightbox from "simple-react-lightbox";
 
 import Header from "../components/header";
 import AnnounceBar from "../components/slices/announce-bar";
@@ -21,22 +24,25 @@ import Footer from "../components/footer";
 import { TokenModalProvider } from "../components/token-chooser/TokenModalProvider";
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
+import { NftProvider } from "../context/NftContext";
 
-import "../styles/globals.css"
+import "../styles/globals.css";
 
-const App: FC<AppProps> = ({Component, pageProps}) => {
-  const network: WalletAdapterNetwork = getWalletAdapterNetwork(process.env.NETWORK);
+const App: FC<AppProps> = ({ Component, pageProps }) => {
+  const network: WalletAdapterNetwork = getWalletAdapterNetwork(
+    process.env.NETWORK
+  );
 
   const endpoint = useMemo(() => clusterApiUrl(network), [network]);
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),
       new SlopeWalletAdapter(),
-      new SolflareWalletAdapter({network}),
+      new SolflareWalletAdapter({ network }),
       new TorusWalletAdapter(),
       new LedgerWalletAdapter(),
-      new SolletWalletAdapter({network}),
-      new SolletExtensionWalletAdapter({network}),
+      new SolletWalletAdapter({ network }),
+      new SolletExtensionWalletAdapter({ network }),
     ],
     [network]
   );
@@ -51,33 +57,40 @@ const App: FC<AppProps> = ({Component, pageProps}) => {
       d.getElementsByTagName("body")[0].appendChild(s);
     })();
   });
-  return <>
-    <Head>
-      <title>Parasol Finance ($PSOL) | Community Governed Launchpad on Solana</title>
-      <link rel="icon" href="/favicon.svg" type="image/svg"/>
-    </Head>
-    <body>
-      <ConnectionProvider endpoint={endpoint}>
-        <WalletProvider
-          wallets={wallets}
-          // onError={(messages) => alert(messages.error)}
-          autoConnect={true}>
-          <WalletModalProvider>
-            <AnnounceBar/>
-            <Header/>
-            <main role="main">
-              <SimpleReactLightbox>
-                <TokenModalProvider>
-                  <Component {...pageProps} />
-                </TokenModalProvider>
-              </SimpleReactLightbox>
-            </main>
-            <Footer/>
-          </WalletModalProvider>
-        </WalletProvider>
-      </ConnectionProvider>
-    </body>
-  </>;
+  return (
+    <>
+      <Head>
+        <title>
+          Parasol Finance ($PSOL) | Community Governed Launchpad on Solana
+        </title>
+        <link rel="icon" href="/favicon.svg" type="image/svg" />
+      </Head>
+      <body>
+        <NftProvider>
+          <ConnectionProvider endpoint={endpoint}>
+            <WalletProvider
+              wallets={wallets}
+              // onError={(messages) => alert(messages.error)}
+              autoConnect={true}
+            >
+              <WalletModalProvider>
+                <AnnounceBar />
+                <Header />
+                <main role="main">
+                  <SimpleReactLightbox>
+                    <TokenModalProvider>
+                      <Component {...pageProps} />
+                    </TokenModalProvider>
+                  </SimpleReactLightbox>
+                </main>
+                <Footer />
+              </WalletModalProvider>
+            </WalletProvider>
+          </ConnectionProvider>
+        </NftProvider>
+      </body>
+    </>
+  );
 };
 
 export default App;

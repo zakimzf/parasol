@@ -1,9 +1,9 @@
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
 export enum CLUSTERS {
-    Dev = "dev",
-    Main = "main",
-    Test = "test",
+    Dev = "devnet",
+    Main = "mainnet",
+    Test = "testnet",
 }
 
 export const getWalletAdapterNetwork = (networkName: String|undefined): WalletAdapterNetwork => {
