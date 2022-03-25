@@ -8,13 +8,8 @@ import Container from "../../components/container";
 import NftCard from "../../components/cards/nft-card";
 import Notification from "../../components/slices/notification";
 
-import {
-  NftStore,
-  ProgramAdapter,
-  ProgramConfig,
-  User,
-} from "parasol-finance-sdk";
-import { Keypair, MAX_SEED_LENGTH, PublicKey } from "@solana/web3.js";
+import {NftStore, ProgramAdapter, ProgramConfig, User,} from "@parasol-finance/parasol-finance-sdk";
+import {Keypair, PublicKey} from "@solana/web3.js";
 
 const Tiers = function () {
   const { connection } = useConnection();
