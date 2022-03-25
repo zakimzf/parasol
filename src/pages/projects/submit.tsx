@@ -358,7 +358,7 @@ const SubmitProject = () => {
               <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
                 <div className={"relative px-6 pt-6 pb-6"}>
                   <h2 className="flex gap-x-2 items-center text-2xl font-bold">
-                    {!values.projectName.trim() && "[Project Name]" || values.projectName}
+                    {!values.projectName.trim() && "Project Name" || values.projectName}
                   </h2>
                   <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
                     <img className="h-8"
@@ -374,7 +374,7 @@ const SubmitProject = () => {
                     </div>
                   </div>
                   <div className="prose prose-lg prose-invert">
-                    <p>{!values.description.trim() && "[Project Description]" || values.description}</p>
+                    <p>{!values.description.trim() && "Project Description" || values.description}</p>
                   </div>
                   <div className="flex-col space-y-3 mt-6">
                     <div className="flex font-medium items-center text-gray-300 gap-x-3">
