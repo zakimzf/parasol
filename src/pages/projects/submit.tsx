@@ -9,7 +9,33 @@ const exchanges = [
 ]
 
 const SubmitProject = () => {
-  const [selected, setSelected] = useState(exchanges[0])
+  // const [selected, setSelected] = useState(exchanges[0])
+
+  const [values, setValues] = useState({
+    splToken : "",
+    projectCover : "",
+    projectName : "",
+    description : "",
+    websiteUrl : "",
+    whitepaperUrl : "",
+    selected: exchanges[0],
+    tokenPrice : "",
+    hardCap : "",
+    twitter : "",
+    telegram : ""
+  });
+
+  const handleChange = (e:any) => {
+    let { name, value } = e.target
+    
+    if(name == "projectCover"){
+      //conver image to base64
+    }
+    
+    setValues({...values, [name]: value})
+  }
+  
+  
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
@@ -31,9 +57,9 @@ const SubmitProject = () => {
                   <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
                     Enter your Token Address
                   </label>
-                  <input
+                  <input onChange={handleChange} value={values.splToken}
                     type="text"
-                    name="token-address"
+                    name="splToken"
                     id="token-address"
                     placeholder={"SPL Token Address"}
                     pattern={"[A-Za-z0-9]*"}
@@ -74,7 +100,7 @@ const SubmitProject = () => {
                           className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
                         >
                           <span>Upload a file</span>
-                          <input id="file-upload" name="file-upload" type="file" className="sr-only"/>
+                          <input onChange={handleChange} value={values.projectCover} id="file-upload" name="projectCover" type="file" className="sr-only"/>
                         </label>
                         <p className="pl-1">or drag and drop</p>
                       </div>
@@ -90,9 +116,9 @@ const SubmitProject = () => {
                   <label htmlFor="project-name" className="block text-sm font-medium text-blue-gray-900">
                     Project Name
                   </label>
-                  <input
+                  <input onChange={handleChange} value={values.projectName}
                     type="text"
-                    name="project-name"
+                    name="projectName"
                     id="project-name"
                     className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                   />
@@ -103,7 +129,7 @@ const SubmitProject = () => {
                     Short Description
                   </label>
                   <div className="mt-1">
-                    <textarea
+                    <textarea onChange={handleChange} value={values.description}
                       id="description"
                       name="description"
                       rows={4}
@@ -120,9 +146,9 @@ const SubmitProject = () => {
                   <label htmlFor="website-url" className="block text-sm font-medium text-blue-gray-900">
                     Website URL
                   </label>
-                  <input
+                  <input onChange={handleChange} value={values.websiteUrl}
                     type="text"
-                    name="website-url"
+                    name="websiteUrl"
                     id="website-url"
                     className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                   />
@@ -132,9 +158,9 @@ const SubmitProject = () => {
                   <label htmlFor="white-paper" className="block text-sm font-medium text-blue-gray-900">
                     WhitePaper URL
                   </label>
-                  <input
+                  <input onChange={handleChange} value={values.whitepaperUrl}
                     type="text"
-                    name="white-paper"
+                    name="whitepaperUrl"
                     id="white-paper"
                     className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                   />
@@ -151,14 +177,14 @@ const SubmitProject = () => {
                 </div>
 
                 <div className="sm:col-span-6">
-                  <Listbox value={selected} onChange={setSelected}>
+                  <Listbox value={values.selected} onChange={handleChange}>
                     {({open}) => (
                       <>
                         <Listbox.Label className="block text-sm font-medium text-blue-gray-900">Select your Target AMM (Dex):</Listbox.Label>
                         <div className="mt-1 relative">
                           <Listbox.Button
                             className="w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg px-3 py-2 text-left cursor-default">
-                            <span className="block truncate">{selected.name}</span>
+                            <span className="block truncate">{values.selected.name}</span>
                             <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                               <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true"/>
                             </span>
@@ -210,9 +236,9 @@ const SubmitProject = () => {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <span className="text-gray-200 sm:text-sm">$</span>
                     </div>
-                    <input
+                    <input onChange={handleChange} value={values.tokenPrice}
                       type="number"
-                      name="token-price"
+                      name="tokenPrice"
                       id="token-price"
                       className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                       placeholder="0.00"
@@ -234,9 +260,9 @@ const SubmitProject = () => {
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                       <span className="text-gray-200 sm:text-sm">$</span>
                     </div>
-                    <input
+                    <input onChange={handleChange} value={values.hardCap}
                       type="number"
-                      name="hard-cap"
+                      name="hardCap"
                       id="hard-cap"
                       className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                       placeholder="0.00"
@@ -263,7 +289,7 @@ const SubmitProject = () => {
                   <label htmlFor="twitter" className="block text-sm font-medium text-blue-gray-900">
                     Twitter
                   </label>
-                  <input
+                  <input onChange={handleChange} value={values.twitter}
                     type="text"
                     name="twitter"
                     id="twitter"
@@ -275,7 +301,7 @@ const SubmitProject = () => {
                   <label htmlFor="telegram" className="block text-sm font-medium text-blue-gray-900">
                     Telegram
                   </label>
-                  <input
+                  <input onChange={handleChange} value={values.telegram}
                     type="text"
                     name="telegram"
                     id="telegram"
@@ -291,30 +317,30 @@ const SubmitProject = () => {
               <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
                 <div className={"relative px-6 pt-6 pb-6"}>
                   <h2 className="flex gap-x-2 items-center text-2xl font-bold">
-                    [Project Name]
+                    {!values.projectName.trim() && "[Project Name]" || values.projectName}
                   </h2>
                   <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
                     <img className="h-8"
                       src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
                       alt="USDC"/>
                     <div className="flex items-end gap-x-2 text-4xl font-bold">
-                      500,000
+                      {!values.hardCap && "0" || values.hardCap}
                       <span>USDC</span>
                     </div>
                   </div>
                   <div className="prose prose-lg prose-invert">
-                    <p>[Project Description]</p>
+                    <p>{!values.description.trim() && "[Project Description]" || values.description}</p>
                   </div>
                   <div className="flex-col space-y-3 mt-6">
                     <div className="flex font-medium items-center text-gray-300 gap-x-3">
                       <span>Hard Cap</span>
                       <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
-                      <span>$500,000</span>
+                      <span>${!values.hardCap && "0" || values.hardCap}</span>
                     </div>
                     <div className="flex font-medium items-center text-gray-300 gap-x-3">
                       <span>Price per Token</span>
                       <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
-                      <span>$0.21</span>
+                      <span>${!values.tokenPrice && "0" || values.tokenPrice}</span>
                     </div>
                   </div>
                   <button
