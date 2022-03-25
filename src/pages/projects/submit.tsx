@@ -3,7 +3,9 @@ import {Listbox, Transition} from "@headlessui/react"
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid"
 import Container from "../../components/container";
 import Heading from "../../components/heading";
+import NumberFormat from "react-number-format";
 import axios from "axios";
+
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -56,13 +58,12 @@ const SubmitProject = () => {
         }
         
       }).catch(error => {
-        console.log(error)
+        // console.log(error)
       });
     }
   
   }, [values.splToken])
   
-  console.log(values)
   
   return (
     <section>
@@ -363,8 +364,12 @@ const SubmitProject = () => {
                     <img className="h-8"
                       src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
                       alt="USDC"/>
-                    <div className="flex items-end gap-x-2 text-4xl font-bold">
-                      {!values.hardCap && "0" || values.hardCap}
+                    <div className="flex items-end gap-x-2 text-4xl font-bold">                      
+                      <NumberFormat
+                        value={!values.hardCap && "0" || values.hardCap}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                      />
                       <span>USDC</span>
                     </div>
                   </div>
@@ -375,12 +380,27 @@ const SubmitProject = () => {
                     <div className="flex font-medium items-center text-gray-300 gap-x-3">
                       <span>Hard Cap</span>
                       <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
-                      <span>${!values.hardCap && "0" || values.hardCap}</span>
+                      <span>
+                        <NumberFormat
+                          value={!values.hardCap && "0" || values.hardCap}
+                          className="foo"
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
+                      </span>
                     </div>
                     <div className="flex font-medium items-center text-gray-300 gap-x-3">
                       <span>Price per Token</span>
                       <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
-                      <span>${!values.tokenPrice && "0" || values.tokenPrice}</span>
+                      <span>                      
+                        <NumberFormat
+                          value={!values.tokenPrice && "0" || values.tokenPrice}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
+                      </span>
                     </div>
                   </div>
                   <button
