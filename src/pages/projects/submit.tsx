@@ -187,7 +187,7 @@ const SubmitProject = () => {
                       Project Cover <span className="text-purple-2">*</span>
                     </label>
                     <div
-                      className="mt-1 border-2 border-gray-300 border-dashed rounded-md px-6 pt-5 pb-6 flex justify-center">
+                      className="mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 pt-5 pb-6 flex justify-center">
                       <div className="space-y-1 text-center">
                         <svg
                           className="mx-auto h-12 w-12 text-gray-400"
