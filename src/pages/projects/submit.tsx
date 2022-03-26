@@ -7,6 +7,7 @@ import NumberFormat from "react-number-format";
 import axios from "axios";
 import {CheckCircleIcon} from "@heroicons/react/outline";
 import { db } from "../../utils/firebase";
+import { getBase64 } from "../../utils/functions";
 import {
   collection,
   addDoc,
@@ -47,17 +48,22 @@ const SubmitProject = () => {
     telegram : ""
   });
   
-  const handleChange = (e:any) => {
+  const handleChange = async(e:any) => {
     let { name, value } = e.target
     
     if(name == "projectCover"){
-      let cover = e.target.files[0];
-      console.log(cover)
+      let file = e.target.files[0];
+
+      await getBase64(file, ( result:any ) => {
+        setValues({...values, [name]: result})
+      })
+    }else{
+      setValues({...values, [name]: value})
     }
     
-    setValues({...values, [name]: value})
+    
   }
-
+  console.log(values)
   useEffect(() => {
     const address = values.splToken;
     if(address){
@@ -157,7 +163,7 @@ const SubmitProject = () => {
                             className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
                           >
                             <span>Upload a file</span>
-                            <input onChange={handleChange} value={values.projectCover} id="file-upload" name="projectCover" type="file" className="sr-only"/>
+                            <input onChange={handleChange} id="file-upload" name="projectCover" type="file" className="sr-only"/>
                           </label>
                           <p className="pl-1">or drag and drop</p>
                         </div>
@@ -198,13 +204,15 @@ const SubmitProject = () => {
                       Short Description <span className="text-purple-2">*</span>
                     </label>
                     <div className="mt-1">
-                      <textarea onChange={handleChange} value={values.description}
+                      <textarea onChange={handleChange}
                         id="description"
                         name="description"
                         rows={4}
                         className="block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
-                        defaultValue={""}
-                      />
+                        value={values.description}
+                      >
+                        
+                      </textarea>
                     </div>
                     <p className="mt-3 text-sm text-blue-gray-500">
                       Brief description of your project, no HTML or Markdown accepted.
