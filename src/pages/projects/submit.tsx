@@ -341,7 +341,7 @@ const SubmitProject = () => {
                                 {exchanges.map((dex) => (
                                   <Listbox.Option
                                     key={dex.id}
-                                    className={({active}) => `${active ? "text-white bg-indigo-600" : "text-gray-900"} cursor-default select-none relative py-2 pl-3 pr-9`}
+                                    className={({active}) => `${active ? "text-white bg-purple-2" : "text-gray-900"} cursor-default select-none relative py-2 pl-3 pr-9`}
                                     value={dex}
                                   >
                                     {({selected, active}) => (
