@@ -5,15 +5,14 @@ import Container from "../../components/container";
 import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
 import axios from "axios";
-import {CheckCircleIcon} from "@heroicons/react/outline";
+import {CheckCircleIcon, ExclamationCircleIcon} from "@heroicons/react/outline";
 import { db } from "../../utils/firebase";
-import { getBase64 } from "../../utils/functions";
+import { getBase64, validURL } from "../../utils/functions";
 import {
   collection,
   addDoc,
 } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { Errors } from "@jup-ag/react-hook";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -53,16 +52,62 @@ const SubmitProject = () => {
   const errClasses = ["border-red-600", "text-red-600", "placeholder-red-600", "focus:outline-none", "focus:ring-red-600", "border-2", "focus:border-red-600", "sm:text-sm", "rounded-md"];
   
   const handleChange = async(e:any) => {
-    let { name, value } = e.target
-    e.target.classList.remove("border-red-600")
+    let { name, value, classList } = e.target
+    classList.remove(...errClasses);
+    errors[name] = "";
     if(name == "projectCover"){
       let file = e.target.files[0];
       await getBase64(file, ( result:any ) => {
         setValues({...values, [name]: result})
       })
     }else{
+
+      if(classList.contains("required_") && !value.trim()) {
+        classList.add(...errClasses);
+        errors[name] = "This field is required";
+      }
+
+      if(classList.contains("url_") && value.trim() && !validURL(value)){
+        classList.add(...errClasses);
+        errors[name] = "Please enter a valid url";
+      }
+
       setValues({...values, [name]: value})
     }
+  }
+
+  const handleSubmit = async(e: { preventDefault: () => void; })=>{
+    e.preventDefault();
+    await validateAllFields();
+    if(base58){
+      values.publicKey = base58;
+      await addDoc(idosCollectionRef, values);
+    }else{
+      console.log("please connect your wallet");
+    }
+  }
+
+  const validateAllFields = ()=>{
+    let elements:any = document.getElementsByClassName("required_");
+    const _errors = [];
+    for(let el of elements){
+      const {name, value} = el;
+      if(!value.trim()){
+        _errors[name] = "This field is required";
+        el.classList.add(...errClasses);
+      }else el.classList.remove(...errClasses);
+    }
+
+    elements = document.getElementsByClassName("url_");
+    for(let el of elements){
+      const {name, value} = el;
+      if(value.trim() && !validURL(value)){
+        _errors[name] = "Please enter a valid url";
+        el.classList.add(...errClasses);
+      }
+    }
+
+    setErrors(_errors);
   }
   
   useEffect(() => {
@@ -89,31 +134,6 @@ const SubmitProject = () => {
   
   }, [values.splToken]);
 
-  const handleSubmit = async(e: { preventDefault: () => void; })=>{
-    e.preventDefault();
-    console.log("click")
-    // if(base58){
-    //   values.publicKey = base58;
-    //   await addDoc(idosCollectionRef, values);
-    // }
-    validateAllFields();
-  }
-
-  const validateAllFields = ()=>{
-    let elements:any = document.getElementsByClassName("required_");
-    const _errors = [];
-    for(let el of elements){
-      const {name, value} = el;
-      if(!value.trim()){
-        _errors[name] = "This field is required";
-        el.classList.add(...errClasses);
-      }else el.classList.remove(...errClasses);
-    }
-
-    elements = document.getElementsByClassName("required_");
-    setErrors(_errors);
-  }
-  
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
@@ -132,7 +152,7 @@ const SubmitProject = () => {
                     </p>
                   </div>
 
-                  <div className="sm:col-span-6">
+                  <div className="sm:col-span-6 relative">
                     <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
                       Enter your Token Address <span className="text-purple-2">*</span>
                     </label>
@@ -143,9 +163,13 @@ const SubmitProject = () => {
                       placeholder={"SPL Token Address"}
                       pattern={"[A-Za-z0-9]*"}
                       className={"mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"}
+                      defaultValue="adamwathan"
+                      aria-invalid="true"
                     />
                     
-                    {errors.splToken && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div> }
+                    {errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></> }
                    
                   </div>
 
@@ -184,21 +208,22 @@ const SubmitProject = () => {
                             className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
                           >
                             <span>Upload a file</span>
-                            <input onChange={handleChange} id="file-upload" name="projectCover" type="file" className="sr-only required_" />
+                            <input onChange={handleChange} id="file-upload" name="projectCover" type="file" className="sr-only" />
                           </label>
                           <p className="pl-1">or drag and drop</p>
                         </div>
                         <p className="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
                       </div>
                       
-                      {errors.projectName && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectName}</div> }
                     </div>
+                    
+                    {errors.projectCover && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectCover}</div> }
                     <p className="mt-3 text-sm text-blue-gray-500">
                       We need a cover in the following format: 1920x1080px.
                     </p>
                   </div>
 
-                  <div className="sm:col-span-4">
+                  <div className="sm:col-span-4 relative">
                     <label htmlFor="project-name" className="block text-sm font-medium text-blue-gray-900">
                       Project Name <span className="text-purple-2">*</span>
                     </label>
@@ -208,10 +233,12 @@ const SubmitProject = () => {
                       id="project-name"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
-                    {errors.projectName && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectName}</div> }
+                    {errors.projectName && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectName}</div></> }
                   </div>
 
-                  <div className="sm:col-span-2">
+                  <div className="sm:col-span-2 relative">
                     <label htmlFor="project-name" className="block text-sm font-medium text-blue-gray-900">
                       Symbol <span className="text-purple-2">*</span>
                     </label>
@@ -221,10 +248,12 @@ const SubmitProject = () => {
                       id="project-name"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
-                    {errors.symbol && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.symbol}</div> }
+                    {errors.symbol && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.symbol}</div></> }
                   </div>
 
-                  <div className="sm:col-span-6">
+                  <div className="sm:col-span-6 relative">
                     <label htmlFor="description" className="block text-sm font-medium text-blue-gray-900">
                       Short Description <span className="text-purple-2">*</span>
                     </label>
@@ -237,14 +266,16 @@ const SubmitProject = () => {
                         value={values.description}
                       >
                       </textarea>
-                      {errors.description && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.description}</div> }
+                      {errors.description && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.description}</div></> }
                     </div>
                     <p className="mt-3 text-sm text-blue-gray-500">
                       Brief description of your project, no HTML or Markdown accepted.
                     </p>
                   </div>
 
-                  <div className="sm:col-span-6">
+                  <div className="sm:col-span-6 relative">
                     <label htmlFor="website-url" className="block text-sm font-medium text-blue-gray-900">
                       Website URL <span className="text-purple-2">*</span>
                     </label>
@@ -252,12 +283,14 @@ const SubmitProject = () => {
                       type="text"
                       name="websiteUrl"
                       id="website-url"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ url_"
                     />
-                    {errors.websiteUrl && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.websiteUrl}</div> }
+                    {errors.websiteUrl && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.websiteUrl}</div></> }
                   </div>
 
-                  <div className="sm:col-span-6">
+                  <div className="sm:col-span-6 relative">
                     <label htmlFor="white-paper" className="block text-sm font-medium text-blue-gray-900">
                       WhitePaper URL
                     </label>
@@ -265,9 +298,11 @@ const SubmitProject = () => {
                       type="text"
                       name="whitepaperUrl"
                       id="white-paper"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
                     />
-                    {errors.whitepaperUrl && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.whitepaperUrl}</div> }
+                    {errors.whitepaperUrl && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.whitepaperUrl}</div></> }
                   </div>
                 </div>
 
@@ -280,7 +315,7 @@ const SubmitProject = () => {
                     </p>
                   </div>
 
-                  <div className="sm:col-span-6">
+                  <div className="sm:col-span-6 relative">
                     <Listbox value={values.dex} onChange={handleChange}>
                       {({open}) => (
                         <>
@@ -331,10 +366,12 @@ const SubmitProject = () => {
                       )}
                     </Listbox>
                     
-                    {errors.dex && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.dex}</div> }
+                    {errors.dex && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.dex}</div></> }
                   </div>
 
-                  <div className={"sm:col-span-3"}>
+                  <div className={"sm:col-span-3 relative"}>
                     <label htmlFor="token-price" className="block text-sm font-medium text-blue-gray-900">
                       Token Price
                     </label>
@@ -358,10 +395,12 @@ const SubmitProject = () => {
                       </div>
                     </div>
                     
-                    {errors.tokenPrice && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenPrice}</div> }
+                    {errors.tokenPrice && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenPrice}</div></> }
                   </div>
 
-                  <div className={"sm:col-span-3"}>
+                  <div className={"sm:col-span-3 relative"}>
                     <label htmlFor="hard-cap" className="block text-sm font-medium text-blue-gray-900">
                       Hard Cap
                     </label>
@@ -384,7 +423,9 @@ const SubmitProject = () => {
                       </div>
                     </div>
                     
-                    {errors.hardCap && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.hardCap}</div> }
+                    {errors.hardCap && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.hardCap}</div></> }
                   </div>
                 </div>
 
@@ -396,7 +437,7 @@ const SubmitProject = () => {
                     </p>
                   </div>
 
-                  <div className="sm:col-span-3">
+                  <div className="sm:col-span-3 relative">
                     <label htmlFor="twitter" className="block text-sm font-medium text-blue-gray-900">
                       Twitter
                     </label>
@@ -404,12 +445,14 @@ const SubmitProject = () => {
                       type="text"
                       name="twitter"
                       id="twitter"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
                     />
-                    {errors.twitter && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.twitter}</div> }
+                    {errors.twitter && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.twitter}</div></> }
                   </div>
 
-                  <div className="sm:col-span-3">
+                  <div className="sm:col-span-3 relative">
                     <label htmlFor="telegram" className="block text-sm font-medium text-blue-gray-900">
                       Telegram
                     </label>
@@ -417,9 +460,11 @@ const SubmitProject = () => {
                       type="text"
                       name="telegram"
                       id="telegram"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
                     />
-                    {errors.telegram && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div> }
+                    {errors.telegram && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div></> }
                   </div>
                 </div>
 
