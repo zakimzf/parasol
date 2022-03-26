@@ -13,6 +13,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { Errors } from "@jup-ag/react-hook";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -24,8 +25,6 @@ const packages = [
 ];
 
 const SubmitProject = () => {
-  // const [selectedPackage, setSelectedPackage] = useState(packages[0])
-
   const { publicKey } = useWallet();
   const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
@@ -48,9 +47,14 @@ const SubmitProject = () => {
     telegram : "",
     package: packages[0]
   });
+
+  const [errors, setErrors] = useState<any>([]);
+
+  const errClasses = ["border-red-600", "text-red-600", "placeholder-red-600", "focus:outline-none", "focus:ring-red-600", "border-2", "focus:border-red-600", "sm:text-sm", "rounded-md"];
   
   const handleChange = async(e:any) => {
     let { name, value } = e.target
+    e.target.classList.remove("border-red-600")
     if(name == "projectCover"){
       let file = e.target.files[0];
       await getBase64(file, ( result:any ) => {
@@ -60,7 +64,7 @@ const SubmitProject = () => {
       setValues({...values, [name]: value})
     }
   }
-  console.log(values)
+  
   useEffect(() => {
     const address = values.splToken;
     if(address){
@@ -87,13 +91,28 @@ const SubmitProject = () => {
 
   const handleSubmit = async(e: { preventDefault: () => void; })=>{
     e.preventDefault();
-    if(base58){
-      values.publicKey = base58;
-      await addDoc(idosCollectionRef, values);
-    }
-    console.log(4444444, base58)
+    console.log("click")
+    // if(base58){
+    //   values.publicKey = base58;
+    //   await addDoc(idosCollectionRef, values);
+    // }
+    validateAllFields();
   }
-  
+
+  const validateAllFields = ()=>{
+    let elements:any = document.getElementsByClassName("required_");
+    const _errors = [];
+    for(let el of elements){
+      const {name, value} = el;
+      if(!value.trim()){
+        _errors[name] = "This field is required";
+        el.classList.add(...errClasses);
+      }else el.classList.remove(...errClasses);
+    }
+
+    elements = document.getElementsByClassName("required_");
+    setErrors(_errors);
+  }
   
   return (
     <section>
@@ -123,10 +142,14 @@ const SubmitProject = () => {
                       id="token-address"
                       placeholder={"SPL Token Address"}
                       pattern={"[A-Za-z0-9]*"}
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
-                      required={true}
+                      className={"mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"}
                     />
+                    
+                    {errors.splToken && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div> }
+                   
                   </div>
+
+                  
                   <p className="text-sm text-blue-gray-500 sm:col-span-6">
                     The token information will be fetched from the Solana blockchain.
                   </p>
@@ -161,12 +184,14 @@ const SubmitProject = () => {
                             className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
                           >
                             <span>Upload a file</span>
-                            <input onChange={handleChange} id="file-upload" name="projectCover" type="file" className="sr-only"/>
+                            <input onChange={handleChange} id="file-upload" name="projectCover" type="file" className="sr-only required_" />
                           </label>
                           <p className="pl-1">or drag and drop</p>
                         </div>
                         <p className="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
                       </div>
+                      
+                      {errors.projectName && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectName}</div> }
                     </div>
                     <p className="mt-3 text-sm text-blue-gray-500">
                       We need a cover in the following format: 1920x1080px.
@@ -181,8 +206,9 @@ const SubmitProject = () => {
                       type="text"
                       name="projectName"
                       id="project-name"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
+                    {errors.projectName && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectName}</div> }
                   </div>
 
                   <div className="sm:col-span-2">
@@ -191,10 +217,11 @@ const SubmitProject = () => {
                     </label>
                     <input onChange={handleChange} value={values.symbol}
                       type="text"
-                      name="projectName"
+                      name="symbol"
                       id="project-name"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
+                    {errors.symbol && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.symbol}</div> }
                   </div>
 
                   <div className="sm:col-span-6">
@@ -206,11 +233,11 @@ const SubmitProject = () => {
                         id="description"
                         name="description"
                         rows={4}
-                        className="block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                        className="block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                         value={values.description}
                       >
-                        
                       </textarea>
+                      {errors.description && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.description}</div> }
                     </div>
                     <p className="mt-3 text-sm text-blue-gray-500">
                       Brief description of your project, no HTML or Markdown accepted.
@@ -225,8 +252,9 @@ const SubmitProject = () => {
                       type="text"
                       name="websiteUrl"
                       id="website-url"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
+                    {errors.websiteUrl && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.websiteUrl}</div> }
                   </div>
 
                   <div className="sm:col-span-6">
@@ -239,6 +267,7 @@ const SubmitProject = () => {
                       id="white-paper"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                     />
+                    {errors.whitepaperUrl && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.whitepaperUrl}</div> }
                   </div>
                 </div>
 
@@ -301,6 +330,8 @@ const SubmitProject = () => {
                         </>
                       )}
                     </Listbox>
+                    
+                    {errors.dex && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.dex}</div> }
                   </div>
 
                   <div className={"sm:col-span-3"}>
@@ -326,6 +357,8 @@ const SubmitProject = () => {
                         </span>
                       </div>
                     </div>
+                    
+                    {errors.tokenPrice && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenPrice}</div> }
                   </div>
 
                   <div className={"sm:col-span-3"}>
@@ -350,6 +383,8 @@ const SubmitProject = () => {
                         </span>
                       </div>
                     </div>
+                    
+                    {errors.hardCap && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.hardCap}</div> }
                   </div>
                 </div>
 
@@ -371,6 +406,7 @@ const SubmitProject = () => {
                       id="twitter"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                     />
+                    {errors.twitter && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.twitter}</div> }
                   </div>
 
                   <div className="sm:col-span-3">
@@ -383,6 +419,7 @@ const SubmitProject = () => {
                       id="telegram"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                     />
+                    {errors.telegram && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div> }
                   </div>
                 </div>
 
