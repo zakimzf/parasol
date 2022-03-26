@@ -24,7 +24,7 @@ const packages = [
 ];
 
 const SubmitProject = () => {
-  const [selectedPackage, setSelectedPackage] = useState(packages[0])
+  // const [selectedPackage, setSelectedPackage] = useState(packages[0])
 
   const { publicKey } = useWallet();
   const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
@@ -45,23 +45,20 @@ const SubmitProject = () => {
     tokenPrice : "",
     hardCap : "",
     twitter : "",
-    telegram : ""
+    telegram : "",
+    package: packages[0]
   });
   
   const handleChange = async(e:any) => {
     let { name, value } = e.target
-    
     if(name == "projectCover"){
       let file = e.target.files[0];
-
       await getBase64(file, ( result:any ) => {
         setValues({...values, [name]: result})
       })
     }else{
       setValues({...values, [name]: value})
     }
-    
-    
   }
   console.log(values)
   useEffect(() => {
@@ -94,6 +91,7 @@ const SubmitProject = () => {
       values.publicKey = base58;
       await addDoc(idosCollectionRef, values);
     }
+    console.log(4444444, base58)
   }
   
   
@@ -319,6 +317,7 @@ const SubmitProject = () => {
                         id="token-price"
                         className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                         placeholder="0.00"
+                        min="0.01"
                       />
                       <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
@@ -395,7 +394,10 @@ const SubmitProject = () => {
                     </p>
                   </div>
                   <div className="sm:col-span-5">
-                    <RadioGroup value={selectedPackage} onChange={setSelectedPackage}>
+                    <RadioGroup 
+                      value={values.package} 
+                      onChange={(pac)=>{setValues({...values, ["package"]: pac})}}
+                    >
                       <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
                       <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
                         {packages.map((size) => (
