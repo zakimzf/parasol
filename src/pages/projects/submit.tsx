@@ -579,6 +579,9 @@ const SubmitProject = () => {
                         </span>
                       </div>
                     </div>
+                    <p className={"text-sm text-gray-400 mt-6"}>
+                      Find more information on the listing process by consulting our documentation <a href={"https://docs.parasol.finance/"} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a>.
+                    </p>
                     <button
                       className={"w-full mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
                       type="submit"
