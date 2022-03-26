@@ -13,6 +13,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
+import TextareaAutosize from "react-textarea-autosize";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -258,14 +259,14 @@ const SubmitProject = () => {
                       Short Description <span className="text-purple-2">*</span>
                     </label>
                     <div className="mt-1">
-                      <textarea onChange={handleChange}
+                      <TextareaAutosize onChange={handleChange}
                         id="description"
                         name="description"
-                        rows={4}
+                        minRows={4}
                         className="block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                         value={values.description}
                       >
-                      </textarea>
+                      </TextareaAutosize>
                       {errors.description && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                       </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.description}</div></> }
