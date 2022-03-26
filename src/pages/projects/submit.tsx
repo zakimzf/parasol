@@ -1,11 +1,11 @@
 import React, { useEffect, useState, Fragment, useMemo } from "react";
-
-import {Listbox, Transition} from "@headlessui/react"
+import {Listbox, RadioGroup, Transition} from "@headlessui/react"
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid"
 import Container from "../../components/container";
 import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
 import axios from "axios";
+import {CheckCircleIcon} from "@heroicons/react/outline";
 import { db } from "../../utils/firebase";
 import {
   collection,
@@ -17,7 +17,13 @@ const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
 ]
 
+const packages = [
+  { name: "Basic", description: "Listing only without Ads.", price: 2100 },
+  { name: "Ultimate", description: "Listing and promotion.", price: 5000 }
+];
+
 const SubmitProject = () => {
+  const [selectedPackage, setSelectedPackage] = useState(packages[0])
 
   const { publicKey } = useWallet();
   const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
@@ -373,6 +379,61 @@ const SubmitProject = () => {
                   </div>
                 </div>
 
+                <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
+                  <div className="sm:col-span-6">
+                    <h2 className="text-xl font-medium text-blue-gray-900">4. Choose Pricing</h2>
+                    <p className="mt-1 text-sm text-blue-gray-500">
+                      Choose the package that best suits your needs, you can read more regarding this pricing <a href={""} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a> .
+                    </p>
+                  </div>
+                  <div className="sm:col-span-5">
+                    <RadioGroup value={selectedPackage} onChange={setSelectedPackage}>
+                      <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
+                      <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                        {packages.map((size) => (
+                          <RadioGroup.Option
+                            as="div"
+                            key={size.name}
+                            value={size}
+                            className={({ active }) => "relative border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none"}
+                          >
+                            {({ active, checked }) => (
+                              <>
+                                <div className="flex-1 flex">
+                                  <div className="flex flex-col">
+                                    <RadioGroup.Label as="span" className="block text-sm font-medium">
+                                      {size.name}
+                                    </RadioGroup.Label>
+                                    <RadioGroup.Description as="span" className="mt-1 flex items-center text-sm">
+                                      {size.description}
+                                    </RadioGroup.Description>
+                                    <RadioGroup.Description as="span" className="mt-3 flex items-center gap-x-2 text-sm font-medium">
+                                      <img className="h-4" src={"/images/logos/parasol-logo-mark-reverse-rgb.svg"} alt="psol" />
+                                      <NumberFormat
+                                        value={!size.price && "0" || size.price}
+                                        displayType={"text"}
+                                        thousandSeparator={true}
+                                      />
+                                      <span>PSOL</span>
+                                    </RadioGroup.Description>
+                                  </div>
+                                </div>
+                                <CheckCircleIcon
+                                  className={`${!checked ? "invisible" : ""} h-5 w-5 text-purple-2`}
+                                  aria-hidden={true}
+                                />
+                                <div
+                                  className={`${checked ? "border-purple-2" : "border-transparent"} border-2 absolute -inset-px rounded-lg pointer-events-none`}
+                                  aria-hidden={true}
+                                />
+                              </>
+                            )}
+                          </RadioGroup.Option>
+                        ))}
+                      </div>
+                    </RadioGroup>
+                  </div>
+                </div>
               </form>
             </div>
             <div className="col-span-3">
@@ -386,7 +447,7 @@ const SubmitProject = () => {
                       <img className="h-8"
                         src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
                         alt="USDC"/>
-                      <div className="flex items-end gap-x-2 text-4xl font-bold">                      
+                      <div className="flex items-end gap-x-2 text-4xl font-bold">
                         <NumberFormat
                           value={!values.hardCap && "0" || values.hardCap}
                           displayType={"text"}
