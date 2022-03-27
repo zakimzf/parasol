@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useMemo } from "react";
+import React, { useEffect, useState, Fragment, useMemo, useRef } from "react";
 import {Listbox, RadioGroup, Transition} from "@headlessui/react"
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid"
 import Container from "../../components/container";
@@ -28,6 +28,8 @@ const SubmitProject = () => {
   const { publicKey } = useWallet();
   const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
+  const splRef:any = useRef(null);
+
   const idosCollectionRef = collection(db, "idos");
   
   const [values, setValues] = useState({
@@ -54,8 +56,6 @@ const SubmitProject = () => {
   
   const handleChange = async(e:any) => {
     let { name, value, classList } = e.target
-    classList.remove(...errClasses);
-    errors[name] = "";
     if(name == "projectCover"){
       let file = e.target.files[0];
       await getBase64(file, ( result:any ) => {
@@ -66,13 +66,15 @@ const SubmitProject = () => {
       if(classList.contains("required_") && !value.trim()) {
         classList.add(...errClasses);
         errors[name] = "This field is required";
-      }
-
-      if(classList.contains("url_") && value.trim() && !validURL(value)){
+      }else if(classList.contains("url_") && value.trim() && !validURL(value)){
         classList.add(...errClasses);
         errors[name] = "Please enter a valid url";
+      }else{
+        if(name != "splToken"){
+          classList.remove(...errClasses);
+          errors[name] = "";
+        }
       }
-
       setValues({...values, [name]: value})
     }
   }
@@ -80,11 +82,13 @@ const SubmitProject = () => {
   const handleSubmit = async(e: { preventDefault: () => void; })=>{
     e.preventDefault();
     await validateAllFields();
-    if(base58){
-      values.publicKey = base58;
-      await addDoc(idosCollectionRef, values);
-    }else{
-      console.log("please connect your wallet");
+    if(Object.keys(errors).length == 0){
+      if(base58){
+        values.publicKey = base58;
+        await addDoc(idosCollectionRef, values);
+      }else{
+        console.log("please connect your wallet");
+      }
     }
   }
 
@@ -113,8 +117,13 @@ const SubmitProject = () => {
   
   useEffect(() => {
     const address = values.splToken;
+    const _errors = errors;
+    
     if(address){
       axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then((res)=>{
+        splRef.current?.classList.remove(...errClasses);
+        delete _errors["splToken"];
+        setErrors(_errors);
         const {data} = res;
         if(data){
           const obj = values;
@@ -129,12 +138,15 @@ const SubmitProject = () => {
         }
         
       }).catch(error => {
-        // console.log(error)
+        // setErrors((errors:Array<any>) => ([...errors, "splToken": "" ));
+        
+        _errors["splToken"] = "Please enter a valid token address" 
+        setErrors(_errors);
       });
     }
   
   }, [values.splToken]);
-
+  console.log(errors)
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
@@ -163,9 +175,11 @@ const SubmitProject = () => {
                       id="token-address"
                       placeholder={"SPL Token Address"}
                       pattern={"[A-Za-z0-9]*"}
-                      className={"mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"}
+                      className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ 
+                      ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}` }
                       defaultValue="adamwathan"
                       aria-invalid="true"
+                      ref={splRef}
                     />
                     
                     {errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
