@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useMemo, useRef } from "react";
+import React, { useEffect, useState, Fragment, useMemo, useRef, useCallback } from "react";
 import {Listbox, RadioGroup, Transition} from "@headlessui/react"
 import {CheckIcon, SelectorIcon} from "@heroicons/react/solid"
 import Container from "../../components/container";
@@ -10,12 +10,16 @@ import { db } from "../../utils/firebase";
 import { getBase64, validURL } from "../../utils/functions";
 import {
   collection,
-  addDoc,
+  doc,
+  getDoc,
+  Timestamp,
+  setDoc,
 } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
-import { async } from "@firebase/util";
 import { useRouter } from "next/router";
+import { useDropzone } from "react-dropzone";
+import { useWalletModal } from "../../components/wallet-connector";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -31,15 +35,18 @@ const SubmitProject = () => {
   const router = useRouter();
 
   const { publicKey } = useWallet();
-  const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
+  const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
+  const walletModal = useWalletModal();
+  
   const splRef:any = useRef(null);
   const submitBtnRef:any = useRef(null);
 
   const idosCollectionRef = collection(db, "idos");
+  const [coverFileName, setCoverFileName] = useState("");
   
   const [values, setValues] = useState({
-    publicKey: base58,
+    publicKey: walletAddress,
     splToken : "",
     projectIcon: "",
     projectCover : "",
@@ -53,7 +60,9 @@ const SubmitProject = () => {
     hardCap : "",
     twitter : "",
     telegram : "",
-    package: packages[0]
+    package: packages[0],
+    isFeatured: false,
+    created: Timestamp.now()
   });
 
   const [errors, setErrors] = useState<any>([]);
@@ -63,10 +72,11 @@ const SubmitProject = () => {
   const handleChange = async(e:any) => {
     let { name, value, classList } = e.target
     if(name == "projectCover"){
-      let file = e.target.files[0];
-      await getBase64(file, ( result:any ) => {
-        setValues({...values, [name]: result})
-      })
+      // let file = e.target.files[0];
+      // console.log(file)
+      // await getBase64(file, ( result:any ) => {
+      //   setValues({...values, [name]: result})
+      // })
     }else{
 
       if(classList.contains("required_") && !value.trim()) {
@@ -87,15 +97,17 @@ const SubmitProject = () => {
 
   const handleSubmit = async(e: { preventDefault: () => void; })=>{
     e.preventDefault();
-    const preContent = submitBtnRef.current.innerHTML;
-    submitBtnRef.current.innerHTML = "Loading ..."
-    await validateAllFieldsAndRedirection();
-    submitBtnRef.current.innerHTML = preContent;
+    if(walletAddress){
+      const preContent = submitBtnRef.current.innerHTML;
+      submitBtnRef.current.innerHTML = "Loading ..."
+      await validateAllFieldsAndRedirection();
+      submitBtnRef.current.innerHTML = preContent;
+    }
   }
 
-  const validateAllFields = ()=>{
+  const validateAllFields = async()=>{
     let elements:any = document.getElementsByClassName("required_");
-    const _errors = [];
+    const _errors:any = [];
     for(let el of elements){
       const {name, value} = el;
       if(!value.trim()){
@@ -112,6 +124,21 @@ const SubmitProject = () => {
         el.classList.add(...errClasses);
       }
     }
+
+    if(!values.projectCover){
+      _errors["projectCover"] = "This field is required";
+    }    
+
+    const {name, value} = splRef.current;
+    if(value){
+      const isExist = await isTokenAddressExist(value);
+      
+      if(isExist){
+        _errors[name] = "This address was already used for run a previous IDO";
+        splRef.current.classList.add(...errClasses);
+      }
+    }
+
     setErrors(_errors);
     return _errors;
   }
@@ -119,49 +146,78 @@ const SubmitProject = () => {
   const validateAllFieldsAndRedirection = async ()=>{
     
     const _errors = await validateAllFields();
-
+    
     if(Object.keys(_errors).length == 0){
-      if(base58){
-        values.publicKey = base58;
-        await addDoc(idosCollectionRef, values);
-        router.push(`/projects/${values.splToken}`);
-      }else{
-        console.log("please connect your wallet");
-      }
+    
+      values.publicKey = walletAddress;
+      await setDoc(doc(idosCollectionRef, values.splToken), values);
+      router.push(`/projects/${values.splToken}`);
+      
     }
   }
   
   useEffect(() => {
-    const address = values.splToken;
-    const _errors = errors;
+
+    const getTokeData = ()=>{
+      
+      const address = values.splToken;
+      const _errors = errors;
+      
+      if(address){
+        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then((res)=>{
+          splRef.current?.classList.remove(...errClasses);
+          delete _errors["splToken"];
+          setErrors(_errors);
+          const {data} = res;          
+          if(data){
+            const obj = values;
+            obj.projectName = data.name || "";
+            obj.symbol = data.symbol || "";
+            obj.projectIcon = data.icon || "";
+            obj.websiteUrl = data.website || "";
+            obj.twitter = data.twitter || "";
+            obj.telegram = data.telegram || "";
     
-    if(address){
-      axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then((res)=>{
-        splRef.current?.classList.remove(...errClasses);
-        delete _errors["splToken"];
-        setErrors(_errors);
-        const {data} = res;
-        if(data){
-          const obj = values;
-          obj.projectName = data.name || "";
-          obj.symbol = data.symbol || "";
-          obj.projectIcon = data.icon || "";
-          obj.websiteUrl = data.website || "";
-          obj.twitter = data.twitter || "";
-          obj.telegram = data.telegram || "";
-  
-          setValues((preValues) => ({...preValues, ...obj}));
-          validateAllFields();
-        }
-        
-      }).catch(error => {        
-        _errors["splToken"] = "Please enter a valid token address" 
-        setErrors(_errors);
-      });
+            setValues((preValues) => ({...preValues, ...obj}));
+            validateAllFields();
+          }
+          
+        }).catch(error => {        
+          _errors["splToken"] = "Please enter a valid token address" 
+          setErrors(_errors);
+        });
+      }
+    
     }
-  
+    getTokeData();
+
   }, [values.splToken]);
+
   
+  const isTokenAddressExist = async (id: string)=>{
+    
+    const docRef = doc(db, "idos", id);
+    const docSnap = await getDoc(docRef);
+    
+    return docSnap.exists();
+  }
+
+  const onDrop = useCallback(async(file) => {
+
+    const _errors = errors;
+    delete _errors["projectCover"];
+    setErrors(_errors);
+
+    setCoverFileName(file[0].name);
+
+    await getBase64(file[0], ( result:any ) => {
+      setValues({...values, ["projectCover"]: result})
+    })
+    
+  }, []);
+
+  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
@@ -216,32 +272,42 @@ const SubmitProject = () => {
                       Project Cover <span className="text-purple-2">*</span>
                     </label>
                     <div
-                      className="mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 pt-5 pb-6 flex justify-center">
+                      className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 py-6 flex justify-center ${values.projectCover && "border-purple-2"} ${errors.projectCover && "border-red-600"}`} {...getRootProps()}>
+
                       <div className="space-y-1 text-center">
-                        <svg
-                          className="mx-auto h-12 w-12 text-gray-400"
-                          stroke="currentColor"
-                          fill="none"
-                          viewBox="0 0 48 48"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                            strokeWidth={2}
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                        <div className="flex text-sm text-gray-200">
-                          <label
-                            htmlFor="file-upload"
-                            className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
+
+                        {coverFileName && <div className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none">{coverFileName}</div> ||
+                        <>
+                          <svg
+                            className="mx-auto h-12 w-12 text-gray-400"
+                            stroke="currentColor"
+                            fill="none"
+                            viewBox="0 0 48 48"
+                            aria-hidden="true"
                           >
-                            <span>Upload a file</span>
-                            <input onChange={handleChange} id="file-upload" name="projectCover" type="file" className="sr-only" />
-                          </label>
-                          <p className="pl-1">or drag and drop</p>
-                        </div>
+                            <path
+                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                              strokeWidth={2}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
+                          </svg>
+                          <div className="flex text-sm text-gray-200">
+                            <label
+                              htmlFor="file-upload"
+                              className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
+                            >
+                              <input {...getInputProps()} id="file-upload" name="projectCover" type="file" className="sr-only" />
+                              <span>Upload a file</span>
+                            </label>
+                            {
+                              isDragActive ?
+                                <p className="pl-1">Drop the file here ...</p> :
+                                <p className="pl-1">or drag and drop</p>
+                            }
+                          </div>
+                        </>
+                        }
                         <p className="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
                       </div>
                       
@@ -615,12 +681,24 @@ const SubmitProject = () => {
                       className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
                       type="submit"
                       ref={submitBtnRef}
+                      onClick={() =>
+                        walletAddress ?? walletModal.setVisible(true)
+                      }
                     >
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/>
-                      </svg>
-                      Create IDO Now
+
+                      {walletAddress ? (
+                        <>
+                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/>
+                          </svg>
+                          Create IDO Now
+                        </>
+                      ) : (
+                        <>Connect Wallet</>
+                      )}
+
+                      
                     </button>
                   </div>
                 </div>
