@@ -11,10 +11,18 @@ import { getBase64, validURL } from "../../utils/functions";
 import {
   collection,
   addDoc,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+  onSnapshot,
+  orderBy,
+  Timestamp,
+  setDoc,
 } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
-import { async } from "@firebase/util";
 import { useRouter } from "next/router";
 
 const exchanges = [
@@ -53,7 +61,8 @@ const SubmitProject = () => {
     hardCap : "",
     twitter : "",
     telegram : "",
-    package: packages[0]
+    package: packages[0],
+    created: Timestamp.now()
   });
 
   const [errors, setErrors] = useState<any>([]);
@@ -93,7 +102,7 @@ const SubmitProject = () => {
     submitBtnRef.current.innerHTML = preContent;
   }
 
-  const validateAllFields = ()=>{
+  const validateAllFields = async()=>{
     let elements:any = document.getElementsByClassName("required_");
     const _errors = [];
     for(let el of elements){
@@ -112,6 +121,18 @@ const SubmitProject = () => {
         el.classList.add(...errClasses);
       }
     }
+    
+
+    const {name, value} = splRef.current;
+    if(value){
+      const isExist = await isTokenAddressExist(value);
+      
+      if(isExist){
+        _errors[name] = "This address was already used for run a previous IDO";
+        splRef.current.classList.add(...errClasses);
+      }
+    }
+
     setErrors(_errors);
     return _errors;
   }
@@ -119,11 +140,11 @@ const SubmitProject = () => {
   const validateAllFieldsAndRedirection = async ()=>{
     
     const _errors = await validateAllFields();
-
+    console.log(_errors)
     if(Object.keys(_errors).length == 0){
       if(base58){
         values.publicKey = base58;
-        await addDoc(idosCollectionRef, values);
+        await setDoc(doc(idosCollectionRef, values.splToken), values);
         router.push(`/projects/${values.splToken}`);
       }else{
         console.log("please connect your wallet");
@@ -132,35 +153,51 @@ const SubmitProject = () => {
   }
   
   useEffect(() => {
-    const address = values.splToken;
-    const _errors = errors;
+
+    const getTokeData = ()=>{
+      
+      const address = values.splToken;
+      const _errors = errors;
+      
+      if(address){
+        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then((res)=>{
+          splRef.current?.classList.remove(...errClasses);
+          delete _errors["splToken"];
+          setErrors(_errors);
+          const {data} = res;          
+          if(data){
+            const obj = values;
+            obj.projectName = data.name || "";
+            obj.symbol = data.symbol || "";
+            obj.projectIcon = data.icon || "";
+            obj.websiteUrl = data.website || "";
+            obj.twitter = data.twitter || "";
+            obj.telegram = data.telegram || "";
     
-    if(address){
-      axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then((res)=>{
-        splRef.current?.classList.remove(...errClasses);
-        delete _errors["splToken"];
-        setErrors(_errors);
-        const {data} = res;
-        if(data){
-          const obj = values;
-          obj.projectName = data.name || "";
-          obj.symbol = data.symbol || "";
-          obj.projectIcon = data.icon || "";
-          obj.websiteUrl = data.website || "";
-          obj.twitter = data.twitter || "";
-          obj.telegram = data.telegram || "";
-  
-          setValues((preValues) => ({...preValues, ...obj}));
-          validateAllFields();
-        }
-        
-      }).catch(error => {        
-        _errors["splToken"] = "Please enter a valid token address" 
-        setErrors(_errors);
-      });
+            setValues((preValues) => ({...preValues, ...obj}));
+            validateAllFields();
+          }
+          
+        }).catch(error => {        
+          _errors["splToken"] = "Please enter a valid token address" 
+          setErrors(_errors);
+        });
+      }
+    
     }
-  
+    getTokeData();
+
   }, [values.splToken]);
+
+  
+  const isTokenAddressExist = async (id: string)=>{
+    
+    const docRef = doc(db, "idos", id);
+    const docSnap = await getDoc(docRef);
+    
+    return docSnap.exists();
+  }
+    
   
   return (
     <section>
