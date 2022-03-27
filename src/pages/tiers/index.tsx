@@ -45,6 +45,7 @@ const Tiers = function () {
       logo: "/images/tiers/covers/Chiller.png",
       video: "https://parasol.finance/_nuxt/videos/3.7803a7c.mp4",
       vestingPeriod: 6,
+      owned: true
     },
     {
       id: 3,
@@ -151,6 +152,7 @@ const Tiers = function () {
           <div className="grid grid-cols-4 gap-x-7">
             {tiers.map((t, index) => (
               <NftCard
+                owned={t.owned}
                 key={t.id}
                 name={t.name}
                 amount={t.amount}

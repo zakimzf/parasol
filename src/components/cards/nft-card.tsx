@@ -3,6 +3,7 @@ import { ShoppingBagIcon } from "@heroicons/react/outline";
 import { useWalletModal } from "../../components/wallet-connector";
 
 type NftDetails = {
+  owned?: boolean,
   poster?: string;
   video: string;
   name: string;
@@ -15,6 +16,7 @@ type NftDetails = {
 };
 
 const NftCard = ({
+  owned,
   name,
   amount,
   poster,
