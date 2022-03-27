@@ -54,9 +54,15 @@ const NftCard = ({
           </video>
         </div>
         <div className="px-6 py-7 flex flex-col gap-y-5 items-start">
-          <h3 className="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-white text-gray-800">
-            {name}
-          </h3>
+          <div className={"flex gap-x-2"}>
+            <span className="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-white text-gray-800">
+              {name}
+            </span>
+            {owned && <span
+              className="inline-flex px-4 py-1 rounded-full text-sm font-semibold tracking-wide uppercase bg-purple-2 text-white">
+              Owned
+            </span>}
+          </div>
           <div className="flex items-baseline text-4xl xl:text-4xl lg:text-2xl font-extrabold">
             <span className="flex text-white gap-x-3 items-center">
               <img
