@@ -14,6 +14,8 @@ import {
 } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
+import { async } from "@firebase/util";
+import { useRouter } from "next/router";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -25,10 +27,14 @@ const packages = [
 ];
 
 const SubmitProject = () => {
+
+  const router = useRouter();
+
   const { publicKey } = useWallet();
   const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
   const splRef:any = useRef(null);
+  const submitBtnRef:any = useRef(null);
 
   const idosCollectionRef = collection(db, "idos");
   
@@ -81,15 +87,10 @@ const SubmitProject = () => {
 
   const handleSubmit = async(e: { preventDefault: () => void; })=>{
     e.preventDefault();
-    await validateAllFields();
-    if(Object.keys(errors).length == 0){
-      if(base58){
-        values.publicKey = base58;
-        await addDoc(idosCollectionRef, values);
-      }else{
-        console.log("please connect your wallet");
-      }
-    }
+    const preContent = submitBtnRef.current.innerHTML;
+    submitBtnRef.current.innerHTML = "Loading ..."
+    await validateAllFieldsAndRedirection();
+    submitBtnRef.current.innerHTML = preContent;
   }
 
   const validateAllFields = ()=>{
@@ -111,8 +112,23 @@ const SubmitProject = () => {
         el.classList.add(...errClasses);
       }
     }
-
     setErrors(_errors);
+    return _errors;
+  }
+
+  const validateAllFieldsAndRedirection = async ()=>{
+    
+    const _errors = await validateAllFields();
+
+    if(Object.keys(_errors).length == 0){
+      if(base58){
+        values.publicKey = base58;
+        await addDoc(idosCollectionRef, values);
+        router.push(`/projects/${values.splToken}`);
+      }else{
+        console.log("please connect your wallet");
+      }
+    }
   }
   
   useEffect(() => {
@@ -135,18 +151,17 @@ const SubmitProject = () => {
           obj.telegram = data.telegram || "";
   
           setValues((preValues) => ({...preValues, ...obj}));
+          validateAllFields();
         }
         
-      }).catch(error => {
-        // setErrors((errors:Array<any>) => ([...errors, "splToken": "" ));
-        
+      }).catch(error => {        
         _errors["splToken"] = "Please enter a valid token address" 
         setErrors(_errors);
       });
     }
   
   }, [values.splToken]);
-  console.log(errors)
+  
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
@@ -398,16 +413,16 @@ const SubmitProject = () => {
                         type="number"
                         name="tokenPrice"
                         id="token-price"
-                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                         placeholder="0.00"
                         min="0.01"
                       />
-                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      {!errors.tokenPrice && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
                           <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
                           USDC
                         </span>
-                      </div>
+                      </div> }
                     </div>
                     
                     {errors.tokenPrice && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -427,15 +442,15 @@ const SubmitProject = () => {
                         type="number"
                         name="hardCap"
                         id="hard-cap"
-                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                         placeholder="0.00"
                       />
-                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      {!errors.hardCap && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
                           <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
                           USDC
                         </span>
-                      </div>
+                      </div>}
                     </div>
                     
                     {errors.hardCap && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
@@ -599,6 +614,7 @@ const SubmitProject = () => {
                     <button
                       className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
                       type="submit"
+                      ref={submitBtnRef}
                     >
                       <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
