@@ -6,7 +6,7 @@ import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
 import axios from "axios";
 import {CheckCircleIcon, ExclamationCircleIcon} from "@heroicons/react/outline";
-import { db } from "../../utils/firebase";
+import { db, storage } from "../../utils/firebase";
 import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
 import {
   collection,
@@ -20,6 +20,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { useWalletModal } from "../../components/wallet-connector";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -92,8 +93,9 @@ const SubmitProject = () => {
     if(walletAddress){
       const preContent = submitBtnRef.current.innerHTML;
       submitBtnRef.current.innerHTML = "Loading ..."
+      submitBtnRef.current.setAttribute("disabled", true);
       await validateAllFieldsAndRedirection();
-      submitBtnRef.current.innerHTML = preContent;
+      // submitBtnRef.current.innerHTML = preContent;
     }
   }
 
@@ -151,8 +153,10 @@ const SubmitProject = () => {
     if(Object.keys(_errors).length == 0){
     
       values.publicKey = walletAddress;
-      await setDoc(doc(idosCollectionRef, values.splToken), values);
-      router.push(`/projects/${values.splToken}`);
+      uploadFiles(coverFile, async(_values: any)=>{
+        await setDoc(doc(idosCollectionRef, _values.splToken), _values);
+        router.push(`/projects/${values.splToken}`);
+      })
       
     }
   }
@@ -195,7 +199,24 @@ const SubmitProject = () => {
 
   }, [values.splToken]);
 
-  
+  const uploadFiles = (file:any, callback:Function) => {
+    //
+    if (!file) return;
+    const sotrageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
+    const uploadTask = uploadBytesResumable(sotrageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => console.log(error),
+      async() => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          const _values = {...values, ["projectCover"]: downloadURL};
+          callback(_values);          
+        });
+      }
+    );
+  };
 
   const onDrop = useCallback(async(file) => {
 
@@ -239,7 +260,6 @@ const SubmitProject = () => {
                       pattern={"[A-Za-z0-9]*"}
                       className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ 
                       ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}` }
-                      defaultValue="adamwathan"
                       aria-invalid="true"
                       ref={splRef}
                     />
