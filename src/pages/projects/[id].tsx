@@ -69,8 +69,9 @@ let amount = 300000;
 
 const ProjectDetails = () => {
   const router = useRouter()
+  
   const {id} = router.query;
-
+  
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [blogs, setBlogs] = useState([]);
