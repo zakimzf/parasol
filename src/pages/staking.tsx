@@ -6,8 +6,8 @@ import Container from "../components/container";
 import CardHost from "../components/cards/base-card";
 
 const operations = [
-  { id: 1, title: "Stake", description: "Lock your $PSOL for 90 days." },
-  { id: 2, title: "Unstake", description: "Retrieve your locked $PSOL." },
+  { id: 0, title: "Stake", description: "Lock your $PSOL for 90 days." },
+  { id: 1, title: "Unstake", description: "Retrieve your locked $PSOL." },
 ]
 
 const advantages = [
@@ -66,7 +66,7 @@ const Staking = () => {
             <div className={"flex flex-col col-span-3"}>
               <CardHost padding={6}>
                 <h2 className="flex gap-x-2 items-center text-2xl font-bold">
-                  Stake PSOL
+                  {selectedOperation.id == 0 ? "Stake" : "Unstake"} PSOL Tokens
                 </h2>
                 <p className="mt-3 text-lg">
                   By staking your $PSOL tokens, you will earn Airdrops on all future IDOs on the platform.
@@ -140,7 +140,7 @@ const Staking = () => {
                 </RadioGroup>
                 <button
                   className="w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg">
-                  Stake Your $PSOL
+                  {selectedOperation.id == 0 ? "Stake" : "Unstake"} Your $PSOL
                 </button>
               </CardHost>
             </div>
