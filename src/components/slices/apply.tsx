@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Button, { ButtonType } from "../button";
 
 const Apply = () => (
   <section className="pt-24 pb-12">
@@ -13,13 +12,15 @@ const Apply = () => (
       <div className="mt-8 flex justify-center">
         <div className="inline-flex rounded-md shadow">
           <Link href={"/projects/submit"} passHref>
-            <Button type={ButtonType.Primary} value={"Apply For IDO"} />
+            <a className={"inline-flex items-center justify-center bg-purple-2 text-white hover:bg-white hover:text-purple-2 px-5 py-3 text-base font-medium rounded-md"}>
+              Submit Your Project
+            </a>
           </Link>
         </div>
         <div className="ml-3 inline-flex">
-          <Link href={"/"} passHref>
-            <Button type={ButtonType.Secondary} value={"Learn More"} />
-          </Link>
+          <a href={"https://docs.parasol.finance/"} target={"_blank"} className={"inline-flex items-center justify-center bg-white text-purple-2 hover:bg-purple-2 hover:text-white px-5 py-3 text-base font-medium rounded-md"} rel="noreferrer">
+            Learn More
+          </a>
         </div>
       </div>
     </div>

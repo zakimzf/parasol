@@ -15,6 +15,7 @@ const nextConfig = {
     NETWORK: process.env.NETWORK || "dev",
     PLATFORM_FEE_ADDRESS: process.env.PLATFORM_FEE_ADDRESS || "",
     PLATFORM_FEE_PERCENTAGE: process.env.PLATFORM_FEE_PERCENTAGE || 0,
+    NEXT_PUBLIC_MINT: process.env.NEXT_PUBLIC_MINT || "",
   },
 };
 
