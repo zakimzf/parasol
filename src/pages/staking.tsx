@@ -1,8 +1,14 @@
 import Heading from "../components/heading";
-import {GlobeAltIcon, LightningBoltIcon, ScaleIcon} from "@heroicons/react/outline"
+import {CheckCircleIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon} from "@heroicons/react/outline"
+import {RadioGroup} from "@headlessui/react"
+import React, {useState} from "react";
 import Container from "../components/container";
 import CardHost from "../components/cards/base-card";
-import React from "react";
+
+const operations = [
+  { id: 1, title: "Stake", description: "Lock your $PSOL for 90 days." },
+  { id: 2, title: "Unstake", description: "Retrieve your locked $PSOL." },
+]
 
 const advantages = [
   {
@@ -28,8 +34,9 @@ const advantages = [
   },
 ]
 
-const Staking = () =>
-  (
+const Staking = () => {
+  const [selectedOperation, setSelectedOperation] = useState(operations[0])
+  return (
     <>
       <Heading tagline={"Parasol Finance"} title={"Parasol Staking"} description={"Stake $PSOL and earn Airdrops for every IDOs."} />
       <div className="overflow-hidden">
@@ -47,7 +54,7 @@ const Staking = () =>
                   <div key={item.id} className="relative">
                     <dt>
                       <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-purple-2 text-white">
-                        <item.icon className="h-6 w-6" aria-hidden="true" />
+                        <item.icon className="h-6 w-6" aria-hidden="true"/>
                       </div>
                       <p className="ml-16 text-lg leading-6 font-medium">{item.name}</p>
                     </dt>
@@ -98,6 +105,39 @@ const Staking = () =>
                     className={"bg-transparent outline-0 ring-0 border-transparent font-semibold text-right text-gray-300 text-lg w-full"}
                   />
                 </div>
+                <RadioGroup className={"mt-6"} value={selectedOperation} onChange={setSelectedOperation}>
+                  <RadioGroup.Label className="text-base font-medium">What you want to do?</RadioGroup.Label>
+                  <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                    {operations.map((mailingList) => (
+                      <RadioGroup.Option
+                        key={mailingList.id}
+                        value={mailingList}
+                        className={({ checked, active }) => `${checked ? "border-transparent" : "border-gray-300"} ${active ? "border-purple-2" : ""} relative border-2 rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none`
+                        }
+                      >
+                        {({ checked, active }) => (
+                          <>
+                            <div className="flex-1 flex">
+                              <div className="flex flex-col">
+                                <RadioGroup.Label as="span" className="block font-bold text-sm font-medium ">
+                                  {mailingList.title}
+                                </RadioGroup.Label>
+                                <RadioGroup.Description as="span" className="mt-1 flex items-center text-sm ">
+                                  {mailingList.description}
+                                </RadioGroup.Description>
+                              </div>
+                            </div>
+                            <CheckCircleIcon className={`${!checked ? "invisible" : ""} h-5 w-5 text-purple-2`}/>
+                            <div
+                              className={`${checked ? "border-purple-2" : "border-transparent"} border-2 absolute -inset-px rounded-lg pointer-events-none`}
+                              aria-hidden="true"
+                            />
+                          </>
+                        )}
+                      </RadioGroup.Option>
+                    ))}
+                  </div>
+                </RadioGroup>
                 <button
                   className="w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg">
                   Stake Your $PSOL
@@ -108,8 +148,8 @@ const Staking = () =>
         </Container>
       </div>
     </>
-  )
-
+  );
+}
 
 
 export default Staking;
