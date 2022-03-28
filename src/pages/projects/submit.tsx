@@ -6,8 +6,8 @@ import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
 import axios from "axios";
 import {CheckCircleIcon, ExclamationCircleIcon} from "@heroicons/react/outline";
-import { db } from "../../utils/firebase";
-import { getBase64, validURL } from "../../utils/functions";
+import { db, storage } from "../../utils/firebase";
+import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
 import {
   collection,
   doc,
@@ -20,6 +20,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { useWalletModal } from "../../components/wallet-connector";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -43,7 +44,7 @@ const SubmitProject = () => {
   const submitBtnRef:any = useRef(null);
 
   const idosCollectionRef = collection(db, "idos");
-  const [coverFileName, setCoverFileName] = useState("");
+  const [coverFile, setcoverFile] = useState<any>();
   
   const [values, setValues] = useState({
     publicKey: walletAddress,
@@ -66,18 +67,10 @@ const SubmitProject = () => {
   });
 
   const [errors, setErrors] = useState<any>([]);
-
-  const errClasses = ["border-red-600", "text-red-600", "placeholder-red-600", "focus:outline-none", "focus:ring-red-600", "border-2", "focus:border-red-600", "sm:text-sm", "rounded-md"];
   
   const handleChange = async(e:any) => {
     let { name, value, classList } = e.target
-    if(name == "projectCover"){
-      // let file = e.target.files[0];
-      // console.log(file)
-      // await getBase64(file, ( result:any ) => {
-      //   setValues({...values, [name]: result})
-      // })
-    }else{
+    if(name != "projectCover"){
 
       if(classList.contains("required_") && !value.trim()) {
         classList.add(...errClasses);
@@ -100,34 +93,44 @@ const SubmitProject = () => {
     if(walletAddress){
       const preContent = submitBtnRef.current.innerHTML;
       submitBtnRef.current.innerHTML = "Loading ..."
+      submitBtnRef.current.setAttribute("disabled", true);
       await validateAllFieldsAndRedirection();
-      submitBtnRef.current.innerHTML = preContent;
+      // submitBtnRef.current.innerHTML = preContent;
     }
   }
 
-  const validateAllFields = async()=>{
-    let elements:any = document.getElementsByClassName("required_");
+  const validateAllFields = async(justSPL = false)=>{
+
     const _errors:any = [];
-    for(let el of elements){
-      const {name, value} = el;
-      if(!value.trim()){
-        _errors[name] = "This field is required";
-        el.classList.add(...errClasses);
-      }else el.classList.remove(...errClasses);
-    }
 
-    elements = document.getElementsByClassName("url_");
-    for(let el of elements){
-      const {name, value} = el;
-      if(value.trim() && !validURL(value)){
-        _errors[name] = "Please enter a valid url";
-        el.classList.add(...errClasses);
+    if(!justSPL){
+      let elements:any = document.getElementsByClassName("required_");
+      for(let el of elements){
+        const {name, value} = el;
+        if(!value.trim()){
+          _errors[name] = "This field is required";
+          el.classList.add(...errClasses);
+        }else el.classList.remove(...errClasses);
       }
-    }
+  
+      elements = document.getElementsByClassName("url_");
+      for(let el of elements){
+        const {name, value} = el;
+        if(value.trim() && !validURL(value)){
+          _errors[name] = "Please enter a valid url";
+          el.classList.add(...errClasses);
+        }
+      }
+  
+      if(!coverFile){
+        _errors["projectCover"] = "This field is required";
+      }  
 
-    if(!values.projectCover){
-      _errors["projectCover"] = "This field is required";
-    }    
+      if(!values.package){
+        _errors["package"] = "This field is required";
+      } 
+
+    }  
 
     const {name, value} = splRef.current;
     if(value){
@@ -139,7 +142,7 @@ const SubmitProject = () => {
       }
     }
 
-    setErrors(_errors);
+    setErrors(_errors); 
     return _errors;
   }
 
@@ -150,8 +153,10 @@ const SubmitProject = () => {
     if(Object.keys(_errors).length == 0){
     
       values.publicKey = walletAddress;
-      await setDoc(doc(idosCollectionRef, values.splToken), values);
-      router.push(`/projects/${values.splToken}`);
+      uploadFiles(coverFile, async(_values: any)=>{
+        await setDoc(doc(idosCollectionRef, _values.splToken), _values);
+        router.push(`/projects/${values.splToken}`);
+      })
       
     }
   }
@@ -164,22 +169,23 @@ const SubmitProject = () => {
       const _errors = errors;
       
       if(address){
-        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then((res)=>{
+        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async(res)=>{
           splRef.current?.classList.remove(...errClasses);
           delete _errors["splToken"];
           setErrors(_errors);
-          const {data} = res;          
-          if(data){
-            const obj = values;
-            obj.projectName = data.name || "";
-            obj.symbol = data.symbol || "";
-            obj.projectIcon = data.icon || "";
-            obj.websiteUrl = data.website || "";
-            obj.twitter = data.twitter || "";
-            obj.telegram = data.telegram || "";
-    
+          const {data} = res;  
+          if(await isTokenAddressExist(address))validateAllFields(true);     
+          else if(data){
+            const obj:any = {};
+            if(data.name)obj.projectName = data.name;
+            if(data.symbol)obj.symbol = data.symbol;
+            if(data.icon)obj.projectIcon = data.icon;
+            if(data.website)obj.websiteUrl = data.website;
+            if(data.twitter)obj.twitter = data.twitter;
+            if(data.telegram)obj.telegram = data.telegram;
+
             setValues((preValues) => ({...preValues, ...obj}));
-            validateAllFields();
+            // validateAllFields(true);
           }
           
         }).catch(error => {        
@@ -193,14 +199,24 @@ const SubmitProject = () => {
 
   }, [values.splToken]);
 
-  
-  const isTokenAddressExist = async (id: string)=>{
-    
-    const docRef = doc(db, "idos", id);
-    const docSnap = await getDoc(docRef);
-    
-    return docSnap.exists();
-  }
+  const uploadFiles = (file:any, callback:Function) => {
+    //
+    if (!file) return;
+    const sotrageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
+    const uploadTask = uploadBytesResumable(sotrageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => console.log(error),
+      async() => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          const _values = {...values, ["projectCover"]: downloadURL};
+          callback(_values);          
+        });
+      }
+    );
+  };
 
   const onDrop = useCallback(async(file) => {
 
@@ -208,14 +224,10 @@ const SubmitProject = () => {
     delete _errors["projectCover"];
     setErrors(_errors);
 
-    setCoverFileName(file[0].name);
+    setcoverFile(file[0]);
 
-    await getBase64(file[0], ( result:any ) => {
-      setValues({...values, ["projectCover"]: result})
-    })
-    
   }, []);
-
+  
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
   return (
@@ -248,7 +260,6 @@ const SubmitProject = () => {
                       pattern={"[A-Za-z0-9]*"}
                       className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ 
                       ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}` }
-                      defaultValue="adamwathan"
                       aria-invalid="true"
                       ref={splRef}
                     />
@@ -272,11 +283,12 @@ const SubmitProject = () => {
                       Project Cover <span className="text-purple-2">*</span>
                     </label>
                     <div
-                      className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 py-6 flex justify-center ${values.projectCover && "border-purple-2"} ${errors.projectCover && "border-red-600"}`} {...getRootProps()}>
+                      className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 pb-6 flex justify-center ${coverFile && "border-purple-2"} ${errors.projectCover && "border-red-600"}`} {...getRootProps()}>
+
 
                       <div className="space-y-1 text-center">
 
-                        {coverFileName && <div className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none">{coverFileName}</div> ||
+                        {coverFile && <div className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none">{coverFile.name}</div> ||
                         <>
                           <svg
                             className="mx-auto h-12 w-12 text-gray-400"
@@ -297,7 +309,7 @@ const SubmitProject = () => {
                               htmlFor="file-upload"
                               className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
                             >
-                              <input {...getInputProps()} id="file-upload" name="projectCover" type="file" className="sr-only" />
+                              <input {...getInputProps()} disabled={true} id="file-upload" name="projectCover" type="file" className="sr-only" />
                               <span>Upload a file</span>
                             </label>
                             {
@@ -621,6 +633,7 @@ const SubmitProject = () => {
                       </div>
                     </RadioGroup>
                   </div>
+                  {errors.package && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.package}</div> }
                 </div>
               </form>
             </div>
