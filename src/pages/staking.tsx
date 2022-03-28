@@ -7,21 +7,21 @@ import React from "react";
 const advantages = [
   {
     id: 1,
-    name: "Competitive exchange rates",
+    name: "Lorem ipsum",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
     icon: GlobeAltIcon,
   },
   {
     id: 2,
-    name: "No hidden fees",
+    name: "Lorem ipsum",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
     icon: ScaleIcon,
   },
   {
     id: 3,
-    name: "Transfers are instant",
+    name: "Lorem ipsum",
     description:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
     icon: LightningBoltIcon,
