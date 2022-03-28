@@ -101,7 +101,7 @@ const Header = () => (
                             </div>
                           </a>
                         </Link>
-                        <Link href={"/seeding"}>
+                        <Link href={"/projects/seeding"}>
                           <a
                             className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                             <svg className={"flex-shrink-0 h-6 w-6 text-purple-2"} viewBox="0 0 512 512"
