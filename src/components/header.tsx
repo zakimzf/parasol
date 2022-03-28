@@ -167,9 +167,9 @@ const Header = () => (
           {/*        Governance*/}
           {/*    </a>*/}
           {/*</Link>*/}
-          <Link href={"/pools"}>
+          <Link href={"/staking"}>
             <a className="font-bold text-sm hover:text-gray-300">
-              Pools
+              Staking
             </a>
           </Link>
           <Popover className="relative">
