@@ -123,7 +123,6 @@ const Seeding = () =>
                         <div className="text-xs text-gray-200 mb-1">Voting ends on:</div>
                         <div className="">{moment(project.created.toDate()).add(5, "days").format("LLL")}</div>
                       </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm">{project.role}</td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                         <a href="#" className="flex items-center gap-x-2 text-purple-2 hover:text-indigo-900">
                           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
