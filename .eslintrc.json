@@ -1,6 +1,7 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
+    "object-curly-spacing": ["error", "always"],
     "indent": [2, 2],
     "quotes": ["error", "double", { "avoidEscape": true }],
     "@next/next/no-img-element": "off"
