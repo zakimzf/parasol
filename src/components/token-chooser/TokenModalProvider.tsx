@@ -14,7 +14,7 @@ export const TokenModalProvider: FC = ({ children }) => {
       visible, setVisible,
       mode, setMode,
       input, setInput,
-      output, setOutput
+      output, setOutput,
     }}>
     {children}
     <TokenModal />
