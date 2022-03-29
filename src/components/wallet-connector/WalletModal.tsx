@@ -6,8 +6,8 @@ import { WalletListItem } from "./WalletListItem";
 import { useWalletModal } from "./useWalletModal";
 
 export const WalletModal: FC = () => {
-  const {wallets, select} = useWallet();
-  const {visible, setVisible} = useWalletModal();
+  const { wallets, select } = useWallet();
+  const { visible, setVisible } = useWalletModal();
 
   const [installedWallets, otherWallets] = useMemo(() => {
     const installed: Wallet[] = [];

@@ -46,8 +46,8 @@ yarn-error.log*
 
 .yarn
 
-*.lock
-*-lock.json
+# *.lock
+# *-lock.json
 
 .yarnrc.yml
 

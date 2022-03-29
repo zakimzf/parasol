@@ -13,7 +13,7 @@ type ProjectDetails = {
   Description: String
 }
 
-const ProjectCard = ({Id, Name, Description, Logo, Cover}: ProjectDetails) => (
+const ProjectCard = ({ Id, Name, Description, Logo, Cover }: ProjectDetails) => (
   <BaseCard hoverEffect={true}>
     {Cover && <Link href={`/projects/${Id}`}>
       <a style={{ position: "relative" }}>

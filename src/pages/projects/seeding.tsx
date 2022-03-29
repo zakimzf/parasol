@@ -1,6 +1,6 @@
 import Container from "../../components/container";
 import Heading from "../../components/heading";
-import {Timestamp} from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 import Apply from "../../components/slices/apply";
 import moment from "moment";
 

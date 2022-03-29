@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, getDocs } from "firebase/firestore";
-import type {NextApiRequest, NextApiResponse} from "next"
+import type { NextApiRequest, NextApiResponse } from "next"
 import { db } from "../../../utils/firebase";
 
 type Data = {
@@ -12,7 +12,7 @@ export default function handler(
   res: NextApiResponse<Data>
 ) {
   const getProject = async()=>{
-    const {tokenAddress} = req.query;
+    const { tokenAddress } = req.query;
   
     const data:any = await getAllProjects();
     res.status(200).json(data)

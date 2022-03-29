@@ -60,7 +60,7 @@ const FrequentlyAskedQuestion = () => (
       <div className={"max-w-3xl mx-auto"}>
         <dl className="mt-6 space-y-6 divide-y divide-gray-500">
           {faqs.map((faq) => <Disclosure as="div" key={faq.question} className="pt-6">
-            {({open}) => (
+            {({ open }) => (
               <>
                 <dt className="text-lg">
                   <Disclosure.Button

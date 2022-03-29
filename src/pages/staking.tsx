@@ -1,7 +1,7 @@
 import Heading from "../components/heading";
-import {CheckCircleIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon} from "@heroicons/react/outline"
-import {RadioGroup} from "@headlessui/react"
-import React, {useState} from "react";
+import { CheckCircleIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon } from "@heroicons/react/outline"
+import { RadioGroup } from "@headlessui/react"
+import React, { useState } from "react";
 import Container from "../components/container";
 import CardHost from "../components/cards/base-card";
 

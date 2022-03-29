@@ -1,11 +1,11 @@
 import React, { useEffect, useState, Fragment, useMemo, useRef, useCallback } from "react";
-import {Listbox, RadioGroup, Transition} from "@headlessui/react"
-import {CheckIcon, SelectorIcon} from "@heroicons/react/solid"
+import { Listbox, RadioGroup, Transition } from "@headlessui/react"
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import Container from "../../components/container";
 import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
 import axios from "axios";
-import {CheckCircleIcon, ExclamationCircleIcon} from "@heroicons/react/outline";
+import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
 import { db, storage } from "../../utils/firebase";
 import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
 import {
@@ -84,7 +84,7 @@ const SubmitProject = () => {
           errors[name] = "";
         }
       }
-      setValues({...values, [name]: value})
+      setValues({ ...values, [name]: value })
     }
   }
 
@@ -106,7 +106,7 @@ const SubmitProject = () => {
     if(!justSPL){
       let elements:any = document.getElementsByClassName("required_");
       for(let el of elements){
-        const {name, value} = el;
+        const { name, value } = el;
         if(!value.trim()){
           _errors[name] = "This field is required";
           el.classList.add(...errClasses);
@@ -115,7 +115,7 @@ const SubmitProject = () => {
   
       elements = document.getElementsByClassName("url_");
       for(let el of elements){
-        const {name, value} = el;
+        const { name, value } = el;
         if(value.trim() && !validURL(value)){
           _errors[name] = "Please enter a valid url";
           el.classList.add(...errClasses);
@@ -132,7 +132,7 @@ const SubmitProject = () => {
 
     }  
 
-    const {name, value} = splRef.current;
+    const { name, value } = splRef.current;
     if(value){
       const isExist = await isTokenAddressExist(value);
       
@@ -173,7 +173,7 @@ const SubmitProject = () => {
           splRef.current?.classList.remove(...errClasses);
           delete _errors["splToken"];
           setErrors(_errors);
-          const {data} = res;  
+          const { data } = res;  
           if(await isTokenAddressExist(address))validateAllFields(true);     
           else if(data){
             const obj:any = {};
@@ -184,7 +184,7 @@ const SubmitProject = () => {
             if(data.twitter)obj.twitter = data.twitter;
             if(data.telegram)obj.telegram = data.telegram;
 
-            setValues((preValues) => ({...preValues, ...obj}));
+            setValues((preValues) => ({ ...preValues, ...obj }));
             // validateAllFields(true);
           }
           
@@ -211,7 +211,7 @@ const SubmitProject = () => {
       (error) => console.log(error),
       async() => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const _values = {...values, ["projectCover"]: downloadURL};
+          const _values = { ...values, ["projectCover"]: downloadURL };
           callback(_values);          
         });
       }
@@ -228,7 +228,7 @@ const SubmitProject = () => {
 
   }, []);
   
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
     <section>
@@ -425,7 +425,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-6 relative">
                     <Listbox value={values.dex} onChange={handleChange}>
-                      {({open}) => (
+                      {({ open }) => (
                         <>
                           <Listbox.Label className="block text-sm font-medium text-blue-gray-900">Select your Target AMM (Dex):</Listbox.Label>
                           <div className="mt-1 relative">
@@ -449,10 +449,10 @@ const SubmitProject = () => {
                                 {exchanges.map((dex) => (
                                   <Listbox.Option
                                     key={dex.id}
-                                    className={({active}) => `${active ? "text-white bg-purple-2" : "text-gray-900"} cursor-default select-none relative py-2 pl-3 pr-9`}
+                                    className={({ active }) => `${active ? "text-white bg-purple-2" : "text-gray-900"} cursor-default select-none relative py-2 pl-3 pr-9`}
                                     value={dex}
                                   >
-                                    {({selected, active}) => (
+                                    {({ selected, active }) => (
                                       <>
                                         <span
                                           className={`${selected ? "font-semibold" : "font-normal"} block truncate`}>
@@ -586,7 +586,7 @@ const SubmitProject = () => {
                   <div className="sm:col-span-5">
                     <RadioGroup 
                       value={values.package} 
-                      onChange={(pac)=>{setValues({...values, ["package"]: pac})}}
+                      onChange={(pac)=>{setValues({ ...values, ["package"]: pac })}}
                     >
                       <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
                       <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
