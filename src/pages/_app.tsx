@@ -66,28 +66,28 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
         <link rel="icon" href="/favicon.svg" type="image/svg" />
       </Head>
       <body>
-        <NftProvider>
-          <ConnectionProvider endpoint={endpoint}>
-            <WalletProvider
-              wallets={wallets}
-              // onError={(messages) => alert(messages.error)}
-              autoConnect={true}
-            >
-              <WalletModalProvider>
-                <AnnounceBar />
-                <Header />
-                <main role="main">
-                  <SimpleReactLightbox>
-                    <TokenModalProvider>
+        <ConnectionProvider endpoint={endpoint}>
+          <WalletProvider
+            wallets={wallets}
+            // onError={(messages) => alert(messages.error)}
+            autoConnect={true}
+          >
+            <WalletModalProvider>
+              <AnnounceBar />
+              <Header />
+              <main role="main">
+                <SimpleReactLightbox>
+                  <TokenModalProvider>
+                    <NftProvider>
                       <Component {...pageProps} />
-                    </TokenModalProvider>
-                  </SimpleReactLightbox>
-                </main>
-                <Footer />
-              </WalletModalProvider>
-            </WalletProvider>
-          </ConnectionProvider>
-        </NftProvider>
+                    </NftProvider>
+                  </TokenModalProvider>
+                </SimpleReactLightbox>
+              </main>
+              <Footer />
+            </WalletModalProvider>
+          </WalletProvider>
+        </ConnectionProvider>
       </body>
     </>
   );
