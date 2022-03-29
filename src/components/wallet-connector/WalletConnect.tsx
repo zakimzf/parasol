@@ -2,6 +2,7 @@ import React, { FC, Fragment, MouseEventHandler, useCallback, useMemo } from "re
 import { useWalletModal } from "./useWalletModal";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Menu, Transition } from "@headlessui/react";
+import Link from "next/link";
 import { LogoutIcon, UserIcon } from "@heroicons/react/outline";
 
 export const WalletConnect: FC = ({ children }) => {
@@ -71,15 +72,16 @@ export const WalletConnect: FC = ({ children }) => {
           className="absolute right-0 mt-2 origin-top-right bg-[#231f38] rounded-lg shadow-lg divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="relative grid gap-6 gap-8 px-7 py-8">
             <Menu.Item>
-              <a className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
-                <span className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true">
-                  <UserIcon />
-                </span>
-                <div className="ml-4">
-                  <p className="text-base font-medium text-white">Profile</p>
-                  {/*<p className="mt-1 text-sm text-gray-300">item.description</p>*/}
-                </div>
-              </a>
+              <Link href={"/profile"}>
+                <a className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
+                  <span className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true">
+                    <UserIcon />
+                  </span>
+                  <div className="ml-4">
+                    <p className="text-base font-medium text-white">Profile</p>
+                  </div>
+                </a>
+              </Link>
             </Menu.Item>
             <Menu.Item>
               <a
