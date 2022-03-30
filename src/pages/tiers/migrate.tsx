@@ -9,7 +9,7 @@ import Notification from "../../components/slices/notification";
 import { NftContext } from "../../context/NftContext";
 
 const Migrate = () => {
-  const { nfts, setNfts, user, adapter, wallet } = React.useContext(NftContext);
+  const { nfts, setNfts, user, wallet } = React.useContext(NftContext);
 
   useEffect(() => {
     if (!wallet.connected) return;
@@ -22,7 +22,7 @@ const Migrate = () => {
   const [selected, setSelected] = useState<any>();
 
   const getNFTList = async () => {
-    const nftsmetadata = await user.getNFTList(adapter.program);
+    const nftsmetadata = await user.getNFTList();
     setNfts(nftsmetadata);
   };
 

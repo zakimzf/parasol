@@ -4,8 +4,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { Provider } from "@project-serum/anchor";
 import {
   NftStore,
-  ProgramAdapter,
-  ProgramConfig,
+  NftStoreConfig,
   User,
 } from "parasol-finance-sdk";
 import { PublicKey } from "@solana/web3.js";
@@ -13,19 +12,19 @@ import { PublicKey } from "@solana/web3.js";
 interface Context {
   setNfts: (n: any) => void;
   nfts: any;
-  adapter: any;
   nftStore: any;
   user: any;
   wallet: any;
+  config: any;
 }
 
 export const NftContext = createContext<Context>({
   setNfts: () => {},
   nfts: [],
-  adapter: null,
   nftStore: null,
   user: null,
   wallet: null,
+  config: null,
 });
 
 export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
@@ -33,7 +32,6 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
   const { connection } = useConnection();
   const wallet = useWallet();
 
-  const [adapter, setAdapter] = useState<any>();
   const [nftStore, setNftStore] = useState<any>();
   const [user, setUser] = useState<any>();
 
@@ -42,21 +40,18 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
     initParams();
   }, [wallet.connected]);
 
-  const config: ProgramConfig = {
-    mint: new PublicKey(process.env.NEXT_PUBLIC_MINT as any),
+  const config: NftStoreConfig = {
+    paymentMint: new PublicKey(process.env.NEXT_PUBLIC_MINT as any),
   };
-
   const provider = new Provider(connection, wallet as any, {
     preflightCommitment: "confirmed",
   });
 
 
   const initParams = async () => {
-    const adapter = await new ProgramAdapter(provider, config);
-    setAdapter(adapter);
-    const nftStore = await new NftStore(adapter.config.mint).build();
+    const nftStore = await new NftStore(provider, config).build();
     setNftStore(nftStore);
-    const user = await new User(adapter.program.provider, nftStore).build();
+    const user = await new User(provider, nftStore).build();
     setUser(user);
   };
 
@@ -68,9 +63,9 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
       value={{
         setNfts: setData,
         nfts,
-        adapter,
         nftStore,
         user,
+        config,
         wallet: useWallet()
       }}
     >

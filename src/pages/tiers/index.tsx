@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
-import { Program, Provider } from "@project-serum/anchor";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 import Container from "../../components/container";
 import NftCard from "../../components/cards/nft-card";
 import Notification from "../../components/slices/notification";
-
-import {
-  NftStore,
-  ProgramAdapter,
-  ProgramConfig,
-  User,
-} from "parasol-finance-sdk";
-import { Keypair, MAX_SEED_LENGTH, PublicKey } from "@solana/web3.js";
+import { NftContext } from "../../context/NftContext";
+import { Keypair, PublicKey } from "@solana/web3.js";
 
 const Tiers = function () {
   const { connection } = useConnection();
-  const { publicKey, sendTransaction } = useWallet();
-  const wallet = useWallet();
+  const { sendTransaction } = useWallet();
+
+  const { nfts, setNfts, wallet, user } = React.useContext(NftContext);
 
   const tiers = [
     {
@@ -62,27 +56,13 @@ const Tiers = function () {
     status: "error",
   });
 
-  const config: ProgramConfig = {
-    mint: new PublicKey(process.env.NEXT_PUBLIC_MINT as any),
-  };
-
-  const provider = new Provider(connection, wallet as any, {
-    preflightCommitment: "confirmed",
-  });
-
   const buyNFT = async (index: number) => {
-    const adapter = await new ProgramAdapter(provider, config);
-    const nftStore = await new NftStore(adapter.config.mint).build();
-    const user = await new User(adapter.program.provider, nftStore).build();
-
     try {
       const mintKeypair = Keypair.generate();
-      const tx = await user.purchase(adapter.program, index, mintKeypair);
-      const signature = await sendTransaction(tx, connection, {
-        signers: [mintKeypair],
-      });
+      const tx = await user.purchase(mintKeypair.publicKey, index);
+      const signature = await sendTransaction(tx, connection, { signers: [mintKeypair] });
       setNotificationMsg({ msg: "Minting an NFT Now....", status: "pending" });
-      await connection.confirmTransaction(signature, "processed");
+      await connection.confirmTransaction(signature, "confirmed");
     } catch (err) {
       setNotificationMsg({ msg: "Minting an NFT is failed!", status: "error" });
       return false;

@@ -7,18 +7,14 @@ import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import Notification from "../../components/slices/notification";
 import { NftContext } from "../../context/NftContext";
 
-import {
-  ProgramConfig,
-} from "parasol-finance-sdk";
-import { PublicKey } from "@solana/web3.js";
-
 import CardHost from "../../components/cards/base-card";
+import { PublicKey } from "@solana/web3.js";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
   const { connection } = useConnection();
 
-  const { nfts, setNfts, user, adapter, wallet } = React.useContext(NftContext);
+  const { nfts, setNfts, user, wallet, config } = React.useContext(NftContext);
 
   useEffect(() => {
     if (!wallet.connected) return;
@@ -37,26 +33,20 @@ const Migrate = () => {
   const [selected, setSelected] = useState<any>();
 
   const getNFTList = async () => {
-    const nftsmetadata = await user.getNFTList(adapter.program);
+    const nftsmetadata = await user.getNFTList();
     setNfts(nftsmetadata);
   };
 
   const redeemNFT = async () => {
-    const collection: ProgramConfig = {
-      mint: new PublicKey(selected.mint),
-    };
-
+    const mintAddress = new PublicKey(selected.mint);
     try {
-      const tx = await user.redeem(adapter.program, collection.mint);
-      let blockhash = await (await connection.getLatestBlockhash("finalized")).blockhash;
-      tx.recentBlockhash = blockhash;
-
+      const tx = await user.redeem(mintAddress);
       const signature = await sendTransaction(tx, connection);
       setNotificationMsg({
         msg: "Doing redeem an NFT Now....",
         status: "pending",
       });
-      await connection.confirmTransaction(signature, "processed");
+      await connection.confirmTransaction(signature, "confirmed");
     } catch (err) {
       setNotificationMsg({
         msg: "Doing redeem an NFT is failed!",
