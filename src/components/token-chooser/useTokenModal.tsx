@@ -19,6 +19,6 @@ export interface TokenChooserContextState {
 
 export const TokenChooserContext = createContext<TokenChooserContextState>({} as TokenChooserContextState);
 
-export function useTokenModal(): TokenChooserContextState {
+export function useTokenModal (): TokenChooserContextState {
   return useContext(TokenChooserContext);
 }

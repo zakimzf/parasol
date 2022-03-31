@@ -6,11 +6,11 @@ type Data = {
   name: string
 }
 
-export default function handler(
+export default function handler (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const getProject = async() => {
+  const getProject = async () => {
     const { tokenAddress } = req.query;
 
     const data:any = await getProjectByAddress(tokenAddress);
@@ -19,7 +19,7 @@ export default function handler(
   getProject();
 }
 
-const getProjectByAddress = async(tokenAddress:any) => {
+const getProjectByAddress = async (tokenAddress:any) => {
 
   const docRef = doc(db, "idos", tokenAddress);
   const docSnap = await getDoc(docRef);

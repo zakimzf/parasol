@@ -62,7 +62,7 @@ const SubmitProject = () => {
 
   const [errors, setErrors] = useState<any>([]);
   
-  const handleChange = async(e:any) => {
+  const handleChange = async (e:any) => {
     let { name, value, classList } = e.target
     if(name != "projectCover"){
 
@@ -82,7 +82,7 @@ const SubmitProject = () => {
     }
   }
 
-  const handleSubmit = async(e: { preventDefault: () => void; }) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if(walletAddress){
       const preContent = submitBtnRef.current.innerHTML;
@@ -93,7 +93,7 @@ const SubmitProject = () => {
     }
   }
 
-  const validateAllFields = async(justSPL = false) => {
+  const validateAllFields = async (justSPL = false) => {
 
     const _errors:any = [];
 
@@ -147,7 +147,7 @@ const SubmitProject = () => {
     if(Object.keys(_errors).length == 0){
     
       values.publicKey = walletAddress;
-      uploadFiles(coverFile, async(_values: any) => {
+      uploadFiles(coverFile, async (_values: any) => {
         await setDoc(doc(idosCollectionRef, _values.splToken), _values);
         router.push(`/projects/${values.splToken}`);
       })
@@ -163,7 +163,7 @@ const SubmitProject = () => {
       const _errors = errors;
       
       if(address){
-        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async(res) => {
+        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async (res) => {
           splRef.current?.classList.remove(...errClasses);
           delete _errors["splToken"];
           setErrors(_errors);
@@ -203,7 +203,7 @@ const SubmitProject = () => {
       "state_changed",
       (snapshot) => {},
       (error) => console.log(error),
-      async() => {
+      async () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const _values = { ...values, ["projectCover"]: downloadURL };
           callback(_values);          
@@ -212,7 +212,7 @@ const SubmitProject = () => {
     );
   };
 
-  const onDrop = useCallback(async(file) => {
+  const onDrop = useCallback(async (file) => {
 
     const _errors = errors;
     delete _errors["projectCover"];

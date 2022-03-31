@@ -7,6 +7,6 @@ export interface WalletModalContextState {
 
 export const WalletModalContext = createContext<WalletModalContextState>({} as WalletModalContextState);
 
-export function useWalletModal(): WalletModalContextState {
+export function useWalletModal (): WalletModalContextState {
   return useContext(WalletModalContext);
 }
