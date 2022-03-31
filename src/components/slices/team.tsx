@@ -16,7 +16,6 @@ const Team = () => (
         <ul role="list"
 				    className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-4 lg:gap-x-8">
           {people.map((person) => (
-            //.sort(() => (Math.random() > .5) ? 1 : -1)
             <li key={person.name}>
               <div className="space-y-4">
                 <Image className="object-cover shadow-lg rounded-xl" src={person.picture} alt={person.name}/>

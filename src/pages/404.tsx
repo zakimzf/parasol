@@ -22,9 +22,6 @@ const Page404 = () => {
                   Back Home
               </a>
             </Link>
-            {/*<a href="#" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-purple-2 bg-white hover:bg-purple-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"> Contact*/}
-            {/*	support*/}
-            {/*</a>*/}
           </div>
         </div>
       </main>

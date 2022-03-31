@@ -81,7 +81,6 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider
             wallets={wallets}
-            // onError={(messages) => alert(messages.error)}
             autoConnect={true}
           >
             <WalletModalProvider>

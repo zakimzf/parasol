@@ -77,11 +77,6 @@ const Hero = () => (
       </div>
       <div className="relative- mt-20 sm:mt-24 lg:mt-0 lg:col-span-6 hidden lg:flex justify-end">
         <FloatingParasol/>
-        {/*<div className="w-full relative -mt-12 -mr-3">*/}
-        {/*	<img className="absolute w-full logo" alt="l" src="/assets/logo-min.png"/>*/}
-        {/*	<img className="absolute w-full parasol" alt="l" src="/assets/logo_p-min.png"/>*/}
-        {/*	<img className="absolute w-full token" alt="l" src="/assets/logo_q-min.png"/>*/}
-        {/*</div>*/}
       </div>
     </div>
   </section>

@@ -209,14 +209,10 @@ const Tiers = function () {
                   </p>
                 </div>
               </div>
-              {/*<div className="mt-12 flex justify-center rounded-md shadow">*/}
-              {/*	<Button value="Read More" />*/}
-              {/*</div>*/}
             </div>
           </div>
         </Container>
       </section>
-      {/*<EyeCatcher />*/}
     </>
   );
 };
