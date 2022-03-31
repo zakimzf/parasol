@@ -263,7 +263,6 @@ const SubmitProject = () => {
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></> }
                    
                   </div>
-
                   
                   <p className="text-sm text-blue-gray-500 sm:col-span-6">
                     The token information will be fetched from the Solana blockchain.
@@ -278,7 +277,6 @@ const SubmitProject = () => {
                     </label>
                     <div
                       className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 pb-6 flex justify-center ${coverFile && "border-purple-2"} ${errors.projectCover && "border-red-600"}`} {...getRootProps()}>
-
 
                       <div className="space-y-1 text-center">
 
@@ -407,7 +405,6 @@ const SubmitProject = () => {
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.whitepaperUrl}</div></> }
                   </div>
                 </div>
-
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
@@ -704,7 +701,6 @@ const SubmitProject = () => {
                       ) : (
                         <>Connect Wallet</>
                       )}
-
                       
                     </button>
                   </div>
