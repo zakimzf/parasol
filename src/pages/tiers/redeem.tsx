@@ -18,7 +18,7 @@ const Migrate = () => {
 
   useEffect(() => {
     if (!wallet.connected) return;
-    if(user) {
+    if (user) {
       getNFTList();
     }
   }, [wallet.connected, user]);
