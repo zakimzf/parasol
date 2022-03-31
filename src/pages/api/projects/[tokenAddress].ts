@@ -11,9 +11,9 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const getProject = async()=>{
+  const getProject = async() => {
     const { tokenAddress } = req.query;
-  
+
     const data:any = await getProjectByAddress(tokenAddress);
     res.status(200).json(data)
   }

@@ -82,7 +82,7 @@ const SubmitProject = () => {
     }
   }
 
-  const handleSubmit = async(e: { preventDefault: () => void; })=>{
+  const handleSubmit = async(e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if(walletAddress){
       const preContent = submitBtnRef.current.innerHTML;
@@ -93,7 +93,7 @@ const SubmitProject = () => {
     }
   }
 
-  const validateAllFields = async(justSPL = false)=>{
+  const validateAllFields = async(justSPL = false) => {
 
     const _errors:any = [];
 
@@ -140,14 +140,14 @@ const SubmitProject = () => {
     return _errors;
   }
 
-  const validateAllFieldsAndRedirection = async ()=>{
+  const validateAllFieldsAndRedirection = async () => {
     
     const _errors = await validateAllFields();
     
     if(Object.keys(_errors).length == 0){
     
       values.publicKey = walletAddress;
-      uploadFiles(coverFile, async(_values: any)=>{
+      uploadFiles(coverFile, async(_values: any) => {
         await setDoc(doc(idosCollectionRef, _values.splToken), _values);
         router.push(`/projects/${values.splToken}`);
       })
@@ -157,13 +157,13 @@ const SubmitProject = () => {
   
   useEffect(() => {
 
-    const getTokeData = ()=>{
+    const getTokeData = () => {
       
       const address = values.splToken;
       const _errors = errors;
       
       if(address){
-        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async(res)=>{
+        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async(res) => {
           splRef.current?.classList.remove(...errClasses);
           delete _errors["splToken"];
           setErrors(_errors);
@@ -196,8 +196,8 @@ const SubmitProject = () => {
   const uploadFiles = (file:any, callback:Function) => {
     //
     if (!file) return;
-    const sotrageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
-    const uploadTask = uploadBytesResumable(sotrageRef, file);
+    const storageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
       "state_changed",
@@ -580,7 +580,7 @@ const SubmitProject = () => {
                   <div className="sm:col-span-5">
                     <RadioGroup 
                       value={values.package} 
-                      onChange={(pac)=>{setValues({ ...values, ["package"]: pac })}}
+                      onChange={(pac) => {setValues({ ...values, ["package"]: pac })}}
                     >
                       <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
                       <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
