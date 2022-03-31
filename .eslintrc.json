@@ -2,6 +2,9 @@
   "extends": "next/core-web-vitals",
   "rules": {
     "object-curly-spacing": ["error", "always"],
+    "space-infix-ops": ["error", { "int32Hint": false }],
+    "arrow-spacing": ["error", { "before": true, "after": true }],
+    "padding-line-between-statements": ["error", { "blankLine": "always", "prev": "var", "next": "return" }],
     "indent": [2, 2],
     "quotes": ["error", "double", { "avoidEscape": true }],
     "@next/next/no-img-element": "off"
