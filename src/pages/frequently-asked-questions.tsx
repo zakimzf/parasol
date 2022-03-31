@@ -1,8 +1,9 @@
 import { Disclosure } from "@headlessui/react"
 import { ChevronDoubleRightIcon, ChevronDownIcon } from "@heroicons/react/outline"
-
+import Head from "next/head";
 import Heading from "../components/heading";
 import Container from "../components/container";
+import React from "react";
 
 const faqs = [
   {
@@ -54,6 +55,11 @@ const faqs = [
 
 const FrequentlyAskedQuestion = () => (
   <>
+    <Head>
+      <title>Parasol Finance ($PSOL) | Frequently Asked Questions</title>
+      <meta property="og:image" content="/images/preview/faq.png"/>
+      <meta property="twitter:image" content="/images/preview/faq.png"/>
+    </Head>
     <Heading tagline={"Getting Help"} title={"Frequently Asked Questions"}
       description={"The most common questions are answered below."}/>
     <section>
