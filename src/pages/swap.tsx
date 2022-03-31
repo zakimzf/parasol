@@ -407,7 +407,7 @@ const Swap = () => {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | Swap</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | Swap" />
+        <meta name="title" content="Parasol Finance ($PSOL) | Swap"/>
         <meta property="og:image" content="/images/preview/swap.png"/>
         <meta property="twitter:image" content="/images/preview/swap.png"/>
       </Head>
@@ -472,7 +472,7 @@ const Swap = () => {
                   <div className="font-semibold" translate={"no"}>
                     {chosenInput.symbol}
                   </div>
-                  <ChevronDownIcon className={"h-5"} />
+                  <ChevronDownIcon className={"h-5"}/>
                 </button>
               )}
               <input
@@ -534,7 +534,7 @@ const Swap = () => {
                   <div className="font-semibold" translate={"no"}>
                     {chosenOutput.symbol}
                   </div>
-                  <ChevronDownIcon className={"h-5"} />
+                  <ChevronDownIcon className={"h-5"}/>
                 </button>
               )}
               <div className="font-semibold mr-3 text-gray-300 text-lg">
@@ -685,7 +685,7 @@ const Swap = () => {
                     aria-haspopup="dialog"
                     aria-expanded="false"
                     aria-controls="popover-content-7"
-                  ></span>
+                  />
                 </div>
                 <div className="text-black-50 dark:text-white-50">
                   {transactionFee + " "}
