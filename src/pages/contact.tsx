@@ -1,7 +1,14 @@
 import Heading from "../components/heading";
+import Head from "next/head";
+import React from "react";
 
 const Contact = () => (
   <>
+    <Head>
+      <title>Parasol Finance ($PSOL) | Contact Us</title>
+      <meta property="og:image" content="/images/preview/contact.png"/>
+      <meta property="twitter:image" content="/images/preview/contact.png"/>
+    </Head>
     <Heading tagline={"Get in Touch"} title={"Contact Parasol Finance"}
       description="Something to tell us, please use please the form below." />
     <section>
