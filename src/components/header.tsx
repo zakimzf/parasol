@@ -27,7 +27,7 @@ const Header = () => (
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link href={"/"}>
             <a>
-              <Image src={Logo} className="h-5" alt="logo" />
+              <Image src={Logo} className="h-5" alt="logo"/>
             </a>
           </Link>
         </div>
@@ -35,7 +35,7 @@ const Header = () => (
           <Popover.Button
             className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
             <span className="sr-only">Open menu</span>
-            <MenuIcon className="h-6 w-6" aria-hidden="true" />
+            <MenuIcon className="h-6 w-6" aria-hidden="true"/>
           </Popover.Button>
         </div>
         <Popover.Group as="nav" className="hidden md:flex items-baseline space-x-10">
@@ -50,7 +50,7 @@ const Header = () => (
                 <Popover.Button
                   className='group inline-flex gap-x-1 items-center font-bold text-sm hover:text-gray-300'>
                   <span>Launchpad</span>
-                  <ChevronDownIcon className={"h-5 w-5 group-hover:text-gray-300"} aria-hidden="true" />
+                  <ChevronDownIcon className={"h-5 w-5 group-hover:text-gray-300"} aria-hidden="true"/>
                 </Popover.Button>
                 <Transition
                   as={Fragment}
@@ -69,7 +69,7 @@ const Header = () => (
                           <a
                             className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                             <CollectionIcon className="flex-shrink-0 h-6 w-6 text-purple-2"
-                              aria-hidden="true" />
+                              aria-hidden="true"/>
                             <div className="ml-4">
                               <p className="text-base font-medium text-white">
                                 Upcoming Projects
@@ -207,7 +207,7 @@ const Header = () => (
                             className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
                           >
                             <item.icon className="flex-shrink-0 h-6 w-6 text-purple-2"
-                              aria-hidden="true" />
+                              aria-hidden="true"/>
                             <div className="ml-4">
                               <p className="text-base font-medium text-white">{item.name}</p>
                               <p className="mt-1 text-sm text-gray-300">{item.description}</p>
@@ -222,7 +222,7 @@ const Header = () => (
             }}
           </Popover>
           <Popover className="relative">
-            {({ open }) => <>
+            {() => <>
               <Popover.Button
                 className={"group inline-flex items-center font-bold text-sm hover:text-gray-300"}>
                 <span>More</span>
@@ -246,7 +246,7 @@ const Header = () => (
                       <Link href={"/about"}>
                         <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                           <InformationCircleIcon
-                            className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                            className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                           <div className="ml-4">
                             <p className="text-base font-medium text-white">About Parasol
                               Finance
@@ -259,7 +259,7 @@ const Header = () => (
                       </Link>
                       <Link href={"/frequently-asked-questions"}>
                         <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                          <AnnotationIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                          <AnnotationIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                           <div className="ml-4">
                             <p className="text-base font-medium text-white">
                               Frequently Asked Questions (FAQ)
@@ -272,7 +272,7 @@ const Header = () => (
                       </Link>
                       <a href="https://docs.parasol.finance/"
                         className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                        <BookOpenIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                        <BookOpenIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                         <div className="ml-4">
                           <p className="text-base font-medium text-white">Read
                             Documentation
@@ -289,7 +289,7 @@ const Header = () => (
                           viewBox="0 0 24 24">
                           <path
                             d="M4.285 7.269a.733.733 0 0 0-.24-.619l-1.77-2.133v-.32h5.498l4.25 9.32 3.736-9.32H21v.319l-1.515 1.451a.45.45 0 0 0-.168.425v10.666a.448.448 0 0 0 .168.425l1.479 1.451v.319h-7.436v-.319l1.529-1.487c.152-.15.152-.195.152-.424V8.401L10.95 19.218h-.575L5.417 8.401v7.249c-.041.305.06.612.275.833L7.684 18.9v.319H2.036V18.9l1.992-2.417a.971.971 0 0 0 .257-.833V7.269z"
-                            fill={"currentColor"} />
+                            fill={"currentColor"}/>
                         </svg>
                         <div className="ml-4">
                           <p className="text-base font-medium text-white">Official
@@ -303,7 +303,7 @@ const Header = () => (
                       <Link href={"/contact"}>
                         <a
                           className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                          <MailIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                          <MailIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                           <div className="ml-4">
                             <p className="text-base font-medium text-white">Contact Us
                             </p>
@@ -342,7 +342,7 @@ const Header = () => (
           </Popover>
         </Popover.Group>
         <div className="hidden md:flex items-center gap-x-3 justify-end md:flex-1 lg:w-0">
-          <WalletConnect />
+          <WalletConnect/>
         </div>
       </div>
     </div>
@@ -372,7 +372,7 @@ const Header = () => (
                 <Popover.Button
                   className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                   <span className="sr-only">Close menu</span>
-                  <XIcon className="h-6 w-6" aria-hidden="true" />
+                  <XIcon className="h-6 w-6" aria-hidden="true"/>
                 </Popover.Button>
               </div>
             </div>

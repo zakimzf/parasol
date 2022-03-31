@@ -42,8 +42,8 @@ const Hero = () => (
             <Link href={"/projects"}>
               <a
                 className="flex items-center justify-center gap-x-2 px-10 bg-purple-2 py-3 text-base font-medium rounded-lg shadow-lg text-white bg-gradient-primary hover:from-pink-600 hover:to-purple-500">
-                <CollectionIcon className={"w-5 h-5"} />
-                                View Upcoming IDOs
+                <CollectionIcon className={"w-5 h-5"}/>
+                View Upcoming IDOs
               </a>
             </Link>
             <Link href={"/swap"}>
@@ -68,8 +68,7 @@ const Hero = () => (
                       d="M41.3623,116.3066v15.94L61.0764,143.59a3.4042,3.4042,0,0,0,3.4226,0l12.0988-6.8334Z"/>
                   </g>
                 </svg>
-                {/*<img src={ParasolLogo} />*/}
-                                Buy $PSOL With USDC
+                Buy $PSOL With USDC
               </a>
             </Link>
           </div>

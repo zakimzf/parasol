@@ -11,7 +11,6 @@ const AnnounceBar = () => (
         </svg>
         Contract Address:
         <span className="truncate">Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ</span>
-        {/*<span className="truncate">Hmatmu1...AdLZ</span>*/}
       </a>
       <a href="https://parasol.finance/"
         className="flex justify-center items-center gap-1 hidden lg:flex font-bold text-sm text-white border border-purple-200 rounded-full pl-4 pr-1 py-1">
