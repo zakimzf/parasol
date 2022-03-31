@@ -1,11 +1,10 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { SelectorIcon } from "@heroicons/react/solid";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 
 import CardHost from "../../components/cards/base-card";
-import Notification from "../../components/slices/notification";
 import { NftContext } from "../../context/NftContext";
 
 const Migrate = () => {
@@ -31,7 +30,7 @@ const Migrate = () => {
       <div className={"mx-auto max-w-md space-y-6"}>
         <Link href={"/tiers"}>
           <a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
-            <ArrowLeftIcon className={"w-4"} />
+            <ArrowLeftIcon className={"w-4"}/>
             Back
           </a>
         </Link>
@@ -98,18 +97,14 @@ const Migrate = () => {
           ) : (
             <div className={"prose prose-lg prose-invert"}>
               <Link href={"/tiers"}>
-                <a className="inline-flex gap-x-2 items-centertext-gray-200">
+                <a className="inline-flex gap-x-2 items-center text-gray-200">
                   No NFT Access Key. Please buy your NFT here.
                 </a>
               </Link>
             </div>
           )}
           {nfts.length > 0 ? (
-            <button
-              className={
-                "w-full bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"
-              }
-            >
+            <button className={"w-full bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
               Upgrade My NFT
             </button>
           ) : (

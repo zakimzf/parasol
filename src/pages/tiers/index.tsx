@@ -78,14 +78,14 @@ const Tiers = function () {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | NFT Access Keys</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | NFT Access Keys" />
+        <meta name="title" content="Parasol Finance ($PSOL) | NFT Access Keys"/>
         <meta property="og:image" content="/images/preview/tiers.png"/>
         <meta property="twitter:image" content="/images/preview/tiers.png"/>
       </Head>
       <section>
         <Container>
           <div className={"grid grid-cols-3  pt-10 pb-16"}>
-            <div className={"flex gap-x-2 items-center"}></div>
+            <div className={"flex gap-x-2 items-center"}/>
             <div>
               <div className="text-center">
                 <h2 className="text-base font-semibold tracking-wider mb-3 text-purple-400 uppercase">
@@ -120,13 +120,13 @@ const Tiers = function () {
             <div className={"flex gap-x-2 justify-end items-center"}>
               <Link href={"/tiers/migrate"}>
                 <a className="inline-flex relative gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-300">
-                  <UploadIcon className={"w-4"} />
+                  <UploadIcon className={"w-4"}/>
                   Migrate
                 </a>
               </Link>
               <Link href={"/tiers/redeem"}>
                 <a className="inline-flex gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-200">
-                  <SwitchVerticalIcon className={"w-4"} />
+                  <SwitchVerticalIcon className={"w-4"}/>
                   Redeem
                 </a>
               </Link>
