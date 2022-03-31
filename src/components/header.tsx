@@ -9,6 +9,7 @@ import {
   CollectionIcon,
   FolderAddIcon,
   InformationCircleIcon,
+  MailIcon,
   MenuIcon,
   XIcon,
 } from "@heroicons/react/outline";
@@ -339,6 +340,17 @@ const Header = () => (
                           </p>
                         </div>
                       </a>
+                      <Link href={"/contact"}>
+                        <a
+                          className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                          <MailIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                          <div className="ml-4">
+                            <p className="text-base font-medium text-white">Contact Us
+                            </p>
+                            <p className="mt-1 text-sm text-gray-300">Something to tell us, please fill the form.</p>
+                          </div>
+                        </a>
+                      </Link>
                     </div>
                     {/*<div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-8 sm:p-8">*/}
                     {/*	{resourcesMenu.map((item) => (*/}
