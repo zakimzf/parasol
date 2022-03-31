@@ -13,7 +13,7 @@ const Tiers = function () {
   const { connection } = useConnection();
   const { sendTransaction } = useWallet();
 
-  const { nfts, setNfts, wallet, user } = React.useContext(NftContext);
+  const { wallet, user, nftKinds } = React.useContext(NftContext);
 
   const tiers = [
     {
@@ -59,7 +59,7 @@ const Tiers = function () {
   const buyNFT = async (index: number) => {
     try {
       const mintKeypair = Keypair.generate();
-      const tx = await user.purchase(mintKeypair.publicKey, index);
+      const tx = await user.purchase(mintKeypair.publicKey, nftKinds[index]);
       const signature = await sendTransaction(tx, connection, { signers: [mintKeypair] });
       setNotificationMsg({ msg: "Minting an NFT Now....", status: "pending" });
       await connection.confirmTransaction(signature, "confirmed");
