@@ -26,7 +26,6 @@ const packages = [
 ];
 
 const SubmitProject = () => {
-
   const router = useRouter();
 
   const { publicKey } = useWallet();
@@ -65,7 +64,6 @@ const SubmitProject = () => {
   const handleChange = async (e:any) => {
     let { name, value, classList } = e.target
     if (name != "projectCover") {
-
       if (classList.contains("required_") && !value.trim()) {
         classList.add(...errClasses);
         errors[name] = "This field is required";
@@ -96,7 +94,6 @@ const SubmitProject = () => {
   }
 
   const validateAllFields = async (justSPL = false) => {
-
     const _errors:any = [];
 
     if (!justSPL) {
@@ -125,8 +122,7 @@ const SubmitProject = () => {
 
       if (!values.package) {
         _errors["package"] = "This field is required";
-      } 
-
+      }
     }  
 
     const { name, value } = splRef.current;
@@ -144,24 +140,19 @@ const SubmitProject = () => {
   }
 
   const validateAllFieldsAndRedirection = async () => {
-    
     const _errors = await validateAllFields();
     
     if (Object.keys(_errors).length == 0) {
-    
       values.publicKey = walletAddress;
       uploadFiles(coverFile, async (_values: any) => {
         await setDoc(doc(idosCollectionRef, _values.splToken), _values);
         router.push(`/projects/${values.splToken}`);
       })
-      
     }
   }
   
   useEffect(() => {
-
     const getTokeData = () => {
-      
       const address = values.splToken;
       const _errors = errors;
       
@@ -184,16 +175,13 @@ const SubmitProject = () => {
             setValues((preValues) => ({ ...preValues, ...obj }));
             // validateAllFields(true);
           }
-          
         }).catch(error => {        
           _errors["splToken"] = "Please enter a valid token address" 
           setErrors(_errors);
         });
       }
-    
     }
     getTokeData();
-
   }, [values.splToken]);
 
   const uploadFiles = (file:any, callback:Function) => {
@@ -216,13 +204,11 @@ const SubmitProject = () => {
   };
 
   const onDrop = useCallback(async (file) => {
-
     const _errors = errors;
     delete _errors["projectCover"];
     setErrors(_errors);
 
     setcoverFile(file[0]);
-
   }, []);
   
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })

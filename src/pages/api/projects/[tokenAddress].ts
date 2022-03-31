@@ -20,10 +20,8 @@ export default function handler (
 }
 
 const getProjectByAddress = async (tokenAddress:any) => {
-
   const docRef = doc(db, "idos", tokenAddress);
   const docSnap = await getDoc(docRef);
 
   return docSnap.data();
-
 }
