@@ -3,6 +3,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 import { Provider } from "@project-serum/anchor";
 import {
+  NftKind,
   NftStore,
   NftStoreConfig,
   User,
@@ -13,6 +14,7 @@ interface Context {
   setNfts: (n: any) => void;
   nfts: any;
   nftStore: any;
+  nftKinds: any;
   user: any;
   wallet: any;
   config: any;
@@ -23,6 +25,7 @@ export const NftContext = createContext<Context>({
   setNfts: () => {},
   nfts: [],
   nftStore: null,
+  nftKinds: null,
   user: null,
   wallet: null,
   config: null,
@@ -35,6 +38,7 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
   const wallet = useWallet();
 
   const [nftStore, setNftStore] = useState<any>();
+  const [nftKinds, setNftKinds] = useState<any>();
   const [user, setUser] = useState<any>();
 
   useEffect(() => {
@@ -53,6 +57,8 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
   const initParams = async () => {
     const nftStore = await new NftStore(provider, config).build();
     setNftStore(nftStore);
+    const nftKinds = await Promise.all([0,1,2,3].map((tier) => new NftKind(provider, tier).build()));
+    setNftKinds(nftKinds);
     const user = await new User(provider, nftStore).build();
     setUser(user);
   };
@@ -66,6 +72,7 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
         setNfts: setData,
         nfts,
         nftStore,
+        nftKinds,
         user,
         config,
         wallet: useWallet(),

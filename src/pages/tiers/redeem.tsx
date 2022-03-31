@@ -14,7 +14,7 @@ const Migrate = () => {
   const { sendTransaction } = useWallet();
   const { connection } = useConnection();
 
-  const { nfts, setNfts, user, wallet, config } = React.useContext(NftContext);
+  const { nfts, setNfts, user, wallet } = React.useContext(NftContext);
 
   useEffect(() => {
     if (!wallet.connected) return;
