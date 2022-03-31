@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useMemo, useRef, useCallback } from "react";
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Listbox, RadioGroup, Transition } from "@headlessui/react"
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import Container from "../../components/container";
@@ -8,13 +8,7 @@ import axios from "axios";
 import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
 import { db, storage } from "../../utils/firebase";
 import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
-import {
-  collection,
-  doc,
-  getDoc,
-  Timestamp,
-  setDoc,
-} from "firebase/firestore";
+import { collection, doc, setDoc, Timestamp, } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
@@ -608,7 +602,7 @@ const SubmitProject = () => {
                                       {size.description}
                                     </RadioGroup.Description>
                                     <RadioGroup.Description as="span" className="mt-3 flex items-center gap-x-2 text-sm font-medium">
-                                      <img className="h-4" src={"/images/logos/parasol-logo-mark-reverse-rgb.svg"} alt="psol" />
+                                      <img className="h-4" src={"/assets/logos/parasol-logo-mark-reverse-rgb.svg"} alt="psol" />
                                       <NumberFormat
                                         value={!size.price && "0" || size.price}
                                         displayType={"text"}

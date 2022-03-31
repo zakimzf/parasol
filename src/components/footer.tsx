@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-const Logo = require("/public/images/logos/parasol-logo-inverted-rgb.svg")
+const Logo = require("/public/assets/logos/parasol-logo-inverted-rgb.svg")
 
 const Footer = () => (
   <footer className="bg-[#231f38]-bg-opacity-40-pt-10 mt-12">
