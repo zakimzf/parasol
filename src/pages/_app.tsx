@@ -1,9 +1,6 @@
 import React, { FC, useEffect, useMemo } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import {
-  ConnectionProvider,
-  WalletProvider,
-} from "@solana/wallet-adapter-react";
+import { ConnectionProvider, WalletProvider, } from "@solana/wallet-adapter-react";
 import {
   LedgerWalletAdapter,
   PhantomWalletAdapter,
@@ -62,7 +59,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
       <Head>
         <title>Parasol Finance ($PSOL) | Community Governed Launchpad on Solana.</title>
         <meta charSet="UTF-8"/>
-        <link rel="icon" href="/favicon.svg" type="image/svg" />
+        <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="title" content="Parasol Finance ($PSOL) | Community Governed Launchpad on Solana." />
         <meta name="description" content="Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs of both projects and investors alike."/>

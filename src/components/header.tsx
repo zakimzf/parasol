@@ -18,7 +18,7 @@ import { WalletConnect } from "./wallet-connector";
 
 import { toolsMenu, resourcesMenu, recentPosts } from "../constants/header";
 
-import Logo from "/public/images/logos/parasol-logo-inverted-rgb.svg";
+import Logo from "/public/assets/logos/parasol-logo-inverted-rgb.svg";
 
 const Header = () => (
   <Popover className="relative">

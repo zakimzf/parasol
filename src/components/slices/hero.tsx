@@ -2,7 +2,6 @@ import Link from "next/link";
 import { CollectionIcon } from "@heroicons/react/outline";
 
 import FloatingParasol from "../utils/floating-illustration";
-// const ParasolLogo = require('../public/images/logos/parasol-logo-mark-reverse-rgb.svg')
 
 const Hero = () => (
   <section id="hero" className="mt-6">
@@ -79,9 +78,9 @@ const Hero = () => (
       <div className="relative- mt-20 sm:mt-24 lg:mt-0 lg:col-span-6 hidden lg:flex justify-end">
         <FloatingParasol/>
         {/*<div className="w-full relative -mt-12 -mr-3">*/}
-        {/*	<img className="absolute w-full logo" alt="l" src="/images/logo-min.png"/>*/}
-        {/*	<img className="absolute w-full parasol" alt="l" src="/images/logo_p-min.png"/>*/}
-        {/*	<img className="absolute w-full token" alt="l" src="/images/logo_q-min.png"/>*/}
+        {/*	<img className="absolute w-full logo" alt="l" src="/assets/logo-min.png"/>*/}
+        {/*	<img className="absolute w-full parasol" alt="l" src="/assets/logo_p-min.png"/>*/}
+        {/*	<img className="absolute w-full token" alt="l" src="/assets/logo_q-min.png"/>*/}
         {/*</div>*/}
       </div>
     </div>

@@ -3,8 +3,6 @@ import { BadgeCheckIcon } from "@heroicons/react/solid";
 
 import BaseCard from "./base-card";
 
-// const UsdcLogo = require('/public/images/logos/usdc-logo.svg')
-
 type ProjectDetails = {
   Id: String,
   Logo?: string,

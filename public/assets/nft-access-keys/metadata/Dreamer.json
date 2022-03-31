@@ -1,0 +1,42 @@
+{
+    "name": "PSOL KEY",
+    "symbol": "PKEY",
+    "description": "The first stage that everyone who changes the world goes through is the dream. The dream to create, to improve, to innovate.",
+    "seller_fee_basis_points": 2100,
+    "image": "https://beta.app.parasol.finance/assets/nft-access-keys/covers/dreamer.png",
+    "animation_url": "https://beta.app.parasol.finance/assets/nft-access-keys/videos/dreamer.mp4",
+    "attributes": [
+        {
+            "trait_type": "Level",
+            "value": "Dreamer"
+        },
+        {
+            "trait_type": "Version",
+            "value": "Beta"
+        }
+    ],
+    "external_url": "",
+    "properties": {
+        "files": [
+            {
+                "uri": "dreamer.png",
+                "type": "image/png"
+            },
+            {
+                "uri": "dreamer.mp4",
+                "type": "video/mp4"
+            }
+        ],
+        "category": "video",
+        "creators": [
+            {
+                "address": "8oRwYDYCeCFT3jQBuvCGJdNRyPe2iytACCjuWgyP6win",
+                "share": 100
+            }
+        ]
+    },
+    "collection": {
+        "name": "PSOL KEY",
+        "family": "Parasol Finance"
+    }
+}
