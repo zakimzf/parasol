@@ -12,6 +12,7 @@ const About = () =>
   <>
     <Head>
       <title>Parasol Finance ($PSOL) | About Us</title>
+      <meta name="title" content="Parasol Finance ($PSOL) | About Us" />
       <meta property="og:image" content="/images/preview/about.png"/>
       <meta property="twitter:image" content="/images/preview/about.png"/>
     </Head>

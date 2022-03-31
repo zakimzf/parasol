@@ -407,6 +407,7 @@ const Swap = () => {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | Swap</title>
+        <meta name="title" content="Parasol Finance ($PSOL) | Swap" />
         <meta property="og:image" content="/images/preview/swap.png"/>
         <meta property="twitter:image" content="/images/preview/swap.png"/>
       </Head>
