@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -7,7 +7,8 @@ import Container from "../../components/container";
 import NftCard from "../../components/cards/nft-card";
 import Notification from "../../components/slices/notification";
 import { NftContext } from "../../context/NftContext";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { Keypair } from "@solana/web3.js";
+import Head from "next/head";
 
 const Tiers = function () {
   const { connection } = useConnection();
@@ -75,6 +76,12 @@ const Tiers = function () {
 
   return (
     <>
+      <Head>
+        <title>Parasol Finance ($PSOL) | NFT Access Keys</title>
+        <meta name="title" content="Parasol Finance ($PSOL) | NFT Access Keys" />
+        <meta property="og:image" content="/images/preview/tiers.png"/>
+        <meta property="twitter:image" content="/images/preview/tiers.png"/>
+      </Head>
       <section>
         <Container>
           <div className={"grid grid-cols-3  pt-10 pb-16"}>
