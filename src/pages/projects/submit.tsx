@@ -277,7 +277,7 @@ const SubmitProject = () => {
                       Project Cover <span className="text-purple-2">*</span>
                     </label>
                     <div
-                      className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 pb-6 flex justify-center ${coverFile && "border-purple-2"} ${errors.projectCover && "border-red-600"}`} {...getRootProps()}>
+                      className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 py-6 flex justify-center ${coverFile && "border-purple-2"} ${errors.projectCover && "border-red-600"}`} {...getRootProps()}>
 
 
                       <div className="space-y-1 text-center">
@@ -634,7 +634,7 @@ const SubmitProject = () => {
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
                 <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
-                  <div className={"relative px-6 pt-6 pb-6"}>
+                  <div className={"relative px-6 py-6"}>
                     <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                       {!values.projectName.trim() && "Project Name" || values.projectName}
                     </h2>
