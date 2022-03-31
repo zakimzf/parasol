@@ -10,7 +10,7 @@
     "no-multiple-empty-lines": ["error", { "max": 1 }],
     "space-before-function-paren": ["error", "always"],
     "padding-line-between-statements": ["error", { "blankLine": "always", "prev": "var", "next": "return" }],
-    "indent": [2, 2],
+    "indent": [2, 2, { "SwitchCase": 1 }],
     "quotes": ["error", "double", { "avoidEscape": true }],
     "@next/next/no-img-element": "off"
   }
