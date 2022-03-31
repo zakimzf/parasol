@@ -1,0 +1,42 @@
+{
+    "name": "PSOL KEY",
+    "symbol": "PKEY",
+    "description": "You did it. You accomplished what you set out to do, and life has rewarded you for your never-ending efforts. It is now time to enjoy the fruits of your labor and chill. It might get a little boring, however. I mean, why stop there?",
+    "seller_fee_basis_points": 2100,
+    "image": "Chiller.png",
+    "animation_url": "Chiller.mp4",
+    "attributes": [
+        {
+            "trait_type": "Level",
+            "value": "Chiller"
+        },
+        {
+            "trait_type": "Version",
+            "value": "Beta"
+        }
+    ],
+    "external_url": "",
+    "properties": {
+        "files": [
+            {
+                "uri": "Chiller.png",
+                "type": "image/png"
+            },
+            {
+                "uri": "Chiller.mp4",
+                "type": "video/mp4"
+            }
+        ],
+        "category": "video",
+        "creators": [
+            {
+                "address": "8oRwYDYCeCFT3jQBuvCGJdNRyPe2iytACCjuWgyP6win",
+                "share": 100
+            }
+        ]
+    },
+    "collection": {
+        "name": "PSOL KEY",
+        "family": "Parasol Finance"
+    }
+}

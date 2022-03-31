@@ -1,0 +1,42 @@
+{
+    "name": "PSOL KEY",
+    "symbol": "PKEY",
+    "description": "To walk on the moon, once must be so invested in improving the world and those in it that they are willing to rise above the earthly squabbles humans are plagued with - all the way to the moon. Big ballers, only.",
+    "seller_fee_basis_points": 2100,
+    "image": "MoonWalker.png",
+    "animation_url": "MoonWalker.mp4",
+    "attributes": [
+        {
+            "trait_type": "Level",
+            "value": "MoonWalker"
+        },
+        {
+            "trait_type": "Version",
+            "value": "Beta"
+        }
+    ],
+    "external_url": "",
+    "properties": {
+        "files": [
+            {
+                "uri": "MoonWalker.png",
+                "type": "image/png"
+            },
+            {
+                "uri": "MoonWalker.mp4",
+                "type": "video/mp4"
+            }
+        ],
+        "category": "video",
+        "creators": [
+            {
+                "address": "8oRwYDYCeCFT3jQBuvCGJdNRyPe2iytACCjuWgyP6win",
+                "share": 100
+            }
+        ]
+    },
+    "collection": {
+        "name": "PSOL KEY",
+        "family": "Parasol Finance"
+    }
+}
