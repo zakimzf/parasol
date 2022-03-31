@@ -22,7 +22,7 @@ const Tiers = function () {
       name: "Dreamer",
       amount: 210,
       logo: "/assets/nft-access-keys/covers/Dreamer.png",
-      video: "https://parasol.finance/_nuxt/videos/1.4914065.mp4",
+      video: "/assets/nft-access-keys/videos/Dreamer.mp4",
       vestingPeriod: 12,
     },
     {
@@ -30,7 +30,7 @@ const Tiers = function () {
       name: "Rider",
       amount: 2100,
       logo: "/assets/nft-access-keys/covers/Rider.png",
-      video: "https://parasol.finance/_nuxt/videos/2.b97bbf5.mp4",
+      video: "/assets/nft-access-keys/videos/Rider.mp4",
       vestingPeriod: 8,
     },
     {
@@ -38,7 +38,7 @@ const Tiers = function () {
       name: "Chiller",
       amount: 21000,
       logo: "/assets/nft-access-keys/covers/Chiller.png",
-      video: "https://parasol.finance/_nuxt/videos/3.7803a7c.mp4",
+      video: "/assets/nft-access-keys/videos/Chiller.mp4",
       vestingPeriod: 6,
       owned: true
     },
@@ -47,7 +47,7 @@ const Tiers = function () {
       name: "MoonWalker",
       amount: 210000,
       logo: "/assets/nft-access-keys/covers/MoonWalker.png",
-      video: "https://parasol.finance/_nuxt/videos/4.93829ce.mp4",
+      video: "/assets/nft-access-keys/videos/MoonWalker.mp4",
       vestingPeriod: 4,
     },
   ];
