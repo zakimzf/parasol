@@ -64,18 +64,18 @@ const SubmitProject = () => {
   
   const handleChange = async (e:any) => {
     let { name, value, classList } = e.target
-    if (name != "projectCover"){
+    if (name != "projectCover") {
 
       if (classList.contains("required_") && !value.trim()) {
         classList.add(...errClasses);
         errors[name] = "This field is required";
       }
-      else if (classList.contains("url_") && value.trim() && !validURL(value)){
+      else if (classList.contains("url_") && value.trim() && !validURL(value)) {
         classList.add(...errClasses);
         errors[name] = "Please enter a valid url";
       }
       else {
-        if (name != "splToken"){
+        if (name != "splToken") {
           classList.remove(...errClasses);
           errors[name] = "";
         }
@@ -86,7 +86,7 @@ const SubmitProject = () => {
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    if (walletAddress){
+    if (walletAddress) {
       const preContent = submitBtnRef.current.innerHTML;
       submitBtnRef.current.innerHTML = "Loading ..."
       submitBtnRef.current.setAttribute("disabled", true);
@@ -99,11 +99,11 @@ const SubmitProject = () => {
 
     const _errors:any = [];
 
-    if (!justSPL){
+    if (!justSPL) {
       let elements:any = document.getElementsByClassName("required_");
-      for (let el of elements){
+      for (let el of elements) {
         const { name, value } = el;
-        if (!value.trim()){
+        if (!value.trim()) {
           _errors[name] = "This field is required";
           el.classList.add(...errClasses);
         }
@@ -111,29 +111,29 @@ const SubmitProject = () => {
       }
   
       elements = document.getElementsByClassName("url_");
-      for (let el of elements){
+      for (let el of elements) {
         const { name, value } = el;
-        if (value.trim() && !validURL(value)){
+        if (value.trim() && !validURL(value)) {
           _errors[name] = "Please enter a valid url";
           el.classList.add(...errClasses);
         }
       }
   
-      if (!coverFile){
+      if (!coverFile) {
         _errors["projectCover"] = "This field is required";
       }  
 
-      if (!values.package){
+      if (!values.package) {
         _errors["package"] = "This field is required";
       } 
 
     }  
 
     const { name, value } = splRef.current;
-    if (value){
+    if (value) {
       const isExist = await isTokenAddressExist(value);
       
-      if (isExist){
+      if (isExist) {
         _errors[name] = "This address was already used for run a previous IDO";
         splRef.current.classList.add(...errClasses);
       }
@@ -147,7 +147,7 @@ const SubmitProject = () => {
     
     const _errors = await validateAllFields();
     
-    if (Object.keys(_errors).length == 0){
+    if (Object.keys(_errors).length == 0) {
     
       values.publicKey = walletAddress;
       uploadFiles(coverFile, async (_values: any) => {
@@ -165,14 +165,14 @@ const SubmitProject = () => {
       const address = values.splToken;
       const _errors = errors;
       
-      if (address){
+      if (address) {
         axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async (res) => {
           splRef.current?.classList.remove(...errClasses);
           delete _errors["splToken"];
           setErrors(_errors);
           const { data } = res;  
           if (await isTokenAddressExist(address))validateAllFields(true);     
-          else if (data){
+          else if (data) {
             const obj:any = {};
             if (data.name)obj.projectName = data.name;
             if (data.symbol)obj.symbol = data.symbol;
