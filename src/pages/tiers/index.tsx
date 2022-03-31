@@ -8,14 +8,13 @@ import NftCard from "../../components/cards/nft-card";
 import Notification from "../../components/slices/notification";
 import { NftContext } from "../../context/NftContext";
 import { Keypair, PublicKey } from "@solana/web3.js";
+import { NftKind } from "parasol-finance-sdk";;
 
 const Tiers = function () {
   const { connection } = useConnection();
   const { sendTransaction } = useWallet();
-
-  const { nfts, setNfts, wallet, user } = React.useContext(NftContext);
-
-  const tiers = [
+  const [ferchTiers, setFerchTiers] = useState(false)
+  const [tiers, setTiers] = useState<any>([
     {
       id: 0,
       name: "Dreamer",
@@ -49,7 +48,10 @@ const Tiers = function () {
       video: "https://parasol.finance/_nuxt/videos/4.93829ce.mp4",
       vestingPeriod: 4,
     },
-  ];
+  ]);
+  // const [tiersData, setTiersData] = useState([]);
+
+  const { provider, nfts, setNfts, wallet, user } = React.useContext(NftContext);
 
   const [notificationMsg, setNotificationMsg] = useState({
     msg: "",
@@ -72,6 +74,21 @@ const Tiers = function () {
       status: "success",
     });
   };
+
+  
+  useEffect(() => {
+    const nftKindData = async()=>{
+      const nftKinds = await Promise.all([0,1,2,3].map((tier) => new NftKind(provider, tier).build()));
+      const tiersDataArray:any = tiers;
+      await Promise.all(nftKinds.map(async(nftKind:any) => {
+        const data = await nftKind.data(); 
+        tiersDataArray[nftKind.tier].data =  data;
+      }));
+      setTiers(tiersDataArray);
+      setFerchTiers(true)
+    }
+    nftKindData();
+  }, [])
 
   return (
     <>
@@ -130,20 +147,21 @@ const Tiers = function () {
       <section>
         <Container fluid={false}>
           <div className="grid grid-cols-4 gap-x-7">
-            {tiers.map((t, index) => (
-              <NftCard
-                owned={t.owned}
-                key={t.id}
-                name={t.name}
-                amount={t.amount}
-                index={index}
-                poster={t.logo}
-                video={t.video}
-                vestingPeriod={t.vestingPeriod}
-                buyNFT={buyNFT}
-                connected={wallet.connected}
-              />
-            ))}
+            {ferchTiers ? tiers.map((t:any, index:any) => (<NftCard
+              owned={t.owned}
+              key={t.id}
+              id={t.id}
+              name={t.name}
+              amount={t.amount}
+              index={index}
+              poster={t.logo}
+              video={t.video}
+              vestingPeriod={t.vestingPeriod}
+              buyNFT={buyNFT}
+              connected={wallet.connected}
+              data={t.data && t.data}
+            />)
+            ) : ""}
           </div>
         </Container>
       </section>

@@ -5,6 +5,7 @@ import { useWalletModal } from "../../components/wallet-connector";
 type NftDetails = {
   owned?: boolean,
   poster?: string;
+  id: number;
   video: string;
   name: string;
   amount: number;
@@ -13,9 +14,11 @@ type NftDetails = {
   index: number;
   buyNFT: any;
   connected: any;
+  data: any;
 };
 
 const NftCard = ({
+  id,
   owned,
   name,
   amount,
@@ -26,7 +29,9 @@ const NftCard = ({
   index,
   buyNFT,
   connected,
+  data,
 }: NftDetails) => {
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const playVideo = () => videoRef.current && videoRef.current.play();
   const pauseVideo = () => videoRef.current && videoRef.current.pause();
@@ -41,7 +46,7 @@ const NftCard = ({
       <div className="">
         <div className="relative">
           <span className="absolute top-0 right-0 m-3 items-center justify-center px-2 py-1 font-medium leading-none indigo-500 bg-purple-500 bg-opacity-50 rounded">
-            8/12
+            {data && (`${data.currentSupply}/${![0, 1].includes(id) ? data.maxSupply : "∞"}`) || "0/0" }
           </span>
           <video
             ref={videoRef}
