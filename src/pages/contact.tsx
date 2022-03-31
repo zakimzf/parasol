@@ -21,7 +21,7 @@ const Contact = () => {
 
   const [errors, setErrors] = useState<any>([]);
 
-  const [sendStatus, setSendStatus] = useState(0)
+  const [sendStatus, setSendStatus] = useState(0);
 
   const handleChange = async (e: any) => {
     e.preventDefault();
@@ -75,7 +75,12 @@ const Contact = () => {
       />
       <section>
         <div className={"max-w-2xl mx-auto"}>
-          {sendStatus == 2 ? (<div className="p-3 text-center relative bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 rounded-full">Thank you for contacting us. Our team will reply as soon as possible.</div>) :
+          {sendStatus == 2 ? (
+            <div className="p-3 text-center relative bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 rounded-full">
+              Thank you for contacting us. Our team will reply as soon as
+              possible.
+            </div>
+          ) : (
             <form
               onSubmit={handleSubmit}
               className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
@@ -211,10 +216,15 @@ const Contact = () => {
                   className={
                     "inline-flex items-center gap-x-2 justify-center bg-purple-2 text-white hover:bg-white hover:text-purple-2 px-5 py-3 text-base font-medium rounded-md"
                   }
-                  disabled={sendStatus==1}
+                  disabled={sendStatus == 1}
                 >
-                  {sendStatus == 1 ? "sending..." : (<><ChatAltIcon className={"w-5"} /> Submit Message</>) }
-
+                  {sendStatus == 1 ? (
+                    "sending..."
+                  ) : (
+                    <>
+                      <ChatAltIcon className={"w-5"} /> Submit Message
+                    </>
+                  )}
                 </button>
                 <button
                   type={"reset"}
@@ -226,7 +236,7 @@ const Contact = () => {
                 </button>
               </div>
             </form>
-          }
+          )}
         </div>
       </section>
     </>
