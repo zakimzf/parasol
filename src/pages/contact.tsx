@@ -219,7 +219,7 @@ const Contact = () => {
                   disabled={sendStatus == 1}
                 >
                   {sendStatus == 1 ? (
-                    "sending..."
+                    "Sending..."
                   ) : (
                     <>
                       <ChatAltIcon className={"w-5"} /> Submit Message
