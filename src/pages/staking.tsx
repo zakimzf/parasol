@@ -5,19 +5,13 @@ import {
   LightningBoltIcon,
   ScaleIcon,
 } from "@heroicons/react/outline";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { RadioGroup } from "@headlessui/react";
-import { PublicKey } from "@solana/web3.js";
-import { getPlatformFeeAccounts, TOKEN_LIST_URL } from "@jup-ag/core";
 
 import Container from "../components/container";
 import CardHost from "../components/cards/base-card";
 
 import Heading from "../components/heading";
-import { useTokenModal } from "../components/token-chooser/useTokenModal";
-import { Token } from "../components/token-chooser/constants";
-import { getWalletAdapterNetwork } from "../core/solana-network";
+import { NftContext } from "../context/NftContext";
 
 const operations = [
   { id: 0, title: "Stake", description: "Lock your $PSOL for 90 days." },
@@ -49,66 +43,27 @@ const advantages = [
 ];
 
 const Staking = () => {
-  const { connection } = useConnection();
-  const wallet = useWallet();
-
-  const { setVisible, setMode, input, setInput } = useTokenModal();
+  const { user, wallet, helper } = React.useContext(NftContext);
   const [iBalance, setIBalance] = useState(0);
   const [inputAmount, setInputAmount] = useState(0);
   const [balanceAvailable, setBalanceAvailable] = useState(true);
-  const [tokens, setTokens] = useState<Token[]>([]);
-  const [platformFeeAndAccounts, setPlatformFeeAndAccounts] = useState<{
-    feeBps: number;
-    feeAccounts: Map<string, PublicKey>;
-  }>();
-
-  const cluster: WalletAdapterNetwork = getWalletAdapterNetwork(
-    process.env.NETWORK
-  );
 
   useEffect(() => {
-    getPlatformFeeAccounts(
-      connection,
-      new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any)
-    ).then((r) => {
-      setPlatformFeeAndAccounts({
-        feeBps: +(process.env.PLATFORM_FEE_PERCENTAGE as any) * 100,
-        feeAccounts: r,
-      });
-    });
-    fetch(TOKEN_LIST_URL[cluster])
-      .then((response) => response.json())
-      .then((result) => setTokens(result));
-  }, [cluster, connection]);
-
-  useEffect(() => {
-    if (wallet.publicKey) {
+    if (!wallet.connected) return;
+    if (helper) {
       getIOBalance().then();
     } else {
       setIBalance(0);
     }
-  }, [input, wallet.publicKey]);
+  }, [wallet.publicKey]);
 
   useEffect(() => {
     isBalanceAvailable();
   }, [inputAmount]);
 
-  const chosenInput = tokens.find((x) => x.symbol === "PSOL" && x.name === "Parasol");
-
   const getIOBalance = async () => {
-    const [iResult] = await Promise.all([
-      connection.getParsedTokenAccountsByOwner(wallet.publicKey as any, {
-        mint: new PublicKey(chosenInput?.address as any),
-      }),
-    ]);
-
-    if (iResult.value.length > 0) {
-      const parsedInfo = iResult.value[0].account.data.parsed;
-      const iTokenAmount = parsedInfo.info.tokenAmount.uiAmount;
-      setIBalance(iTokenAmount);
-    } else {
-      setIBalance(0);
-    }
+    const psolAmount = await helper.getTokenBalance(user.paymentAta);
+    setIBalance(psolAmount);
   };
 
   const getMaxAmount = () => {
@@ -153,7 +108,7 @@ const Staking = () => {
   };
 
   const restrictDecimal = (val: any) => {
-    return Number(val.toFixed(chosenInput?.decimals));
+    return Number(val.toFixed(7));
   };
 
   const [selectedOperation, setSelectedOperation] = useState(operations[0]);
@@ -235,7 +190,7 @@ const Staking = () => {
                     className="gap-x-2 py-2 px-2 rounded-lg flex items-center"
                   >
                     <img
-                      src={"/assets/logos/parasol-logo-mark-reverse-rgb.svg"}
+                      src={"/images/logos/parasol-logo-mark-reverse-rgb.svg"}
                       className="w-5 h-5 rounded-full"
                       alt={"PSOL"}
                     />
