@@ -34,4 +34,4 @@ export const isTokenAddressExist = async (id)=>{
   return docSnap.exists();
 }
 
-export const errClasses = ["border-red-600", "text-red-600", "placeholder-red-600", "focus:outline-none", "focus:ring-red-600", "border-2", "focus:border-red-600", "sm:text-sm", "rounded-md"];
+export const errClasses = ["border-red-600", "text-red-600", "placeholder-red-600", "focus:outline-none", "focus:ring-red-600", "border-2", "focus:border-red-600", "sm:text-sm"];

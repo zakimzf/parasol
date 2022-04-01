@@ -1,89 +1,248 @@
 import Heading from "../components/heading";
 import Head from "next/head";
-import React from "react";
+import React, { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { ChatAltIcon } from "@heroicons/react/solid";
+import { errClasses } from "../utils/functions";
+import { ExclamationCircleIcon } from "@heroicons/react/outline";
+import { addDoc, collection, doc, Timestamp } from "firebase/firestore";
+import { db } from "../utils/firebase";
 
-const Contact = () => (
-  <>
-    <Head>
-      <title>Parasol Finance ($PSOL) | Contact Us</title>
-      <meta name="title" content="Parasol Finance ($PSOL) | Contact Us"/>
-      <meta property="og:image" content="/images/preview/contact.png"/>
-      <meta property="twitter:image" content="/images/preview/contact.png"/>
-    </Head>
-    <Heading tagline={"Get in Touch"} title={"Contact Parasol Finance"}
-      description="You want to write to us then use the form below."/>
-    <section>
-      <div className={"max-w-2xl mx-auto"}>
-        <form action="#" method="POST" className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8">
-          <div>
-            <label htmlFor="complete-name" className="block text-sm font-medium">
-              Complete Name
-            </label>
-            <div className="mt-1">
-              <input
-                type="text"
-                name="complete-name"
-                id="complete-name"
-                autoComplete="given-name"
-                className="py-3 px-4 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md"/>
+const Contact = () => {
+  const contactCollectionRef = collection(db, "contacts");
+
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+    created: Timestamp.now(),
+  });
+
+  const [errors, setErrors] = useState<any>([]);
+
+  const [sendStatus, setSendStatus] = useState(0);
+
+  const handleChange = async (e: any) => {
+    e.preventDefault();
+    let { name, value, classList } = e.target;
+
+    if (classList.contains("required_") && !value.trim()) {
+      classList.add(...errClasses);
+      errors[name] = "This field is required";
+    } else {
+      classList.remove(...errClasses);
+      errors[name] = "";
+    }
+
+    setValues({ ...values, [name]: value });
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setSendStatus(1);
+
+    const _errors: any = [];
+
+    let elements: any = document.getElementsByClassName("required_");
+    for (let el of elements) {
+      const { name, value } = el;
+      if (!value.trim()) {
+        _errors[name] = "This field is required";
+        el.classList.add(...errClasses);
+      } else el.classList.remove(...errClasses);
+    }
+    setErrors(_errors);
+
+    if (Object.keys(_errors).length == 0) {
+      await addDoc(contactCollectionRef, values);
+      setSendStatus(2);
+    }else{
+      setSendStatus(0);
+    }
+  };
+
+  return (
+    <>
+      <Head>
+        <title>Parasol Finance ($PSOL) | Contact Us</title>
+        <meta name="title" content="Parasol Finance ($PSOL) | Contact Us" />
+        <meta property="og:image" content="/images/preview/contact.png" />
+        <meta property="twitter:image" content="/images/preview/contact.png" />
+      </Head>
+      <Heading
+        tagline={"Get in Touch"}
+        title={"Contact Parasol Finance"}
+        description="You want to write to us then use the form below."
+      />
+      <section>
+        <div className={"max-w-2xl mx-auto"}>
+          {sendStatus == 2 ? (
+            <div className="p-3 text-center relative bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 rounded-full">
+              Thank you for contacting us. Our team will reply as soon as
+              possible.
             </div>
-          </div>
-          <div>
-            <label htmlFor="email-address" className="block text-sm font-medium">
-              Email Address
-            </label>
-            <div className="mt-1">
-              <input
-                type="email"
-                name="email-address"
-                id="email-address"
-                autoComplete="family-name"
-                className="py-3 px-4 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md"/>
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label htmlFor="subject" className="block text-sm font-medium">
-              Subject
-            </label>
-            <div className="mt-1">
-              <input
-                id="subject"
-                name="subject"
-                type="text"
-                autoComplete="email"
-                className="py-3 px-4 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md"/>
-            </div>
-          </div>
-          <div className="sm:col-span-2">
-            <label htmlFor="message" className="block text-sm font-medium">
-              Message
-            </label>
-            <div className="mt-1">
-              <TextareaAutosize
-                id="message"
-                name="message"
-                minRows={5}
-                className="py-3 px-4 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md"
-                defaultValue={""}/>
-            </div>
-          </div>
-          <div className={"col-span-2 flex justify-center gap-x-3 mt-6"}>
-            <button type={"submit"}
-              className={"inline-flex items-center gap-x-2 justify-center bg-purple-2 text-white hover:bg-white hover:text-purple-2 px-5 py-3 text-base font-medium rounded-md"}>
-              <ChatAltIcon className={"w-5"}/>
-              Submit Message
-            </button>
-            <button type={"reset"}
-              className={"inline-flex items-center gap-x-2 justify-center bg-white text-purple-2 hover:bg-purple-2 hover:text-white px-5 py-3 text-base font-medium rounded-md"}>
-              Clear
-            </button>
-          </div>
-        </form>
-      </div>
-    </section>
-  </>
-)
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
+            >
+              <div className="relative">
+                <label
+                  htmlFor="complete-name"
+                  className="block text-sm font-medium"
+                >
+                  Complete Name <span className="text-purple-2">*</span>
+                </label>
+                <div className="mt-1">
+                  <input
+                    onChange={handleChange}
+                    value={values.name}
+                    type="text"
+                    name="name"
+                    id="complete-name"
+                    autoComplete="given-name"
+                    className="py-3 px-4 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md required_"
+                  />
+
+                  {errors.name && (
+                    <>
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <div className="mt-2 text-sm text-red-600 sm:col-span-6">
+                        {errors.name}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="relative">
+                <label
+                  htmlFor="email-address"
+                  className="block text-sm font-medium"
+                >
+                  Email Address <span className="text-purple-2">*</span>
+                </label>
+                <div className="mt-1">
+                  <input
+                    onChange={handleChange}
+                    value={values.email}
+                    type="email"
+                    name="email"
+                    id="email-address"
+                    autoComplete="family-name"
+                    className="py-3 px-4 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md required_"
+                  />
+
+                  {errors.email && (
+                    <>
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <div className="mt-2 text-sm text-red-600 sm:col-span-6">
+                        {errors.email}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="sm:col-span-2 relative">
+                <label htmlFor="subject" className="block text-sm font-medium">
+                  Subject <span className="text-purple-2">*</span>
+                </label>
+                <div className="mt-1">
+                  <input
+                    onChange={handleChange}
+                    value={values.subject}
+                    id="subject"
+                    name="subject"
+                    type="text"
+                    autoComplete="email"
+                    className="py-3 px-4 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md required_"
+                  />
+
+                  {errors.subject && (
+                    <>
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <div className="mt-2 text-sm text-red-600 sm:col-span-6">
+                        {errors.subject}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className="sm:col-span-2 relative">
+                <label htmlFor="message" className="block text-sm font-medium">
+                  Message <span className="text-purple-2">*</span>
+                </label>
+                <div className="mt-1">
+                  <TextareaAutosize
+                    onChange={handleChange}
+                    value={values.message}
+                    id="message"
+                    name="message"
+                    minRows={5}
+                    className="py-3 px-4 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md required_"
+                  />
+
+                  {errors.message && (
+                    <>
+                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon
+                          className="h-5 w-5 text-red-500"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <div className="mt-2 text-sm text-red-600 sm:col-span-6">
+                        {errors.message}
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+              <div className={"col-span-2 flex justify-center gap-x-3 mt-6"}>
+                <button
+                  type={"submit"}
+                  className={
+                    "inline-flex items-center gap-x-2 justify-center bg-purple-2 text-white hover:bg-white hover:text-purple-2 px-5 py-3 text-base font-medium rounded-md"
+                  }
+                  disabled={sendStatus == 1}
+                >
+                  {sendStatus == 1 ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <ChatAltIcon className={"w-5"} /> Submit Message
+                    </>
+                  )}
+                </button>
+                <button
+                  type={"reset"}
+                  className={
+                    "inline-flex items-center gap-x-2 justify-center bg-white text-purple-2 hover:bg-purple-2 hover:text-white px-5 py-3 text-base font-medium rounded-md"
+                  }
+                >
+                  Clear
+                </button>
+              </div>
+            </form>
+          )}
+        </div>
+      </section>
+    </>
+  );
+};
 
 export default Contact;
