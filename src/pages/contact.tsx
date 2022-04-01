@@ -5,7 +5,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { ChatAltIcon } from "@heroicons/react/solid";
 import { errClasses } from "../utils/functions";
 import { ExclamationCircleIcon } from "@heroicons/react/outline";
-import { addDoc, collection, doc, Timestamp } from "firebase/firestore";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "../utils/firebase";
 
 const Contact = () => {
@@ -23,14 +23,15 @@ const Contact = () => {
 
   const [sendStatus, setSendStatus] = useState(0);
 
-  const handleChange = async (e: any) => {
+  const handleChange = (e: any) => {
     e.preventDefault();
     let { name, value, classList } = e.target;
 
     if (classList.contains("required_") && !value.trim()) {
       classList.add(...errClasses);
       errors[name] = "This field is required";
-    } else {
+    }
+    else {
       classList.remove(...errClasses);
       errors[name] = "";
     }
@@ -50,14 +51,16 @@ const Contact = () => {
       if (!value.trim()) {
         _errors[name] = "This field is required";
         el.classList.add(...errClasses);
-      } else el.classList.remove(...errClasses);
+      }
+      else el.classList.remove(...errClasses);
     }
     setErrors(_errors);
 
     if (Object.keys(_errors).length == 0) {
       await addDoc(contactCollectionRef, values);
       setSendStatus(2);
-    }else{
+    }
+    else {
       setSendStatus(0);
     }
   };
