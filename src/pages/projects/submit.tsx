@@ -61,7 +61,7 @@ const SubmitProject = () => {
 
   const [errors, setErrors] = useState<any>([]);
   
-  const handleChange = async (e:any) => {
+  const handleChange = (e:any) => {
     let { name, value, classList } = e.target
     if (name != "projectCover") {
       if (classList.contains("required_") && !value.trim()) {
@@ -194,7 +194,7 @@ const SubmitProject = () => {
       "state_changed",
       (snapshot) => {},
       (error) => console.log(error),
-      async () => {
+      () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const _values = { ...values, ["projectCover"]: downloadURL };
           callback(_values);          
@@ -203,7 +203,7 @@ const SubmitProject = () => {
     );
   };
 
-  const onDrop = useCallback(async (file) => {
+  const onDrop = useCallback((file) => {
     const _errors = errors;
     delete _errors["projectCover"];
     setErrors(_errors);
