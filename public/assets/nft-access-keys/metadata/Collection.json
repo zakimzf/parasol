@@ -1,0 +1,23 @@
+{
+    "name": "Parasol Access Keys",
+    "symbol": "PKEY",
+    "description": "Parasol Finance NFT Access Keys",
+    "seller_fee_basis_points": 2100,
+    "image": "https://raw.githubusercontent.com/parasol-labs-org/white-paper/main/logo.png",
+    "attributes": [],
+    "properties": {
+        "files": [
+            {
+                "uri": "collection.png",
+                "type": "image/png"
+            }
+        ],
+        "category": "image",
+        "creators": [
+            {
+                "address": "HYjY2XQNLUwDdRSYbPfdPADgYQFZ82Cir3yNvBSTtqjn",
+                "share": 100
+            }
+        ]
+    }
+}
