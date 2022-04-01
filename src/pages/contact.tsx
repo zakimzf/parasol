@@ -57,6 +57,8 @@ const Contact = () => {
     if (Object.keys(_errors).length == 0) {
       await addDoc(contactCollectionRef, values);
       setSendStatus(2);
+    }else{
+      setSendStatus(0);
     }
   };
 
