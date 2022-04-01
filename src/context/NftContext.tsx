@@ -7,15 +7,19 @@ import {
   NftStore,
   NftStoreConfig,
   User,
+  Migrator
 } from "parasol-finance-sdk";
+
 import { PublicKey } from "@solana/web3.js";
 
 interface Context {
   setNfts: (n: any) => void;
   nfts: any;
+  provider: any;
   nftStore: any;
   nftKinds: any;
   user: any;
+  migrator: any;
   wallet: any;
   config: any;
 }
@@ -23,9 +27,11 @@ interface Context {
 export const NftContext = createContext<Context>({
   setNfts: () => {},
   nfts: [],
+  provider: null,
   nftStore: null,
   nftKinds: null,
   user: null,
+  migrator: null,
   wallet: null,
   config: null,
 });
@@ -38,6 +44,7 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
   const [nftStore, setNftStore] = useState<any>();
   const [nftKinds, setNftKinds] = useState<any>();
   const [user, setUser] = useState<any>();
+  const [migrator, setMigrator] = useState<any>();
 
   useEffect(() => {
     if (!wallet.connected) return;
@@ -59,6 +66,8 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
     setNftKinds(nftKinds);
     const user = await new User(provider, nftStore).build();
     setUser(user);
+    const migrator = new Migrator(provider, user, nftKinds);
+    setMigrator(migrator);
   };
 
   const setData = (n: any): void => {
@@ -69,9 +78,11 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
       value={{
         setNfts: setData,
         nfts,
+        provider,
         nftStore,
         nftKinds,
         user,
+        migrator,
         config,
         wallet: useWallet()
       }}

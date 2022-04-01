@@ -6,24 +6,60 @@ import Link from "next/link";
 
 import CardHost from "../../components/cards/base-card";
 import Notification from "../../components/slices/notification";
+import { useWallet, useConnection } from "@solana/wallet-adapter-react";
 import { NftContext } from "../../context/NftContext";
+import { Keypair, PublicKey } from "@solana/web3.js";
 
 const Migrate = () => {
-  const { nfts, setNfts, user, wallet } = React.useContext(NftContext);
+  const { sendTransaction } = useWallet();
+  const { connection } = useConnection();
+
+  const { nfts, setNfts, wallet, migrator } = React.useContext(NftContext);
 
   useEffect(() => {
     if (!wallet.connected) return;
-    if (user) {
+    if (migrator) {
       getNFTList();
     }
   }, [wallet.connected]);
 
   useEffect(() => setSelected(nfts[0]), [nfts]);
   const [selected, setSelected] = useState<any>();
+  const [notificationMsg, setNotificationMsg] = useState({
+    msg: "",
+    status: "error",
+  });
 
   const getNFTList = async () => {
-    const nftsmetadata = await user.getNFTList();
+    const nftsmetadata = await migrator.getNFTList();
     setNfts(nftsmetadata);
+  };
+
+  const upgradeNFT = async () => {
+    const mintAddress = new PublicKey(selected.mint);
+    const mintKeypair = Keypair.generate();
+    try {
+      const tx = await migrator.upgrade(mintAddress, mintKeypair.publicKey);
+      const signature = await sendTransaction(tx, connection, { signers: [mintKeypair] });
+      setNotificationMsg({
+        msg: "Doing upgarde an NFT Now....",
+        status: "pending",
+      });
+      await connection.confirmTransaction(signature, "confirmed");
+    } catch (err) {
+      setNotificationMsg({
+        msg: "Doing upgarde an NFT is failed!",
+        status: "error",
+      });
+      return false;
+    }
+    setNotificationMsg({
+      msg: "Successfully did upgarde an NFT",
+      status: "success",
+    });
+
+    setNfts([]);
+    getNFTList();
   };
 
   return (
@@ -35,6 +71,21 @@ const Migrate = () => {
             Back
           </a>
         </Link>
+        {notificationMsg.msg.length > 0 ? (
+          <Notification
+            title={notificationMsg.msg}
+            source={notificationMsg.msg}
+            color={
+              notificationMsg.status == "pending"
+                ? "bg-gray-700"
+                : notificationMsg.status == "error"
+                  ? "bg-red-700"
+                  : "bg-green-700"
+            }
+          />
+        ) : (
+          ""
+        )}
         <CardHost hoverEffect={false} classes={"space-y-6"} padding={6}>
           <div className={"prose prose-lg prose-invert"}>
             <h2>Migrate NFT</h2>
@@ -109,6 +160,7 @@ const Migrate = () => {
               className={
                 "w-full bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"
               }
+              onClick={upgradeNFT}
             >
               Upgrade My NFT
             </button>
