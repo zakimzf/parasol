@@ -27,7 +27,7 @@ const Header = () => (
         <div className="flex justify-start lg:w-0 lg:flex-1">
           <Link href={"/"}>
             <a>
-              <Image src={Logo} className="h-5" alt="logo" />
+              <Image src={Logo} className="h-5" alt="logo"/>
             </a>
           </Link>
         </div>
@@ -35,7 +35,7 @@ const Header = () => (
           <Popover.Button
             className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
             <span className="sr-only">Open menu</span>
-            <MenuIcon className="h-6 w-6" aria-hidden="true" />
+            <MenuIcon className="h-6 w-6" aria-hidden="true"/>
           </Popover.Button>
         </div>
         <Popover.Group as="nav" className="hidden md:flex items-baseline space-x-10">
@@ -50,7 +50,7 @@ const Header = () => (
                 <Popover.Button
                   className='group inline-flex gap-x-1 items-center font-bold text-sm hover:text-gray-300'>
                   <span>Launchpad</span>
-                  <ChevronDownIcon className={"h-5 w-5 group-hover:text-gray-300"} aria-hidden="true" />
+                  <ChevronDownIcon className={"h-5 w-5 group-hover:text-gray-300"} aria-hidden="true"/>
                 </Popover.Button>
                 <Transition
                   as={Fragment}
@@ -69,7 +69,7 @@ const Header = () => (
                           <a
                             className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                             <CollectionIcon className="flex-shrink-0 h-6 w-6 text-purple-2"
-                              aria-hidden="true" />
+                              aria-hidden="true"/>
                             <div className="ml-4">
                               <p className="text-base font-medium text-white">
                                 Upcoming Projects
@@ -134,21 +134,7 @@ const Header = () => (
                             </div>
                           </a>
                         </Link>
-                        {/*{launchpadMenu.map((item) => (*/}
-                        {/*    <a*/}
-                        {/*        key={item.name}*/}
-                        {/*        href={item.href}*/}
-                        {/*        className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"*/}
-                        {/*    >*/}
-                        {/*        <item.icon className="flex-shrink-0 h-6 w-6 text-purple-2"*/}
-                        {/*                   aria-hidden="true"/>*/}
-                        {/*        <div className="ml-4">*/}
-                        {/*            <p className="text-base font-medium text-white">{item.name}</p>*/}
-                        {/*            <p className="mt-1 text-sm text-gray-300">{item.description}</p>*/}
-                        {/*        </div>*/}
-                        {/*    </a>*/}
-                        {/*))}*/}
-                        <div className="w-full border-t border-white border-opacity-10" />
+                        <div className="w-full border-t border-white border-opacity-10"/>
                         <Link href="/tiers" passHref>
                           <a className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
                             <img className="w-6 h-6 rounded-full" src="https://storage.googleapis.com/polkastarter-production-assets/tcwqly5amlb5m9b5uge0zfl4iwxm" width={0} height={0} alt="project"/>
@@ -185,21 +171,6 @@ const Header = () => (
               </>;
             }}
           </Popover>
-          {/*<Link href={"/projects"}>*/}
-          {/*	<a className="font-bold text-sm hover:text-gray-300">*/}
-          {/*		Launchpad*/}
-          {/*	</a>*/}
-          {/*</Link>*/}
-          {/*<Link href={"/tiers"}>*/}
-          {/*	<a className="font-bold border-b-pb-1 text-sm hover:text-gray-300">*/}
-          {/*		Access Keys*/}
-          {/*	</a>*/}
-          {/*</Link>*/}
-          {/*<Link href={"/governance"}>*/}
-          {/*    <a className="font-bold text-sm hover:text-gray-300">*/}
-          {/*        Governance*/}
-          {/*    </a>*/}
-          {/*</Link>*/}
           <Link href={"/staking"}>
             <a className="font-bold text-sm hover:text-gray-300">
               Staking
@@ -232,12 +203,11 @@ const Header = () => (
                         {toolsMenu.map((item) => (
                           <a
                             key={item.name}
-                            // href={item.href}
                             href={"https://forms.gle/eWqpaPdGMX8joTem9"}
                             className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
                           >
                             <item.icon className="flex-shrink-0 h-6 w-6 text-purple-2"
-                              aria-hidden="true" />
+                              aria-hidden="true"/>
                             <div className="ml-4">
                               <p className="text-base font-medium text-white">{item.name}</p>
                               <p className="mt-1 text-sm text-gray-300">{item.description}</p>
@@ -251,13 +221,8 @@ const Header = () => (
               </>;
             }}
           </Popover>
-          {/*<Link href={"/governance"}>*/}
-          {/*	<a className="font-bold text-sm hover:text-gray-300">*/}
-          {/*		Tools*/}
-          {/*	</a>*/}
-          {/*</Link>*/}
           <Popover className="relative">
-            {({ open }) => <>
+            {() => <>
               <Popover.Button
                 className={"group inline-flex items-center font-bold text-sm hover:text-gray-300"}>
                 <span>More</span>
@@ -281,7 +246,7 @@ const Header = () => (
                       <Link href={"/about"}>
                         <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                           <InformationCircleIcon
-                            className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                            className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                           <div className="ml-4">
                             <p className="text-base font-medium text-white">About Parasol
                               Finance
@@ -294,7 +259,7 @@ const Header = () => (
                       </Link>
                       <Link href={"/frequently-asked-questions"}>
                         <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                          <AnnotationIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                          <AnnotationIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                           <div className="ml-4">
                             <p className="text-base font-medium text-white">
                               Frequently Asked Questions (FAQ)
@@ -307,7 +272,7 @@ const Header = () => (
                       </Link>
                       <a href="https://docs.parasol.finance/"
                         className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                        <BookOpenIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                        <BookOpenIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                         <div className="ml-4">
                           <p className="text-base font-medium text-white">Read
                             Documentation
@@ -319,17 +284,12 @@ const Header = () => (
                       </a>
                       <a href="https://parasol-finance.medium.com/"
                         className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                        {/*<svg xmlns="http://www.w3.org/2000/svg" className={"flex-shrink-0 h-6 w-6 text-purple-2"} viewBox="0 0 360.465 204.139">*/}
-                        {/*	<g transform="translate(68.168 -117.174)">*/}
-                        {/*		<path id="path847" d="M24.172,321.059A102.34,102.34,0,0,1-66.4,239.335c-1.531-7.725-1.77-10.4-1.77-19.844,0-9.029.16-11.151,1.353-17.987A102.143,102.143,0,0,1,83.438,130.046a100.314,100.314,0,0,1,22.5,17.064c16.633,16.659,26.476,37.084,29.4,61a127.953,127.953,0,0,1,.005,22.357,101.35,101.35,0,0,1-4.67,21.034,101.91,101.91,0,0,1-65.687,65.059,109.45,109.45,0,0,1-22.026,4.52,183.424,183.424,0,0,1-18.785-.025Zm167.614-4.9c-16.515-2.534-31.365-19.456-40.1-45.692A157.683,157.683,0,0,1,144.5,235.5a261.258,261.258,0,0,1,0-32.411c1.6-15.67,4.68-29.175,9.364-41.01,4.767-12.045,10.41-21.185,17.4-28.193,5.836-5.847,11.154-9.1,17.785-10.9,2.33-.629,3.058-.7,7.094-.7s4.765.072,7.094.7c6.629,1.79,11.928,5.036,17.788,10.9,14.142,14.143,23.745,38.864,26.727,68.8a265.5,265.5,0,0,1,.4,27.812c-1.127,16.4-4.132,31.14-9.043,44.344a131.734,131.734,0,0,1-8.838,18.2c-8.508,13.465-18.946,21.5-30.066,23.134a23.7,23.7,0,0,1-8.433-.024Zm79.337-10.149c-1.541-.814-3.569-3.334-5.114-6.354-9.639-18.844-14.12-69.938-10.046-114.557,2.662-29.155,8.75-49.651,15.655-52.706,2.16-.956,3.909-.355,6.214,2.134,6.044,6.528,11.081,27.048,13.291,54.143a410.516,410.516,0,0,1,.394,56.356c-2.136,31.99-8.316,56.164-15.529,60.738a4.88,4.88,0,0,1-4.864.245Z" fill={"currentColor"}/>*/}
-                        {/*	</g>*/}
-                        {/*</svg>*/}
                         <svg xmlns="http://www.w3.org/2000/svg"
                           className={"flex-shrink-0 h-6 w-6 text-purple-2"}
                           viewBox="0 0 24 24">
                           <path
                             d="M4.285 7.269a.733.733 0 0 0-.24-.619l-1.77-2.133v-.32h5.498l4.25 9.32 3.736-9.32H21v.319l-1.515 1.451a.45.45 0 0 0-.168.425v10.666a.448.448 0 0 0 .168.425l1.479 1.451v.319h-7.436v-.319l1.529-1.487c.152-.15.152-.195.152-.424V8.401L10.95 19.218h-.575L5.417 8.401v7.249c-.041.305.06.612.275.833L7.684 18.9v.319H2.036V18.9l1.992-2.417a.971.971 0 0 0 .257-.833V7.269z"
-                            fill={"currentColor"} />
+                            fill={"currentColor"}/>
                         </svg>
                         <div className="ml-4">
                           <p className="text-base font-medium text-white">Official
@@ -343,7 +303,7 @@ const Header = () => (
                       <Link href={"/contact"}>
                         <a
                           className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                          <MailIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"} />
+                          <MailIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                           <div className="ml-4">
                             <p className="text-base font-medium text-white">Contact Us
                             </p>
@@ -352,21 +312,6 @@ const Header = () => (
                         </a>
                       </Link>
                     </div>
-                    {/*<div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-8 sm:p-8">*/}
-                    {/*	{resourcesMenu.map((item) => (*/}
-                    {/*		<a*/}
-                    {/*			key={item.name}*/}
-                    {/*			href={item.href}*/}
-                    {/*			className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"*/}
-                    {/*		>*/}
-                    {/*			<item.icon className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true" />*/}
-                    {/*			<div className="ml-4">*/}
-                    {/*				<p className="text-base font-medium text-white">{item.name}</p>*/}
-                    {/*				<p className="mt-1 text-sm text-gray-300">{item.description}</p>*/}
-                    {/*			</div>*/}
-                    {/*		</a>*/}
-                    {/*	))}*/}
-                    {/*</div>*/}
                     <div className="px-5 py-5 bg-[#2a2542] sm:px-8 sm:py-8">
                       <div>
                         <h3 className="text-sm tracking-wide font-medium text-gray-400 uppercase">Recent
@@ -397,7 +342,7 @@ const Header = () => (
           </Popover>
         </Popover.Group>
         <div className="hidden md:flex items-center gap-x-3 justify-end md:flex-1 lg:w-0">
-          <WalletConnect />
+          <WalletConnect/>
         </div>
       </div>
     </div>
@@ -427,20 +372,12 @@ const Header = () => (
                 <Popover.Button
                   className="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
                   <span className="sr-only">Close menu</span>
-                  <XIcon className="h-6 w-6" aria-hidden="true" />
+                  <XIcon className="h-6 w-6" aria-hidden="true"/>
                 </Popover.Button>
               </div>
             </div>
             <div className="mt-6">
               <nav className="grid gap-y-8">
-                {/*{launchpadMenu.map((item) => <a*/}
-                {/*    key={item.name}*/}
-                {/*    href={item.href}*/}
-                {/*    className="-m-3 p-3 flex items-center rounded-md hover:bg-gray-50"*/}
-                {/*>*/}
-                {/*    <item.icon className="flex-shrink-0 h-6 w-6 text-indigo-600" aria-hidden="true"/>*/}
-                {/*    <span className="ml-3 text-base font-medium text-gray-900">{item.name}</span>*/}
-                {/*</a>)}*/}
               </nav>
             </div>
           </div>
