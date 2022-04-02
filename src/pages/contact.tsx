@@ -1,15 +1,17 @@
 import Heading from "../components/heading";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { ChatAltIcon } from "@heroicons/react/solid";
 import { errClasses } from "../utils/functions";
 import { ExclamationCircleIcon } from "@heroicons/react/outline";
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "../utils/firebase";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 const Contact = () => {
   const contactCollectionRef = collection(db, "contacts");
+  const sitekey:any = process.env.HCAPTCHA_SITE_KEY;
 
   const [values, setValues] = useState({
     name: "",
@@ -39,8 +41,12 @@ const Contact = () => {
     setValues({ ...values, [name]: value });
   };
 
+  const [token, setToken] = useState<any>(null);
+  const captchaRef: any = useRef(null);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     setSendStatus(1);
 
     const _errors: any = [];
@@ -57,8 +63,14 @@ const Contact = () => {
     setErrors(_errors);
 
     if (Object.keys(_errors).length == 0) {
-      await addDoc(contactCollectionRef, values);
-      setSendStatus(2);
+      if (token) {
+        await addDoc(contactCollectionRef, values);
+        setSendStatus(2);
+      }
+      else {
+        captchaRef.current.execute();
+        setSendStatus(0);
+      }
     }
     else {
       setSendStatus(0);
@@ -215,7 +227,16 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className={"col-span-2 flex justify-center gap-x-3 mt-6"}>
+
+              <div className={"col-span-2 flex justify-center gap-x-3"}>
+                <HCaptcha
+                  sitekey={sitekey}
+                  onVerify={setToken}
+                  ref={captchaRef}
+                />
+              </div>
+
+              <div className={"col-span-2 flex justify-center gap-x-3 mt-3"}>
                 <button
                   type={"submit"}
                   className={
