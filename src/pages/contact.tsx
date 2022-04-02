@@ -9,7 +9,6 @@ import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
-
 const Contact = () => {
   const contactCollectionRef = collection(db, "contacts");
   const sitekey:any = process.env.HCAPTCHA_SITE_KEY;
@@ -67,11 +66,13 @@ const Contact = () => {
       if (token) {
         await addDoc(contactCollectionRef, values);
         setSendStatus(2);
-      } else {
+      }
+      else {
         captchaRef.current.execute();
         setSendStatus(0);
       }
-    } else {
+    }
+    else {
       setSendStatus(0);
     }
   };
