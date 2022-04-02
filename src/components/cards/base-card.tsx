@@ -12,7 +12,7 @@ const BaseCard = ({ children, hoverEffect, classes, padding }: CardBaseProps) =>
   if (classes != null) {
     className.push(classes);
   }
-  if(hoverEffect) {
+  if (hoverEffect) {
     className.push("transition duration-300 hover:-translate-y-3 hover:shadow hover:shadow-gray-800")
   }
   return <article className={className.join(" ")}>{children}</article>;

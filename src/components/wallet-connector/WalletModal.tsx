@@ -17,9 +17,11 @@ export const WalletModal: FC = () => {
     for (const wallet of wallets) {
       if (wallet.readyState === WalletReadyState.NotDetected) {
         notDetected.push(wallet);
-      } else if (wallet.readyState === WalletReadyState.Loadable) {
+      }
+      else if (wallet.readyState === WalletReadyState.Loadable) {
         loadable.push(wallet);
-      } else if (wallet.readyState === WalletReadyState.Installed) {
+      }
+      else if (wallet.readyState === WalletReadyState.Installed) {
         installed.push(wallet);
       }
     }

@@ -19,12 +19,9 @@ const Page404 = () => {
             <Link href={"/"}>
               <a className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-2 hover:bg-white hover:text-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                 <ArrowLeftIcon className="h-5 mr-2"/>
-                  Back Home
+                Back Home
               </a>
             </Link>
-            {/*<a href="#" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-purple-2 bg-white hover:bg-purple-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"> Contact*/}
-            {/*	support*/}
-            {/*</a>*/}
           </div>
         </div>
       </main>
