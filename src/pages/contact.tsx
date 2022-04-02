@@ -24,7 +24,7 @@ const Contact = () => {
 
   const [sendStatus, setSendStatus] = useState(0);
 
-  const handleChange = async (e: any) => {
+  const handleChange = (e: any) => {
     e.preventDefault();
     let { name, value, classList } = e.target;
 
