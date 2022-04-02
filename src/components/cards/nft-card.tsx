@@ -71,7 +71,7 @@ const NftCard = ({
           </div>
           <div className="flex items-baseline text-4xl xl:text-4xl lg:text-2xl font-extrabold">
             <span className="flex text-white gap-x-3 items-center">
-              <Image src={Logo} className="h-8" alt="logo" width={30}  height={30}/>
+              <Image src={Logo} className="h-8" alt="logo" width={32}  height={32}/>
               <div className="flex items-end gap-x-2">
                 {amount > 10000
                   ? (amount / 1000).toLocaleString("en-US", {

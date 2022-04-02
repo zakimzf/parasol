@@ -50,7 +50,6 @@ const Tiers = function () {
       vestingPeriod: 4,
     },
   ]);
-  // const [tiersData, setTiersData] = useState([]);
 
   const { provider, nfts, setNfts, wallet, user } =
     React.useContext(NftContext);
