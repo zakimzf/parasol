@@ -2,7 +2,6 @@ import Link from "next/link";
 import { CollectionIcon } from "@heroicons/react/outline";
 
 import FloatingParasol from "../utils/floating-illustration";
-// const ParasolLogo = require('../public/images/logos/parasol-logo-mark-reverse-rgb.svg')
 
 const Hero = () => (
   <section id="hero" className="mt-6">
@@ -43,8 +42,8 @@ const Hero = () => (
             <Link href={"/projects"}>
               <a
                 className="flex items-center justify-center gap-x-2 px-10 bg-purple-2 py-3 text-base font-medium rounded-lg shadow-lg text-white bg-gradient-primary hover:from-pink-600 hover:to-purple-500">
-                <CollectionIcon className={"w-5 h-5"} />
-                                View Upcoming IDOs
+                <CollectionIcon className={"w-5 h-5"}/>
+                View Upcoming IDOs
               </a>
             </Link>
             <Link href={"/swap"}>
@@ -69,8 +68,7 @@ const Hero = () => (
                       d="M41.3623,116.3066v15.94L61.0764,143.59a3.4042,3.4042,0,0,0,3.4226,0l12.0988-6.8334Z"/>
                   </g>
                 </svg>
-                {/*<img src={ParasolLogo} />*/}
-                                Buy $PSOL With USDC
+                Buy $PSOL With USDC
               </a>
             </Link>
           </div>
@@ -78,11 +76,6 @@ const Hero = () => (
       </div>
       <div className="relative- mt-20 sm:mt-24 lg:mt-0 lg:col-span-6 hidden lg:flex justify-end">
         <FloatingParasol/>
-        {/*<div className="w-full relative -mt-12 -mr-3">*/}
-        {/*	<img className="absolute w-full logo" alt="l" src="/images/logo-min.png"/>*/}
-        {/*	<img className="absolute w-full parasol" alt="l" src="/images/logo_p-min.png"/>*/}
-        {/*	<img className="absolute w-full token" alt="l" src="/images/logo_q-min.png"/>*/}
-        {/*</div>*/}
       </div>
     </div>
   </section>

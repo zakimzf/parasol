@@ -53,7 +53,6 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
     preflightCommitment: "confirmed",
   });
 
-
   const initParams = async () => {
     const nftStore = await new NftStore(provider, config).build();
     setNftStore(nftStore);

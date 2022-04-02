@@ -15,8 +15,6 @@ const project =
   cover: "https://storage.googleapis.com/polkastarter-production-assets/nfy5nnqh2v55q1dbfcynrqeipzcb"
 };
 
-const Logo = require("/public/images/team/Anthony.png")
-
 const markdown = `![](https://storage.googleapis.com/polkastarter-production-assets/h3bth4ctn32w62tmrk7a9cewyxn8)
 
 Sagittis scelerisque nulla cursus in enim consectetur quam.

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useMemo, useRef, useCallback } from "react";
+import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Listbox, RadioGroup, Transition } from "@headlessui/react"
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import Container from "../../components/container";
@@ -8,13 +8,7 @@ import axios from "axios";
 import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
 import { db, storage } from "../../utils/firebase";
 import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
-import {
-  collection,
-  doc,
-  getDoc,
-  Timestamp,
-  setDoc,
-} from "firebase/firestore";
+import { collection, doc, setDoc, Timestamp, } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
@@ -32,7 +26,6 @@ const packages = [
 ];
 
 const SubmitProject = () => {
-
   const router = useRouter();
 
   const { publicKey } = useWallet();
@@ -68,18 +61,19 @@ const SubmitProject = () => {
 
   const [errors, setErrors] = useState<any>([]);
   
-  const handleChange = async(e:any) => {
+  const handleChange = (e:any) => {
     let { name, value, classList } = e.target
-    if(name != "projectCover"){
-
-      if(classList.contains("required_") && !value.trim()) {
+    if (name != "projectCover") {
+      if (classList.contains("required_") && !value.trim()) {
         classList.add(...errClasses);
         errors[name] = "This field is required";
-      }else if(classList.contains("url_") && value.trim() && !validURL(value)){
+      }
+      else if (classList.contains("url_") && value.trim() && !validURL(value)) {
         classList.add(...errClasses);
         errors[name] = "Please enter a valid url";
-      }else{
-        if(name != "splToken"){
+      }
+      else {
+        if (name != "splToken") {
           classList.remove(...errClasses);
           errors[name] = "";
         }
@@ -88,9 +82,9 @@ const SubmitProject = () => {
     }
   }
 
-  const handleSubmit = async(e: { preventDefault: () => void; })=>{
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    if(walletAddress){
+    if (walletAddress) {
       const preContent = submitBtnRef.current.innerHTML;
       submitBtnRef.current.innerHTML = "Loading ..."
       submitBtnRef.current.setAttribute("disabled", true);
@@ -99,44 +93,43 @@ const SubmitProject = () => {
     }
   }
 
-  const validateAllFields = async(justSPL = false)=>{
-
+  const validateAllFields = async (justSPL = false) => {
     const _errors:any = [];
 
-    if(!justSPL){
+    if (!justSPL) {
       let elements:any = document.getElementsByClassName("required_");
-      for(let el of elements){
+      for (let el of elements) {
         const { name, value } = el;
-        if(!value.trim()){
+        if (!value.trim()) {
           _errors[name] = "This field is required";
           el.classList.add(...errClasses);
-        }else el.classList.remove(...errClasses);
+        }
+        else el.classList.remove(...errClasses);
       }
   
       elements = document.getElementsByClassName("url_");
-      for(let el of elements){
+      for (let el of elements) {
         const { name, value } = el;
-        if(value.trim() && !validURL(value)){
+        if (value.trim() && !validURL(value)) {
           _errors[name] = "Please enter a valid url";
           el.classList.add(...errClasses);
         }
       }
   
-      if(!coverFile){
+      if (!coverFile) {
         _errors["projectCover"] = "This field is required";
       }  
 
-      if(!values.package){
+      if (!values.package) {
         _errors["package"] = "This field is required";
-      } 
-
+      }
     }  
 
     const { name, value } = splRef.current;
-    if(value){
+    if (value) {
       const isExist = await isTokenAddressExist(value);
       
-      if(isExist){
+      if (isExist) {
         _errors[name] = "This address was already used for run a previous IDO";
         splRef.current.classList.add(...errClasses);
       }
@@ -146,70 +139,62 @@ const SubmitProject = () => {
     return _errors;
   }
 
-  const validateAllFieldsAndRedirection = async ()=>{
-    
+  const validateAllFieldsAndRedirection = async () => {
     const _errors = await validateAllFields();
     
-    if(Object.keys(_errors).length == 0){
-    
+    if (Object.keys(_errors).length == 0) {
       values.publicKey = walletAddress;
-      uploadFiles(coverFile, async(_values: any)=>{
+      uploadFiles(coverFile, async (_values: any) => {
         await setDoc(doc(idosCollectionRef, _values.splToken), _values);
         router.push(`/projects/${values.splToken}`);
       })
-      
     }
   }
   
   useEffect(() => {
-
-    const getTokeData = ()=>{
-      
+    const getTokeData = () => {
       const address = values.splToken;
       const _errors = errors;
       
-      if(address){
-        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async(res)=>{
+      if (address) {
+        axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async (res) => {
           splRef.current?.classList.remove(...errClasses);
           delete _errors["splToken"];
           setErrors(_errors);
           const { data } = res;  
-          if(await isTokenAddressExist(address))validateAllFields(true);     
-          else if(data){
+          if (await isTokenAddressExist(address))validateAllFields(true);     
+          else if (data) {
             const obj:any = {};
-            if(data.name)obj.projectName = data.name;
-            if(data.symbol)obj.symbol = data.symbol;
-            if(data.icon)obj.projectIcon = data.icon;
-            if(data.website)obj.websiteUrl = data.website;
-            if(data.twitter)obj.twitter = data.twitter;
-            if(data.telegram)obj.telegram = data.telegram;
+            if (data.name)obj.projectName = data.name;
+            if (data.symbol)obj.symbol = data.symbol;
+            if (data.icon)obj.projectIcon = data.icon;
+            if (data.website)obj.websiteUrl = data.website;
+            if (data.twitter)obj.twitter = data.twitter;
+            if (data.telegram)obj.telegram = data.telegram;
 
             setValues((preValues) => ({ ...preValues, ...obj }));
             // validateAllFields(true);
           }
-          
         }).catch(error => {        
           _errors["splToken"] = "Please enter a valid token address" 
           setErrors(_errors);
         });
       }
-    
     }
     getTokeData();
-
   }, [values.splToken]);
 
   const uploadFiles = (file:any, callback:Function) => {
     //
     if (!file) return;
-    const sotrageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
-    const uploadTask = uploadBytesResumable(sotrageRef, file);
+    const storageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
       "state_changed",
       (snapshot) => {},
       (error) => console.log(error),
-      async() => {
+      () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const _values = { ...values, ["projectCover"]: downloadURL };
           callback(_values);          
@@ -218,14 +203,12 @@ const SubmitProject = () => {
     );
   };
 
-  const onDrop = useCallback(async(file) => {
-
+  const onDrop = useCallback((file) => {
     const _errors = errors;
     delete _errors["projectCover"];
     setErrors(_errors);
 
     setcoverFile(file[0]);
-
   }, []);
   
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
@@ -269,7 +252,6 @@ const SubmitProject = () => {
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></> }
                    
                   </div>
-
                   
                   <p className="text-sm text-blue-gray-500 sm:col-span-6">
                     The token information will be fetched from the Solana blockchain.
@@ -283,8 +265,7 @@ const SubmitProject = () => {
                       Project Cover <span className="text-purple-2">*</span>
                     </label>
                     <div
-                      className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 pb-6 flex justify-center ${coverFile && "border-purple-2"} ${errors.projectCover && "border-red-600"}`} {...getRootProps()}>
-
+                      className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 py-6 flex justify-center ${coverFile && "border-purple-2"} ${errors.projectCover && "border-red-600"}`} {...getRootProps()}>
 
                       <div className="space-y-1 text-center">
 
@@ -413,7 +394,6 @@ const SubmitProject = () => {
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.whitepaperUrl}</div></> }
                   </div>
                 </div>
-
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
@@ -586,7 +566,9 @@ const SubmitProject = () => {
                   <div className="sm:col-span-5">
                     <RadioGroup 
                       value={values.package} 
-                      onChange={(pac)=>{setValues({ ...values, ["package"]: pac })}}
+                      onChange={(pac) => {
+                        setValues({ ...values, ["package"]: pac })
+                      }}
                     >
                       <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
                       <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -608,7 +590,7 @@ const SubmitProject = () => {
                                       {size.description}
                                     </RadioGroup.Description>
                                     <RadioGroup.Description as="span" className="mt-3 flex items-center gap-x-2 text-sm font-medium">
-                                      <img className="h-4" src={"/images/logos/parasol-logo-mark-reverse-rgb.svg"} alt="psol" />
+                                      <img className="h-4" src={"/assets/logos/parasol-logo-mark-reverse-rgb.svg"} alt="psol" />
                                       <NumberFormat
                                         value={!size.price && "0" || size.price}
                                         displayType={"text"}
@@ -640,7 +622,7 @@ const SubmitProject = () => {
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
                 <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
-                  <div className={"relative px-6 pt-6 pb-6"}>
+                  <div className={"relative px-6 py-6"}>
                     <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                       {!values.projectName.trim() && "Project Name" || values.projectName}
                     </h2>
@@ -710,7 +692,6 @@ const SubmitProject = () => {
                       ) : (
                         <>Connect Wallet</>
                       )}
-
                       
                     </button>
                   </div>

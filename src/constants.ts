@@ -1,7 +1,7 @@
-export const Clint = require("../public/images/team/Clint.png");
-let Alex = require("/public/images/team/Alex.png");
-let Anthony = require("/public/images/team/Anthony.png");
-let Tom = require("/public/images/team/Tom.png");
+export const Clint = require("../public/assets/team/clint.png");
+let Alex = require("../public/assets/team/alex.png");
+let Anthony = require("../public/assets/team/anthony.png");
+let Tom = require("../public/assets/team/tom.png");
 
 export const people = [
   {
