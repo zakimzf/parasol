@@ -14,7 +14,7 @@ import Head from "next/head";
 const Tiers = function () {
   const { connection } = useConnection();
   const { sendTransaction } = useWallet();
-  const [ferchTiers, setFerchTiers] = useState(false)
+  const [ferchTiers, setFerchTiers] = useState(false);
   const [tiers, setTiers] = useState<any>([
     {
       id: 0,
@@ -39,7 +39,7 @@ const Tiers = function () {
       logo: "/assets/nft-access-keys/covers/Chiller.png",
       video: "/assets/nft-access-keys/videos/Chiller.mp4",
       vestingPeriod: 6,
-      owned: true
+      owned: true,
     },
     {
       id: 3,
@@ -52,7 +52,8 @@ const Tiers = function () {
   ]);
   // const [tiersData, setTiersData] = useState([]);
 
-  const { provider, nfts, setNfts, wallet, user } = React.useContext(NftContext);
+  const { provider, nfts, setNfts, wallet, user } =
+    React.useContext(NftContext);
 
   const [notificationMsg, setNotificationMsg] = useState({
     msg: "",
@@ -63,10 +64,12 @@ const Tiers = function () {
     try {
       const mintKeypair = Keypair.generate();
       const tx = await user.purchase(mintKeypair.publicKey, index);
-      const signature = await sendTransaction(tx, connection, { signers: [mintKeypair] });
+      const signature = await sendTransaction(tx, connection, {
+        signers: [mintKeypair],
+      });
       setNotificationMsg({ msg: "Minting an NFT Now....", status: "pending" });
       await connection.confirmTransaction(signature, "confirmed");
-    }
+    } 
     catch (err) {
       setNotificationMsg({ msg: "Minting an NFT is failed!", status: "error" });
       return false;
@@ -77,33 +80,39 @@ const Tiers = function () {
     });
   };
 
-  
   useEffect(() => {
-    const nftKindData = async()=>{
-      const nftKinds = await Promise.all([0,1,2,3].map((tier) => new NftKind(provider, tier).build()));
-      const tiersDataArray:any = tiers;
-      await Promise.all(nftKinds.map(async(nftKind:any) => {
-        const data = await nftKind.data(); 
-        tiersDataArray[nftKind.tier].data =  data;
-      }));
+    const nftKindData = async () => {
+      const nftKinds = await Promise.all(
+        [0, 1, 2, 3].map((tier) => new NftKind(provider, tier).build())
+      );
+      const tiersDataArray: any = tiers;
+      await Promise.all(
+        nftKinds.map(async (nftKind: any) => {
+          const data = await nftKind.data();
+          tiersDataArray[nftKind.tier].data = data;
+        })
+      );
       setTiers(tiersDataArray);
-      setFerchTiers(true)
-    }
+      setFerchTiers(true);
+    };
     nftKindData();
-  }, [])
+  }, []);
 
   return (
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | NFT Access Keys</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | NFT Access Keys"/>
-        <meta property="og:image" content="/images/preview/tiers.png"/>
-        <meta property="twitter:image" content="/images/preview/tiers.png"/>
+        <meta
+          name="title"
+          content="Parasol Finance ($PSOL) | NFT Access Keys"
+        />
+        <meta property="og:image" content="/images/preview/tiers.png" />
+        <meta property="twitter:image" content="/images/preview/tiers.png" />
       </Head>
       <section>
         <Container>
           <div className={"grid grid-cols-3  pt-10 pb-16"}>
-            <div className={"flex gap-x-2 items-center"}/>
+            <div className={"flex gap-x-2 items-center"} />
             <div>
               <div className="text-center">
                 <h2 className="text-base font-semibold tracking-wider mb-3 text-purple-400 uppercase">
@@ -127,9 +136,7 @@ const Tiers = function () {
                 color={
                   notificationMsg.status == "pending"
                     ? "bg-gray-700"
-                    : notificationMsg.status == "error"
-                      ? "bg-red-700"
-                      : "bg-green-700"
+                    : notificationMsg.status == "error" ? "bg-red-700" : "bg-green-700"
                 }
               />
             ) : (
@@ -138,13 +145,13 @@ const Tiers = function () {
             <div className={"flex gap-x-2 justify-end items-center"}>
               <Link href={"/tiers/migrate"}>
                 <a className="inline-flex relative gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-300">
-                  <UploadIcon className={"w-4"}/>
+                  <UploadIcon className={"w-4"} />
                   Migrate
                 </a>
               </Link>
               <Link href={"/tiers/redeem"}>
                 <a className="inline-flex gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-200">
-                  <SwitchVerticalIcon className={"w-4"}/>
+                  <SwitchVerticalIcon className={"w-4"} />
                   Redeem
                 </a>
               </Link>
@@ -155,21 +162,24 @@ const Tiers = function () {
       <section>
         <Container fluid={false}>
           <div className="grid grid-cols-4 gap-x-7">
-            {ferchTiers ? tiers.map((t:any, index:any) => (<NftCard
-              owned={t.owned}
-              key={t.id}
-              id={t.id}
-              name={t.name}
-              amount={t.amount}
-              index={index}
-              poster={t.logo}
-              video={t.video}
-              vestingPeriod={t.vestingPeriod}
-              buyNFT={buyNFT}
-              connected={wallet.connected}
-              data={t.data && t.data}
-            />)
-            ) : ""}
+            {ferchTiers
+              ? tiers.map((t: any, index: any) => (
+                <NftCard
+                  owned={t.owned}
+                  key={t.id}
+                  id={t.id}
+                  name={t.name}
+                  amount={t.amount}
+                  index={index}
+                  poster={t.logo}
+                  video={t.video}
+                  vestingPeriod={t.vestingPeriod}
+                  buyNFT={buyNFT}
+                  connected={wallet.connected}
+                  data={t.data && t.data}
+                />
+              ))
+              : ""}
           </div>
         </Container>
       </section>

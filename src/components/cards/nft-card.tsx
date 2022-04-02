@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/outline";
 import { useWalletModal } from "../../components/wallet-connector";
+import Logo from "/public/assets/logos/parasol-logo-mark-full-color-rgb.svg";
+import Image from "next/image";
 
 type NftDetails = {
   owned?: boolean,
@@ -31,7 +33,6 @@ const NftCard = ({
   connected,
   data,
 }: NftDetails) => {
-
   const videoRef = useRef<HTMLVideoElement>(null);
   const playVideo = () => videoRef.current && videoRef.current.play();
   const pauseVideo = () => videoRef.current && videoRef.current.pause();
@@ -70,11 +71,7 @@ const NftCard = ({
           </div>
           <div className="flex items-baseline text-4xl xl:text-4xl lg:text-2xl font-extrabold">
             <span className="flex text-white gap-x-3 items-center">
-              <img
-                className="h-8"
-                src="/images/logos/parasol-logo-mark-full-color-rgb.svg"
-                alt="psol"
-              />
+              <Image src={Logo} className="h-8" alt="logo" width={30}  height={30}/>
               <div className="flex items-end gap-x-2">
                 {amount > 10000
                   ? (amount / 1000).toLocaleString("en-US", {
