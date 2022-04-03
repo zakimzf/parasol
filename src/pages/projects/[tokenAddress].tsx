@@ -5,6 +5,7 @@ import { SRLWrapper } from "simple-react-lightbox";
 import Markdown from "markdown-to-jsx";
 
 import Container from "../../components/container";
+import axios from "axios";
 
 const project =
 {
@@ -68,28 +69,20 @@ let amount = 300000;
 const ProjectDetails = () => {
   const router = useRouter()
   
-  const { id } = router.query;
-  
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [blogs, setBlogs] = useState([]);
+  const { tokenAddress } = router.query;
 
+  const [ido, setIdo] = useState(null)
+  
   useEffect(() => {
-    // fetch("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@nutanbhogendrasharma/")
-    // 	.then(res => res.json())
-    // 	.then(
-    // 		(data) => {
-    // 			setIsLoaded(true);
-    // 			setBlogs(data.items);
-    // 		},
-    // 		(error) => {
-    // 			setIsLoaded(true);
-    // 			setError(error);
-    // 		}
-    // 	)
-  }, [])
+    const getDataByTokenAddress = async()=>{
+      const {data}:any = await axios.get(`/api/projects/${tokenAddress}`);
+      if(data) setIdo(data);
+    }
+    getDataByTokenAddress();
+  }, [tokenAddress])
 
   return <section className="pt-6">
+    { ido ?
     <Container>
       {/*<nav className="flex mb-8" aria-label="Breadcrumb">*/}
       {/*	<ol role="list" className="flex items-center space-x-4">*/}
@@ -192,6 +185,7 @@ const ProjectDetails = () => {
         </div>
       </div>
     </Container>
+    : ""}
   </section>
 }
 
