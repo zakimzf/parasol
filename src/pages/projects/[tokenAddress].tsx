@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { SRLWrapper } from "simple-react-lightbox";
 import Markdown from "markdown-to-jsx";
-import MDEditor from '@uiw/react-md-editor';
 
 import Container from "../../components/container";
 import axios from "axios";
@@ -51,7 +50,7 @@ const ProjectDetails = () => {
       if (data) setIdo(data);
       else router.push(`/404`);
     };
-    if(tokenAddress) getDataByTokenAddress();
+    if (tokenAddress) getDataByTokenAddress();
   }, [tokenAddress]);
 
   const [value, setValue] = useState<any>("**Hello world!!!**");
@@ -97,12 +96,6 @@ const ProjectDetails = () => {
                 </div>
               </div>
 
-              {/* <MDEditor
-                value={value}
-                onChange={setValue}
-              />
-              <MDEditor.Markdown source={value} /> */}
-                      
               <SRLWrapper>
                 <Markdown
                   options={{
