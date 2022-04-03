@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { SRLWrapper } from "simple-react-lightbox";
 import Markdown from "markdown-to-jsx";
+import MDEditor from '@uiw/react-md-editor';
 
 import Container from "../../components/container";
 import axios from "axios";
@@ -37,22 +38,6 @@ Purus morbi dignissim senectus mattis [adipiscing](#). Amet, massa quam varius o
 Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit.
 `;
 
-const renderers = {
-  //This custom renderer changes how images are rendered
-  //we use it to constrain the max width of an image to its container
-  image: ({
-    alt,
-    src,
-    title,
-  }: {
-    alt?: string;
-    src?: string;
-    title?: string;
-  }) => <img alt={alt} src={src as any} title={title} />,
-};
-
-let amount = 300000;
-
 const ProjectDetails = () => {
   const router = useRouter();
 
@@ -64,10 +49,12 @@ const ProjectDetails = () => {
     const getDataByTokenAddress = async () => {
       const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
       if (data) setIdo(data);
-      console.log(data);
+      else router.push(`/404`);
     };
-    getDataByTokenAddress();
+    if(tokenAddress) getDataByTokenAddress();
   }, [tokenAddress]);
+
+  const [value, setValue] = useState<any>("**Hello world!!!**");
 
   return (
     <section className="pt-6">
@@ -109,6 +96,13 @@ const ProjectDetails = () => {
                   </p>
                 </div>
               </div>
+
+              {/* <MDEditor
+                value={value}
+                onChange={setValue}
+              />
+              <MDEditor.Markdown source={value} /> */}
+                      
               <SRLWrapper>
                 <Markdown
                   options={{
@@ -146,7 +140,7 @@ const ProjectDetails = () => {
                   <div className={"relative px-6 pt-6 pb-6"}>
                     <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                       {ido.projectName}
-                      {ido.verified && (
+                      {ido.isFeatured && (
                         <BadgeCheckIcon className={"h-7 text-purple-2"} />
                       )}
                     </h2>
