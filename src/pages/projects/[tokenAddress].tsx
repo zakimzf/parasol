@@ -48,7 +48,7 @@ const ProjectDetails = () => {
     const getDataByTokenAddress = async () => {
       const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
       if (data) setIdo(data);
-      else router.push(`/404`);
+      else router.push("/404");
     };
     if (tokenAddress) getDataByTokenAddress();
   }, [tokenAddress]);
