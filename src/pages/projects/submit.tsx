@@ -56,6 +56,7 @@ const SubmitProject = () => {
     telegram : "",
     package: packages[0],
     isFeatured: false,
+    verified: false,
     created: Timestamp.now()
   });
 

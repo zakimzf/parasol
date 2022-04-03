@@ -146,7 +146,7 @@ const ProjectDetails = () => {
                   <div className={"relative px-6 pt-6 pb-6"}>
                     <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                       {ido.projectName}
-                      <BadgeCheckIcon className={"h-7 text-purple-2"} />
+                      {ido.verified && <BadgeCheckIcon className={"h-7 text-purple-2"} /> }
                     </h2>
                     <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
                       <img
