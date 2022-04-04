@@ -28,7 +28,7 @@ const EditorJs = () => {
   });
 
   return (
-    <div className="border-2 p-2">
+    <div>
       <div id="editorjs"></div>
     </div>
   );
