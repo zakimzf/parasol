@@ -9,7 +9,8 @@ import axios from "axios";
 import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
 
-const Editor = dynamic(() => import("../../components/editor"), { ssr: false });
+// const Editor = dynamic(() => import("../../components/editor"), { ssr: false });
+const EditorJs = dynamic(() => import("../../components/editorJs"), { ssr: false });
 
 const markdown = `
 
@@ -129,7 +130,7 @@ const ProjectDetails = () => {
                   {markdown}
                 </Markdown> */}
               </SRLWrapper>
-              <Editor />
+              <EditorJs />
             </div>
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
