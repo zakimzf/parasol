@@ -10,7 +10,9 @@ import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
 
 // const Editor = dynamic(() => import("../../components/editor"), { ssr: false });
-const EditorJs = dynamic(() => import("../../components/editorJs"), { ssr: false });
+const EditorJs = dynamic(() => import("../../components/editorJs"), {
+  ssr: false,
+});
 
 const markdown = `
 
