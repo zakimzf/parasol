@@ -53,11 +53,8 @@ const Staking = () => {
 
   useEffect(() => {
     if (!wallet.connected) return;
-    if (helper) {
-      getIOBalance().then();
-    } else {
-      setIBalance(0);
-    }
+    if (helper) getIOBalance().then();
+    else setIBalance(0);
   }, [wallet.publicKey]);
 
   useEffect(() => {
@@ -100,17 +97,11 @@ const Staking = () => {
     if (iBalance < inputAmount) {
       setBalanceAvailable(false);
     } else if (iBalance == inputAmount) {
-      if (inputAmount === 0) {
-        setBalanceAvailable(true);
-      } else {
-        setBalanceAvailable(true);
-      }
+      if (inputAmount === 0) setBalanceAvailable(true);
+      else setBalanceAvailable(true);
     } else {
-      if (inputAmount === 0) {
-        setBalanceAvailable(true);
-      } else {
-        setBalanceAvailable(true);
-      }
+      if (inputAmount === 0) setBalanceAvailable(true);
+      else setBalanceAvailable(true);
     }
   };
 
