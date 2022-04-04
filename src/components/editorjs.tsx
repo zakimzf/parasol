@@ -4,13 +4,18 @@ import List from "@editorjs/list";
 import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
 import { useEffect, useState } from "react";
+import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { db } from "../utils/firebase";
 
 interface props {
+  tokenAddress: any;
   isOwner: boolean;
   content: any;
 }
 
-const EditorJs: React.FC<props> = ({ isOwner, content }) => {
+const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
+  const idosCollectionRef: any = doc(db, "idos", tokenAddress);
+
   useEffect(() => {
     let editor_: any = null;
     const initEditor = async () => {
@@ -30,7 +35,6 @@ const EditorJs: React.FC<props> = ({ isOwner, content }) => {
           },
           embed: {
             class: Embed,
-            inlineToolbar: false,
             config: {
               services: {
                 youtube: true,
@@ -40,12 +44,14 @@ const EditorJs: React.FC<props> = ({ isOwner, content }) => {
           },
           table: Table,
         },
-        data: content,
+        data: JSON.parse(content),
         onChange: (api: any, event: any) => {
           editor_
             .save()
-            .then((outputData: any) => {
-              console.log(outputData);
+            .then(async (outputData: any) => {
+              await updateDoc(idosCollectionRef, {
+                content: JSON.stringify(outputData),
+              });
             })
             .catch((error: any) => {
               console.log("Saving failed: ", error);

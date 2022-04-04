@@ -66,7 +66,11 @@ const ProjectDetails = () => {
                   {`![](${ido.projectCover})`}
                 </Markdown>
               </SRLWrapper>
-              <EditorJs content={{}} isOwner={true} />
+              <EditorJs
+                content={ido.content || "{}"}
+                isOwner={true}
+                tokenAddress={tokenAddress}
+              />
             </div>
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
