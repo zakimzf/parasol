@@ -24,6 +24,7 @@ interface Context {
   migrator: any;
   wallet: any;
   config: any;
+  provider: any,
 }
 
 export const NftContext = createContext<Context>({
@@ -37,6 +38,7 @@ export const NftContext = createContext<Context>({
   migrator: null,
   wallet: null,
   config: null,
+  provider: null,
 });
 
 export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
@@ -91,7 +93,8 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
         helper,
         migrator,
         config,
-        wallet: useWallet()
+        wallet: useWallet(),
+        provider,
       }}
     >
       {children}

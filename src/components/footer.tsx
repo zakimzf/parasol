@@ -14,8 +14,8 @@ const Footer = () => (
           </a>
         </Link>
         <p className="text-base">
-                    Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs
-                    of both projects and investors alike.
+          Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs
+          of both projects and investors alike.
         </p>
         <div className="space-x-6 flex">
           <a href="https://github.com/parasol-finance" target="_blank"
@@ -119,23 +119,28 @@ const Footer = () => (
         <div className="md:grid md:grid-cols-2 md:gap-8">
           <div>
             <h3 className="text-sm font-bold  tracking-wider uppercase">Social
-                            Links</h3>
+              Links
+            </h3>
             <ul role="list" className="mt-4 space-y-4">
               <li>
-                <a href="https://twitter.com/parasol_finance"
-                  className="text-base  hover:">Twitter</a>
+                <a href="https://twitter.com/parasol_finance" className="text-base  hover:">
+                  Twitter
+                </a>
               </li>
               <li>
-                <a href="https://t.me/parasolfinance"
-                  className="text-base  hover:">Telegram</a>
+                <a href="https://t.me/parasolfinance" className="text-base hover:">
+                  Telegram
+                </a>
               </li>
               <li>
-                <a href="https://discord.gg/JBzVvUVZPn"
-                  className="text-base  hover:">Discord</a>
+                <a href="https://discord.gg/JBzVvUVZPn" className="text-base  hover:">
+                  Discord
+                </a>
               </li>
               <li>
-                <a href="https://parasol-finance.medium.com/"
-                  className="text-base  hover:">Medium</a>
+                <a href="https://parasol-finance.medium.com/" className="text-base  hover:">
+                  Medium
+                </a>
               </li>
             </ul>
           </div>
@@ -165,17 +170,19 @@ const Footer = () => (
     <div className="py-10">
       <div
         className="mx-auto max-w-7xl px-5 grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-0 lg:text-base text-sm">
-        <p className="lg:text-left text-center">Copyright &copy; {new Date().getFullYear()} Parasol
-                    Finance. All rights reserved. </p>
+        <p className="lg:text-left text-center">
+          Copyright &copy; {new Date().getFullYear()} Parasol
+          Finance. All rights reserved.
+        </p>
         <p className="flex-1 lg:text-right text-center">
-                    Build with
+          Build with
           <svg className="w-5 h-5 text-purple-2 mb-1 inline mx-2" fill="currentColor" viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd"
               d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
               clipRule="evenodd"/>
           </svg>
-                    in Europe - Crafted by Clint.Network
+          in Europe - Crafted by Clint.Network
         </p>
       </div>
     </div>

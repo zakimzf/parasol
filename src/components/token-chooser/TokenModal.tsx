@@ -99,7 +99,8 @@ export const TokenModal: FC = () => {
                         onClick={() => {
                           if (mode == TokenChooserMode.Input) {
                             setInput(new PublicKey(token.address))
-                          } else {
+                          }
+                          else {
                             setOutput(new PublicKey(token.address))
                           }
                           close()

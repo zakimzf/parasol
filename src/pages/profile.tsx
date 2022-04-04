@@ -59,7 +59,6 @@ const projects = [
   },
 ]
 
-
 const Profile = function () {
   return (
     <>
