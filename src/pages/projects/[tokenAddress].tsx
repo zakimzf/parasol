@@ -14,35 +14,6 @@ const EditorJs = dynamic(() => import("../../components/editorjs"), {
   ssr: false,
 });
 
-const markdown = `
-
-Sagittis scelerisque nulla cursus in enim consectetur quam.
-
-Faucibus commodo massa rhoncus, volutpat. **Dignissim** sed **eget risus enim**. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. [Mattis mauris semper](#) sed amet vitae sed turpis id.
-
-*   Quis elit egestas venenatis mattis dignissim.
-*   Cras cras lobortis vitae vivamus ultricies facilisis tempus.
-*   Orci in sit morbi dignissim metus diam arcu pretium.
-
-Quis semper vulputate aliquam venenatis egestas sagittis quisque orci. Donec commodo sit viverra aliquam porttitor ultrices gravida eu. Tincidunt leo, elementum mattis elementum ut nisl, justo, amet, mattis. Nunc purus, diam commodo tincidunt turpis. Amet, duis sed elit interdum dignissim.
-
-From beginner to expert in 30 days
-----------------------------------
-
-Id orci tellus laoreet id ac. Dolor, aenean leo, ac etiam consequat in. Convallis arcu ipsum urna nibh. Pharetra, euismod vitae interdum mauris enim, consequat vulputate nibh. Maecenas pellentesque id sed tellus mauris, ultrices mauris. Tincidunt enim cursus ridiculus mi. Pellentesque nam sed nullam sed diam turpis ipsum eu a sed convallis diam.
-
-> Sagittis scelerisque nulla cursus in enim consectetur quam. Dictum urna sed consectetur neque tristique pellentesque. Blandit amet, sed aenean erat arcu morbi.
-
-Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit.
-
-Everything you need to get up and running
------------------------------------------
-
-Purus morbi dignissim senectus mattis [adipiscing](#). Amet, massa quam varius orci dapibus volutpat cras. In amet eu ridiculus leo sodales cursus tristique. Tincidunt sed tempus ut viverra ridiculus non molestie. Gravida quis fringilla amet eget dui tempor dignissim. Facilisis auctor venenatis varius nunc, congue erat ac. Cras fermentum convallis quam.
-
-Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque erat velit.
-`;
-
 const ProjectDetails = () => {
   const router = useRouter();
 
@@ -59,33 +30,10 @@ const ProjectDetails = () => {
     if (tokenAddress) getDataByTokenAddress();
   }, [tokenAddress]);
 
-  const [value, setValue] = useState<any>("**Hello world!!!**");
-
   return (
     <section className="pt-6">
       {ido ? (
         <Container>
-          {/*<nav className="flex mb-8" aria-label="Breadcrumb">*/}
-          {/*	<ol role="list" className="flex items-center space-x-4">*/}
-          {/*		<li>*/}
-          {/*			<div className="flex items-center">*/}
-          {/*				<Link href={"/projects"}>*/}
-          {/*					<a className=" text-sm font-medium text-gray-300 hover:text-white">Projects</a>*/}
-          {/*				</Link>*/}
-          {/*			</div>*/}
-          {/*		</li>*/}
-          {/*		<li>*/}
-          {/*			<div className="flex items-center">*/}
-          {/*				<svg className="flex-shrink-0 h-5 w-5 text-gray-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">*/}
-          {/*					<path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />*/}
-          {/*				</svg>*/}
-          {/*				<a href="#" className="ml-4 text-sm font-medium text-gray-300 hover:text-white" aria-current="page">Project*/}
-          {/*					Nero*/}
-          {/*				</a>*/}
-          {/*			</div>*/}
-          {/*		</li>*/}
-          {/*	</ol>*/}
-          {/*</nav>*/}
           <div className="grid grid-cols-9">
             <div className="prose markdown prose-lg prose-invert col-span-6">
               <div className="flex items-center gap-x-6">
@@ -117,20 +65,6 @@ const ProjectDetails = () => {
                 >
                   {`![](${ido.projectCover})`}
                 </Markdown>
-                {/* <Markdown
-                  options={{
-                    overrides: {
-                      img: {
-                        props: {
-                          className:
-                            "rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105",
-                        },
-                      },
-                    },
-                  }}
-                >
-                  {markdown}
-                </Markdown> */}
               </SRLWrapper>
               <EditorJs />
             </div>
@@ -197,23 +131,6 @@ const ProjectDetails = () => {
                     </button>
                   </div>
                 </div>
-                {/*<div className={"flex gap-x-6"}>*/}
-                {/*	<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>*/}
-                {/*		<FaFacebookF size={25} />*/}
-                {/*	</button>*/}
-                {/*	<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>*/}
-                {/*		<FaTwitter size={25} />*/}
-                {/*	</button>*/}
-                {/*	<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>*/}
-                {/*		<FaTelegramPlane size={25} />*/}
-                {/*	</button>*/}
-                {/*	<button className={"flex-1 bg-[#231f38] flex justify-center shadow-half-strong border border-gray-800 rounded-lg p-6"}>*/}
-                {/*		<FaDiscord size={25} />*/}
-                {/*	</button>*/}
-                {/*</div>*/}
-                {/*<button className={"bg-gradient-to-r from-purple-1 to-purple-2 shadow-lg px-5 py-4 text-lg font-medium rounded-lg"}>*/}
-                {/*	Apply Now*/}
-                {/*</button>*/}
               </div>
             </div>
           </div>

@@ -47,7 +47,7 @@ const EditorJs = () => {
   }, []);
 
   return (
-    <div>
+    <div className="bg-[#231f38] p-4">
       <div id="editorjs"></div>
     </div>
   );
