@@ -89,8 +89,8 @@ const Migrate = () => {
               notificationMsg.status == "pending"
                 ? "bg-gray-700"
                 : notificationMsg.status == "error"
-                ? "bg-red-700"
-                : "bg-green-700"
+                  ? "bg-red-700"
+                  : "bg-green-700"
             }
           />
         ) : (

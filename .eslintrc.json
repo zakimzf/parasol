@@ -1,7 +1,7 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "brace-style": ["error", "stroustrup"],
+    "brace-style": ["error"],
     "object-curly-spacing": ["error", "always"],
     "space-infix-ops": ["error", { "int32Hint": false }],
     "arrow-spacing": ["error", { "before": true, "after": true }],
