@@ -16,7 +16,6 @@ import { PublicKey } from "@solana/web3.js";
 interface Context {
   setNfts: (n: any) => void;
   nfts: any;
-  provider: any;
   nftStore: any;
   nftKinds: any;
   user: any;
