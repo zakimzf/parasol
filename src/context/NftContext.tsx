@@ -37,7 +37,6 @@ export const NftContext = createContext<Context>({
   migrator: null,
   wallet: null,
   config: null,
-  provider: null,
 });
 
 export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
