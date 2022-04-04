@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { SRLWrapper } from "simple-react-lightbox";
@@ -8,6 +8,7 @@ import Container from "../../components/container";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 // const Editor = dynamic(() => import("../../components/editor"), { ssr: false });
 const EditorJs = dynamic(() => import("../../components/editorjs"), {
@@ -15,6 +16,8 @@ const EditorJs = dynamic(() => import("../../components/editorjs"), {
 });
 
 const ProjectDetails = () => {
+  const { publicKey } = useWallet();
+  const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const router = useRouter();
 
   const { tokenAddress } = router.query;
@@ -68,7 +71,7 @@ const ProjectDetails = () => {
               </SRLWrapper>
               <EditorJs
                 content={ido.content || "{}"}
-                isOwner={true}
+                isOwner={walletAddress && walletAddress == ido.publicKey || false}
                 tokenAddress={tokenAddress}
               />
             </div>

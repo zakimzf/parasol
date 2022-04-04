@@ -15,11 +15,16 @@ interface props {
 
 const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
   const idosCollectionRef: any = doc(db, "idos", tokenAddress);
+  const [editor, setEditor] = useState<any>(null);
 
   useEffect(() => {
-    let editor_: any = null;
-    const initEditor = async () => {
-      editor_ = await new EditorJS({
+    initEditor();
+  }, [isOwner]);
+
+  const initEditor = async () => {
+    if (editor) editor.destroy();
+    setEditor(
+      await new EditorJS({
         holder: "editorjs",
         // autofocus: true,
         readOnly: !isOwner,
@@ -46,7 +51,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
         },
         data: JSON.parse(content),
         onChange: (api: any, event: any) => {
-          editor_
+          editor
             .save()
             .then(async (outputData: any) => {
               await updateDoc(idosCollectionRef, {
@@ -57,13 +62,12 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
               console.log("Saving failed: ", error);
             });
         },
-      });
-    };
-    initEditor();
-  }, []);
+      })
+    );
+  };
 
   return (
-    <div className="bg-[#231f38] p-4">
+    <div className={(isOwner && "bg-[#231f38] p-4") || ""}>
       <div id="editorjs"></div>
     </div>
   );
