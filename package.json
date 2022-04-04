@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.17.2",
-    "@ckeditor/ckeditor5-build-classic": "^33.0.0",
     "@ckeditor/ckeditor5-build-inline": "^33.0.0",
     "@ckeditor/ckeditor5-essentials": "^33.0.0",
     "@ckeditor/ckeditor5-markdown-gfm": "^33.0.0",
