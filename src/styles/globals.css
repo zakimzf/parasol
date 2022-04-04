@@ -53,12 +53,12 @@ input[type="number"] {
   }
 }
 
-.ce-toolbar__plus, .ce-toolbar__settings-btn, .ce-conversion-tool__icon, .ce-inline-toolbar__dropdown .icon--toggler-down, .ce-inline-toolbar__dropdown-content svg, .ce-conversion-tool{
+.ce-toolbar__plus, .ce-toolbar__settings-btn, .ce-conversion-tool__icon, .ce-inline-toolbar__dropdown .icon--toggler-down, .ce-inline-toolbar__dropdown-content svg, .ce-conversion-tool, .tc-popover__item-label, .tc-popover__item-icon, .tc-add-column, .tc-add-row{
   color:#ae62fe !important;
 }
 
-::selection{
-  background-color: #b064fe;
+::selection, .ce-block--selected .ce-block__content [contenteditable]{
+  background-color: #b064fe !important;
 }
 
 .ce-conversion-tool--focused{

@@ -5,16 +5,19 @@ import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
 import { useEffect, useState } from "react";
 
-const EditorJs = () => {
-  const [editor, setEditor] = useState<any>(null);
+interface props {
+  isOwner: boolean;
+  content: any;
+}
 
+const EditorJs: React.FC<props> = ({ isOwner, content }) => {
   useEffect(() => {
-    let editor_ = null;
+    let editor_: any = null;
     const initEditor = async () => {
       editor_ = await new EditorJS({
         holder: "editorjs",
         // autofocus: true,
-        // readOnly: true,
+        readOnly: !isOwner,
         placeholder: "Please enter your content here...",
         tools: {
           header: {
@@ -37,15 +40,18 @@ const EditorJs = () => {
           },
           table: Table,
         },
-        data: {},
+        data: content,
         onChange: (api: any, event: any) => {
-          console.log(api)
+          editor_
+            .save()
+            .then((outputData: any) => {
+              console.log(outputData);
+            })
+            .catch((error: any) => {
+              console.log("Saving failed: ", error);
+            });
         },
       });
-
-      console.log(editor_);
-
-      setEditor(editor_);
     };
     initEditor();
   }, []);
