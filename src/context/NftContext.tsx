@@ -73,7 +73,6 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
     setMigrator(migrator);
     const helper = new RpcHelper(provider);
     setHelper(helper);
-
   };
 
   const setData = (n: any): void => {
@@ -92,7 +91,6 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
         migrator,
         config,
         wallet: useWallet(),
-        provider,
       }}
     >
       {children}
