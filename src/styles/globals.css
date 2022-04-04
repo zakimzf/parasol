@@ -53,6 +53,15 @@ input[type="number"] {
   }
 }
 
-.ce-toolbar__plus, .ce-toolbar__settings-btn{
+.ce-toolbar__plus, .ce-toolbar__settings-btn, .ce-conversion-tool__icon, .ce-inline-toolbar__dropdown .icon--toggler-down, .ce-inline-toolbar__dropdown-content svg, .ce-conversion-tool{
   color:#ae62fe !important;
+}
+
+::selection{
+  background-color: #b064fe;
+}
+
+.ce-conversion-tool--focused{
+  background-color: #b064fe !important;
+  color: #fff !important;  
 }

@@ -38,8 +38,12 @@ const EditorJs = () => {
           table: Table,
         },
         data: {},
-        onChange: (api: any, event: any) => {},
+        onChange: (api: any, event: any) => {
+          console.log(api)
+        },
       });
+
+      console.log(editor_);
 
       setEditor(editor_);
     };
