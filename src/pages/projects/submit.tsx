@@ -67,12 +67,10 @@ const SubmitProject = () => {
       if (classList.contains("required_") && !value.trim()) {
         classList.add(...errClasses);
         errors[name] = "This field is required";
-      }
-      else if (classList.contains("url_") && value.trim() && !validURL(value)) {
+      } else if (classList.contains("url_") && value.trim() && !validURL(value)) {
         classList.add(...errClasses);
         errors[name] = "Please enter a valid url";
-      }
-      else {
+      } else {
         if (name != "splToken") {
           classList.remove(...errClasses);
           errors[name] = "";
@@ -103,8 +101,7 @@ const SubmitProject = () => {
         if (!value.trim()) {
           _errors[name] = "This field is required";
           el.classList.add(...errClasses);
-        }
-        else el.classList.remove(...errClasses);
+        } else el.classList.remove(...errClasses);
       }
   
       elements = document.getElementsByClassName("url_");

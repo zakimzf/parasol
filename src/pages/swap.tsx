@@ -62,8 +62,7 @@ const Swap = () => {
   useEffect(() => {
     if (wallet.publicKey) {
       getIOBalance().then();
-    }
-    else {
+    } else {
       setIBalance(0);
       setOBalance(0);
     }
@@ -101,16 +100,14 @@ const Swap = () => {
       const parsedInfo = iResult.value[0].account.data.parsed;
       const iTokenAmount = parsedInfo.info.tokenAmount.uiAmount;
       setIBalance(iTokenAmount);
-    }
-    else {
+    } else {
       setIBalance(0);
     }
     if (oResult.value.length > 0) {
       const parsedInfo = oResult.value[0].account.data.parsed;
       const oTokenAmount = parsedInfo.info.tokenAmount.uiAmount;
       setOBalance(oTokenAmount);
-    }
-    else {
+    } else {
       setOBalance(0);
     }
   };
@@ -151,8 +148,7 @@ const Swap = () => {
       setSwapStatus(true);
       const rate = calcRate(computeRoutes.routesInfos, inputAmount);
       setRate(rate);
-    }
-    else {
+    } else {
       setSwapStatus(false);
       setRate("0");
     }
@@ -208,8 +204,7 @@ const Swap = () => {
       if ("error" in swapResult) {
         setSwapResult(false);
         alert(`Error:${swapResult.error}`);
-      }
-      else if ("txid" in swapResult) {
+      } else if ("txid" in swapResult) {
         setSwapResult(true);
         setShowNotification(true);
         console.log("Sucess:", swapResult.txid);
@@ -228,8 +223,7 @@ const Swap = () => {
       if (inputAmount !== +iBalance) {
         setInputAmount(val);
       }
-    }
-    else {
+    } else {
       console.log("Please connect wallet");
     }
   };
@@ -241,8 +235,7 @@ const Swap = () => {
       if (inputAmount !== +iBalance / 2) {
         setInputAmount(val);
       }
-    }
-    else {
+    } else {
       console.log("Please connect wallet");
     }
   };
@@ -264,17 +257,14 @@ const Swap = () => {
     if (inputAmount > 0) {
       if (routes.length <= 0) {
         return "Routes are not found!";
-      }
-      else {
+      } else {
         if (!isRoutePending) {
           return routes.length + " routes found!";
-        }
-        else {
+        } else {
           return "Finding routes...";
         }
       }
-    }
-    else {
+    } else {
       return "Please input the amount";
     }
   };
@@ -320,8 +310,7 @@ const Swap = () => {
           )}
         </button>
       );
-    }
-    else {
+    } else {
       return (
         <button
           onClick={() => walletModal.setVisible(true)}
@@ -373,8 +362,7 @@ const Swap = () => {
     if (allRoutes.length > 0) {
       if (inputVal == 0) {
         return 0.0 + " ";
-      }
-      else {
+      } else {
         return (
           (
             allRoutes[0].outAmount /
@@ -383,8 +371,7 @@ const Swap = () => {
           ).toFixed(6) + " "
         );
       }
-    }
-    else {
+    } else {
       return 0.0 + " ";
     }
   };
@@ -393,23 +380,19 @@ const Swap = () => {
     if (iBalance < inputAmount) {
       setBalanceAvailable(false);
       setSwapStatus(false);
-    }
-    else if (iBalance == inputAmount) {
+    } else if (iBalance == inputAmount) {
       if (inputAmount === 0) {
         setSwapStatus(false);
         setBalanceAvailable(true);
-      }
-      else {
+      } else {
         setBalanceAvailable(true);
         setSwapStatus(true);
       }
-    }
-    else {
+    } else {
       if (inputAmount === 0) {
         setSwapStatus(false);
         setBalanceAvailable(true);
-      }
-      else {
+      } else {
         setSwapStatus(true);
         setBalanceAvailable(true);
       }

@@ -54,8 +54,7 @@ const Migrate = () => {
         status: "pending",
       });
       await connection.confirmTransaction(signature, "confirmed");
-    }
-    catch (err) {
+    } catch (err) {
       setNotificationMsg({
         msg: "Doing redeem an NFT is failed!",
         status: "error",

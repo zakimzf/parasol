@@ -32,8 +32,7 @@ const Contact = () => {
     if (classList.contains("required_") && !value.trim()) {
       classList.add(...errClasses);
       errors[name] = "This field is required";
-    }
-    else {
+    } else {
       classList.remove(...errClasses);
       errors[name] = "";
     }
@@ -57,8 +56,7 @@ const Contact = () => {
       if (!value.trim()) {
         _errors[name] = "This field is required";
         el.classList.add(...errClasses);
-      }
-      else el.classList.remove(...errClasses);
+      } else el.classList.remove(...errClasses);
     }
     setErrors(_errors);
 
@@ -66,13 +64,11 @@ const Contact = () => {
       if (token) {
         await addDoc(contactCollectionRef, values);
         setSendStatus(2);
-      }
-      else {
+      } else {
         captchaRef.current.execute();
         setSendStatus(0);
       }
-    }
-    else {
+    } else {
       setSendStatus(0);
     }
   };

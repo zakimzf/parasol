@@ -68,8 +68,7 @@ const Tiers = function () {
       });
       setNotificationMsg({ msg: "Minting an NFT Now....", status: "pending" });
       await connection.confirmTransaction(signature, "confirmed");
-    } 
-    catch (err) {
+    } catch (err) {
       setNotificationMsg({ msg: "Minting an NFT is failed!", status: "error" });
       return false;
     }
