@@ -340,6 +340,11 @@
     codex-tooltip "^1.0.4"
     nanoid "^3.1.22"
 
+"@editorjs/embed@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@editorjs/embed/-/embed-2.5.1.tgz#e03e56d880df7816e34f5419b4ed0e8059885173"
+  integrity sha512-QoBvC6upo5ubO0toGlt5b1Upcq15MC4eqejxcjcm291Ww5cO+lKhSFY6KNk3ldL9PnWKtORxFCd6pAawtkkijA==
+
 "@editorjs/header@^2.6.2":
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/@editorjs/header/-/header-2.6.2.tgz#523b6dda72ff882e53f64325840ee7bfc68ee6b7"
@@ -349,6 +354,11 @@
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@editorjs/list/-/list-1.7.0.tgz#986c55026bdeee2ec7ef74fe09bd4b285e12bd1e"
   integrity sha512-0k0RKbQqfV32u24UYHHz5mrmSu4wr246qqXBT7xQiS533Bfd4hzki6UGzvy4f275ULzi+egbjI3BXLkpoTh9iQ==
+
+"@editorjs/table@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@editorjs/table/-/table-2.0.1.tgz#ec7726b7b662ed4ddbcd023e9a4644fbb6ea73b8"
+  integrity sha512-PB8VM+GPRwGy7IlF+WrEQw2A2c36xEXBnYIvf2VGNJo8A7PjYHtuWrlyHHCnGpY4lHXYnavZ/U8pKAfXv86XjA==
 
 "@emotion/cache@^11.7.1":
   version "11.7.1"
