@@ -7,6 +7,9 @@ import Markdown from "markdown-to-jsx";
 import Container from "../../components/container";
 import axios from "axios";
 import NumberFormat from "react-number-format";
+import dynamic from "next/dynamic";
+
+const Editor = dynamic(() => import("../../components/editor"), { ssr: false });
 
 const markdown = `
 
@@ -111,7 +114,7 @@ const ProjectDetails = () => {
                 >
                   {`![](${ido.projectCover})`}
                 </Markdown>
-                <Markdown
+                {/* <Markdown
                   options={{
                     overrides: {
                       img: {
@@ -124,8 +127,9 @@ const ProjectDetails = () => {
                   }}
                 >
                   {markdown}
-                </Markdown>
+                </Markdown> */}
               </SRLWrapper>
+              <Editor />
             </div>
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
