@@ -55,7 +55,6 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
           editor_
             .save()
             .then(async (outputData: any) => {
-              console.log(outputData)
               await updateDoc(idosCollectionRef, {
                 content: JSON.stringify(outputData),
               });
