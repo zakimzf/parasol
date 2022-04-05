@@ -18,42 +18,44 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
   const [editor, setEditor] = useState<any>(null);
 
   useEffect(() => {
+    if (editor) editor.destroy();
     initEditor();
   }, [isOwner]);
 
   const initEditor = async () => {
-    if (editor) editor.destroy();
-    setEditor(
-      await new EditorJS({
-        holder: "editorjs",
-        // autofocus: true,
-        readOnly: !isOwner,
-        placeholder: "Please enter your content here...",
-        tools: {
-          header: {
-            class: Header,
-            inlineToolbar: ["marker", "link"],
-          },
-          list: {
-            class: List,
-            inlineToolbar: ["link", "bold"],
-          },
-          embed: {
-            class: Embed,
-            config: {
-              services: {
-                youtube: true,
-                coub: true,
-              },
+    let editor_: any = null;
+    editor_ = await new EditorJS({
+      holder: "editorjs",
+      // autofocus: true,
+      readOnly: !isOwner,
+      placeholder: "Please enter your content here...",
+      tools: {
+        header: {
+          class: Header,
+          inlineToolbar: true,
+        },
+        list: {
+          class: List,
+          inlineToolbar: ["link", "bold"],
+        },
+        embed: {
+          class: Embed,
+          config: {
+            services: {
+              youtube: true,
+              coub: true,
             },
           },
-          table: Table,
         },
-        data: JSON.parse(content),
-        onChange: (api: any, event: any) => {
-          editor
+        table: Table,
+      },
+      data: JSON.parse(content),
+      onChange: (api: any, event: any) => {
+        if (editor_) {
+          editor_
             .save()
             .then(async (outputData: any) => {
+              console.log(outputData)
               await updateDoc(idosCollectionRef, {
                 content: JSON.stringify(outputData),
               });
@@ -61,9 +63,13 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
             .catch((error: any) => {
               console.log("Saving failed: ", error);
             });
-        },
-      })
-    );
+        }
+      },
+      onPaste: (event: any) => {
+        console.log(event, 44444444);
+      },
+    });
+    setEditor(editor_);
   };
 
   return (
