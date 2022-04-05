@@ -89,7 +89,8 @@ const SubmitProject = () => {
       submitBtnRef.current.innerHTML = "Loading ..."
       submitBtnRef.current.setAttribute("disabled", true);
       await validateAllFieldsAndRedirection();
-      // submitBtnRef.current.innerHTML = preContent;
+      submitBtnRef.current.innerHTML = preContent;
+      submitBtnRef.current.removeAttribute("disabled");
     }
   }
 
