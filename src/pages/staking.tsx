@@ -77,7 +77,8 @@ const Staking = () => {
       if (inputAmount !== +iBalance) {
         setInputAmount(val);
       }
-    } else {
+    }
+    else {
       console.log("Please connect wallet");
     }
   };
@@ -88,7 +89,8 @@ const Staking = () => {
       if (inputAmount !== +iBalance / 2) {
         setInputAmount(val);
       }
-    } else {
+    }
+    else {
       console.log("Please connect wallet");
     }
   };
@@ -96,10 +98,12 @@ const Staking = () => {
   const isBalanceAvailable = () => {
     if (iBalance < inputAmount) {
       setBalanceAvailable(false);
-    } else if (iBalance == inputAmount) {
+    }
+    else if (iBalance == inputAmount) {
       if (inputAmount === 0) setBalanceAvailable(true);
       else setBalanceAvailable(true);
-    } else {
+    }
+    else {
       if (inputAmount === 0) setBalanceAvailable(true);
       else setBalanceAvailable(true);
     }

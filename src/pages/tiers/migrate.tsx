@@ -56,7 +56,8 @@ const Migrate = () => {
         status: "pending",
       });
       await connection.confirmTransaction(signature, "confirmed");
-    } catch (err) {
+    }
+    catch (err) {
       setNotificationMsg({
         msg: "Doing upgarde an NFT is failed!",
         status: "error",
