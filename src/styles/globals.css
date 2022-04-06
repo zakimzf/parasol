@@ -29,15 +29,13 @@ input[type="number"] {
 
 #hideMe {
   -moz-animation: cssAnimation 0s ease-in 5s forwards;
-  /* Firefox */
   -webkit-animation: cssAnimation 0s ease-in 5s forwards;
-  /* Safari and Chrome */
   -o-animation: cssAnimation 0s ease-in 5s forwards;
-  /* Opera */
   animation: cssAnimation 0s ease-in 5s forwards;
   -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 }
+
 @keyframes cssAnimation {
   to {
     width: 0;
@@ -51,4 +49,22 @@ input[type="number"] {
     height: 0;
     visibility: hidden;
   }
+}
+
+.ce-block__content,
+.ce-toolbar__content {
+  max-width: unset;
+}
+
+.ce-toolbar__plus, .ce-toolbar__settings-btn, .ce-conversion-tool__icon, .ce-inline-toolbar__dropdown .icon--toggler-down, .ce-inline-toolbar__dropdown-content svg, .ce-conversion-tool, .tc-popover__item-label, .tc-popover__item-icon, .tc-add-column, .tc-add-row{
+  color:#ae62fe !important;
+}
+
+::selection, .ce-block--selected .ce-block__content [contenteditable]{
+  background-color: #b064fe !important;
+}
+
+.ce-conversion-tool--focused{
+  background-color: #b064fe !important;
+  color: #fff !important;  
 }
