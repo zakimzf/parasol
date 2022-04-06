@@ -4,7 +4,7 @@ import List from "@editorjs/list";
 import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
 import { useEffect, useState } from "react";
-import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
 
 interface props {

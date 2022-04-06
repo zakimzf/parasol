@@ -10,7 +10,6 @@ import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
 import { useWallet } from "@solana/wallet-adapter-react";
 
-// const Editor = dynamic(() => import("../../components/editor"), { ssr: false });
 const EditorJs = dynamic(() => import("../../components/editorjs"), {
   ssr: false,
 });
@@ -82,7 +81,7 @@ const ProjectDetails = () => {
                     <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                       {ido.projectName}
                       {ido.isFeatured && (
-                        <BadgeCheckIcon className={"h-7 text-purple-2"} />
+                        <BadgeCheckIcon className={"h-7 text-purple-2"}/>
                       )}
                     </h2>
                     <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
@@ -106,7 +105,7 @@ const ProjectDetails = () => {
                     <div className="flex-col space-y-3 mt-6">
                       <div className="flex font-medium items-center text-gray-300 gap-x-3">
                         <span>Hard Cap</span>
-                        <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                        <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
                         <span>
                           <NumberFormat
                             value={ido.hardCap}
@@ -118,7 +117,7 @@ const ProjectDetails = () => {
                       </div>
                       <div className="flex font-medium items-center text-gray-300 gap-x-3">
                         <span>Price per Token</span>
-                        <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                        <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
                         <span>
                           <NumberFormat
                             value={ido.tokenPrice}
@@ -129,11 +128,7 @@ const ProjectDetails = () => {
                         </span>
                       </div>
                     </div>
-                    <button
-                      className={
-                        "w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"
-                      }
-                    >
+                    <button className={"w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
                       Participate to Sale
                     </button>
                   </div>
