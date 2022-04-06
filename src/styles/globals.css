@@ -53,6 +53,11 @@ input[type="number"] {
   }
 }
 
+.ce-block__content,
+.ce-toolbar__content {
+  max-width: unset;
+}
+
 .ce-toolbar__plus, .ce-toolbar__settings-btn, .ce-conversion-tool__icon, .ce-inline-toolbar__dropdown .icon--toggler-down, .ce-inline-toolbar__dropdown-content svg, .ce-conversion-tool, .tc-popover__item-label, .tc-popover__item-icon, .tc-add-column, .tc-add-row{
   color:#ae62fe !important;
 }

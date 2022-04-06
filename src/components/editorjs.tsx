@@ -71,11 +71,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
     setEditor(editor_);
   };
 
-  return (
-    <div className={(isOwner && "bg-[#231f38] p-4") || ""}>
-      <div id="editorjs"></div>
-    </div>
-  );
+  return <div id={"editorjs"}/>;
 };
 
 export default EditorJs;
