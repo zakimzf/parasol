@@ -3,9 +3,11 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
+import Snackbar from "node-snackbar"
 import { useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
+import "node-snackbar/dist/snackbar.min.css";
 
 interface props {
   tokenAddress: any;
@@ -55,6 +57,12 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
           editor_
             .save()
             .then(async (outputData: any) => {
+              Snackbar.show({
+                pos: "bottom-center",
+                text: "Content was successfully saved.",
+                backgroundColor: "#231f38",
+                showAction: false
+              });
               await updateDoc(idosCollectionRef, {
                 content: JSON.stringify(outputData),
               });
@@ -63,6 +71,9 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
               console.log("Saving failed: ", error);
             });
         }
+      },
+      onBlur: (event: any) => {
+        alert("lo");
       },
       onPaste: (event: any) => {
         console.log(event, 44444444);
