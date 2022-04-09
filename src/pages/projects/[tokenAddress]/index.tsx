@@ -2,7 +2,7 @@ import { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { Tab } from "@headlessui/react"
-import Container from "../../components/container";
+import Container from "../../../components/container";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
@@ -10,7 +10,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
 import Disqus from "disqus-react";
 
-const EditorJs = dynamic(() => import("../../components/editorjs"), {
+const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
 });
 
