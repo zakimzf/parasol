@@ -1,10 +1,10 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import { BadgeCheckIcon } from "@heroicons/react/outline";
 import { Tab } from "@headlessui/react"
 import Container from "../../../components/container";
 import axios from "axios";
-import Link from "next/link";
 import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
 import { SRLWrapper } from "simple-react-lightbox";
@@ -12,6 +12,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { ExternalLinkIcon, FireIcon } from "@heroicons/react/solid";
 import Disqus from "disqus-react";
 import Countdown from "react-countdown";
+import { useWalletModal } from "../../../components/wallet-connector";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
@@ -21,6 +22,7 @@ const ProjectDetails = () => {
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const router = useRouter();
+  const walletModal = useWalletModal();
 
   const { tokenAddress } = router.query;
 
@@ -233,12 +235,23 @@ const ProjectDetails = () => {
                         </span>
                       </div>
                     </div>
-                    <Link href={`/projects/${tokenAddress}/participate`}>
-                      <a className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
-                        <FireIcon className={"w-6"}/>
-                        Participate to Sale
-                      </a>
-                    </Link>
+                    {walletAddress ? (
+                      <>
+                        <Link href={`/projects/${tokenAddress}/participate`}>
+                          <a className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
+                            <FireIcon className={"w-6"}/>
+                            Participate to Sale
+                          </a>
+                        </Link>
+                      </>
+                    ) : (
+                      <button
+                        className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
+                        type="button"
+                        onClick={() => walletAddress ?? walletModal.setVisible(true)}>
+                        Connect Wallet
+                      </button>
+                    )}
                   </div>
                 </div>
                 <div className={"flex flex-col justify-center items-center"}>
