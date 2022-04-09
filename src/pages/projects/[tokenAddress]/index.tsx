@@ -60,7 +60,7 @@ const ProjectDetails = () => {
                       <Tab as={Fragment}>
                         {({ selected }) => (
                           <a
-                            href={"#"}
+                            href={"#details"}
                             className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                             aria-current={selected ? "page" : undefined}>
                             Project Details
@@ -70,7 +70,7 @@ const ProjectDetails = () => {
                       <Tab as={Fragment}>
                         {({ selected }) => (
                           <a
-                            href={"#"}
+                            href={"#token"}
                             className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                             aria-current={selected ? "page" : undefined}>
                             Token Details
@@ -80,7 +80,7 @@ const ProjectDetails = () => {
                       <Tab as={Fragment}>
                         {({ selected }) => (
                           <a
-                            href={"#"}
+                            href={"#wp"}
                             className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                             aria-current={selected ? "page" : undefined}>
                             White Paper
