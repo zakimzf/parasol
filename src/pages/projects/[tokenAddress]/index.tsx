@@ -11,6 +11,7 @@ import { SRLWrapper } from "simple-react-lightbox";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ExternalLinkIcon, FireIcon } from "@heroicons/react/solid";
 import Disqus from "disqus-react";
+import Countdown from "react-countdown";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
@@ -33,6 +34,22 @@ const ProjectDetails = () => {
     };
     if (tokenAddress) getDataByTokenAddress();
   }, [tokenAddress]);
+
+  const countdownRenderer = ({ days, hours, minutes, seconds, completed }: any) => {
+    if (!completed) {
+      return (
+        <div className={"flex justify-center items-end text-4xl gap-x-1 font-bold"}>
+          <span>{days}</span>
+          <span className={"pr-2"}>days</span>
+          <span>{hours}</span>
+          <span>:</span>
+          <span>{minutes}</span>
+          <span>:</span>
+          <span>{seconds}</span>
+        </div>
+      );
+    }
+  };
 
   return (
     <section className="pt-6">
@@ -223,6 +240,14 @@ const ProjectDetails = () => {
                       </a>
                     </Link>
                   </div>
+                </div>
+                <div className={"flex flex-col justify-center items-center"}>
+                  <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.projectName} Ends In:</p>
+                  <Countdown
+                    renderer={countdownRenderer}
+                    intervalDelay={0}
+                    precision={3}
+                    date={Date.now() + 210000000} />
                 </div>
               </div>
             </div>
