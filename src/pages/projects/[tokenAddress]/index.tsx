@@ -1,13 +1,14 @@
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { BadgeCheckIcon } from "@heroicons/react/solid";
+import { BadgeCheckIcon } from "@heroicons/react/outline";
 import { Tab } from "@headlessui/react"
 import Container from "../../../components/container";
 import axios from "axios";
+import Link from "next/link";
 import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { ExternalLinkIcon } from "@heroicons/react/outline";
+import { ExternalLinkIcon, FireIcon } from "@heroicons/react/solid";
 import Disqus from "disqus-react";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
@@ -191,9 +192,12 @@ const ProjectDetails = () => {
                         </span>
                       </div>
                     </div>
-                    <button className={"w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
-                      Participate to Sale
-                    </button>
+                    <Link href={`/projects/${tokenAddress}/participate`}>
+                      <a className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
+                        <FireIcon className={"w-6"} />
+                        Participate to Sale
+                      </a>
+                    </Link>
                   </div>
                 </div>
               </div>
