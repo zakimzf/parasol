@@ -38,7 +38,7 @@ const ProjectDetails = () => {
       {ido ? (
         <Container>
           <div className="grid grid-cols-9">
-            <div className="col-span-6">
+            <div className="col-span-6 pr-16">
               <div className="flex gap-x-5">
                 <img
                   className="rounded-full h-16 p-1 m-0"
@@ -52,9 +52,9 @@ const ProjectDetails = () => {
                   </p>
                 </div>
               </div>
-              <img src={ido.projectCover} className={"w-11/12 mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 -hover:scale-105"}  alt={ido.name}/>
+              <img src={ido.projectCover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 -hover:scale-105"} alt={ido.name}/>
               <Tab.Group>
-                <Tab.List className={"w-11/12 mb-3"}>
+                <Tab.List className={"mb-3"}>
                   <div className="border-b border-gray-500">
                     <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                       <Tab as={Fragment}>
@@ -101,7 +101,7 @@ const ProjectDetails = () => {
                         href={ido.websiteUrl}
                         target={"_blank"}
                         className={"flex items-center gap-x-1 !ml-auto text-white px-3 pt-2 pb-3 font-medium text-sm"} rel="noreferrer">
-                        <ExternalLinkIcon className={"w-5"} />
+                        <ExternalLinkIcon className={"w-5"}/>
                         Visit Website
                       </a>}
                     </nav>
@@ -121,10 +121,10 @@ const ProjectDetails = () => {
                     {/*Token details to add*/}
                   </Tab.Panel>
                   <Tab.Panel>
-                    <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-11/12 min-h-screen border-none"}/>
+                    <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-full my-3 min-h-screen border-none"}/>
                   </Tab.Panel>
                   <Tab.Panel>
-                    <div className={"w-11/12 py-3"}>
+                    <div className={"py-3"}>
                       <Disqus.DiscussionEmbed
                         shortname={"parasol-finance"}
                         config={{
@@ -194,7 +194,7 @@ const ProjectDetails = () => {
                     </div>
                     <Link href={`/projects/${tokenAddress}/participate`}>
                       <a className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
-                        <FireIcon className={"w-6"} />
+                        <FireIcon className={"w-6"}/>
                         Participate to Sale
                       </a>
                     </Link>
