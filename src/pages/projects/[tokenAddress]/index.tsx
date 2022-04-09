@@ -118,7 +118,40 @@ const ProjectDetails = () => {
                     </div>
                   </Tab.Panel>
                   <Tab.Panel>
-                    {/*Token details to add*/}
+                    <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 -rounded-md">
+                      <table className="min-w-full divide-y divide-gray-800 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg">
+                        <tbody className="divide-y divide-gray-800">
+                          <tr>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Address</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm">{tokenAddress}</td>
+                          </tr>
+                          <tr>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Name</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.projectName}</td>
+                          </tr>
+                          <tr>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Symbol</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                          </tr>
+                          <tr>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm">7</td>
+                          </tr>
+                          <tr>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDT)</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                          </tr>
+                          <tr>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Market Cap (in USDT)</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                          </tr>
+                          <tr>
+                            <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Volume 24h (in USDT)</td>
+                            <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </Tab.Panel>
                   <Tab.Panel>
                     <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-full my-3 min-h-screen border-none"}/>
