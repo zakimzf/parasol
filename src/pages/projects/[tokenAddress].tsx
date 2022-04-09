@@ -27,7 +27,7 @@ const ProjectDetails = () => {
     const getDataByTokenAddress = async () => {
       const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
       if (data) setIdo(data);
-      else router.push("/404");
+      else await router.push("/404");
     };
     if (tokenAddress) getDataByTokenAddress();
   }, [tokenAddress]);
@@ -38,7 +38,7 @@ const ProjectDetails = () => {
         <Container>
           <div className="grid grid-cols-9">
             <div className="col-span-6">
-              <div className="flex gap-x-6">
+              <div className="flex gap-x-5">
                 <img
                   className="rounded-full h-16 p-1 m-0"
                   src={ido.projectIcon}
