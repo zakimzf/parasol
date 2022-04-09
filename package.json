@@ -38,6 +38,7 @@
     "@tailwindcss/forms": "^0.5.0",
     "autoprefixer": "^10.4.2",
     "axios": "^0.26.1",
+    "disqus-react": "^1.1.2",
     "firebase": "^9.6.10",
     "markdown-to-jsx": "^7.1.6",
     "moment": "^2.29.1",
