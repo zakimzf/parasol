@@ -8,6 +8,7 @@ import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { ExternalLinkIcon } from "@heroicons/react/outline";
+import Disqus from "disqus-react";
 
 const EditorJs = dynamic(() => import("../../components/editorjs"), {
   ssr: false,
@@ -79,16 +80,27 @@ const ProjectDetails = () => {
                         {({ selected }) => (
                           <a
                             href={"#"}
+                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                            aria-current={selected ? "page" : undefined}>
+                            {/*<DocumentDownloadIcon className={"w-5"} />*/}
+                            White Paper
+                          </a>
+                        )}
+                      </Tab>
+                      <Tab as={Fragment}>
+                        {({ selected }) => (
+                          <a
+                            href={"#"}
                             className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                             aria-current={selected ? "page" : undefined}>
-                            White Paper
+                            Comments
                           </a>
                         )}
                       </Tab>
                       {ido.websiteUrl && <a
                         href={ido.websiteUrl}
                         target={"_blank"}
-                        className={"flex items-center gap-x-1 text-white !ml-auto px-3 pt-2 pb-3 font-medium text-sm"} rel="noreferrer">
+                        className={"flex items-center gap-x-1 !ml-auto text-white px-3 pt-2 pb-3 font-medium text-sm"} rel="noreferrer">
                         <ExternalLinkIcon className={"w-5"} />
                         Visit Website
                       </a>}
@@ -97,7 +109,7 @@ const ProjectDetails = () => {
                 </Tab.List>
                 <Tab.Panels>
                   <Tab.Panel>
-                    <div className={"prose markdown prose-lg prose-invert "}>
+                    <div className={"prose markdown prose-lg prose-invert"}>
                       <EditorJs
                         content={ido.content || "{}"}
                         isOwner={walletAddress && walletAddress == ido.publicKey || false}
@@ -110,6 +122,18 @@ const ProjectDetails = () => {
                   </Tab.Panel>
                   <Tab.Panel>
                     <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-11/12 min-h-screen border-none"}/>
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    <div className={"w-11/12 py-3"}>
+                      <Disqus.DiscussionEmbed
+                        shortname={"parasol-finance"}
+                        config={{
+                          url: window.location.href,
+                          identifier: ido.tokenAddress,
+                          title: ido.projectName
+                        }}
+                      />
+                    </div>
                   </Tab.Panel>
                 </Tab.Panels>
               </Tab.Group>
