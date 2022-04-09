@@ -1,14 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
-import { SRLWrapper } from "simple-react-lightbox";
-import Markdown from "markdown-to-jsx";
-
+import { Tab } from "@headlessui/react"
 import Container from "../../components/container";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { ExternalLinkIcon } from "@heroicons/react/outline";
 
 const EditorJs = dynamic(() => import("../../components/editorjs"), {
   ssr: false,
@@ -37,42 +36,83 @@ const ProjectDetails = () => {
       {ido ? (
         <Container>
           <div className="grid grid-cols-9">
-            <div className="prose markdown prose-lg prose-invert col-span-6">
-              <div className="flex items-center gap-x-6">
+            <div className="col-span-6">
+              <div className="flex gap-x-6">
                 <img
-                  className="rounded-full h-16 mb-2 m-0"
+                  className="rounded-full h-16 p-1 m-0"
                   src={ido.projectIcon}
-                  alt=""
+                  alt={ido.projectName}
                 />
-                <div>
-                  <h1 className="text-4xl mb-0">{ido.projectName}</h1>
-                  <p className={"my-2 font-semibold"}>
-                    We bring new technologies to our community.
+                <div className={"mb-6"}>
+                  <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">{ido.projectName}</a>
+                  <p className=" max-w-prose mx-auto text-sm lg:text-base text-gray-200">
+                      We bring new technologies to our community.
                   </p>
                 </div>
               </div>
-
-              <SRLWrapper>
-                <Markdown
-                  options={{
-                    overrides: {
-                      img: {
-                        props: {
-                          className:
-                            "rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105",
-                        },
-                      },
-                    },
-                  }}
-                >
-                  {`![](${ido.projectCover})`}
-                </Markdown>
-              </SRLWrapper>
-              <EditorJs
-                content={ido.content || "{}"}
-                isOwner={walletAddress && walletAddress == ido.publicKey || false}
-                tokenAddress={tokenAddress}
-              />
+              <img src={ido.projectCover} className={"w-11/12 mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 -hover:scale-105"}  alt={ido.name}/>
+              <Tab.Group>
+                <Tab.List className={"w-11/12 mb-3"}>
+                  <div className="border-b border-gray-500">
+                    <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+                      <Tab as={Fragment}>
+                        {({ selected }) => (
+                          <a
+                            href={"#"}
+                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                            aria-current={selected ? "page" : undefined}>
+                            IDO Information
+                          </a>
+                        )}
+                      </Tab>
+                      <Tab as={Fragment}>
+                        {({ selected }) => (
+                          <a
+                            href={"#"}
+                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                            aria-current={selected ? "page" : undefined}>
+                            Token Details
+                          </a>
+                        )}
+                      </Tab>
+                      <Tab as={Fragment}>
+                        {({ selected }) => (
+                          <a
+                            href={"#"}
+                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                            aria-current={selected ? "page" : undefined}>
+                            White Paper
+                          </a>
+                        )}
+                      </Tab>
+                      {ido.websiteUrl && <a
+                        href={ido.websiteUrl}
+                        target={"_blank"}
+                        className={"flex items-center gap-x-1 text-white !ml-auto px-3 pt-2 pb-3 font-medium text-sm"} rel="noreferrer">
+                        <ExternalLinkIcon className={"w-5"} />
+                        Visit Website
+                      </a>}
+                    </nav>
+                  </div>
+                </Tab.List>
+                <Tab.Panels>
+                  <Tab.Panel>
+                    <div className={"prose markdown prose-lg prose-invert "}>
+                      <EditorJs
+                        content={ido.content || "{}"}
+                        isOwner={walletAddress && walletAddress == ido.publicKey || false}
+                        tokenAddress={tokenAddress}
+                      />
+                    </div>
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    {/*Token details to add*/}
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-11/12 min-h-screen border-none"}/>
+                  </Tab.Panel>
+                </Tab.Panels>
+              </Tab.Group>
             </div>
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
