@@ -232,6 +232,7 @@ const Contact = () => {
                 <HCaptcha
                   sitekey={sitekey}
                   onVerify={setToken}
+                  theme={"dark"}
                   ref={captchaRef}
                 />
               </div>
