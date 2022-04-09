@@ -87,16 +87,6 @@ const ProjectDetails = () => {
                           </a>
                         )}
                       </Tab>
-                      <Tab as={Fragment}>
-                        {({ selected }) => (
-                          <a
-                            href={"#"}
-                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
-                            aria-current={selected ? "page" : undefined}>
-                            Comments
-                          </a>
-                        )}
-                      </Tab>
                       {ido.websiteUrl && <a
                         href={ido.websiteUrl}
                         target={"_blank"}
@@ -156,20 +146,18 @@ const ProjectDetails = () => {
                   <Tab.Panel>
                     <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-full my-3 min-h-screen border-none"}/>
                   </Tab.Panel>
-                  <Tab.Panel>
-                    <div className={"py-3"}>
-                      <Disqus.DiscussionEmbed
-                        shortname={"parasol-finance"}
-                        config={{
-                          url: window.location.href,
-                          identifier: ido.tokenAddress,
-                          title: ido.projectName
-                        }}
-                      />
-                    </div>
-                  </Tab.Panel>
                 </Tab.Panels>
               </Tab.Group>
+              <div className={"mt-12"}>
+                <Disqus.DiscussionEmbed
+                  shortname={"parasol-finance"}
+                  config={{
+                    url: window.location.href,
+                    identifier: ido.tokenAddress,
+                    title: ido.projectName
+                  }}
+                />
+              </div>
             </div>
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">

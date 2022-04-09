@@ -31,6 +31,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
       // autofocus: true,
       readOnly: !isOwner,
       placeholder: "Please enter your content here...",
+      minHeight : 0,
       tools: {
         header: {
           class: Header,
