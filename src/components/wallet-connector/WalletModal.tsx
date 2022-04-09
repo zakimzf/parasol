@@ -28,7 +28,7 @@ export const WalletModal: FC = () => {
     return [installed, [...loadable, ...notDetected]];
   }, [wallets]);
 
-  const handleWalletClick = useCallback((event, walletName: WalletName) => {
+  const handleWalletClick = useCallback((event: any, walletName: WalletName) => {
     select(walletName);
     setVisible(false);
   }, [ select, setVisible ]);

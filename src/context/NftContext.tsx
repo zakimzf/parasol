@@ -1,15 +1,8 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 import { Provider } from "@project-serum/anchor";
-import {
-  NftKind,
-  NftStore,
-  NftStoreConfig,
-  User,
-  Migrator,
-  RpcHelper
-} from "parasol-finance-sdk";
+import { Migrator, NftKind, NftStore, NftStoreConfig, RpcHelper, User } from "parasol-finance-sdk";
 
 import { PublicKey } from "@solana/web3.js";
 
@@ -39,7 +32,7 @@ export const NftContext = createContext<Context>({
   config: null,
 });
 
-export const NftProvider: React.FC<React.ReactNode> = ({ children }) => {
+export const NftProvider: React.FC<React.ReactNode> = ({ children }: any) => {
   const [nfts, setNfts] = useState<any>([]);
   const { connection } = useConnection();
   const wallet = useWallet();

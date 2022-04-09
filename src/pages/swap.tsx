@@ -573,7 +573,7 @@ const Swap = () => {
               <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
               <div className="space-y-4">
                 {routes.length > 0 &&
-                  routes.map((route) => (
+                  routes.map((route: any) => (
                     <RadioGroup.Option
                       key={route.marketInfos[0].marketMeta.amm.label}
                       value={route}

@@ -47,7 +47,7 @@ const ProjectDetails = () => {
                 <div className={"mb-6"}>
                   <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">{ido.projectName}</a>
                   <p className=" max-w-prose mx-auto text-sm lg:text-base text-gray-200">
-                      We bring new technologies to our community.
+                    We bring new technologies to our community.
                   </p>
                 </div>
               </div>
@@ -62,7 +62,7 @@ const ProjectDetails = () => {
                             href={"#"}
                             className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                             aria-current={selected ? "page" : undefined}>
-                            IDO Information
+                            Project Details
                           </a>
                         )}
                       </Tab>
@@ -82,7 +82,6 @@ const ProjectDetails = () => {
                             href={"#"}
                             className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                             aria-current={selected ? "page" : undefined}>
-                            {/*<DocumentDownloadIcon className={"w-5"} />*/}
                             White Paper
                           </a>
                         )}

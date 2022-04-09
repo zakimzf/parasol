@@ -92,7 +92,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
               <main role="main">
                 <SimpleReactLightbox>
                   <TokenModalProvider>
-                    <NftProvider>
+                    <NftProvider {...pageProps} >
                       <Component {...pageProps} />
                     </NftProvider>
                   </TokenModalProvider>

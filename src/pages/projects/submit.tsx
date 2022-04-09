@@ -204,7 +204,7 @@ const SubmitProject = () => {
     );
   };
 
-  const onDrop = useCallback((file) => {
+  const onDrop = useCallback((file: any) => {
     const _errors = errors;
     delete _errors["projectCover"];
     setErrors(_errors);

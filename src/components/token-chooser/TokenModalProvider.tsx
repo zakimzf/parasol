@@ -4,7 +4,11 @@ import { PublicKey } from "@solana/web3.js";
 import { TokenModal } from "./TokenModal";
 import { TokenChooserContext, TokenChooserMode } from "./useTokenModal";
 
-export const TokenModalProvider: FC = ({ children }) => {
+type TokenChooserProps = {
+  children: React.ReactNode,
+};
+
+export const TokenModalProvider: FC<TokenChooserProps> = ({ children }: TokenChooserProps) => {
   const [visible, setVisible] = useState(false);
   const [mode, setMode] = useState(TokenChooserMode.Input);
   const [input, setInput] = useState(new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"));

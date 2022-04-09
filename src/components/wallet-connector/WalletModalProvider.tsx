@@ -2,7 +2,11 @@ import React, { FC, useState } from "react";
 import { WalletModalContext } from "./useWalletModal";
 import { WalletModal } from "./WalletModal";
 
-export const WalletModalProvider: FC = ({ children }) => {
+type WalletModalProviderProps = {
+  children: React.ReactNode,
+};
+
+export const WalletModalProvider: FC<WalletModalProviderProps> = ({ children }: WalletModalProviderProps) => {
   const [visible, setVisible] = useState(false);
   return <WalletModalContext.Provider
     value={{

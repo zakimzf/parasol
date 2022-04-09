@@ -5,15 +5,14 @@ import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
 import { LogoutIcon, UserIcon } from "@heroicons/react/outline";
 
-export const WalletConnect: FC = ({ children }) => {
+export const WalletConnect: FC = () => {
   const { publicKey, wallet, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
   const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const content = useMemo(() => {
-    if (children) return children;
     if (!wallet || !base58) return null;
     return base58.slice(0, 7) + ".." + base58.slice(-5);
-  }, [children, wallet, base58]);
+  }, [wallet, base58]);
 
   const disconnectWallet: MouseEventHandler<HTMLAnchorElement> = useCallback((event) => {
     if (!event.defaultPrevented) disconnect().catch(() => {
