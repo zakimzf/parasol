@@ -11,6 +11,7 @@
     "space-before-function-paren": ["error", "always"],
     "padding-line-between-statements": ["error", { "blankLine": "always", "prev": "var", "next": "return" }],
     "padded-blocks": ["error", "never"],
+    "no-inline-comments": "error",
     "require-await": "error",
     "indent": [2, 2, { "SwitchCase": 1 }],
     "quotes": ["error", "double", { "avoidEscape": true }],

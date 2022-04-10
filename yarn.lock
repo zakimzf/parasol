@@ -3338,6 +3338,7 @@ __metadata:
     next: ^12.1.0
     next-compose-plugins: ^2.2.1
     next-transpile-modules: ^9.0.0
+    node-snackbar: ^0.1.16
     parasol-finance-sdk: ^0.4.2
     postcss: ^8.4.6
     raw-loader: ^4.0.2
@@ -8217,6 +8218,13 @@ __metadata:
   version: 2.0.2
   resolution: "node-releases@npm:2.0.2"
   checksum: da858bf86b4d512842379749f5a5e4196ddab05ba18ffcf29f05bf460beceaca927f070f4430bb5046efec18941ddbc85e4c5fdbb83afc28a38dd6069a2f255e
+  languageName: node
+  linkType: hard
+
+"node-snackbar@npm:^0.1.16":
+  version: 0.1.16
+  resolution: "node-snackbar@npm:0.1.16"
+  checksum: 679bbb530b49c823fe8005b5b22a40ce5681aeec05c9ab6fb7d005b101c84137a3f3f94e6e1221258db61a7d6e19dbd1ca470c824ec9ec61b80fe52d2ae3e6a4
   languageName: node
   linkType: hard
 
