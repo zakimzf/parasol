@@ -47,7 +47,8 @@ const Swap = () => {
   useEffect(() => {
     getPlatformFeeAccounts(
       connection,
-      new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any) // The platform fee account owner. Need to fetch this from the env
+      // The platform fee account owner. Need to fetch this from the env
+      new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any)
     ).then((r) => {
       setPlatformFeeAndAccounts({
         feeBps: +(process.env.PLATFORM_FEE_PERCENTAGE as any) * 100,
