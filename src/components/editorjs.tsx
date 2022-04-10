@@ -3,13 +3,12 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
-import { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { useWallet } from "@solana/wallet-adapter-react";
-import React, { useCallback } from "react";
 import { sign } from "tweetnacl";
-import Snackbar from "node-snackbar"; 
+import Snackbar from "node-snackbar";
 
 import "node-snackbar/dist/snackbar.min.css";
 
@@ -38,6 +37,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
       // autofocus: true,
       readOnly: !isOwner,
       placeholder: "Please enter your content here...",
+      minHeight : 0,
       tools: {
         header: {
           class: Header,

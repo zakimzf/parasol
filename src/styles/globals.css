@@ -68,3 +68,11 @@ input[type="number"] {
   background-color: #b064fe !important;
   color: #fff !important;  
 }
+
+.ce-toolbox__button {
+  color: #edf2f7;
+}
+
+.ce-toolbox__button:hover {
+  color: #b064fe;
+}
