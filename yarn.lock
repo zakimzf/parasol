@@ -5822,6 +5822,11 @@ node-releases@^2.0.2:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.2.tgz#7139fe71e2f4f11b47d4d2986aaf8c48699e0c01"
   integrity sha512-XxYDdcQ6eKqp/YjI+tb2C5WM2LgjnZrfYg4vgQt49EK268b6gYCHsBLrK2qvJo4FmCtqmKezb0WZFK4fkrZNsg==
 
+node-snackbar@^0.1.16:
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/node-snackbar/-/node-snackbar-0.1.16.tgz#72baa02d40afc4dfe5621137850b80246d8078d5"
+  integrity sha512-3s43QMKgABXdnqUfpKAXG+WlvS8bbuO6n6LAOmmLNZs87CGdpexqfGYCktFVi9NHFgREwNJARgeVTLOFAf2MQg==
+
 normalize-path@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-2.1.1.tgz#1ab28b556e198363a8c1a6f7e6fa20137fe6aed9"
