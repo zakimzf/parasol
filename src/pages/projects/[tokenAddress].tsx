@@ -196,6 +196,13 @@ const ProjectDetails = () => {
                     </button>
                   </div>
                 </div>
+                <div className="px-10">
+                  {walletAddress && walletAddress == ido.publicKey && (
+                    <button className={"w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"} id="saveEditor">
+                      Save Changes
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
