@@ -252,7 +252,7 @@ const Contact = () => {
                 </button>
                 <button
                   type={"reset"}
-                  className={"button secondary"}
+                  className={"button"}
                 >
                   Clear
                 </button>

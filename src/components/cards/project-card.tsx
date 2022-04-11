@@ -51,7 +51,7 @@ const ProjectCard = ({ Id, Name, Description, Logo, Cover }: ProjectDetails) => 
       </div>
       <div className="flex gap-x-3">
         <button className="button py-3 flex-1 whitespace-nowrap text-base">Participate in IDO</button>
-        <button className="button secondary py-3 flex-1 text-base">More Info</button>
+        <button className="button py-3 flex-1 text-base">More Info</button>
       </div>
     </div>
   </Card>

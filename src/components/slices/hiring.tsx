@@ -23,7 +23,7 @@ const Hiring = () => (
           </p>
           <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
             <a href="mailto:contact@parasol.finance"
-              className="button secondary py-3">
+              className="button py-3">
               Contact Us
             </a>
           </div>

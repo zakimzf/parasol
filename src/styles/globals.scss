@@ -18,18 +18,16 @@
 
 @layer components {
   .button {
-    @apply flex justify-center items-center gap-x-2 bg-gradient-to-r from-purple-1 to-purple-2 px-6 py-4 text-lg font-medium rounded-lg;
+    @apply flex justify-center items-center gap-x-2 px-6 py-4 text-lg font-medium rounded-lg bg-gradient-to-r from-purple-1 to-purple-2;
   }
 
-  .button.secondary,
-  .button:hover
-  {
+  .button:hover {
     @apply bg-none bg-white text-purple-2;
   }
 
-  .button.secondary:hover
+  div > .button:nth-child(2):not(.except)
   {
-    @apply bg-none bg-purple-2 text-white;
+    @apply bg-none bg-white text-purple-2;
   }
 }
 

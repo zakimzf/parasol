@@ -30,25 +30,25 @@ const Hero = () => (
                 className="text-white">Governed</span> IDO Platform</span>
           </h1>
           <p className="mt-7 text-base text-gray-200 font-medium text-xl">
-                        Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs
-                        of both projects and investors alike.
+            Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs
+            of both projects and investors alike.
           </p>
           <div className="flex justify-center mt-6 sm:justify-between">
             <p className="text-gray-200 text-lg font-bold mb-3 truncate">
-                            Buy your NFT access key now! (limited quantity) 🎉
+              Buy your NFT access key now! (limited quantity) 🎉
             </p>
           </div>
           <div className="mt-8 grid lg:flex gap-3 grid-cols-1 lg:grid-cols-2 justify-start">
             <Link href={"/projects"}>
               <a
-                className="flex items-center justify-center gap-x-2 px-10 bg-purple-2 py-3 text-base font-medium rounded-lg shadow-lg text-white bg-gradient-primary hover:from-pink-600 hover:to-purple-500">
+                className="button px-10 bg-none bg-purple-2 py-3 text-base">
                 <CollectionIcon className={"w-5 h-5"}/>
                 View Upcoming IDOs
               </a>
             </Link>
             <Link href={"/swap"}>
               <a
-                className="flex items-center justify-center gap-x-2 px-7 py-3 text-base font-medium border border-white hover:bg-white hover:text-purple-600 rounded-lg shadow-lg text-white hover:to-purple-500">
+                className="button border border-white bg-none except py-3 text-base">
                 <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 125.5752 144.6496">
                   <g>
