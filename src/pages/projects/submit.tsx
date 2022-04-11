@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { useWalletModal } from "../../components/wallet-connector";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import Card from "../../components/card";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -622,81 +623,78 @@ const SubmitProject = () => {
             </div>
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
-                <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
-                  <div className={"relative px-6 py-6"}>
-                    <h2 className="flex gap-x-2 items-center text-2xl font-bold">
-                      {!values.projectName.trim() && "Project Name" || values.projectName}
-                    </h2>
-                    <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
-                      <img className="h-8"
-                        src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
-                        alt="USDC"/>
-                      <div className="flex items-end gap-x-2 text-4xl font-bold">
+                <Card padded={true}>
+                  <h2 className="flex gap-x-2 items-center text-2xl font-bold">
+                    {!values.projectName.trim() && "Project Name" || values.projectName}
+                  </h2>
+                  <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
+                    <img className="h-8"
+                      src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
+                      alt="USDC"/>
+                    <div className="flex items-end gap-x-2 text-4xl font-bold">
+                      <NumberFormat
+                        value={!values.hardCap && "0" || values.hardCap}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                      />
+                      <span>USDC</span>
+                    </div>
+                  </div>
+                  <div className="prose prose-lg prose-invert">
+                    <p>{!values.description.trim() && "Project Description" || values.description}</p>
+                  </div>
+                  <div className="flex-col space-y-3 mt-6">
+                    <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                      <span>Hard Cap</span>
+                      <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
+                      <span>
                         <NumberFormat
                           value={!values.hardCap && "0" || values.hardCap}
+                          className="foo"
                           displayType={"text"}
                           thousandSeparator={true}
+                          prefix={"$"}
                         />
-                        <span>USDC</span>
-                      </div>
+                      </span>
                     </div>
-                    <div className="prose prose-lg prose-invert">
-                      <p>{!values.description.trim() && "Project Description" || values.description}</p>
+                    <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                      <span>Price per Token</span>
+                      <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
+                      <span>                      
+                        <NumberFormat
+                          value={!values.tokenPrice && "0" || values.tokenPrice}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                        />
+                      </span>
                     </div>
-                    <div className="flex-col space-y-3 mt-6">
-                      <div className="flex font-medium items-center text-gray-300 gap-x-3">
-                        <span>Hard Cap</span>
-                        <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
-                        <span>
-                          <NumberFormat
-                            value={!values.hardCap && "0" || values.hardCap}
-                            className="foo"
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />
-                        </span>
-                      </div>
-                      <div className="flex font-medium items-center text-gray-300 gap-x-3">
-                        <span>Price per Token</span>
-                        <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
-                        <span>                      
-                          <NumberFormat
-                            value={!values.tokenPrice && "0" || values.tokenPrice}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />
-                        </span>
-                      </div>
-                    </div>
-                    <p className={"text-sm text-gray-400 mt-6"}>
-                      Find more information on the listing process by consulting our documentation <a href={"https://docs.parasol.finance/"} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a>.
-                    </p>
-                    <button
-                      className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
-                      type="submit"
-                      ref={submitBtnRef}
-                      onClick={() =>
-                        walletAddress ?? walletModal.setVisible(true)
-                      }
-                    >
-
-                      {walletAddress ? (
-                        <>
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/>
-                          </svg>
-                          Create IDO Now
-                        </>
-                      ) : (
-                        <>Connect Wallet</>
-                      )}
-                      
-                    </button>
                   </div>
-                </div>
+                  <p className={"text-sm text-gray-400 mt-6"}>
+                    Find more information on the listing process by consulting our documentation <a href={"https://docs.parasol.finance/"} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a>.
+                  </p>
+                  <button
+                    className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
+                    type="submit"
+                    ref={submitBtnRef}
+                    onClick={() =>
+                      walletAddress ?? walletModal.setVisible(true)
+                    }
+                  >
+                    {walletAddress ? (
+                      <>
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/>
+                        </svg>
+                        Create IDO Now
+                      </>
+                    ) : (
+                      <>Connect Wallet</>
+                    )}
+                  </button>
+                  {/*</div>*/}
+                </Card>
               </div>
             </div>
           </div>
