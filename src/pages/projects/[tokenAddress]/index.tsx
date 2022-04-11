@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { BadgeCheckIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon, PencilAltIcon } from "@heroicons/react/outline";
 import { Tab } from "@headlessui/react"
 import Container from "../../../components/container";
 import axios from "axios";
@@ -235,7 +235,12 @@ const ProjectDetails = () => {
                         </span>
                       </div>
                     </div>
-                    {walletAddress ? (
+                    {walletAddress ? walletAddress == ido.publicKey ? (
+                      <button className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"} id="saveEditor">
+                        <PencilAltIcon className={"w-6"}/>
+                        Save Changes
+                      </button>
+                    ) : (
                       <>
                         <Link href={`/projects/${tokenAddress}/participate`}>
                           <a className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
@@ -260,7 +265,7 @@ const ProjectDetails = () => {
                     renderer={countdownRenderer}
                     intervalDelay={0}
                     precision={3}
-                    date={Date.now() + 210000000} />
+                    date={Date.now() + 210000000}/>
                 </div>
               </div>
             </div>

@@ -34,7 +34,6 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
     let editor_: any = null;
     editor_ = await new EditorJS({
       holder: "editorjs",
-      // autofocus: true,
       readOnly: !isOwner,
       placeholder: "Please enter your content here...",
       minHeight : 0,
@@ -59,11 +58,6 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
         table: Table,
       },
       data: JSON.parse(content),
-      // onChange: (api: any, event: any) => {
-      // },
-      // onPaste: (event: any) => {
-      //   console.log(event);
-      // },
     });
     setEditor(editor_);
   };
