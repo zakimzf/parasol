@@ -16,6 +16,23 @@
   }
 }
 
+@layer components {
+  .button {
+    @apply flex justify-center items-center gap-x-2 bg-gradient-to-r from-purple-1 to-purple-2 px-6 py-4 text-lg font-medium rounded-lg;
+  }
+
+  .button.secondary,
+  .button:hover
+  {
+    @apply bg-none bg-white text-purple-2;
+  }
+
+  .button.secondary:hover
+  {
+    @apply bg-none bg-purple-2 text-white;
+  }
+}
+
 body {
   background: url("/assets/ellipses.svg") no-repeat top -200px center #17122b;
   color: theme("colors.white");
