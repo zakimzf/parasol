@@ -674,7 +674,7 @@ const SubmitProject = () => {
                     Find more information on the listing process by consulting our documentation <a href={"https://docs.parasol.finance/"} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a>.
                   </p>
                   <button
-                    className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
+                    className={"w-full button mt-8"}
                     type="submit"
                     ref={submitBtnRef}
                     onClick={() =>

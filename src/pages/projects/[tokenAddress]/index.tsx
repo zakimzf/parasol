@@ -236,7 +236,7 @@ const ProjectDetails = () => {
                       </div>
                     </div>
                     {walletAddress ? walletAddress == ido.publicKey ? (
-                      <button className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"} id="saveEditor">
+                      <button className={"w-full button mt-8"} id="saveEditor">
                         <PencilAltIcon className={"w-6"}/>
                         Save Changes
                       </button>

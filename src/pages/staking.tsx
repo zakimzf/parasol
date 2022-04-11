@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { CheckCircleIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon, } from "@heroicons/react/outline";
+import {
+  CheckCircleIcon,
+  DownloadIcon,
+  GlobeAltIcon,
+  LightningBoltIcon,
+  ScaleIcon,
+  UploadIcon,
+} from "@heroicons/react/outline";
 import { RadioGroup } from "@headlessui/react";
 
 import Container from "../components/container";
@@ -274,12 +281,10 @@ const Staking = () => {
                 </RadioGroup>
                 {wallet.connected ? (
                   <button
-                    id="swap-btn"
-                    className={`w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg ${
-                      !balanceAvailable ? "opacity-50" : ""
-                    }`}
-                    disabled={!balanceAvailable}
-                  >
+                    id="stake-btn"
+                    className={`w-full button mt-8 ${!balanceAvailable ? "opacity-50" : ""}`}
+                    disabled={!balanceAvailable}>
+                    {selectedOperation.id == 0 ? <UploadIcon className={"w-6"} /> : <DownloadIcon className={"w-6"} />}
                     {selectedOperation.id == 0 ? "Stake" : "Unstake"} Your $PSOL
                   </button>
                 ) : (

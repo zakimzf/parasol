@@ -47,7 +47,7 @@ const NftCard = ({
       <div className="">
         <div className="relative">
           <span className="absolute top-0 right-0 m-3 items-center justify-center px-2 py-1 font-medium leading-none indigo-500 bg-purple-500 bg-opacity-50 rounded">
-            {data && (`${data.currentSupply}/${![0, 1].includes(id) ? data.maxSupply : "∞"}`) || "0/0" }
+            {data && (`${data.currentSupply}/${![0, 1].includes(id) ? data.maxSupply : "∞"}`) || "0/0"}
           </span>
           <video
             ref={videoRef}
@@ -56,7 +56,7 @@ const NftCard = ({
             loop
             className="w-full"
           >
-            <source src={video} />
+            <source src={video}/>
           </video>
         </div>
         <div className="px-6 py-7 flex flex-col gap-y-5 items-start">
@@ -71,7 +71,7 @@ const NftCard = ({
           </div>
           <div className="flex items-baseline text-4xl xl:text-4xl lg:text-2xl font-extrabold">
             <span className="flex text-white gap-x-3 items-center">
-              <Image src={Logo} className="h-8" alt="logo" width={32}  height={32}/>
+              <Image src={Logo} className="h-8" alt="logo" width={32} height={32}/>
               <div className="flex items-end gap-x-2">
                 {amount > 10000
                   ? (amount / 1000).toLocaleString("en-US", {
@@ -108,7 +108,8 @@ const NftCard = ({
                 </svg>
               </div>
               <p className="ml-3 text-base text-gray-200">
-                <span className="font-bold">Dynamic Vesting Period:</span>{" "}
+                <span className="font-bold">Dynamic Vesting Period:</span>
+                {" "}
                 {vestingPeriod} weeks
               </p>
             </li>
@@ -131,19 +132,17 @@ const NftCard = ({
                 </svg>
               </div>
               <p className="ml-3 text-base text-gray-200">
-                <span className="font-bold">Starting Vesting Fees:</span> 21%
+                <span className="font-bold">Starting Vesting Fees:</span>
+                21%
               </p>
             </li>
           </ul>
           <button
-            className="flex gap-x-2 items-center justify-center w-full whitespace-nowrap bg-gradient-to-r from-purple-1 to-purple-2 font-medium rounded-md p-3 hover:bg-white hover:text-purple-2"
-            onClick={() =>
-              connected ? buyNFT(index) : walletModal.setVisible(true)
-            }
-          >
+            className="w-full button text-base py-4"
+            onClick={() => connected ? buyNFT(index) : walletModal.setVisible(true)}>
             {connected ? (
               <>
-                <ShoppingBagIcon className="h-5" />
+                <ShoppingBagIcon className="w-5"/>
                 Buy NFT Access Key
               </>
             ) : (
