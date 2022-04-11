@@ -35,7 +35,7 @@ const Notification: React.FC<NotificationProps> = ({ type, title, message }: Not
     <>
       <div
         aria-live="assertive"
-        className="sticky top-0 bg-red-600 w-full z-50">
+        className="sticky top-0 bg-red-600 w-full z-50 pointer-events-none">
         <div className={"absolute w-full h-screen p-6"}>
           <div className="w-full flex flex-col items-center space-y-4 sm:items-end">
             <Transition
