@@ -42,13 +42,13 @@ const About = () =>
               </p>
               <div className="mt-8 grid lg:flex gap-3 grid-cols-1 lg:grid-cols-2 justify-start">
                 <a href={"/whitepaper.pdf"}
-                  className="flex items-center gap-x-2 justify-center px-10 bg-purple-2 py-3 text-base font-medium rounded-lg shadow-lg text-white bg-gradient-primary hover:from-pink-600 hover:to-purple-500">
+                  className="button px-10 bg-none bg-purple-2 py-3 text-base">
                   <DownloadIcon className={"h-5"} />
                   Download White Paper
                 </a>
                 <Link href={"/contact"}>
                   <a type="button"
-                    className="flex items-center gap-x-2 justify-center px-7 py-3 text-base font-medium border border-white hover:bg-white hover:text-purple-600 rounded-lg shadow-lg text-white hover:to-purple-500">
+                    className="button border border-white bg-none except py-3 text-base">
                     <MailOpenIcon className={"h-5"} />
                     Contact Us
                   </a>

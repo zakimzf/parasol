@@ -171,9 +171,7 @@ const Migrate = () => {
               [
                 nfts.length > 0 ? (
                   <button
-                    className={
-                      "w-full bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"
-                    }
+                    className={"button"}
                     onClick={upgradeNFT}
                   >
                     Upgrade My NFT
@@ -185,7 +183,7 @@ const Migrate = () => {
             ) : (
               <button
                 onClick={() => walletModal.setVisible(true)}
-                className="flex items-center justify-center w-full bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 gap-x-2 text-lg font-medium rounded-lg"
+                className="w-full button"
                 disabled={isPending}
               >
                 {isPending ? (
