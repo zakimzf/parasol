@@ -42,7 +42,7 @@ const NftCard = ({
     <article
       onMouseOver={playVideo}
       onMouseOut={pauseVideo}
-      className={`mt-${offset} cursor-pointer relative mx-4 lg:mx-0 flex-col bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg overflow-hidden`}
+      className={"card cursor-pointer lg:mx-0 overflow-hidden"}
     >
       <div className="">
         <div className="relative">

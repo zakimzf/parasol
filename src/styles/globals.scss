@@ -3,6 +3,19 @@
 @tailwind utilities;
 @tailwind typography;
 
+@layer components {
+  .card {
+    background-color: theme('colors.card');
+    border-radius: theme('borderRadius.lg');
+    box-shadow: theme('boxShadow.half-strong');
+    border: 1px solid rgb(31 41 55);
+  }
+
+  .padded {
+    @apply p-6;
+  }
+}
+
 body {
   background: url("/assets/ellipses.svg") no-repeat top -200px center #17122b;
   color: theme("colors.white");

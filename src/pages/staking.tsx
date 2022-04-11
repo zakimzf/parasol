@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import {
-  CheckCircleIcon,
-  GlobeAltIcon,
-  LightningBoltIcon,
-  ScaleIcon,
-} from "@heroicons/react/outline";
+import { CheckCircleIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon, } from "@heroicons/react/outline";
 import { RadioGroup } from "@headlessui/react";
 
 import Container from "../components/container";
-import CardHost from "../components/cards/base-card";
+import Card from "../components/card";
 
 import Heading from "../components/heading";
 import { NftContext } from "../context/NftContext";
@@ -151,7 +146,7 @@ const Staking = () => {
               </dl>
             </div>
             <div className={"flex flex-col col-span-3"}>
-              <CardHost padding={6}>
+              <Card padded={true}>
                 <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                   {selectedOperation.id == 0 ? "Stake" : "Unstake"} PSOL Tokens
                 </h2>
@@ -330,7 +325,7 @@ const Staking = () => {
                     {isPending ? "" : "Connect Wallet"}
                   </button>
                 )}
-              </CardHost>
+              </Card>
             </div>
           </div>
         </Container>

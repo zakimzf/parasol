@@ -10,6 +10,7 @@ module.exports = {
     extend: {
       colors: {
         "parasol": "#170F25",
+        "card": "rgba(35,31,56,0.5)",
         "purple-1": "#7939ff",
         "purple-2": "#b064fe"
       },
