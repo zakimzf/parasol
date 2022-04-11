@@ -17,6 +17,7 @@ import SimpleReactLightbox from "simple-react-lightbox";
 
 import Header from "../components/header";
 import AnnounceBar from "../components/slices/announce-bar";
+import Notification, { NotificationType } from "../components/notifications";
 import Footer from "../components/footer";
 import { TokenModalProvider } from "../components/token-chooser/TokenModalProvider";
 import { getWalletAdapterNetwork } from "../core/solana-network";
@@ -88,6 +89,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
           >
             <WalletModalProvider>
               <AnnounceBar/>
+              <Notification type={NotificationType.Danger} title={"Saved Changes"} message={"The content has been successfully saved."}/>
               <Header/>
               <main role="main">
                 <SimpleReactLightbox>
