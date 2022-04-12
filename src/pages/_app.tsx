@@ -23,9 +23,9 @@ import { TokenModalProvider } from "../components/token-chooser/TokenModalProvid
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
 import { NftProvider } from "../context/NftContext";
-import { ToastContainer } from "react-nextjs-toast"
 
 import "../styles/globals.css";
+import { Toaster } from "react-hot-toast";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   const network: WalletAdapterNetwork = getWalletAdapterNetwork(
@@ -90,8 +90,10 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
           >
             <WalletModalProvider>
               <AnnounceBar/>
-              
-              <ToastContainer />
+              <Toaster
+                position="top-right"
+                reverseOrder={false}
+              />
               {/* <Notification type={NotificationType.Danger} title={"Saved Changes"} message={"The content has been successfully saved."}/> */}
               <Header/>
               <main role="main">
