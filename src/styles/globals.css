@@ -80,8 +80,3 @@ input[type="number"] {
 .toast-container.jsx-2113859084{
   z-index: 9999;
 }
-
-.stickyImportant{
-  position: -webkit-sticky  !important;
-  position: sticky !important;
-}
