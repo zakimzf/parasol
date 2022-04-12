@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 
-import BaseCard from "./base-card";
+import Card from "../card";
 
 type ProjectDetails = {
   Id: String,
@@ -12,7 +12,7 @@ type ProjectDetails = {
 }
 
 const ProjectCard = ({ Id, Name, Description, Logo, Cover }: ProjectDetails) => (
-  <BaseCard hoverEffect={true}>
+  <Card>
     {Cover && <Link href={`/projects/${Id}`}>
       <a style={{ position: "relative" }}>
         <img className="w-full rounded-t-lg" src={Cover} alt={`${Id}-cover`}/>
@@ -50,13 +50,10 @@ const ProjectCard = ({ Id, Name, Description, Logo, Cover }: ProjectDetails) => 
         </div>
       </div>
       <div className="flex gap-x-3">
-        <button className="w-full whitespace-nowrap bg-purple-2 font-medium rounded-md p-3">Participate in IDO
-        </button>
-        <button className="w-full flex-1 px-6 whitespace-nowrap font-medium bg-gray-300 text-gray-800 rounded-md p-3">More
-					Info
-        </button>
+        <button className="button py-3 flex-1 whitespace-nowrap text-base">Participate in IDO</button>
+        <button className="button py-3 flex-1 text-base">More Info</button>
       </div>
     </div>
-  </BaseCard>
+  </Card>
 )
 export default ProjectCard;

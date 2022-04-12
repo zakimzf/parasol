@@ -23,7 +23,7 @@ import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
 import { NftProvider } from "../context/NftContext";
 
-import "../styles/globals.css";
+import "../styles/globals.scss";
 import { Toaster } from "react-hot-toast";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {

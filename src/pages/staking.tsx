@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { CheckCircleIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon, } from "@heroicons/react/outline";
+import {
+  CheckCircleIcon,
+  DownloadIcon,
+  GlobeAltIcon,
+  LightningBoltIcon,
+  ScaleIcon,
+  UploadIcon,
+} from "@heroicons/react/outline";
 import { RadioGroup } from "@headlessui/react";
 
 import Container from "../components/container";
-import CardHost from "../components/cards/base-card";
+import Card from "../components/card";
 
 import Heading from "../components/heading";
 import { NftContext } from "../context/NftContext";
 import { useWalletModal } from "../components/wallet-connector";
-import { notification } from "../utils/functions";
 
 const operations = [
   { id: 0, title: "Stake", description: "Lock your $PSOL for 90 days." },
@@ -75,7 +81,7 @@ const Staking = () => {
       }
     }
     else {
-      notification("information", "Please connect your wallet before.", "Connection Required");
+      console.log("Please connect wallet");
     }
   };
   const getHalfAmount = () => {
@@ -87,7 +93,7 @@ const Staking = () => {
       }
     }
     else {
-      notification("information", "Please connect your wallet before.", "Connection Required");
+      console.log("Please connect wallet");
     }
   };
 
@@ -147,7 +153,7 @@ const Staking = () => {
               </dl>
             </div>
             <div className={"flex flex-col col-span-3"}>
-              <CardHost padding={6}>
+              <Card padded={true}>
                 <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                   {selectedOperation.id == 0 ? "Stake" : "Unstake"} PSOL Tokens
                 </h2>
@@ -275,12 +281,10 @@ const Staking = () => {
                 </RadioGroup>
                 {wallet.connected ? (
                   <button
-                    id="swap-btn"
-                    className={`w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg ${
-                      !balanceAvailable ? "opacity-50" : ""
-                    }`}
-                    disabled={!balanceAvailable}
-                  >
+                    id="stake-btn"
+                    className={`w-full button mt-8 ${!balanceAvailable ? "opacity-50" : ""}`}
+                    disabled={!balanceAvailable}>
+                    {selectedOperation.id == 0 ? <UploadIcon className={"w-6"} /> : <DownloadIcon className={"w-6"} />}
                     {selectedOperation.id == 0 ? "Stake" : "Unstake"} Your $PSOL
                   </button>
                 ) : (
@@ -326,7 +330,7 @@ const Staking = () => {
                     {isPending ? "" : "Connect Wallet"}
                   </button>
                 )}
-              </CardHost>
+              </Card>
             </div>
           </div>
         </Container>
