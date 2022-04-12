@@ -94,16 +94,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                 position="top-right"
                 reverseOrder={false}
                 containerClassName="stickyImportant top-0"
-              >
-                
-                {(t) => (
-                  <div
-                    className="sticky top-0 xxx"
-                  >
-                    {resolveValue(t.message, t)}
-                  </div>
-                )}
-              </Toaster> 
+              /> 
               {/* <Notification type={NotificationType.Danger} title={"Saved Changes"} message={"The content has been successfully saved."}/> */}
               <Header/>
               <main role="main">
