@@ -1,5 +1,6 @@
 import { db } from "./firebase";
 import { doc, getDoc, } from "firebase/firestore";
+import { toast } from "react-nextjs-toast"
 
 export const getBase64 = (file, cb) => {
   let reader = new FileReader();
@@ -25,3 +26,12 @@ export const isTokenAddressExist = async (id) => {
 }
 
 export const errClasses = ["border-red-600", "text-red-600", "placeholder-red-600", "focus:outline-none", "focus:ring-red-600", "border-2", "focus:border-red-600", "sm:text-sm"];
+
+export const notification = (type, message, title = "") => {  
+  // success error info 
+  toast.notify(message, {
+    duration: 5000,
+    type: type,
+    title: title
+  })
+}

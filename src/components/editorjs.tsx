@@ -8,9 +8,9 @@ import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../utils/firebase";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { sign } from "tweetnacl";
-import Snackbar from "node-snackbar";
 
 import "node-snackbar/dist/snackbar.min.css";
+import { notification } from "../utils/functions";
 
 interface props {
   tokenAddress: any;
@@ -36,7 +36,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
       holder: "editorjs",
       readOnly: !isOwner,
       placeholder: "Please enter your content here...",
-      minHeight : 0,
+      minHeight: 0,
       tools: {
         header: {
           class: Header,
@@ -82,19 +82,14 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
         await updateDoc(idosCollectionRef, {
           content: JSON.stringify(outputData),
         });
-        Snackbar.show({
-          pos: "bottom-center",
-          text: "Content was successfully saved.",
-          backgroundColor: "#231f38",
-          showAction: false
-        });
+        notification("success", "Content was successfully saved.")
       })
       .catch((error: any) => {
         // console.log("Saving failed: ", error);
       });
     setSaveState(false);
   };
-  
+
   const signWallet = useCallback(async () => {
     try {
       // `publicKey` will be null if the wallet isn"t connected
