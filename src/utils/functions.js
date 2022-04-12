@@ -30,7 +30,7 @@ export const errClasses = ["border-red-600", "text-red-600", "placeholder-red-60
 export const notification = (type, message, title = "") => {  
   // success error info 
   toast.notify(message, {
-    duration: 5000,
+    duration: 5,
     type: type,
     title: title
   })

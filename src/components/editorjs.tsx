@@ -85,7 +85,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
         notification("success", "Content was successfully saved.")
       })
       .catch((error: any) => {
-        // console.log("Saving failed: ", error);
+        notification("error", "message", "title")
       });
     setSaveState(false);
   };
@@ -109,7 +109,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
       setSaveState(true);
     } 
     catch (error: any) {
-      console.log(`Signing failed: ${error?.message}`);
+      notification("error", "Signing failed")
     }
   }, [publicKey, signMessage]);
 
