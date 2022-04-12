@@ -13,6 +13,7 @@ import Notification from "../components/slices/notification";
 import { useWalletModal } from "../components/wallet-connector";
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import Head from "next/head";
+import { notification } from "../utils/functions";
 
 const Swap = () => {
   const { connection } = useConnection();
@@ -231,7 +232,7 @@ const Swap = () => {
       }
     }
     else {
-      console.log("Please connect wallet");
+      notification("information", "Please connect your wallet before.", "Connection Required");
     }
   };
   const getHalfAmount = () => {
@@ -244,7 +245,7 @@ const Swap = () => {
       }
     }
     else {
-      console.log("Please connect wallet");
+      notification("information", "Please connect your wallet before.", "Connection Required");
     }
   };
   const onBlurIAmountEvent = () => {
