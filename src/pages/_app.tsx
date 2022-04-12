@@ -25,7 +25,7 @@ import { WalletModalProvider } from "../components/wallet-connector";
 import { NftProvider } from "../context/NftContext";
 
 import "../styles/globals.css";
-import { Toaster } from "react-hot-toast";
+import { resolveValue, Toaster } from "react-hot-toast";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   const network: WalletAdapterNetwork = getWalletAdapterNetwork(
@@ -93,7 +93,17 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
               <Toaster
                 position="top-right"
                 reverseOrder={false}
-              />
+                containerClassName="stickyImportant top-0"
+              >
+                
+                {(t) => (
+                  <div
+                    className="sticky top-0 xxx"
+                  >
+                    {resolveValue(t.message, t)}
+                  </div>
+                )}
+              </Toaster> 
               {/* <Notification type={NotificationType.Danger} title={"Saved Changes"} message={"The content has been successfully saved."}/> */}
               <Header/>
               <main role="main">
