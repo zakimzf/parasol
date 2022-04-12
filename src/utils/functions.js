@@ -1,9 +1,7 @@
 import { db } from "./firebase";
 import { doc, getDoc, } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
-import { Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
-import { Fragment } from "react";
 import { CheckCircleIcon, ExclamationCircleIcon, ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
 
 export const getBase64 = (file, cb) => {
@@ -48,7 +46,6 @@ export const notification = (type, message, title = "") => {
   const hideNotif = (t) => {
     toast.dismiss(t.id)
     t.visible = false;
-    // "animate-leave"
     document.getElementById("notifId").classList.add("opacity-0")
   }
 
