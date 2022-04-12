@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  CheckCircleIcon,
-  GlobeAltIcon,
-  LightningBoltIcon,
-  ScaleIcon,
-} from "@heroicons/react/outline";
+import { CheckCircleIcon, GlobeAltIcon, LightningBoltIcon, ScaleIcon, } from "@heroicons/react/outline";
 import { RadioGroup } from "@headlessui/react";
 
 import Container from "../components/container";
@@ -13,6 +8,7 @@ import CardHost from "../components/cards/base-card";
 import Heading from "../components/heading";
 import { NftContext } from "../context/NftContext";
 import { useWalletModal } from "../components/wallet-connector";
+import { notification } from "../utils/functions";
 
 const operations = [
   { id: 0, title: "Stake", description: "Lock your $PSOL for 90 days." },
@@ -79,7 +75,7 @@ const Staking = () => {
       }
     }
     else {
-      console.log("Please connect wallet");
+      notification("information", "Please connect your wallet before.", "Connection Required");
     }
   };
   const getHalfAmount = () => {
@@ -91,7 +87,7 @@ const Staking = () => {
       }
     }
     else {
-      console.log("Please connect wallet");
+      notification("information", "Please connect your wallet before.", "Connection Required");
     }
   };
 

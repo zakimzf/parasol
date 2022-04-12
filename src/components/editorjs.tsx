@@ -82,10 +82,10 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
         await updateDoc(idosCollectionRef, {
           content: JSON.stringify(outputData),
         });
-        notification("success", "Content was successfully saved.")
+        notification("success", "Content was successfully saved.", "Update IDO")
       })
       .catch((error: any) => {
-        notification("error", "message", "title")
+        notification("danger", "Unable to save your changes.", "Update IDO")
       });
     setSaveState(false);
   };
@@ -109,7 +109,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
       setSaveState(true);
     } 
     catch (error: any) {
-      notification("error", "Signing failed")
+      notification("danger", "Unable to sign the transaction.", "Transaction Error");
     }
   }, [publicKey, signMessage]);
 

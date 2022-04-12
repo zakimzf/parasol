@@ -32,14 +32,14 @@ export const errClasses = ["border-red-600", "text-red-600", "placeholder-red-60
 export const notification = (type, message, title = "") => {
   function iconByType () {
     switch (type) {
+      default:
+        return <InformationCircleIcon className="h-6 w-6 text-blue-400" />
       case "success":
         return <CheckCircleIcon className="h-6 w-6 text-green-400" />
       case "warning":
         return <ExclamationIcon className="h-6 w-6 text-orange-400" />
       case "danger":
         return <ExclamationCircleIcon className="h-6 w-6 text-red-400" />
-      case "info":
-        return <InformationCircleIcon className="h-6 w-6 text-blue-400" />
     }
   }
 
