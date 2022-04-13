@@ -79,7 +79,6 @@ const EditProject = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (walletAddress && walletAddress == values.publicKey) {
-      const preContent = submitBtnRef.current.innerHTML;
       setLoading(true);
       await validateAllFieldsAndRedirection();
       setLoading(false);
