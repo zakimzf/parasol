@@ -9,7 +9,12 @@ import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useWalletModal } from "../../../components/wallet-connector";
-import { errClasses, validURL, } from "../../../utils/functions";
+import {
+  errClasses,
+  isTokenAddressExist,
+  notification,
+  validURL,
+} from "../../../utils/functions";
 import Container from "../../../components/container";
 import { db, storage } from "../../../utils/firebase";
 
@@ -47,6 +52,8 @@ const EditProject = () => {
     created: Timestamp.now(),
   });
 
+  const [loading, setLoading] = useState(false);
+
   const [errors, setErrors] = useState<any>([]);
 
   const handleChange = (e: any) => {
@@ -76,15 +83,15 @@ const EditProject = () => {
 
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    if (walletAddress) {
+    if (walletAddress && walletAddress == values.publicKey) {
       const preContent = submitBtnRef.current.innerHTML;
-      submitBtnRef.current.innerHTML = "Loading ...";
-      submitBtnRef.current.setAttribute("disabled", true);
+      setLoading(true)
       await validateAllFieldsAndRedirection();
-      submitBtnRef.current.innerHTML = preContent;
-      submitBtnRef.current.removeAttribute("disabled");
+      setLoading(false)
     }
-    console.log(77777);
+    else {
+      notification("warning", "Lorem ipsum");
+    }
   };
 
   const validateAllFields = () => {
@@ -167,7 +174,9 @@ const EditProject = () => {
   useEffect(() => {
     const getDataByTokenAddress = async () => {
       const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
-      if (data) setValues(data);
+      if (data) {
+        setValues(data);
+      } 
       else await router.push("/404");
     };
     if (tokenAddress) getDataByTokenAddress();
@@ -574,12 +583,17 @@ const EditProject = () => {
                       onClick={() =>
                         walletAddress ?? walletModal.setVisible(true)
                       }
+                      disabled={loading}
                     >
                       {walletAddress ? (
-                        <>
-                          <PencilAltIcon className={"w-6"} />
-                          Submit Changes
-                        </>
+                        !loading ? (
+                          <>
+                            <PencilAltIcon className={"w-6"} />
+                            Submit Changes
+                          </>
+                        ) : (
+                          <>Loading ...</>
+                        )
                       ) : (
                         <>Connect Wallet</>
                       )}
