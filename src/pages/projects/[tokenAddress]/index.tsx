@@ -52,7 +52,7 @@ const ProjectDetails = () => {
       );
     }
   };
-
+  console.log(walletAddress, ido.publicKey)
   return (
     <section className="pt-6">
       {ido ? (
@@ -73,16 +73,20 @@ const ProjectDetails = () => {
                     {ido.description}
                   </p>
                 </div>
-                <div className={"flex ml-auto justify-items-end items-center"}>
-                  <Link href={`/projects/${tokenAddress}/edit`}>
-                    <a
-                      type="button"
-                      className="inline-flex items-center gap-x-1 px-3.5 py-2 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm text-white bg-white bg-opacity-30 text-purple-2 hover:bg-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                      <PencilAltIcon className={"w-4"} />
-                      Edit IDO
-                    </a>
-                  </Link>
-                </div>
+                {walletAddress == ido.publicKey &&
+                (
+                  <div className={"flex ml-auto justify-items-end items-center"}>
+                    <Link href={`/projects/${tokenAddress}/edit`}>
+                      <a
+                        type="button"
+                        className="inline-flex items-center gap-x-1 px-3.5 py-2 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm text-white bg-white bg-opacity-30 text-purple-2 hover:bg-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <PencilAltIcon className={"w-4"} />
+                        Edit IDO
+                      </a>
+                    </Link>
+                  </div>
+                )
+                }
               </div>
               <SRLWrapper>
                 <img src={ido.projectCover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name}/>

@@ -6,26 +6,22 @@ import { collection, doc, setDoc, Timestamp } from "firebase/firestore";
 import { useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
-import { useDropzone } from "react-dropzone";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useWalletModal } from "../../../components/wallet-connector";
 import { errClasses, notification, validURL, } from "../../../utils/functions";
 import Container from "../../../components/container";
-import { db, storage } from "../../../utils/firebase";
+import { db } from "../../../utils/firebase";
+import { sign } from "tweetnacl";
 
 const EditProject = () => {
   const router = useRouter();
 
-  const { publicKey } = useWallet();
+  const { publicKey, signMessage } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
   const walletModal = useWalletModal();
 
-  const splRef: any = useRef(null);
-  const submitBtnRef: any = useRef(null);
-
   const idosCollectionRef = collection(db, "idos");
-  const [coverFile, setcoverFile] = useState<any>();
+  // const [coverFile, setcoverFile] = useState<any>();
 
   const [values, setValues] = useState({
     publicKey: walletAddress,
@@ -122,47 +118,70 @@ const EditProject = () => {
   const validateAllFieldsAndRedirection = async () => {
     const _errors = await validateAllFields();
     if (Object.keys(_errors).length == 0) {
-      console.log(_errors);
-      values.publicKey = walletAddress;
-      if (coverFile) {
-        uploadFiles(coverFile, async (_values: any) => {
-          await setDoc(doc(idosCollectionRef, _values.splToken), _values);
-        });
-      } 
-      else {
-        await setDoc(doc(idosCollectionRef, values.splToken), values);
-      }
-      router.push(`/projects/${values.splToken}`);
+      // if (coverFile) {
+      //   uploadFiles(coverFile, async (_values: any) => {
+      //     await setDoc(doc(idosCollectionRef, _values.splToken), _values);
+      //   });
+      // } 
+      // else {
+      signWallet();
+      
+      // }
     }
   };
+  
+  const signWallet = useCallback(async () => {
+    try {
+      // `publicKey` will be null if the wallet isn't connected
+      if (!publicKey) throw new Error("Wallet not connected!");
+      // `signMessage` will be undefined if the wallet doesn't support it
+      if (!signMessage)
+        throw new Error("Wallet does not support message signing!");
 
-  const uploadFiles = (file: any, callback: Function) => {
-    if (!file) return;
-    const storageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+      // Encode anything as bytes
+      const message = new TextEncoder().encode("I agree to change the details of this IDO.");
+      // Sign the bytes using the wallet
+      const signature = await signMessage(message);
+      // Verify that the bytes were signed using the private key that matches the known public key
+      if (!sign.detached.verify(message, signature, publicKey.toBytes()))
+        throw new Error("Invalid signature!");
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {},
-      (error) => console.log(error),
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const _values = { ...values, ["projectCover"]: downloadURL };
-          callback(_values);
-        });
-      }
-    );
-  };
+      await setDoc(doc(idosCollectionRef, values.splToken), values);
+      router.push(`/projects/${values.splToken}`);
+    } 
+    catch (error: any) {
+      notification("danger", "Unable to sign the transaction.", "Transaction Error");
+    }
+  }, [publicKey, signMessage]);
 
-  const onDrop = useCallback((file: any) => {
-    const _errors = errors;
-    delete _errors["projectCover"];
-    setErrors(_errors);
+  // const uploadFiles = (file: any, callback: Function) => {
+  //   if (!file) return;
+  //   const storageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
 
-    setcoverFile(file[0]);
-  }, []);
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {},
+  //     (error) => console.log(error),
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         const _values = { ...values, ["projectCover"]: downloadURL };
+  //         console.log(_values)
+  //         callback(_values);
+  //       });
+  //     }
+  //   );
+  // };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  // const onDrop = useCallback((file: any) => {
+  //   const _errors = errors;
+  //   delete _errors["projectCover"];
+  //   setErrors(_errors);
+
+  //   setcoverFile(file[0]);
+  // }, []);
+
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const { tokenAddress } = router.query;
 
@@ -208,7 +227,7 @@ const EditProject = () => {
                       You can edit the general information of your project.
                     </p>
                   </div>
-                  <div className="sm:col-span-6">
+                  {/* <div className="sm:col-span-6">
                     <label
                       htmlFor="project-cover"
                       className="block text-sm font-medium text-blue-gray-900"
@@ -279,7 +298,7 @@ const EditProject = () => {
                     <p className="mt-3 text-sm text-blue-gray-500">
                       We need a cover in the following format: 1920x1080px.
                     </p>
-                  </div>
+                  </div> */}
 
                   <div className="sm:col-span-4 relative">
                     <label
@@ -574,7 +593,6 @@ const EditProject = () => {
                         "w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"
                       }
                       type="submit"
-                      ref={submitBtnRef}
                       onClick={() =>
                         walletAddress ?? walletModal.setVisible(true)
                       }
