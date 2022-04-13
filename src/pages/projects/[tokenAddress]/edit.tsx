@@ -179,17 +179,17 @@ const EditProject = () => {
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-9">
             <div className="col-span-6">
-              <div className="flex gap-x-5 mb-3">
+              <div className="flex mb-6 gap-x-5">
                 <img
                   className="rounded-full h-16 p-1 m-0"
                   src={values.projectIcon}
                   alt={values.projectName}
                 />
-                <div className={"mb-6"}>
+                <div className={"w-1/2"}>
                   <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
                     {values.projectName}
                   </a>
-                  <p className="truncate w-4/5 max-w-prose text-sm lg:text-base text-gray-200">
+                  <p className="truncate max-w-prose text-sm lg:text-base text-gray-200">
                     {values.description}
                   </p>
                 </div>

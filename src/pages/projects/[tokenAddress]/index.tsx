@@ -65,11 +65,11 @@ const ProjectDetails = () => {
                   src={ido.projectIcon}
                   alt={ido.projectName}
                 />
-                <div>
+                <div className={"w-1/2"}>
                   <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
                     {ido.projectName}
                   </a>
-                  <p className="truncate w-4/5 max-w-prose text-sm lg:text-base text-gray-200">
+                  <p className="truncate max-w-prose text-sm lg:text-base text-gray-200">
                     {ido.description}
                   </p>
                 </div>
