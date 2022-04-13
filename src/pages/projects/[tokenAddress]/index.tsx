@@ -32,8 +32,15 @@ const ProjectDetails = () => {
     const getDataByTokenAddress = async () => {
       const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
       if (data) {
-        const getToekenData = await axios.get(`https://public-api.solscan.io/market/token/${tokenAddress}`);
-        setIdo({ ...data, ...getToekenData.data });
+        const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${tokenAddress}`);
+        const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${tokenAddress}`);
+        axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+          const responseOne = responses[0]
+          const responseTwo = responses[1]
+          setIdo({ ...data, ...responseOne.data,  ...responseTwo.data });
+        })).catch(errors => {
+          // react on errors.
+        })
       }
       else await router.push("/404");
     };
@@ -149,7 +156,7 @@ const ProjectDetails = () => {
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">7</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.decimals}</td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDT)</td>
