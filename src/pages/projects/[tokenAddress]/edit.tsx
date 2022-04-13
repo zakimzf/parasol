@@ -9,7 +9,11 @@ import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useWalletModal } from "../../../components/wallet-connector";
-import { errClasses, notification, validURL, } from "../../../utils/functions";
+import {
+  errClasses,
+  notification,
+  validURL,
+} from "../../../utils/functions";
 import Container from "../../../components/container";
 import { db, storage } from "../../../utils/firebase";
 
@@ -79,7 +83,6 @@ const EditProject = () => {
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (walletAddress && walletAddress == values.publicKey) {
-      const preContent = submitBtnRef.current.innerHTML;
       setLoading(true)
       await validateAllFieldsAndRedirection();
       setLoading(false)
