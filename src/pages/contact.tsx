@@ -232,6 +232,7 @@ const Contact = () => {
                 <HCaptcha
                   sitekey={sitekey}
                   onVerify={setToken}
+                  theme={"dark"}
                   ref={captchaRef}
                 />
               </div>
@@ -239,11 +240,8 @@ const Contact = () => {
               <div className={"col-span-2 flex justify-center gap-x-3 mt-3"}>
                 <button
                   type={"submit"}
-                  className={
-                    "inline-flex items-center gap-x-2 justify-center bg-purple-2 text-white hover:bg-white hover:text-purple-2 px-5 py-3 text-base font-medium rounded-md"
-                  }
-                  disabled={sendStatus == 1}
-                >
+                  className={"button"}
+                  disabled={sendStatus == 1}>
                   {sendStatus == 1 ? (
                     "Sending..."
                   ) : (
@@ -254,9 +252,7 @@ const Contact = () => {
                 </button>
                 <button
                   type={"reset"}
-                  className={
-                    "inline-flex items-center gap-x-2 justify-center bg-white text-purple-2 hover:bg-purple-2 hover:text-white px-5 py-3 text-base font-medium rounded-md"
-                  }
+                  className={"button"}
                 >
                   Clear
                 </button>

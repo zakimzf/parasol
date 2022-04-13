@@ -3,6 +3,34 @@
 @tailwind utilities;
 @tailwind typography;
 
+@layer components {
+  .card {
+    background-color: theme('colors.card');
+    border-radius: theme('borderRadius.lg');
+    box-shadow: theme('boxShadow.half-strong');
+    border: 1px solid rgb(31 41 55);
+  }
+
+  .padded {
+    @apply p-6;
+  }
+}
+
+@layer components {
+  .button {
+    @apply flex justify-center items-center gap-x-2 px-6 py-4 text-lg font-medium rounded-lg bg-gradient-to-r from-purple-1 to-purple-2;
+  }
+
+  .button:hover {
+    @apply bg-none bg-white text-purple-2;
+  }
+
+  div > .button:nth-child(2):not(.except)
+  {
+    @apply bg-none bg-white text-purple-2;
+  }
+}
+
 body {
   background: url("/assets/ellipses.svg") no-repeat top -200px center #17122b;
   color: theme("colors.white");
@@ -67,4 +95,16 @@ input[type="number"] {
 .ce-conversion-tool--focused{
   background-color: #b064fe !important;
   color: #fff !important;  
+}
+
+.ce-toolbox__button {
+  color: #edf2f7;
+}
+
+.ce-toolbox__button:hover {
+  color: #b064fe;
+}
+
+.toast-container.jsx-2113859084{
+  z-index: 9999;
 }

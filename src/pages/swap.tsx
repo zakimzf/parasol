@@ -13,6 +13,7 @@ import Notification from "../components/slices/notification";
 import { useWalletModal } from "../components/wallet-connector";
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import Head from "next/head";
+import { notification } from "../utils/functions";
 
 const Swap = () => {
   const { connection } = useConnection();
@@ -47,7 +48,8 @@ const Swap = () => {
   useEffect(() => {
     getPlatformFeeAccounts(
       connection,
-      new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any) // The platform fee account owner. Need to fetch this from the env
+      // The platform fee account owner. Need to fetch this from the env
+      new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any)
     ).then((r) => {
       setPlatformFeeAndAccounts({
         feeBps: +(process.env.PLATFORM_FEE_PERCENTAGE as any) * 100,
@@ -230,7 +232,7 @@ const Swap = () => {
       }
     }
     else {
-      console.log("Please connect wallet");
+      notification("information", "Please connect your wallet before.", "Connection Required");
     }
   };
   const getHalfAmount = () => {
@@ -243,7 +245,7 @@ const Swap = () => {
       }
     }
     else {
-      console.log("Please connect wallet");
+      notification("information", "Please connect your wallet before.", "Connection Required");
     }
   };
   const onBlurIAmountEvent = () => {

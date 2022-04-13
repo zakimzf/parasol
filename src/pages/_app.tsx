@@ -23,7 +23,8 @@ import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
 import { NftProvider } from "../context/NftContext";
 
-import "../styles/globals.css";
+import "../styles/globals.scss";
+import { Toaster } from "react-hot-toast";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   const network: WalletAdapterNetwork = getWalletAdapterNetwork(
@@ -88,6 +89,13 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
           >
             <WalletModalProvider>
               <AnnounceBar/>
+              <div className={"sticky top-0 mt-6 w-full z-50"}>
+                <Toaster
+                  containerClassName={"!absolute !inset-0 w-full h-screen"}
+                  containerStyle={{}}
+                  position={"top-right"}
+                  gutter={21}/>
+              </div>
               <Header/>
               <main role="main">
                 <SimpleReactLightbox>

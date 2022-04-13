@@ -1,14 +1,18 @@
-import { Fragment, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
-import { BadgeCheckIcon } from "@heroicons/react/solid";
+import Link from "next/link";
+import { BadgeCheckIcon, PencilAltIcon } from "@heroicons/react/outline";
 import { Tab } from "@headlessui/react"
 import Container from "../../../components/container";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import dynamic from "next/dynamic";
+import { SRLWrapper } from "simple-react-lightbox";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { ExternalLinkIcon } from "@heroicons/react/outline";
+import { ExternalLinkIcon, FireIcon } from "@heroicons/react/solid";
 import Disqus from "disqus-react";
+import Countdown from "react-countdown";
+import { useWalletModal } from "../../../components/wallet-connector";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
@@ -18,6 +22,7 @@ const ProjectDetails = () => {
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const router = useRouter();
+  const walletModal = useWalletModal();
 
   const { tokenAddress } = router.query;
 
@@ -32,12 +37,28 @@ const ProjectDetails = () => {
     if (tokenAddress) getDataByTokenAddress();
   }, [tokenAddress]);
 
+  const countdownRenderer = ({ days, hours, minutes, seconds, completed }: any) => {
+    if (!completed) {
+      return (
+        <div className={"flex justify-center items-end text-4xl gap-x-1 font-bold"}>
+          <span>{days}</span>
+          <span className={"pr-2"}>days</span>
+          <span>{hours}</span>
+          <span>:</span>
+          <span>{minutes}</span>
+          <span>:</span>
+          <span>{seconds}</span>
+        </div>
+      );
+    }
+  };
+
   return (
     <section className="pt-6">
       {ido ? (
         <Container>
           <div className="grid grid-cols-9">
-            <div className="col-span-6">
+            <div className="col-span-6 pr-16">
               <div className="flex gap-x-5">
                 <img
                   className="rounded-full h-16 p-1 m-0"
@@ -51,91 +72,114 @@ const ProjectDetails = () => {
                   </p>
                 </div>
               </div>
-              <img src={ido.projectCover} className={"w-11/12 mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 -hover:scale-105"}  alt={ido.name}/>
-              <Tab.Group>
-                <Tab.List className={"w-11/12 mb-3"}>
-                  <div className="border-b border-gray-500">
-                    <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-                      <Tab as={Fragment}>
-                        {({ selected }) => (
-                          <a
-                            href={"#"}
-                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
-                            aria-current={selected ? "page" : undefined}>
-                            Project Details
-                          </a>
-                        )}
-                      </Tab>
-                      <Tab as={Fragment}>
-                        {({ selected }) => (
-                          <a
-                            href={"#"}
-                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
-                            aria-current={selected ? "page" : undefined}>
-                            Token Details
-                          </a>
-                        )}
-                      </Tab>
-                      <Tab as={Fragment}>
-                        {({ selected }) => (
-                          <a
-                            href={"#"}
-                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
-                            aria-current={selected ? "page" : undefined}>
-                            White Paper
-                          </a>
-                        )}
-                      </Tab>
-                      <Tab as={Fragment}>
-                        {({ selected }) => (
-                          <a
-                            href={"#"}
-                            className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
-                            aria-current={selected ? "page" : undefined}>
-                            Comments
-                          </a>
-                        )}
-                      </Tab>
-                      {ido.websiteUrl && <a
-                        href={ido.websiteUrl}
-                        target={"_blank"}
-                        className={"flex items-center gap-x-1 !ml-auto text-white px-3 pt-2 pb-3 font-medium text-sm"} rel="noreferrer">
-                        <ExternalLinkIcon className={"w-5"} />
-                        Visit Website
-                      </a>}
-                    </nav>
-                  </div>
-                </Tab.List>
-                <Tab.Panels>
-                  <Tab.Panel>
-                    <div className={"prose markdown prose-lg prose-invert"}>
-                      <EditorJs
-                        content={ido.content || "{}"}
-                        isOwner={walletAddress && walletAddress == ido.publicKey || false}
-                        tokenAddress={tokenAddress}
-                      />
+              <SRLWrapper>
+                <img src={ido.projectCover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name}/>
+                <Tab.Group>
+                  <Tab.List className={"mb-3"}>
+                    <div className="border-b border-gray-500">
+                      <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+                        <Tab as={Fragment}>
+                          {({ selected }) => (
+                            <a
+                              href={"#details"}
+                              className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                              aria-current={selected ? "page" : undefined}>
+                              Project Details
+                            </a>
+                          )}
+                        </Tab>
+                        <Tab as={Fragment}>
+                          {({ selected }) => (
+                            <a
+                              href={"#token"}
+                              className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                              aria-current={selected ? "page" : undefined}>
+                              Token Details
+                            </a>
+                          )}
+                        </Tab>
+                        <Tab as={Fragment}>
+                          {({ selected }) => (
+                            <a
+                              href={"#wp"}
+                              className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                              aria-current={selected ? "page" : undefined}>
+                              White Paper
+                            </a>
+                          )}
+                        </Tab>
+                        {ido.websiteUrl && <a
+                          href={ido.websiteUrl}
+                          target={"_blank"}
+                          className={"flex items-center gap-x-1 !ml-auto text-white px-3 pt-2 pb-3 font-medium text-sm"} rel="noreferrer">
+                          <ExternalLinkIcon className={"w-5"}/>
+                          Visit Website
+                        </a>}
+                      </nav>
                     </div>
-                  </Tab.Panel>
-                  <Tab.Panel>
-                    {/*Token details to add*/}
-                  </Tab.Panel>
-                  <Tab.Panel>
-                    <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-11/12 min-h-screen border-none"}/>
-                  </Tab.Panel>
-                  <Tab.Panel>
-                    <div className={"w-11/12 py-3"}>
-                      <Disqus.DiscussionEmbed
-                        shortname={"parasol-finance"}
-                        config={{
-                          url: window.location.href,
-                          identifier: ido.tokenAddress,
-                          title: ido.projectName
-                        }}
-                      />
-                    </div>
-                  </Tab.Panel>
-                </Tab.Panels>
-              </Tab.Group>
+                  </Tab.List>
+                  <Tab.Panels>
+                    <Tab.Panel>
+                      <div className={"prose markdown prose-lg prose-invert"}>
+                        <EditorJs
+                          content={ido.content || "{}"}
+                          isOwner={walletAddress && walletAddress == ido.publicKey || false}
+                          tokenAddress={tokenAddress}
+                        />
+                      </div>
+                    </Tab.Panel>
+                    <Tab.Panel>
+                      <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 -rounded-md">
+                        <table className="min-w-full divide-y divide-gray-800 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg">
+                          <tbody className="divide-y divide-gray-800">
+                            <tr>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Address</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">{tokenAddress}</td>
+                            </tr>
+                            <tr>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Name</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.projectName}</td>
+                            </tr>
+                            <tr>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Symbol</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                            </tr>
+                            <tr>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">7</td>
+                            </tr>
+                            <tr>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDT)</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                            </tr>
+                            <tr>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Market Cap (in USDT)</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                            </tr>
+                            <tr>
+                              <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Volume 24h (in USDT)</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </Tab.Panel>
+                    <Tab.Panel>
+                      <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-full my-3 min-h-screen border-none"}/>
+                    </Tab.Panel>
+                  </Tab.Panels>
+                </Tab.Group>
+              </SRLWrapper>
+              <div className={"mt-12"}>
+                <Disqus.DiscussionEmbed
+                  shortname={"parasol-finance"}
+                  config={{
+                    url: window.location.href,
+                    identifier: ido.tokenAddress,
+                    title: ido.projectName
+                  }}
+                />
+              </div>
             </div>
             <div className="col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
@@ -191,10 +235,37 @@ const ProjectDetails = () => {
                         </span>
                       </div>
                     </div>
-                    <button className={"w-full mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
-                      Participate to Sale
-                    </button>
+                    {walletAddress ? walletAddress == ido.publicKey ? (
+                      <button className={"w-full button mt-8"} id="saveEditor">
+                        <PencilAltIcon className={"w-6"}/>
+                        Save Changes
+                      </button>
+                    ) : (
+                      <>
+                        <Link href={`/projects/${tokenAddress}/participate`}>
+                          <a className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
+                            <FireIcon className={"w-6"}/>
+                            Participate to Sale
+                          </a>
+                        </Link>
+                      </>
+                    ) : (
+                      <button
+                        className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
+                        type="button"
+                        onClick={() => walletAddress ?? walletModal.setVisible(true)}>
+                        Connect Wallet
+                      </button>
+                    )}
                   </div>
+                </div>
+                <div className={"flex flex-col justify-center items-center"}>
+                  <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.projectName} Ends In:</p>
+                  <Countdown
+                    renderer={countdownRenderer}
+                    intervalDelay={0}
+                    precision={3}
+                    date={Date.now() + 210000000}/>
                 </div>
               </div>
             </div>
