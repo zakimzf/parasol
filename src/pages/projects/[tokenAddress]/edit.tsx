@@ -80,9 +80,10 @@ const EditProject = () => {
     e.preventDefault();
     if (walletAddress && walletAddress == values.publicKey) {
       const preContent = submitBtnRef.current.innerHTML;
-      setLoading(true)
+      setLoading(true);
       await validateAllFieldsAndRedirection();
-      setLoading(false)
+      setLoading(false);
+      notification("success", "The IDO was successfully updated.", "Updated IDO Details");
     }
     else {
       notification("warning", "You cannot update this IDO.", "Forbidden");
