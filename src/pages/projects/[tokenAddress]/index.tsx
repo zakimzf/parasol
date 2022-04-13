@@ -31,7 +31,17 @@ const ProjectDetails = () => {
   useEffect(() => {
     const getDataByTokenAddress = async () => {
       const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
-      if (data) setIdo(data);
+      if (data) {
+        const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${tokenAddress}`);
+        const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${tokenAddress}`);
+        axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+          const responseOne = responses[0]
+          const responseTwo = responses[1]
+          setIdo({ ...data, ...responseOne.data,  ...responseTwo.data });
+        })).catch(errors => {
+          // react on errors.
+        })
+      }
       else await router.push("/404");
     };
     if (tokenAddress) getDataByTokenAddress();
@@ -142,23 +152,23 @@ const ProjectDetails = () => {
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Symbol</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.symbol}</td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">7</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.decimals}</td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDT)</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm"><NumberFormat value={ido.priceUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} /></td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Market Cap (in USDT)</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm"><NumberFormat value={ido.marketCapFD} displayType={"text"} thousandSeparator={true} prefix={"$"} /></td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Volume 24h (in USDT)</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm"><NumberFormat value={ido.volumeUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} /></td>
                             </tr>
                           </tbody>
                         </table>
