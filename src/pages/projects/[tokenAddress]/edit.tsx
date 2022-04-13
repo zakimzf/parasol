@@ -9,12 +9,7 @@ import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useWalletModal } from "../../../components/wallet-connector";
-import {
-  errClasses,
-  isTokenAddressExist,
-  notification,
-  validURL,
-} from "../../../utils/functions";
+import { errClasses, notification, validURL, } from "../../../utils/functions";
 import Container from "../../../components/container";
 import { db, storage } from "../../../utils/firebase";
 
@@ -90,7 +85,7 @@ const EditProject = () => {
       setLoading(false)
     }
     else {
-      notification("warning", "Lorem ipsum");
+      notification("warning", "You cannot update this IDO.", "Forbidden");
     }
   };
 
