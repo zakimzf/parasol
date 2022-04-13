@@ -52,7 +52,7 @@ const ProjectDetails = () => {
       );
     }
   };
-  console.log(walletAddress, ido.publicKey)
+  
   return (
     <section className="pt-6">
       {ido ? (
