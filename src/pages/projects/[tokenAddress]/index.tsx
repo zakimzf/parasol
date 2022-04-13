@@ -68,7 +68,7 @@ const ProjectDetails = () => {
                 <div>
                   <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">{ido.projectName}</a>
                   <p className="max-w-prose mx-auto text-sm lg:text-base text-gray-200">
-                    We bring new technologies to our community.
+                    {ido.description}
                   </p>
                 </div>
                 <div className={"flex ml-auto justify-items-end items-center"}>

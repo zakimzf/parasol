@@ -135,12 +135,12 @@ const EditProject = () => {
       if (coverFile) {
         uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, _values.splToken), _values);
-          router.push(`/projects/${values.splToken}`);
         });
       } 
       else {
-        console.log("send")
+        await setDoc(doc(idosCollectionRef, values.splToken), values);
       }
+      router.push(`/projects/${values.splToken}`);
     }
   };
 
@@ -200,10 +200,10 @@ const EditProject = () => {
                     id="features"
                     className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl"
                   >
-                    Project Name
+                    {values.projectName}
                   </a>
                   <p className=" max-w-prose mx-auto text-sm lg:text-base text-gray-200">
-                    We bring new technologies to our community.
+                    {values.description}
                   </p>
                 </div>
               </div>
