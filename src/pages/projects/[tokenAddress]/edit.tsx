@@ -207,6 +207,20 @@ const EditProject = () => {
         <form  onSubmit={handleSubmit}>
           <div className="grid grid-cols-9">
             <div className="col-span-6">
+              <div className="flex gap-x-5 mb-3">
+                <img
+                  className="rounded-full h-16 p-1 m-0"
+                  src={"https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/9nEqaUcb16sQ3Tn1psbkWqyhPdLmfHWjKGymREjsAgTE/logo.png"}
+                  // src={ido.projectIcon}
+                  // alt={ido.projectName}
+                />
+                <div className={"mb-6"}>
+                  <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">Project Name</a>
+                  <p className=" max-w-prose mx-auto text-sm lg:text-base text-gray-200">
+                    We bring new technologies to our community.
+                  </p>
+                </div>
+              </div>
               <form className="space-y-12 pr-12 divide-y- divide-gray-400">
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
@@ -440,9 +454,6 @@ const EditProject = () => {
                         </span>
                       </div>
                     </div>
-                    <p className={"text-sm text-gray-400 mt-6"}>
-                      Find more information on the listing process by consulting our documentation <a href={"https://docs.parasol.finance/"} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a>.
-                    </p>
                     <button
                       className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
                       type="submit"
