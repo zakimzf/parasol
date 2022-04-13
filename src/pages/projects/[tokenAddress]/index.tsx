@@ -66,13 +66,14 @@ const ProjectDetails = () => {
                   alt={ido.projectName}
                 />
                 <div>
-                  <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">{ido.projectName}</a>
-                  <p className="max-w-prose mx-auto text-sm lg:text-base text-gray-200">
+                  <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
+                    {ido.projectName}
+                  </a>
+                  <p className="truncate w-4/5 max-w-prose text-sm lg:text-base text-gray-200">
                     {ido.description}
                   </p>
                 </div>
                 <div className={"flex ml-auto justify-items-end items-center"}>
-                  {/*Only display for IDO owner*/}
                   <Link href={`/projects/${tokenAddress}/edit`}>
                     <a
                       type="button"

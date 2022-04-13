@@ -1,10 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState, } from "react";
 import NumberFormat from "react-number-format";
 import axios from "axios";
 import { ExclamationCircleIcon, PencilAltIcon } from "@heroicons/react/outline";
@@ -15,11 +9,7 @@ import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useWalletModal } from "../../../components/wallet-connector";
-import {
-  errClasses,
-  isTokenAddressExist,
-  validURL,
-} from "../../../utils/functions";
+import { errClasses, validURL, } from "../../../utils/functions";
 import Container from "../../../components/container";
 import { db, storage } from "../../../utils/firebase";
 
@@ -196,13 +186,10 @@ const EditProject = () => {
                   alt={values.projectName}
                 />
                 <div className={"mb-6"}>
-                  <a
-                    id="features"
-                    className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl"
-                  >
+                  <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
                     {values.projectName}
                   </a>
-                  <p className=" max-w-prose mx-auto text-sm lg:text-base text-gray-200">
+                  <p className="truncate w-4/5 max-w-prose text-sm lg:text-base text-gray-200">
                     {values.description}
                   </p>
                 </div>
