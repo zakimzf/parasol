@@ -201,6 +201,17 @@ const EditProject = () => {
   
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
+  const { tokenAddress } = router.query;
+  
+  useEffect(() => {
+    const getDataByTokenAddress = async () => {
+      const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
+      if (data) setValues(data);
+      else await router.push("/404");
+    };
+    if (tokenAddress) getDataByTokenAddress();
+  }, [tokenAddress]);
+
   return (
     <section className={"pt-6"}>
       <Container>
