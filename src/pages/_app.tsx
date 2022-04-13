@@ -89,12 +89,12 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
           >
             <WalletModalProvider>
               <AnnounceBar/>
-              <div className={"sticky top-0 mt-6 w-full z-50"}>
+              <div className={"sticky top-0 w-full z-50"}>
                 <Toaster
                   containerClassName={"!absolute !inset-0 w-full h-screen"}
                   containerStyle={{}}
                   position={"top-right"}
-                  gutter={21}/>
+                  gutter={0}/>
               </div>
               <Header/>
               <main role="main">
