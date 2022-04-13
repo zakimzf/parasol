@@ -78,7 +78,6 @@ const EditProject = () => {
       setLoading(true);
       await validateAllFieldsAndRedirection();
       setLoading(false);
-      notification("success", "The IDO was successfully updated.", "Updated IDO Details");
     }
     else {
       notification("warning", "You cannot update this IDO.", "Forbidden");
@@ -147,6 +146,7 @@ const EditProject = () => {
         throw new Error("Invalid signature!");
 
       await setDoc(doc(idosCollectionRef, values.splToken), values);
+      notification("success", "The IDO was successfully updated.", "Updated IDO Details");
       router.push(`/projects/${values.splToken}`);
     } 
     catch (error: any) {
