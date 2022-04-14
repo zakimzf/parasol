@@ -5,7 +5,7 @@ import Container from "../../components/container";
 import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
 import axios from "axios";
-import { CheckCircleIcon, ExclamationCircleIcon, ViewGridAddIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
 import { db, storage } from "../../utils/firebase";
 import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
 import { collection, doc, setDoc, Timestamp, } from "firebase/firestore";
@@ -223,8 +223,7 @@ const SubmitProject = () => {
         <form  onSubmit={handleSubmit}>
           <div className="grid grid-cols-9">
             <div className="col-span-6">
-              <form className="space-y-12 pr-12 divide-y- divide-gray-400">
-
+              <form className="space-y-12 pr-16 divide-y- divide-gray-400">
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
                     <h2 className="text-xl font-medium text-blue-gray-900">1. General Information</h2>
