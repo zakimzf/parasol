@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 import Container from "../../components/container";
 import NftCard from "../../components/cards/nft-card";
-import Notification from "../../components/slices/notification";
 import { NftContext } from "../../context/NftContext";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { Keypair } from "@solana/web3.js";
 import { NftKind } from "parasol-finance-sdk";
 import Head from "next/head";
+import { notification } from "../../utils/functions";
 
 const Tiers = function () {
   const { connection } = useConnection();
@@ -54,11 +54,6 @@ const Tiers = function () {
   const { provider, nfts, setNfts, wallet, user } =
     React.useContext(NftContext);
 
-  const [notificationMsg, setNotificationMsg] = useState({
-    msg: "",
-    status: "error",
-  });
-
   const buyNFT = async (index: number) => {
     try {
       const mintKeypair = Keypair.generate();
@@ -66,17 +61,14 @@ const Tiers = function () {
       const signature = await sendTransaction(tx, connection, {
         signers: [mintKeypair],
       });
-      setNotificationMsg({ msg: "Minting an NFT Now....", status: "pending" });
+      notification("information", "Mining NFT right now...", "Pending Transaction");
       await connection.confirmTransaction(signature, "confirmed");
     }
     catch (err) {
-      setNotificationMsg({ msg: "Minting an NFT is failed!", status: "error" });
+      notification("danger", "Unable to mint the NFT.", "Transaction Error");
       return false;
     }
-    setNotificationMsg({
-      msg: "Successfully minted an NFT",
-      status: "success",
-    });
+    notification("success", "Successfully minted NFT", "Transaction Success");
   };
 
   useEffect(() => {
@@ -128,19 +120,6 @@ const Tiers = function () {
                 </p>
               </div>
             </div>
-            {notificationMsg.msg.length > 0 ? (
-              <Notification
-                title={notificationMsg.msg}
-                source={notificationMsg.msg}
-                color={
-                  notificationMsg.status == "pending"
-                    ? "bg-gray-700"
-                    : notificationMsg.status == "error" ? "bg-red-700" : "bg-green-700"
-                }
-              />
-            ) : (
-              ""
-            )}
             <div className={"flex gap-x-2 justify-end items-center"}>
               <Link href={"/tiers/migrate"}>
                 <a className="inline-flex relative gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-300">

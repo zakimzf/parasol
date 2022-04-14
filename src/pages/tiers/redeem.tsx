@@ -4,12 +4,12 @@ import { SelectorIcon } from "@heroicons/react/solid";
 import { ArrowLeftIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import Notification from "../../components/slices/notification";
 import { NftContext } from "../../context/NftContext";
 
 import Card from "../../components/card";
 import { useWalletModal } from "../../components/wallet-connector";
 import { PublicKey } from "@solana/web3.js";
+import { notification } from "../../utils/functions";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
@@ -32,11 +32,6 @@ const Migrate = () => {
     setPending(walletModal.visible);
   }, [walletModal.visible]);
 
-  const [notificationMsg, setNotificationMsg] = useState({
-    msg: "",
-    status: "error",
-  });
-
   const [selected, setSelected] = useState<any>();
 
   const getNFTList = async () => {
@@ -49,23 +44,14 @@ const Migrate = () => {
     try {
       const tx = await user.redeem(mintAddress);
       const signature = await sendTransaction(tx, connection);
-      setNotificationMsg({
-        msg: "Doing redeem an NFT Now....",
-        status: "pending",
-      });
+      notification("information",  "Redeeming the NFT right now...", "Pending Transaction");
       await connection.confirmTransaction(signature, "confirmed");
     }
     catch (err) {
-      setNotificationMsg({
-        msg: "Doing redeem an NFT is failed!",
-        status: "error",
-      });
+      notification("danger", "Unable to redeem the NFT.", "Transaction Error");
       return false;
     }
-    setNotificationMsg({
-      msg: "Successfully did redeem an NFT",
-      status: "success",
-    });
+    notification("success", "Successfully redeemed NFT.", "Transaction Success");
 
     setNfts([]);
     getNFTList();
@@ -80,21 +66,6 @@ const Migrate = () => {
             Back
           </a>
         </Link>
-        {notificationMsg.msg.length > 0 ? (
-          <Notification
-            title={notificationMsg.msg}
-            source={notificationMsg.msg}
-            color={
-              notificationMsg.status == "pending"
-                ? "bg-gray-700"
-                : notificationMsg.status == "error"
-                  ? "bg-red-700"
-                  : "bg-green-700"
-            }
-          />
-        ) : (
-          ""
-        )}
         <Card padded={true}>
           <div className={"space-y-6"}>
             <div className={"prose prose-lg prose-invert"}>
