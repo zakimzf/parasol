@@ -78,8 +78,8 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
         <meta property="twitter:title" content="Parasol Finance ($PSOL) | Community Governed Launchpad on Solana."/>
         <meta property="twitter:description"
           content="Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs of both projects and investors alike."/>
-        <meta property="og:image" content="/images/preview/default.png"/>
-        <meta property="twitter:image" content="/images/preview/default.png"/>
+        <meta property="og:image" content="/assets/preview/default.png"/>
+        <meta property="twitter:image" content="/assets/preview/default.png"/>
       </Head>
       <body>
         <ConnectionProvider endpoint={endpoint}>

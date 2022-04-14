@@ -82,8 +82,8 @@ const Contact = () => {
       <Head>
         <title>Parasol Finance ($PSOL) | Contact Us</title>
         <meta name="title" content="Parasol Finance ($PSOL) | Contact Us" />
-        <meta property="og:image" content="/images/preview/contact.png" />
-        <meta property="twitter:image" content="/images/preview/contact.png" />
+        <meta property="og:image" content="/assets/preview/contact.png" />
+        <meta property="twitter:image" content="/assets/preview/contact.png" />
       </Head>
       <Heading
         tagline={"Get in Touch"}

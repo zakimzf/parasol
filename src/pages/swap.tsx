@@ -425,8 +425,8 @@ const Swap = () => {
       <Head>
         <title>Parasol Finance ($PSOL) | Swap</title>
         <meta name="title" content="Parasol Finance ($PSOL) | Swap"/>
-        <meta property="og:image" content="/images/preview/swap.png"/>
-        <meta property="twitter:image" content="/images/preview/swap.png"/>
+        <meta property="og:image" content="/assets/preview/swap.png"/>
+        <meta property="twitter:image" content="/assets/preview/swap.png"/>
       </Head>
       <section className="pt-6 pb-20">
         <div className="flex flex-col gap-y-6 max-w-md mx-auto mt-6">

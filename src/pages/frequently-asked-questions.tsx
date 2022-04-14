@@ -58,8 +58,8 @@ const FrequentlyAskedQuestion = () => (
     <Head>
       <title>Parasol Finance ($PSOL) | Frequently Asked Questions</title>
       <meta name="title" content="Parasol Finance ($PSOL) | Frequently Asked Questions"/>
-      <meta property="og:image" content="/images/preview/faq.png"/>
-      <meta property="twitter:image" content="/images/preview/faq.png"/>
+      <meta property="og:image" content="/assets/preview/faq.png"/>
+      <meta property="twitter:image" content="/assets/preview/faq.png"/>
     </Head>
     <Heading tagline={"Getting Help"} title={"Frequently Asked Questions"}
       description={"The most common questions are answered below."}/>

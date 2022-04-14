@@ -4,6 +4,8 @@ import { Timestamp } from "firebase/firestore";
 import Apply from "../../components/slices/apply";
 import moment from "moment";
 import { ChevronDoubleUpIcon } from "@heroicons/react/outline";
+import Head from "next/head";
+import React from "react";
 
 const projects = [
   {
@@ -61,6 +63,12 @@ const projects = [
 
 const Seeding = () =>
   <>
+    <Head>
+      <title>Parasol Finance ($PSOL) | Projects Seeding</title>
+      <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding" />
+      <meta property="og:image" content="/assets/preview/seeding.png" />
+      <meta property="twitter:image" content="/assets/preview/seeding.png" />
+    </Head>
     <Heading tagline={"Parasol Finance"} title={"Projects Seeding"}
       description={"Vote for the new projects that have just arrived."}/>
     <section>

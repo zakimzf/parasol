@@ -97,8 +97,8 @@ const Tiers = function () {
           name="title"
           content="Parasol Finance ($PSOL) | NFT Access Keys"
         />
-        <meta property="og:image" content="/images/preview/tiers.png" />
-        <meta property="twitter:image" content="/images/preview/tiers.png" />
+        <meta property="og:image" content="/assets/preview/tiers.png" />
+        <meta property="twitter:image" content="/assets/preview/tiers.png" />
       </Head>
       <section>
         <Container>

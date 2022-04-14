@@ -16,6 +16,7 @@ import Heading from "../components/heading";
 import { NftContext } from "../context/NftContext";
 import { useWalletModal } from "../components/wallet-connector";
 import { notification } from "../utils/functions";
+import Head from "next/head";
 
 const operations = [
   { id: 0, title: "Stake", description: "Lock your $PSOL for 90 days." },
@@ -119,6 +120,12 @@ const Staking = () => {
   const [selectedOperation, setSelectedOperation] = useState(operations[0]);
   return (
     <>
+      <Head>
+        <title>Parasol Finance ($PSOL) | Staking $PSOL</title>
+        <meta name="title" content="Parasol Finance ($PSOL) | Staking $PSOL" />
+        <meta property="og:image" content="/assets/preview/staking.png" />
+        <meta property="twitter:image" content="/assets/preview/staking.png" />
+      </Head>
       <Heading
         tagline={"Parasol Finance"}
         title={"Parasol Staking"}
