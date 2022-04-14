@@ -5,11 +5,11 @@ import { ArrowLeftIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 
 import Card from "../../components/card";
-import Notification from "../../components/slices/notification";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { NftContext } from "../../context/NftContext";
 import { useWalletModal } from "../../components/wallet-connector";
 import { Keypair, PublicKey } from "@solana/web3.js";
+import { notification } from "../../utils/functions";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
@@ -33,10 +33,6 @@ const Migrate = () => {
   }, [walletModal.visible]);
 
   const [selected, setSelected] = useState<any>();
-  const [notificationMsg, setNotificationMsg] = useState({
-    msg: "",
-    status: "error",
-  });
 
   const getNFTList = async () => {
     const nftsmetadata = await migrator.getNFTList();
@@ -51,23 +47,14 @@ const Migrate = () => {
       const signature = await sendTransaction(tx, connection, {
         signers: [mintKeypair],
       });
-      setNotificationMsg({
-        msg: "Doing upgarde an NFT Now....",
-        status: "pending",
-      });
+      notification("information", "Migrating NFT right now...", "Pending Transaction");
       await connection.confirmTransaction(signature, "confirmed");
     }
     catch (err) {
-      setNotificationMsg({
-        msg: "Doing upgarde an NFT is failed!",
-        status: "error",
-      });
+      notification("danger", "Unable to Migrate the NFT.", "Transaction Error");
       return false;
     }
-    setNotificationMsg({
-      msg: "Successfully did upgarde an NFT",
-      status: "success",
-    });
+    notification("success", "Successfully migrated the NFT.", "Transaction Success");
 
     setNfts([]);
     getNFTList();
@@ -82,21 +69,6 @@ const Migrate = () => {
             Back
           </a>
         </Link>
-        {notificationMsg.msg.length > 0 ? (
-          <Notification
-            title={notificationMsg.msg}
-            source={notificationMsg.msg}
-            color={
-              notificationMsg.status == "pending"
-                ? "bg-gray-700"
-                : notificationMsg.status == "error"
-                  ? "bg-red-700"
-                  : "bg-green-700"
-            }
-          />
-        ) : (
-          ""
-        )}
         <Card padded={true}>
           <div className={"space-y-6"}>
             <div className={"prose prose-lg prose-invert"}>
