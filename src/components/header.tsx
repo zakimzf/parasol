@@ -16,7 +16,7 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { WalletConnect } from "./wallet-connector";
 
-import { toolsMenu, resourcesMenu, recentPosts } from "../constants/header";
+import { recentPosts, resourcesMenu, toolsMenu } from "../constants/header";
 
 import Logo from "/public/assets/logos/parasol-logo-inverted-rgb.svg";
 
@@ -239,7 +239,7 @@ const Header = () => (
                 leaveTo="opacity-0 translate-y-1"
               >
                 <Popover.Panel
-                  className="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0">
+                  className="absolute z-20 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0">
                   <div
                     className="rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                     <div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-8 sm:p-8">
