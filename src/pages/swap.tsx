@@ -9,7 +9,6 @@ import { TokenChooserMode, useTokenModal } from "../components/token-chooser/use
 import { getPlatformFeeAccounts, Jupiter, RouteInfo, TOKEN_LIST_URL } from "@jup-ag/core";
 
 import { Token } from "../components/token-chooser/constants";
-import Notification from "../components/slices/notification";
 import { useWalletModal } from "../components/wallet-connector";
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import Head from "next/head";
@@ -36,7 +35,6 @@ const Swap = () => {
   const [swapStatus, setSwapStatus] = useState(true);
   const [swapResult, setSwapResult] = useState(false);
   const [balanceAvailable, setBalanceAvailable] = useState(true);
-  const [showNotification, setShowNotification] = useState(false);
   const [transactionFee, SetTransactionFee] = useState(0);
   const [requestable, setRequestable] = useState(false);
   const [rate, setRate] = useState("0");
@@ -209,14 +207,14 @@ const Swap = () => {
       console.log(swapResult);
       if ("error" in swapResult) {
         setSwapResult(false);
-        alert(`Error:${swapResult.error}`);
+        notification("danger", `Unable to swap: ${swapResult.error}`, "Transaction Error");
       }
       else if ("txid" in swapResult) {
         setSwapResult(true);
-        setShowNotification(true);
-        console.log("Sucess:", swapResult.txid);
-        console.log("Input:", swapResult.inputAmount);
-        console.log("Output:", swapResult.outputAmount);
+        notification("success", `TXID: ${swapResult.txid}`, "Transaction Success");
+        // console.log("Success:", swapResult.txid);
+        // console.log("Input:", swapResult.inputAmount);
+        // console.log("Output:", swapResult.outputAmount);
       }
     }
 
@@ -431,15 +429,6 @@ const Swap = () => {
         <meta property="twitter:image" content="/images/preview/swap.png"/>
       </Head>
       <section className="pt-6 pb-20">
-        {showNotification ? (
-          <Notification
-            title={swapResult ? "Transaction Success!" : "Transaction Faild!"}
-            source={swapResult ? "Transaction Success!" : "Transaction Faild!"}
-            color={swapResult ? "bg-green-700" : "bg-red-700"}
-          />
-        ) : (
-          ""
-        )}
         <div className="flex flex-col gap-y-6 max-w-md mx-auto mt-6">
           <div className="bg-[#231f38] bg-opacity-80 shadow-xl rounded-xl shadow-half-strong border border-gray-800 p-8">
             <div className={"flex justify-between items-end mb-4"}>
