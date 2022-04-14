@@ -5,7 +5,7 @@ import Container from "../../components/container";
 import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
 import axios from "axios";
-import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
+import { CheckCircleIcon, ExclamationCircleIcon, ViewGridAddIcon } from "@heroicons/react/outline";
 import { db, storage } from "../../utils/firebase";
 import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
 import { collection, doc, setDoc, Timestamp, } from "firebase/firestore";

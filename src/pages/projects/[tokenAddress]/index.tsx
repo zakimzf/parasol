@@ -31,7 +31,17 @@ const ProjectDetails = () => {
   useEffect(() => {
     const getDataByTokenAddress = async () => {
       const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
-      if (data) setIdo(data);
+      if (data) {
+        const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${tokenAddress}`);
+        const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${tokenAddress}`);
+        axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+          const responseOne = responses[0]
+          const responseTwo = responses[1]
+          setIdo({ ...data, ...responseOne.data,  ...responseTwo.data });
+        })).catch(errors => {
+          // react on errors.
+        })
+      }
       else await router.push("/404");
     };
     if (tokenAddress) getDataByTokenAddress();
@@ -52,25 +62,41 @@ const ProjectDetails = () => {
       );
     }
   };
-
+  
   return (
     <section className="pt-6">
       {ido ? (
         <Container>
           <div className="grid grid-cols-9">
             <div className="col-span-6 pr-16">
-              <div className="flex gap-x-5">
+              <div className="flex mb-6 gap-x-5">
                 <img
                   className="rounded-full h-16 p-1 m-0"
                   src={ido.projectIcon}
                   alt={ido.projectName}
                 />
-                <div className={"mb-6"}>
-                  <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">{ido.projectName}</a>
-                  <p className=" max-w-prose mx-auto text-sm lg:text-base text-gray-200">
-                    We bring new technologies to our community.
+                <div className={"w-1/2"}>
+                  <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
+                    {ido.projectName}
+                  </a>
+                  <p className="truncate max-w-prose text-sm lg:text-base text-gray-200">
+                    {ido.description}
                   </p>
                 </div>
+                {walletAddress == ido.publicKey &&
+                (
+                  <div className={"flex ml-auto justify-items-end items-center"}>
+                    <Link href={`/projects/${tokenAddress}/edit`}>
+                      <a
+                        type="button"
+                        className="inline-flex items-center gap-x-1 px-3.5 py-2 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm text-white bg-white bg-opacity-30 text-purple-2 hover:bg-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <PencilAltIcon className={"w-4"} />
+                        Edit IDO
+                      </a>
+                    </Link>
+                  </div>
+                )
+                }
               </div>
               <SRLWrapper>
                 <img src={ido.projectCover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name}/>
@@ -142,23 +168,23 @@ const ProjectDetails = () => {
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Symbol</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.symbol}</td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">7</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.decimals}</td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDT)</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm"><NumberFormat value={ido.priceUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} /></td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Market Cap (in USDT)</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm"><NumberFormat value={ido.marketCapFD} displayType={"text"} thousandSeparator={true} prefix={"$"} /></td>
                             </tr>
                             <tr>
                               <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Volume 24h (in USDT)</td>
-                              <td className="whitespace-nowrap px-3 py-4 text-sm">N/a</td>
+                              <td className="whitespace-nowrap px-3 py-4 text-sm"><NumberFormat value={ido.volumeUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} /></td>
                             </tr>
                           </tbody>
                         </table>
