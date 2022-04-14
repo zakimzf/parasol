@@ -3,6 +3,7 @@ import Heading from "../../components/heading";
 import { Timestamp } from "firebase/firestore";
 import Apply from "../../components/slices/apply";
 import moment from "moment";
+import { ChevronDoubleUpIcon } from "@heroicons/react/outline";
 
 const projects = [
   {
@@ -124,10 +125,8 @@ const Seeding = () =>
                         <div className="">{moment(project.created.toDate()).add(5, "days").format("LLL")}</div>
                       </td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                        <a href="#" className="flex items-center gap-x-2 text-purple-2 hover:text-indigo-900">
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M4.293 15.707a1 1 0 010-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414 0zm0-6a1 1 0 010-1.414l5-5a1 1 0 011.414 0l5 5a1 1 0 01-1.414 1.414L10 5.414 5.707 9.707a1 1 0 01-1.414 0z" clipRule="evenodd"/>
-                          </svg>
+                        <a href="#" className="button p-1 gap-x-1 text-sm bg-none bg-purple-2 rounded-md">
+                          <ChevronDoubleUpIcon className={"w-3"} />
                           Vote
                         </a>
                       </td>
