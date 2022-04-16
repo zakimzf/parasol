@@ -72,45 +72,47 @@ const Footer = () => (
             <ul role="list" className="mt-4 space-y-4">
               <li>
                 <Link href={"/about"}>
-                  <a className="text-base  hover:">About Parasol</a>
+                  <a className="text-base">About Parasol</a>
                 </Link>
               </li>
               <li>
                 <a href="https://docs.parasol.finance" target="_blank"
-                  className="text-base  hover:" rel="noreferrer">Documentation</a>
+                  className="text-base" rel="noreferrer">Documentation</a>
               </li>
               <li>
                 <a href="https://github.com/parasol-finance" target="_blank"
-                  className="text-base  hover:" rel="noreferrer">Github Organization</a>
+                  className="text-base" rel="noreferrer">Github Organization</a>
               </li>
               <li>
                 <a href="https://explorer.solana.com/address/Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ"
-                  target="_blank" className="text-base  hover:" rel="noreferrer">Token
+                  target="_blank" className="text-base" rel="noreferrer">Token
                                     Address</a>
               </li>
             </ul>
           </div>
           <div className="mt-12 md:mt-0">
-            <h3 className="text-sm font-bold  tracking-wider uppercase">Useful
-                            Links</h3>
+            <h3 className="text-sm font-bold  tracking-wider uppercase">Useful Links</h3>
             <ul role="list" className="mt-4 space-y-4">
               <li>
-                <a href="https://forms.gle/jypcaJgvPgrkYmRDA" target="_blank"
-                  className="text-base  hover:" rel="noreferrer">Apply for IDO</a>
+                <Link href={"/projects/submit"}>
+                  <a className="text-base" rel="noreferrer">
+                    Apply for IDO
+                  </a>
+                </Link>
               </li>
               <li>
-                <a href="/whitepaper.pdf" className="text-base  hover:">
-                                    WhitePaper
+                <a href="/whitepaper.pdf" className="text-base">
+                  WhitePaper
                 </a>
               </li>
               <li>
-                <Link href={"/roadmap"}>
-                  <a className="text-base  hover:">Roadmap</a>
+                <Link href={"/presskit"}>
+                  <a className="text-base">Press Kit</a>
                 </Link>
               </li>
               <li>
                 <Link href={"/tiers"}>
-                  <a className="text-base  hover:">Tiers System</a>
+                  <a className="text-base">Tiers System</a>
                 </Link>
               </li>
             </ul>
@@ -123,7 +125,7 @@ const Footer = () => (
             </h3>
             <ul role="list" className="mt-4 space-y-4">
               <li>
-                <a href="https://twitter.com/parasol_finance" className="text-base  hover:">
+                <a href="https://twitter.com/parasol_finance" className="text-base">
                   Twitter
                 </a>
               </li>
@@ -133,12 +135,12 @@ const Footer = () => (
                 </a>
               </li>
               <li>
-                <a href="https://discord.gg/JBzVvUVZPn" className="text-base  hover:">
+                <a href="https://discord.gg/JBzVvUVZPn" className="text-base">
                   Discord
                 </a>
               </li>
               <li>
-                <a href="https://parasol-finance.medium.com/" className="text-base  hover:">
+                <a href="https://parasol-finance.medium.com/" className="text-base">
                   Medium
                 </a>
               </li>
@@ -149,17 +151,17 @@ const Footer = () => (
             <ul role="list" className="mt-4 space-y-4">
               <li>
                 <Link href={"/contact"}>
-                  <a className="text-base  hover:">Contact Us</a>
+                  <a className="text-base">Contact Us</a>
                 </Link>
               </li>
               <li>
                 <Link href={"/terms-of-service"}>
-                  <a className="text-base  hover:">Terms of Service</a>
+                  <a className="text-base">Terms of Service</a>
                 </Link>
               </li>
               <li>
                 <Link href={"/privacy-policy"}>
-                  <a className="text-base  hover:">Privacy Policy</a>
+                  <a className="text-base">Privacy Policy</a>
                 </Link>
               </li>
             </ul>
