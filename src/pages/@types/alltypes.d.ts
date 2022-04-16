@@ -7,3 +7,4 @@ declare module "@editorjs/embed";
 declare module "@editorjs/table";
 declare module "react-nextjs-toast";
 declare module "@editorjs/image";
+declare module "@editorjs/quote";

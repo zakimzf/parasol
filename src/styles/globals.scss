@@ -122,6 +122,20 @@ input[type="number"] {
   display: none;
 }
 
-.cdx-input.image-tool__caption, .cdx-input.embed-tool__caption {
+.cdx-quote
+{
+  padding: 0;
+  margin: 1.5rem 0 !important;
+}
+
+.cdx-quote__text {
+  border: 0;
+  margin: 0;
+  min-height: initial !important;
+}
+
+.cdx-input.image-tool__caption,
+.cdx-input.embed-tool__caption,
+.cdx-input.cdx-quote__caption{
   display: none;
 }

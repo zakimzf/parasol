@@ -14,6 +14,8 @@ import { notification } from "../utils/functions";
 import ImageTool from "@editorjs/image";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
+const Quote = require("@editorjs/quote");
+
 interface props {
   tokenAddress: any;
   isOwner: boolean;
@@ -58,6 +60,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
           },
         },
         table: Table,
+        quote: Quote,
         image: {
           class: ImageTool,
           config: {
