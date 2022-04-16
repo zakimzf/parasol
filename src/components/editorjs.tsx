@@ -71,7 +71,6 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
                     "state_changed",
                     function complete () {
                       getDownloadURL(task.snapshot.ref).then((coverUrl: string) => {
-                        console.log(coverUrl)
                         resolve({
                           success: 1,
                           file: {

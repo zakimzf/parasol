@@ -88,7 +88,7 @@ export const uploadFile = (file, tokenAddress, notify, updateIdoCover = false, i
   task.on(
     "state_changed",
     (snapshot) => {
-      console.log(snapshot)
+      // console.log(snapshot)
     },
     (error) => notify(false),
     () => {
