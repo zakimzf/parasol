@@ -1,8 +1,9 @@
-import { db } from "./firebase";
+import { db, storage } from "./firebase";
 import { doc, getDoc, } from "firebase/firestore";
 import { CheckCircleIcon, ExclamationCircleIcon, ExclamationIcon, InformationCircleIcon } from "@heroicons/react/solid";
 import toast from "react-hot-toast";
 import React from "react";
+import { ref, uploadBytesResumable } from "firebase/storage";
 
 export const getBase64 = (file, cb) => {
   let reader = new FileReader();
@@ -74,4 +75,36 @@ export const notification = (type, message, title = "") => {
       </div>
     </div>
   ))
+}
+
+export const uploadFile = (file, tokenAddress, notify, updateIdoCover = false, idosCollectionRef = null) => {
+  if (!file) return;
+  let res = {};
+  
+  const storageRef = ref(storage, `projects/${tokenAddress && (updateIdoCover ? tokenAddress : tokenAddress + "/images") || "files"}/${file.name}`);
+
+  const task = uploadBytesResumable(storageRef, file);
+
+  task.on(
+    "state_changed",
+    (snapshot) => {
+      console.log(snapshot)
+    },
+    (error) => console.log(error),
+    () => {
+      if (updateIdoCover) {
+        getDownloadURL(task.snapshot.ref).then(async (coverUrl) => {
+          await updateDoc(idosCollectionRef, {
+            projectCover: coverUrl,
+          });
+          notify(true)
+        });
+      }
+      else {
+        notify(true)
+      }
+    }
+  );
+  
+  return res
 }
