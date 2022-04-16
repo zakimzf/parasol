@@ -7,7 +7,7 @@ import { useWalletModal } from "../../../components/wallet-connector";
 import Head from "next/head";
 import Container from "../../../components/container";
 import Link from "next/link";
-import { BadgeCheckIcon, PencilAltIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon, CloudUploadIcon, PencilAltIcon } from "@heroicons/react/outline";
 import { SRLWrapper } from "simple-react-lightbox";
 import { Tab } from "@headlessui/react";
 import { ExternalLinkIcon, FireIcon } from "@heroicons/react/solid";
@@ -107,8 +107,18 @@ const ProjectDetails = () => {
                       )
                     }
                   </div>
+                  {walletAddress && walletAddress == ido.publicKey &&
+                    <>
+                      <div className={"relative"}>
+                        <img src={ido.projectCover} className={"mb-6 rounded-lg"} alt={ido.name}/>
+                        <div className={"flex justify-center items-center absolute duration-300 scale-105 cursor-pointer filter backdrop-blur-sm top-0 w-full h-full"}>
+                          <CloudUploadIcon className={"w-32 text-white "} />
+                        </div>
+                      </div>
+                    </>
+                  }
                   <SRLWrapper>
-                    <img src={ido.projectCover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name}/>
+                    {(!walletAddress || walletAddress != ido.publicKey) && <img src={ido.projectCover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name}/>}
                     <Tab.Group>
                       <Tab.List className={"mb-3"}>
                         <div className="border-b border-gray-500">
