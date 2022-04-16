@@ -90,7 +90,7 @@ export const uploadFile = (file, tokenAddress, notify, updateIdoCover = false, i
     (snapshot) => {
       console.log(snapshot)
     },
-    (error) => console.log(error),
+    (error) => notify(false),
     () => {
       if (updateIdoCover) {
         getDownloadURL(task.snapshot.ref).then(async (coverUrl) => {

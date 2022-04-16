@@ -5,12 +5,14 @@ import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
 import React, { useCallback, useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../utils/firebase";
+import { db, storage } from "../utils/firebase";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { sign } from "tweetnacl";
 
 import "node-snackbar/dist/snackbar.min.css";
 import { notification } from "../utils/functions";
+import ImageTool from "@editorjs/image";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 interface props {
   tokenAddress: any;
@@ -56,6 +58,34 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
           },
         },
         table: Table,
+        image: {
+          class: ImageTool,
+          config: {
+            uploader: {
+              uploadByFile (file : File) {
+                return new Promise((resolve, reject) => {
+                  const storageRef = ref(storage, `projects/${tokenAddress}/editor/${file.name}`);
+
+                  const task = uploadBytesResumable(storageRef, file);
+                  task.on(
+                    "state_changed",
+                    function complete () {
+                      getDownloadURL(task.snapshot.ref).then((coverUrl: string) => {
+                        console.log(coverUrl)
+                        resolve({
+                          success: 1,
+                          file: {
+                            url: coverUrl
+                          }
+                        });
+                      });
+                    }
+                  );
+                })
+              }
+            }
+          }
+        },
       },
       data: JSON.parse(content),
     });
