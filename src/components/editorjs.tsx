@@ -13,6 +13,7 @@ import "node-snackbar/dist/snackbar.min.css";
 import { notification } from "../utils/functions";
 import ImageTool from "@editorjs/image";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import axios from "axios";
 
 const Quote = require("@editorjs/quote");
 
@@ -29,8 +30,22 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
 
   const { publicKey, signMessage } = useWallet();
 
+  const [editorContent, setEditorContent] = useState(JSON.parse(content));
+
   useEffect(() => {
     if (editor) editor.destroy();
+
+    editorContent.blocks.map( async (block: any, index: number) => {
+      if (await block.type == "image") {
+        await axios.get(block.data.file.url).catch(function (error) {
+          if (error.response) {
+            delete editorContent.blocks[index];
+          }
+        });
+      }
+    })
+    setEditorContent(editorContent);
+
     initEditor();
   }, [isOwner]);
 
@@ -66,8 +81,9 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
           config: {
             uploader: {
               uploadByFile (file : File) {
+                const dateTime = new Date().getTime();
                 return new Promise((resolve, reject) => {
-                  const storageRef = ref(storage, `projects/${tokenAddress}/editor/${file.name}`);
+                  const storageRef = ref(storage, `projects/${tokenAddress}/editor/${dateTime + file.name}`);
 
                   const task = uploadBytesResumable(storageRef, file);
                   task.on(
@@ -81,9 +97,6 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
                           }
                         });
                       });
-                    },
-                    function error (error) {
-                      reject(error)
                     }
                   );
                 })
@@ -92,7 +105,10 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
           }
         },
       },
-      data: JSON.parse(content),
+      // onChange: (api: any, event: any)  => {
+      //   console.log(api)
+      // },
+      data: editorContent,
     });
     setEditor(editor_);
   };
