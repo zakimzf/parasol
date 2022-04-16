@@ -174,7 +174,7 @@ const ProjectDetails = () => {
                           </div>
                         </Tab.Panel>
                         <Tab.Panel>
-                          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 -rounded-md">
+                          <div className="overflow-hidden shadow pt-5 ring-1 ring-black ring-opacity-5 -rounded-md">
                             <table className="min-w-full divide-y divide-gray-800 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg">
                               <tbody className="divide-y divide-gray-800">
                                 <tr>
