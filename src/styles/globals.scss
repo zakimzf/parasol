@@ -112,3 +112,13 @@ input[type="number"] {
 .cdx-notify{
   color: #17122b;
 }
+
+.image-tool--loading .image-tool__image{
+  border: unset !important;
+  background-color: #231f38 !important;
+  @apply bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg;
+}
+
+.cdx-input.image-tool__caption, .cdx-input.embed-tool__caption{
+  display: none;
+}
