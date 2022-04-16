@@ -113,10 +113,13 @@ input[type="number"] {
   color: #17122b;
 }
 
-.image-tool--loading .image-tool__image, .cdx-button{
+.image-tool--loading .image-tool__image, .image-tool .cdx-button {
   border: unset !important;
-  background-color: #231f38 !important;
-  @apply bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg;
+  @apply border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md p-6 flex justify-center;
+}
+
+.image-tool .cdx-button > svg {
+  display: none;
 }
 
 .cdx-input.image-tool__caption, .cdx-input.embed-tool__caption{
