@@ -78,6 +78,9 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
                           }
                         });
                       });
+                    },
+                    function error (error) {
+                      reject(error)
                     }
                   );
                 })

@@ -113,7 +113,7 @@ input[type="number"] {
   color: #17122b;
 }
 
-.image-tool--loading .image-tool__image{
+.image-tool--loading .image-tool__image, .cdx-button{
   border: unset !important;
   background-color: #231f38 !important;
   @apply bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg;
