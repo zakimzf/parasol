@@ -115,7 +115,7 @@ input[type="number"] {
 
 .image-tool--loading .image-tool__image, .image-tool .cdx-button {
   border: unset !important;
-  @apply border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md p-6 flex justify-center;
+  @apply border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md p-6 flex justify-center text-gray-400;
 }
 
 .image-tool .cdx-button > svg {
