@@ -25,8 +25,7 @@
     @apply bg-none bg-white text-purple-2;
   }
 
-  div > .button:nth-child(2):not(.except)
-  {
+  div > .button:nth-child(2):not(.except) {
     @apply bg-none bg-white text-purple-2;
   }
 }
@@ -71,6 +70,7 @@ input[type="number"] {
     overflow: hidden;
   }
 }
+
 @-webkit-keyframes cssAnimation {
   to {
     width: 0;
@@ -84,27 +84,64 @@ input[type="number"] {
   max-width: unset;
 }
 
-.ce-toolbar__plus, .ce-toolbar__settings-btn, .ce-conversion-tool__icon, .ce-inline-toolbar__dropdown .icon--toggler-down, .ce-inline-toolbar__dropdown-content svg, .ce-conversion-tool, .tc-popover__item-label, .tc-popover__item-icon, .tc-add-column, .tc-add-row{
-  color:#ae62fe !important;
+.ce-toolbar__plus, .ce-toolbar__settings-btn, .ce-conversion-tool__icon, .ce-inline-toolbar__dropdown .icon--toggler-down, .ce-inline-toolbar__dropdown-content svg, .ce-conversion-tool, .tc-popover__item-label, .tc-popover__item-icon, .tc-add-column, .tc-add-row {
+  color: #ae62fe !important;
 }
 
-::selection, .ce-block--selected .ce-block__content [contenteditable]{
+::selection, .ce-block--selected .ce-block__content [contenteditable] {
   background-color: #b064fe !important;
 }
 
-.ce-conversion-tool--focused{
+.ce-conversion-tool--focused {
   background-color: #b064fe !important;
-  color: #fff !important;  
+  color: #fff !important;
 }
 
 .ce-toolbox__button {
-  color: #edf2f7;
+  color: #b3b3b3;
 }
 
 .ce-toolbox__button:hover {
   color: #b064fe;
 }
 
-.toast-container.jsx-2113859084{
+.toast-container.jsx-2113859084 {
   z-index: 9999;
+}
+
+.cdx-notify {
+  color: #17122b;
+}
+
+.image-tool--loading .image-tool__image, .image-tool .cdx-button {
+  border: unset !important;
+  background-color: #231f38;
+  @apply border-2 border-dashed bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md p-6 flex justify-center text-gray-400;
+}
+
+.image-tool__image-picture
+{
+  margin: 0;
+  @apply rounded-lg cursor-pointer transition-transform duration-300;
+}
+
+.image-tool .cdx-button > svg {
+  display: none;
+}
+
+.cdx-quote {
+  padding: 0;
+  margin: 1.5rem 0 !important;
+}
+
+.cdx-quote__text {
+  border: 0;
+  margin: 0;
+  min-height: initial !important;
+}
+
+.cdx-input.image-tool__caption,
+.cdx-input.embed-tool__caption,
+.cdx-input.cdx-quote__caption {
+  display: none;
 }
