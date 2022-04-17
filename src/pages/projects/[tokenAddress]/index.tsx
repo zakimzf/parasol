@@ -66,14 +66,14 @@ const ProjectDetails = () => {
 
   return (
     <>
+    
+      <Head>
+        <title>Parasol Finance ($PSOL)</title>
+        <meta property="og:image" content={`/api/projects/${tokenAddress}?cover`}/>
+        <meta property="twitter:image" content={`/api/projects/${tokenAddress}?cover`}/>
+      </Head>
       {ido &&
         <>
-          <Head>
-            <title>Parasol Finance ($PSOL) | {ido.projectName}</title>
-            <meta name="title" content={`Parasol Finance ($PSOL) | ${ido.projectName}`}/>
-            <meta property="og:image" content={ido.projectCover || "/assets/preview/default.png"}/>
-            <meta property="twitter:image" content={ido.projectCover || "/assets/preview/default.png"}/>
-          </Head>
           <section className="pt-6">
             <Container>
               <div className="grid grid-cols-9">

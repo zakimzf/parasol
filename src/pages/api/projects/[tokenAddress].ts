@@ -11,10 +11,10 @@ export default function handler (
   res: NextApiResponse<Data>
 ) {
   const getProject = async () => {
-    const { tokenAddress } = req.query;
-
-    const data:any = await getProjectByAddress(tokenAddress);
-    res.status(200).json(data)
+    const { tokenAddress, cover } = req.query;
+    let data:any = await getProjectByAddress(tokenAddress);
+    if (cover == "") res.status(301).redirect(data.projectCover)
+    else res.status(200).json(data)
   }
   getProject();
 }
