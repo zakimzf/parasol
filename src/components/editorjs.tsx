@@ -12,7 +12,12 @@ import { sign } from "tweetnacl";
 import "node-snackbar/dist/snackbar.min.css";
 import { notification } from "../utils/functions";
 import ImageTool from "@editorjs/image";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 import axios from "axios";
 
 const Quote = require("@editorjs/quote");
@@ -31,19 +36,22 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
   const { publicKey, signMessage } = useWallet();
 
   const [editorContent, setEditorContent] = useState(JSON.parse(content));
+  const [imagesToRemove, setImagesToRemove] = useState<any>([]);
+
+  const blocksArray = JSON.parse(content).blocks;
 
   useEffect(() => {
     if (editor) editor.destroy();
 
-    editorContent.blocks.map( async (block: any, index: number) => {
-      if (await block.type == "image") {
+    editorContent.blocks.map(async (block: any, index: number) => {
+      if ((await block.type) == "image") {
         await axios.get(block.data.file.url).catch(function (error) {
           if (error.response) {
             delete editorContent.blocks[index];
           }
         });
       }
-    })
+    });
     setEditorContent(editorContent);
 
     initEditor();
@@ -80,34 +88,43 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
           class: ImageTool,
           config: {
             uploader: {
-              uploadByFile (file : File) {
+              uploadByFile (file: File) {
                 const dateTime = new Date().getTime();
                 return new Promise((resolve, reject) => {
-                  const storageRef = ref(storage, `projects/${tokenAddress}/editor/${dateTime + file.name}`);
+                  const storageRef = ref(
+                    storage,
+                    `projects/${tokenAddress}/editor/${dateTime + file.name}`
+                  );
 
                   const task = uploadBytesResumable(storageRef, file);
-                  task.on(
-                    "state_changed",
-                    function complete () {
-                      getDownloadURL(task.snapshot.ref).then((coverUrl: string) => {
+                  task.on("state_changed", function complete () {
+                    getDownloadURL(task.snapshot.ref).then(
+                      (coverUrl: string) => {
                         resolve({
                           success: 1,
                           file: {
-                            url: coverUrl
-                          }
+                            url: coverUrl,
+                          },
                         });
-                      });
-                    }
-                  );
-                })
-              }
-            }
-          }
+                      }
+                    );
+                  });
+                });
+              },
+            },
+          },
         },
       },
-      // onChange: (api: any, event: any)  => {
-      //   console.log(api)
-      // },
+      onChange: (api: any, event: any) => {
+        if (event.type == "block-removed") {
+          const index = event.detail.index;
+          if (blocksArray[index].type == "image") {
+            const url = blocksArray[index].data.file.url;
+            setImagesToRemove((preValue: Array<string>) => [...preValue, url]);
+            blocksArray.splice(index, 1);
+          }
+        }
+      },
       data: editorContent,
     });
     setEditor(editor_);
@@ -130,13 +147,27 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
     await editor
       .save()
       .then(async (outputData: any) => {
+        imagesToRemove.map((url: string) => {
+          const imgRef: any = ref(storage, url);
+          deleteObject(imgRef)
+            .then(() => {
+              // console.log("deleted")
+            })
+            .catch((error) => {
+              // console.log(error)
+            });
+        });
         await updateDoc(idosCollectionRef, {
           content: JSON.stringify(outputData),
         });
-        notification("success", "Content was successfully saved.", "Update IDO")
+        notification(
+          "success",
+          "Content was successfully saved.",
+          "Update IDO"
+        );
       })
       .catch((error: any) => {
-        notification("danger", "Unable to save your changes.", "Update IDO")
+        notification("danger", "Unable to save your changes.", "Update IDO");
       });
     setSaveState(false);
   };
@@ -150,7 +181,9 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
         throw new Error("Wallet does not support message signing!");
 
       // Encode anything as bytes
-      const message = new TextEncoder().encode("I agree to change the details of this IDO.");
+      const message = new TextEncoder().encode(
+        "I agree to change the details of this IDO."
+      );
       // Sign the bytes using the wallet
       const signature = await signMessage(message);
       // Verify that the bytes were signed using the private key that matches the known public key
@@ -160,7 +193,11 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
       setSaveState(true);
     } 
     catch (error: any) {
-      notification("danger", "Unable to sign the transaction.", "Transaction Error");
+      notification(
+        "danger",
+        "Unable to sign the transaction.",
+        "Transaction Error"
+      );
     }
   }, [publicKey, signMessage]);
 
