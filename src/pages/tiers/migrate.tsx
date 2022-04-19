@@ -53,7 +53,8 @@ const Migrate = () => {
         "Pending Transaction"
       );
       await connection.confirmTransaction(signature, "confirmed");
-    } catch (err) {
+    }
+    catch (err) {
       notification("danger", "Unable to Migrate the NFT.", "Transaction Error");
       return false;
     }
