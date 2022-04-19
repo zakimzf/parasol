@@ -44,14 +44,21 @@ const Migrate = () => {
     try {
       const tx = await user.redeem(mintAddress);
       const signature = await sendTransaction(tx, connection);
-      notification("information",  "Redeeming the NFT right now...", "Pending Transaction");
+      notification(
+        "information",
+        "Redeeming the NFT right now...",
+        "Pending Transaction"
+      );
       await connection.confirmTransaction(signature, "confirmed");
-    }
-    catch (err) {
+    } catch (err) {
       notification("danger", "Unable to redeem the NFT.", "Transaction Error");
       return false;
     }
-    notification("success", "Successfully redeemed NFT.", "Transaction Success");
+    notification(
+      "success",
+      "Successfully redeemed NFT.",
+      "Transaction Success"
+    );
 
     setNfts([]);
     getNFTList();
@@ -59,7 +66,7 @@ const Migrate = () => {
 
   return (
     <section className={"py-6"}>
-      <div className={"mx-auto max-w-md space-y-6"}>
+      <div className={"mx-auto max-w-md space-y-6 xxs:px-5"}>
         <Link href={"/tiers"}>
           <a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
             <ArrowLeftIcon className={"w-4"} />
@@ -75,8 +82,8 @@ const Migrate = () => {
                 eiusmod tempor incididunt ut labore et dolore magna aliqua.
               </p>
               <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                laboris nisi ut aliquip ex ea commodo consequat.
               </p>
             </div>
             {nfts.length > 0 ? (
@@ -105,7 +112,9 @@ const Migrate = () => {
                           key={index}
                           className={({ active }) =>
                             `cursor-default select-none relative py-2 px-4 ${
-                              active ? "text-white bg-purple-2" : "text-gray-900"
+                              active
+                                ? "text-white bg-purple-2"
+                                : "text-gray-900"
                             }`
                           }
                           value={nft}
@@ -139,10 +148,7 @@ const Migrate = () => {
             {wallet.connected ? (
               [
                 nfts.length > 0 ? (
-                  <button
-                    className={"button"}
-                    onClick={redeemNFT}
-                  >
+                  <button className={"button"} onClick={redeemNFT}>
                     Redeem My NFT
                   </button>
                 ) : (

@@ -102,7 +102,7 @@ const Tiers = function () {
       </Head>
       <section>
         <Container>
-          <div className={"grid grid-cols-3  pt-10 pb-16"}>
+          <div className={"grid md:grid-cols-3 pt-10 pb-16"}>
             <div className={"flex gap-x-2 items-center"} />
             <div>
               <div className="text-center">
@@ -120,7 +120,7 @@ const Tiers = function () {
                 </p>
               </div>
             </div>
-            <div className={"flex gap-x-2 justify-end items-center"}>
+            <div className={"flex gap-x-2 md:justify-end items-center justify-center mt-5"}>
               <Link href={"/tiers/migrate"}>
                 <a className="inline-flex relative gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-300">
                   <UploadIcon className={"w-4"} />
@@ -139,7 +139,7 @@ const Tiers = function () {
       </section>
       <section>
         <Container fluid={false}>
-          <div className="grid grid-cols-4 gap-x-7">
+          <div className="grid grid-cols-1 sm:grid-cols-2 s_lg:grid-cols-3 m_lg:grid-cols-4 gap-x-7">
             {ferchTiers
               ? tiers.map((t: any, index: any) => (
                 <NftCard
@@ -164,7 +164,7 @@ const Tiers = function () {
       <section className={"mt-12"}>
         <Container>
           <div className="relative z-10 text-center py-10 mb-8 md:mb-2 md:px-6">
-            <div className="text-base max-w-prose lg:max-w-none">
+            <div className="text-base">
               <h2 className="leading-6 text-purple-400 font-semibold tracking-wide uppercase">
                 NFTs as Tiers System
               </h2>
@@ -176,7 +176,7 @@ const Tiers = function () {
           <div className="relative">
             <div className="relative md:p-6">
               <div className="lg:grid lg:grid-cols-2 lg:gap-6">
-                <div className="prose prose-invert prose-lg lg:max-w-none">
+                <div className="prose-invert prose-lg lg:max-w-none">
                   {/*<h2>What is an NFT?</h2>*/}
                   <p>
                     Non-fungible tokens, or NFTs, are the latest cryptocurrency
@@ -195,7 +195,7 @@ const Tiers = function () {
                     to Parasol Finance’s utility NFTs.
                   </p>
                 </div>
-                <div className="prose prose-invert prose-lg lg:mt-0">
+                <div className="prose-invert prose-lg lg:mt-0">
                   {/*<h2>NFT’s as Key access</h2>*/}
                   <p>
                     Parasol Finance is adopting a unique and never-before-seen

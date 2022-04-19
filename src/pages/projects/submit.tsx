@@ -221,9 +221,9 @@ const SubmitProject = () => {
         description={"Create your presale in a few clicks by holding PSOL tokens."}/>
       <Container>
         <form  onSubmit={handleSubmit}>
-          <div className="grid grid-cols-9">
-            <div className="col-span-6">
-              <form className="space-y-12 pr-16 divide-y- divide-gray-400">
+          <div className="grid grid-cols-1 xs:grid-cols-2">
+            <div>
+              <form className="space-y-12 xs:pr-16 divide-y- divide-gray-400">
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
                     <h2 className="text-xl font-medium text-blue-gray-900">1. General Information</h2>
@@ -396,15 +396,15 @@ const SubmitProject = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
-                  <div className="sm:col-span-6">
+                <div className="grid grid-cols-1 gap-y-6 md:grid-cols-6 md:gap-x-6">
+                  <div className="md:col-span-6">
                     <h2 className="text-xl font-medium text-blue-gray-900">2. Token &amp; Liquidity</h2>
                     <p className="mt-1 text-sm text-blue-gray-500">
                       Calculate the amount of token for your IDO, and the liquidity.
                     </p>
                   </div>
 
-                  <div className="sm:col-span-6 relative">
+                  <div className="md:col-span-6 relative">
                     <Listbox value={values.dex} onChange={handleChange}>
                       {({ open }) => (
                         <>
@@ -457,27 +457,27 @@ const SubmitProject = () => {
                     
                     {errors.dex && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.dex}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.dex}</div></> }
                   </div>
 
-                  <div className={"sm:col-span-3 relative"}>
+                  <div className={"md:col-span-3 relative"}>
                     <label htmlFor="token-price" className="block text-sm font-medium text-blue-gray-900">
                       Token Price
                     </label>
                     <div className="mt-1 relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 sm:text-sm">$</span>
+                        <span className="text-gray-200 md:text-sm">$</span>
                       </div>
                       <input onChange={handleChange} value={values.tokenPrice}
                         type="number"
                         name="tokenPrice"
                         id="token-price"
-                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                        className="block w-full pl-7 pr-12 md:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                         placeholder="0.00"
                         min="0.01"
                       />
                       {!errors.tokenPrice && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
+                        <span className="text-gray-200 flex items-center gap-x-1 md:text-sm" id="price-currency">
                           <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
                           USDC
                         </span>
@@ -486,26 +486,26 @@ const SubmitProject = () => {
                     
                     {errors.tokenPrice && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenPrice}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.tokenPrice}</div></> }
                   </div>
 
-                  <div className={"sm:col-span-3 relative"}>
+                  <div className={"md:col-span-3 relative"}>
                     <label htmlFor="hard-cap" className="block text-sm font-medium text-blue-gray-900">
                       Hard Cap
                     </label>
                     <div className="mt-1 relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 sm:text-sm">$</span>
+                        <span className="text-gray-200 md:text-sm">$</span>
                       </div>
                       <input onChange={handleChange} value={values.hardCap}
                         type="number"
                         name="hardCap"
                         id="hard-cap"
-                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                        className="block w-full pl-7 pr-12 md:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                         placeholder="0.00"
                       />
                       {!errors.hardCap && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
+                        <span className="text-gray-200 flex items-center gap-x-1 md:text-sm" id="price-currency">
                           <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
                           USDC
                         </span>
@@ -514,7 +514,7 @@ const SubmitProject = () => {
                     
                     {errors.hardCap && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.hardCap}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.hardCap}</div></> }
                   </div>
                 </div>
 
@@ -572,7 +572,7 @@ const SubmitProject = () => {
                       }}
                     >
                       <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
-                      <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="mt-1 grid grid-cols-1 gap-4 md:grid-cols-2">
                         {packages.map((size) => (
                           <RadioGroup.Option
                             as="div"
@@ -620,7 +620,7 @@ const SubmitProject = () => {
                 </div>
               </form>
             </div>
-            <div className="col-span-3">
+            <div className="mt-5">
               <div className="sticky flex flex-col gap-y-6 top-20">
                 <Card padded={true}>
                   <h2 className="flex gap-x-2 items-center text-2xl font-bold">
