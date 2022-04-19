@@ -9,7 +9,7 @@ import { useWalletModal } from "./useWalletModal";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Menu, Transition } from "@headlessui/react";
 import Link from "next/link";
-import { LogoutIcon, UserIcon } from "@heroicons/react/outline";
+import { ClipboardCopyIcon, LogoutIcon, UserIcon } from "@heroicons/react/outline";
 
 type WalletConnectDetail = {
   Width: String;
@@ -113,6 +113,18 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
                   </div>
                 </a>
               </Link>
+            </Menu.Item>
+            <Menu.Item>
+              <a
+                onClick={() => navigator.clipboard.writeText(base58)}
+                className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
+                <span className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true">
+                  <ClipboardCopyIcon/>
+                </span>
+                <div className="ml-4">
+                  <p className="text-base font-medium whitespace-nowrap text-white">Copy Address</p>
+                </div>
+              </a>
             </Menu.Item>
             <Menu.Item>
               <a

@@ -338,12 +338,12 @@ const EditProject = () => {
                       Symbol <span className="text-purple-2">*</span>
                     </label>
                     <input
-                      onChange={handleChange}
-                      value={values.symbol}
                       type="text"
                       name="symbol"
                       id="project-name"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                      onChange={handleChange}
+                      value={values.symbol}
                     />
                     {errors.symbol && (
                       <>
