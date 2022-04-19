@@ -159,7 +159,7 @@ const Footer = () => (
                   <a className="text-base">Terms of Service</a>
                 </Link>
               </li>
-              <li>
+              <li className="pt-11">
                 <Link href={"/privacy-policy"}>
                   <a className="text-base">Privacy Policy</a>
                 </Link>
