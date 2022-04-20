@@ -25,7 +25,7 @@
     @apply bg-none bg-white text-purple-2;
   }
 
-  div > .button:nth-child(2):not(.except) {
+  div>.button:nth-child(2):not(.except) {
     @apply bg-none bg-white text-purple-2;
   }
 }
@@ -84,11 +84,21 @@ input[type="number"] {
   max-width: unset;
 }
 
-.ce-toolbar__plus, .ce-toolbar__settings-btn, .ce-conversion-tool__icon, .ce-inline-toolbar__dropdown .icon--toggler-down, .ce-inline-toolbar__dropdown-content svg, .ce-conversion-tool, .tc-popover__item-label, .tc-popover__item-icon, .tc-add-column, .tc-add-row {
+.ce-toolbar__plus,
+.ce-toolbar__settings-btn,
+.ce-conversion-tool__icon,
+.ce-inline-toolbar__dropdown .icon--toggler-down,
+.ce-inline-toolbar__dropdown-content svg,
+.ce-conversion-tool,
+.tc-popover__item-label,
+.tc-popover__item-icon,
+.tc-add-column,
+.tc-add-row {
   color: #ae62fe !important;
 }
 
-::selection, .ce-block--selected .ce-block__content [contenteditable] {
+::selection,
+.ce-block--selected .ce-block__content [contenteditable] {
   background-color: #b064fe !important;
 }
 
@@ -113,19 +123,19 @@ input[type="number"] {
   color: #17122b;
 }
 
-.image-tool--loading .image-tool__image, .image-tool .cdx-button {
+.image-tool--loading .image-tool__image,
+.image-tool .cdx-button {
   border: unset !important;
   background-color: #231f38;
   @apply border-2 border-dashed bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md p-6 flex justify-center text-gray-400;
 }
 
-.image-tool__image-picture
-{
+.image-tool__image-picture {
   margin: 0;
   @apply rounded-lg cursor-pointer transition-transform duration-300;
 }
 
-.image-tool .cdx-button > svg {
+.image-tool .cdx-button>svg {
   display: none;
 }
 
@@ -148,4 +158,46 @@ input[type="number"] {
 
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  input[type='range'] {
+    overflow: hidden;
+    width: 100%;
+    -webkit-appearance: none;
+    background-color: #231f38;
+  }
+
+  input[type='range']::-webkit-slider-runnable-track {
+    height: 13px;
+    -webkit-appearance: none;
+    color: #b064fe;
+    margin-top: -1px;
+  }
+
+  input[type='range']::-webkit-slider-thumb {
+    width: 13px;
+    -webkit-appearance: none;
+    height: 13px;
+    cursor: ew-resize;
+    background: #434343;
+    box-shadow: -1000px 0 0 1000px #b064fe;
+  }
+
+}
+
+input[type="range"]::-moz-range-progress {
+  background-color: #b064fe;
+}
+
+input[type="range"]::-moz-range-track {
+  background-color: #231f38;
+}
+
+input[type="range"]::-ms-fill-lower {
+  background-color: #b064fe;
+}
+
+input[type="range"]::-ms-fill-upper {
+  background-color: #231f38;
 }
