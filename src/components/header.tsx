@@ -429,10 +429,10 @@ const Header = () => (
     >
       <Popover.Panel
         focus
-        className="absolute top-0 inset-x-0 transition transform origin-top-right md:hidden z-50"
+        className="absolute top-0 inset-x-0 transition transform origin-top-right md:hidden z-50 bg-header-color"
       >
         <div className="shadow-lg ring-1 ring-black ring-opacity-5 divide-y-2 divide-gray-50 bg-header-color">
-          <div className="pt-5 px-5">
+          <div className="pt-6 px-5">
             <div className="flex items-center justify-between">
               <div className="flex justify-start lg:w-0 lg:flex-1">
                 <Link href={"/"}>
