@@ -76,8 +76,8 @@ const ProjectDetails = () => {
         <>
           <section className="pt-6">
             <Container>
-              <div className="grid grid-cols-9">
-                <div className="col-span-6 pr-16">
+              <div className="grid md:grid-cols-9">
+                <div className="md:col-span-6 md:pr-16">
                   <div className="flex mb-6 gap-x-5">
                     <img
                       className="rounded-full h-16 p-1 m-0"
@@ -232,7 +232,7 @@ const ProjectDetails = () => {
                     />
                   </div>
                 </div>
-                <div className="col-span-3">
+                <div className="md:col-span-3">
                   <div className="sticky flex flex-col gap-y-6 top-20">
                     <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
                       <div className={"relative px-6 pt-6 pb-6"}>
