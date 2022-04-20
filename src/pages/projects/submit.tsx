@@ -16,6 +16,7 @@ import { useDropzone } from "react-dropzone";
 import { useWalletModal } from "../../components/wallet-connector";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Card from "../../components/card";
+import { Keypair } from "@solana/web3.js";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -23,6 +24,7 @@ const exchanges = [
 
 const packages = [
   { name: "Basic", description: "Listing only without Ads.", price: 2100 },
+  { name: "Pro", description: "[description]", price: 10500 },
   { name: "Ultimate", description: "Listing and promotion.", price: 5000 }
 ];
 
@@ -145,11 +147,27 @@ const SubmitProject = () => {
     const _errors = await validateAllFields();
     
     if (Object.keys(_errors).length == 0) {
-      values.publicKey = walletAddress;
-      uploadFiles(coverFile, async (_values: any) => {
-        await setDoc(doc(idosCollectionRef, _values.splToken), _values);
-        router.push(`/projects/${values.splToken}`);
-      })
+      try {
+        
+        const projectKeypair = Keypair.generate();
+        console.log(projectKeypair)
+        // const project =  new Project(provider, store, projectKeypair.publicKey).build();
+        // project.create(args, user);
+      
+        // // sign transaction
+        // let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
+        // // confirm transaction
+        // await connection.confirmTransaction(signature, "confirmed");
+        
+        // values.publicKey = walletAddress;
+        
+        // uploadFiles(coverFile, async (_values: any) => {
+        //   await setDoc(doc(idosCollectionRef, _values.splToken), _values);
+        //   router.push(`/projects/${values.splToken}`);
+        // })
+      } catch (err) {
+        // handle custom program error code
+      }
     }
   }
   
