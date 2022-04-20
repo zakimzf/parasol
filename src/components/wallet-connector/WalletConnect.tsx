@@ -52,11 +52,11 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
     );
 
   return (
-    <Menu as="div" className="relative z-10 inline-block text-left">
+    <Menu as="div" className={`relative z-10 inline-block text-left ${Width == "full" ? "w-full" : ""}`}>
       <div>
         <Menu.Button
           // onClick={() => setVisible(true)}
-          className="inline-flex items-center px-4 py-2 gap-x-2 text-base font-medium rounded-md bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 text-white hover:bg-white hover:text-purple-2 hover:from-purple-2 hover:to-purple-1"
+          className={`inline-flex items-center px-4 py-2 gap-x-2 text-base font-medium rounded-md bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 text-white hover:bg-white hover:text-purple-2 hover:from-purple-2 hover:to-purple-1 ${Width == "full" ? "w-full items-center justify-center" : ""}`}
         >
           <svg
             className="h-3"
