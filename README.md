@@ -9,27 +9,52 @@
     Community Governed IDO Platform on Solana. 🚀
   </p>
   <p align="center">
-    <a href="https://github.com/parasol-finance/application"><img src="https://img.shields.io/badge/parasol-application-green?logo=vercel&style=plastic" /></a>
-    <img src="https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white" />
-    <img src="https://img.shields.io/badge/Made%20With-NextJS-CCCCCC" />
-    <a href="https://t.me/parasolfinance"><img src="https://img.shields.io/badge/Telegram-Channel-0088cc" /></a>
+    <a href="https://parasol.finance"><img src="https://therealsujitk-vercel-badge.vercel.app/?app=application-git-master-parasol-finance" /></a>
+    <a href="https://www.npmjs.com/package/parasol-finance-sdk"><img src="https://img.shields.io/badge/npm-parasol--finance--sdk-blue" /></a>
+    <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Made%20With-NextJS-CCCCCC" /></a>
+    <a href="https://t.me/parasolfinance"><img src="https://img.shields.io/badge/license-MIT-blue" /></a>
   </p>
 </p>
 
+# What is Parasol Finance?
 
-## Introduction
+Parasol Finance aims to be the first ever community-owned and governed IDO platform built on Solana that serves their community over everything else, as opposed to the team having all the control over what projects are listed and which projects are allowed to raise money on the platform, the community will have all the power.
 
-Parasol Finance aims to be the first ever community-owned and governed IDO platform built on Solana that serves their community over everything else. They aim to provide that community all the control over which projects are put forward and which can participate in the IDO process. As opposed to the team having all the control over what projects are listed and which projects are allowed to raise money on the platform, the community will have all the power. What the community says, goes. The team believes that “Since the token holders and active community members are the ones most affected by management decisions and IDO listings, they should have the absolute say in what projects are allowed to list with us at Parasol.
+[Read the complete Medium article →](https://parasol-finance.medium.com/parasol-finance-this-new-raydium-listing-aims-to-be-the-top-decentralized-ido-platform-af5fa78fb725)
 
+![Preview](https://user-images.githubusercontent.com/5221349/164296566-de97367a-d857-4b15-abdd-9ba21f3df377.png)
 
-## Why Parasol?
+# Run Application Locally
 
-The key utility of owning Parasol tokens ($PSOL) are governance rights of voting for and participating in IDOs. The community-governed platform will be an integral part of bringing new and existing projects and protocols into the Parasol ecosystem while enabling the community members to invest at the ground floor. In the process, Parasol and the $PSOL token will become a foundation for enabling further development with partners, the community, and the burgeoning blockchain ecosystem as a whole.
-Being a part of Parasol means being a part of the next-generation of technological innovation. By participating in the IDOs chosen by the Parasol community, $PSOL holders are the very first to own these innovative new businesses before anyone else.
+If you intend to deploy this application locally or work on it you must do this:
 
-## Social Networks
+```bash
+$ git clone https://github.com/parasol-finance/application.git
+$ yarn install
+$ yarn dev
 
-- https://t.me/parasolfinance
-- https://twitter.com/parasol_finance
-- https://www.reddit.com/r/Parasol_Finance/
+# The application should run on http://localhost:3000/
+```
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/parasol-finance/application)
+
+# Development Credits
+
+Here are all the people who have or are still working on the development of Parasol Finance.
+
+| Username          | Twitter or Github                 | Role                     | Assigned Tasks                          |
+|-------------------|-----------------------------------|--------------------------|-----------------------------------------|
+| Clint Mourlevat   | [thisisclint21](https://twitter.com/thisisclint21) | Parasol Finance CEO      | Mostly drinking cider and waiting       |
+| Keisuke Wantanabe | [keisukew53](https://github.com/keisukew53)     | Solana Developer | Creating Parasol SC and SDK             |
+| achamchi01        | [achamchi01](https://github.com/achamchi01)     | Front-End Developer      | Implemented Firebase and the Parasol SDK|
+| soft-top-notch    | [soft-top-notch](https://github.com/soft-top-notch) | Front-End Developer      | Implemented NFT with Parasol SDK        |
+
+# Contribute
+
+See the [CONTRIBUTING.md](CONTRIBUTING.md) file for best practices to participate in the collaborative development of Parasol Finance.
+
+# Community
+
+* Join us on the [Parasol Discord](https://discord.gg/JBzVvUVZPn).
+* Read our latest blog articles on [Medium](https://parasol-finance.medium.com/).
+* Reach our [Telegram](https://t.me/parasolfinance) community.
