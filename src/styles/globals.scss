@@ -145,3 +145,7 @@ input[type="number"] {
 .cdx-input.cdx-quote__caption {
   display: none;
 }
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
