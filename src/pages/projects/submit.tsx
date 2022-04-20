@@ -32,7 +32,7 @@ const packages = [
 
 const SubmitProject = () => {
   const router = useRouter();
-  const { provider, config, user } = useContext(NftContext);
+  const { provider, config, user, nftKinds } = useContext(NftContext);
 
   const { publicKey, sendTransaction } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
@@ -169,16 +169,14 @@ const SubmitProject = () => {
           tier: values.package,
           hardcap: values.hardCap,
           salePrice: values.tokenPrice,
-          // startTime: ,
-          // endTime: ,
-          // uri: ,
+          startTime: values.startTime,
+          endTime: values.endTime,
+          uri: `${location.protocol + '//' + location.host}/projects/${projectKeypair.publicKey}`,
         };
 
-        project.create(args, user);
+        const tx:any = project.create(args, user);
       
-        const index = null;
         // sign transaction
-        const tx = await user.purchase(projectKeypair.publicKey, index);
         let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
         // confirm transaction
         await connection.confirmTransaction(signature, "confirmed");
