@@ -51,13 +51,13 @@ const Tiers = function () {
     },
   ]);
 
-  const { provider, nfts, setNfts, wallet, user } =
+  const { provider, nfts, setNfts, nftKinds, wallet, user } =
     React.useContext(NftContext);
 
   const buyNFT = async (index: number) => {
     try {
       const mintKeypair = Keypair.generate();
-      const tx = await user.purchase(mintKeypair.publicKey, index);
+      const tx = await user.purchase(mintKeypair.publicKey, nftKinds[index]);
       const signature = await sendTransaction(tx, connection, {
         signers: [mintKeypair],
       });

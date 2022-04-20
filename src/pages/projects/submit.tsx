@@ -158,12 +158,24 @@ const SubmitProject = () => {
         const projectKeypair = Keypair.generate();
         const project =  await new Project(provider, nftStore, projectKeypair.publicKey).build();
 
-        const args:any = [];
+        const args:any = {
+          projectKind: values.package,
+          treasuryMint: values.hardCap,
+          tokenMint: values.splToken,
+          tokenDecimal: values.splToken,
+          tier: values.package,
+          hardcap: values.hardCap,
+          salePrice: values.tokenPrice,
+          // startTime: ,
+          // endTime: ,
+          // uri: ,
+        };
 
         project.create(args, user);
       
+        const index = null;
         // sign transaction
-        const tx = await user.purchase(projectKeypair.publicKey, 0);
+        const tx = await user.purchase(projectKeypair.publicKey, index);
         let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
         // confirm transaction
         await connection.confirmTransaction(signature, "confirmed");
