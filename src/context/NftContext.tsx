@@ -1,8 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
-import { Provider } from "@project-serum/anchor";
-import { Migrator, NftKind, NftStore, NftStoreConfig, RpcHelper, User } from "parasol-finance-sdk";
+import { AnchorProvider, Migrator, NftKind, NftStore, NftStoreConfig, RpcHelper, User } from "parasol-finance-sdk";
 
 import { PublicKey } from "@solana/web3.js";
 
@@ -49,10 +48,11 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }: any) => {
   }, [wallet.connected]);
 
   const config: NftStoreConfig = {
-    paymentMint: new PublicKey(process.env.NEXT_PUBLIC_MINT as any),
-    collectionMint: new PublicKey(process.env.NEXT_PUBLIC_COLLECTION_MINT as any),
+    paymentMint: new PublicKey(process.env.NEXT_PUBLIC_PAYMENT_MINT as string),
+    collectionMint: new PublicKey(process.env.NEXT_PUBLIC_COLLECTION_MINT as string),
   };
-  const provider = new Provider(connection, wallet as any, {
+
+  const provider = new AnchorProvider(connection, wallet as any, {
     preflightCommitment: "confirmed",
   });
 

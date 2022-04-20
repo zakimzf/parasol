@@ -14,6 +14,7 @@ import { clusterApiUrl } from "@solana/web3.js";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import SimpleReactLightbox from "simple-react-lightbox";
+import { Toaster } from "react-hot-toast";
 
 import Header from "../components/header";
 import AnnounceBar from "../components/slices/announce-bar";
@@ -24,14 +25,13 @@ import { WalletModalProvider } from "../components/wallet-connector";
 import { NftProvider } from "../context/NftContext";
 
 import "../styles/globals.scss";
-import { Toaster } from "react-hot-toast";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   const network: WalletAdapterNetwork = getWalletAdapterNetwork(
     process.env.NETWORK
   );
 
-  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  const endpoint = useMemo(() => process.env.NEXT_PUBLIC_CUSTOM_RPC || clusterApiUrl(network), [network]);
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),

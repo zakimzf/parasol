@@ -155,7 +155,6 @@ const SubmitProject = () => {
 
     if (Object.keys(_errors).length == 0) {
       try {
-
         const nftStore = await new NftStore(provider, config).build();
 
         const projectKeypair = Keypair.generate();
@@ -171,7 +170,7 @@ const SubmitProject = () => {
           salePrice: values.tokenPrice,
           startTime: values.startTime,
           endTime: values.endTime,
-          uri: `${location.protocol + '//' + location.host}/projects/${projectKeypair.publicKey}`,
+          uri: `${location.protocol + "//" + location.host}/projects/${projectKeypair.publicKey}`,
         };
 
         const tx:any = project.create(args, user);
@@ -187,7 +186,8 @@ const SubmitProject = () => {
           await setDoc(doc(idosCollectionRef, _values.splToken), _values);
           router.push(`/projects/${values.splToken}`);
         })
-      } catch (err) {
+      }
+      catch (err) {
         console.log("error")
       }
     }
