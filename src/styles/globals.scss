@@ -160,7 +160,6 @@ input[type="number"] {
   filter: invert(1);
 }
 
-/*Chrome*/
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   input[type='range'] {
     overflow: hidden;
@@ -187,7 +186,6 @@ input[type="number"] {
 
 }
 
-/** FF*/
 input[type="range"]::-moz-range-progress {
   background-color: #b064fe;
 }
@@ -196,7 +194,6 @@ input[type="range"]::-moz-range-track {
   background-color: #231f38;
 }
 
-/* IE*/
 input[type="range"]::-ms-fill-lower {
   background-color: #b064fe;
 }
