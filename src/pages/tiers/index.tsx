@@ -14,7 +14,7 @@ import { notification } from "../../utils/functions";
 const Tiers = function () {
   const { connection } = useConnection();
   const { sendTransaction } = useWallet();
-  const [ferchTiers, setFerchTiers] = useState(false);
+  const [fetchTiers, setFetchTiers] = useState(false);
   const [tiers, setTiers] = useState<any>([
     {
       id: 0,
@@ -84,7 +84,7 @@ const Tiers = function () {
         })
       );
       setTiers(tiersDataArray);
-      setFerchTiers(true);
+      setFetchTiers(true);
     };
     nftKindData();
   }, []);
@@ -140,7 +140,7 @@ const Tiers = function () {
       <section>
         <Container fluid={false}>
           <div className="grid grid-cols-4 gap-x-7">
-            {ferchTiers
+            {fetchTiers
               ? tiers.map((t: any, index: any) => (
                 <NftCard
                   owned={t.owned}
