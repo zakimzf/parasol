@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { Fragment, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Listbox, RadioGroup, Transition } from "@headlessui/react"
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import Container from "../../components/container";
@@ -9,14 +9,16 @@ import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline
 import { db, storage } from "../../utils/firebase";
 import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
 import { collection, doc, setDoc, Timestamp, } from "firebase/firestore";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
 import { useDropzone } from "react-dropzone";
 import { useWalletModal } from "../../components/wallet-connector";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Card from "../../components/card";
-import { Keypair } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
+import { NftContext, NftProvider } from "../../context/NftContext";
+import { NftStore, NftStoreConfig, Project } from "parasol-finance-sdk";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -30,10 +32,12 @@ const packages = [
 
 const SubmitProject = () => {
   const router = useRouter();
+  const { provider, config, user } = useContext(NftContext);
 
-  const { publicKey } = useWallet();
+  const { publicKey, sendTransaction } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
-
+  
+  const { connection } = useConnection();
   const walletModal = useWalletModal();
   
   const splRef:any = useRef(null);
@@ -148,25 +152,30 @@ const SubmitProject = () => {
     
     if (Object.keys(_errors).length == 0) {
       try {
-        
+
+        const nftStore = await new NftStore(provider, config).build();
+
         const projectKeypair = Keypair.generate();
-        console.log(projectKeypair)
-        // const project =  new Project(provider, store, projectKeypair.publicKey).build();
-        // project.create(args, user);
+        const project =  await new Project(provider, nftStore, projectKeypair.publicKey).build();
+
+        const args:any = [];
+
+        project.create(args, user);
       
-        // // sign transaction
-        // let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
-        // // confirm transaction
-        // await connection.confirmTransaction(signature, "confirmed");
+        // sign transaction
+        const tx = await user.purchase(projectKeypair.publicKey, 0);
+        let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
+        // confirm transaction
+        await connection.confirmTransaction(signature, "confirmed");
         
-        // values.publicKey = walletAddress;
+        values.publicKey = walletAddress;
         
-        // uploadFiles(coverFile, async (_values: any) => {
-        //   await setDoc(doc(idosCollectionRef, _values.splToken), _values);
-        //   router.push(`/projects/${values.splToken}`);
-        // })
+        uploadFiles(coverFile, async (_values: any) => {
+          await setDoc(doc(idosCollectionRef, _values.splToken), _values);
+          router.push(`/projects/${values.splToken}`);
+        })
       } catch (err) {
-        // handle custom program error code
+        console.log("error")
       }
     }
   }
