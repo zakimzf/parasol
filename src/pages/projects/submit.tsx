@@ -221,9 +221,9 @@ const SubmitProject = () => {
         description={"Create your presale in a few clicks by holding PSOL tokens."}/>
       <Container>
         <form  onSubmit={handleSubmit}>
-          <div className="grid grid-cols-1 xs:grid-cols-2">
-            <div>
-              <form className="space-y-12 xs:pr-16 divide-y- divide-gray-400">
+          <div className="grid md:grid-cols-9">
+            <div className="md:col-span-6">
+              <form className="space-y-12 md:pr-16 divide-y- divide-gray-400">
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
                     <h2 className="text-xl font-medium text-blue-gray-900">1. General Information</h2>
@@ -620,7 +620,7 @@ const SubmitProject = () => {
                 </div>
               </form>
             </div>
-            <div className="mt-5">
+            <div className="mt-5 md:col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
                 <Card padded={true}>
                   <h2 className="flex gap-x-2 items-center text-2xl font-bold">

@@ -31,7 +31,7 @@ const ProjectCard = ({
       </Link>
     )}
     {/*<label className="absolute z-10 top-3 right-3 p-2 bg-opacity-100 text-xs uppercase font-medium rounded-md bg-purple-1">Whitelist Opened</label>*/}
-    <div className={`relative px-6 ${Logo ? "pt-16" : "pt-6"} pb-6`}>
+    <div className={`relative px-3 ${Logo ? "pt-16" : "pt-6"} pb-6`}>
       {Logo && (
         <img
           className="absolute w-20 h-20 border-4 border-gray-700 bg-gray-700 -top-10 rounded-xl"
@@ -78,7 +78,7 @@ const ProjectCard = ({
           <span>$0.21</span>
         </div>
       </div>
-      <div className="grid gap-x-3 grid-cols-1 xxs:grid-cols-2">
+      <div className="xxs:grid gap-x-3 grid-cols-1 xxs:grid-cols-2">
         <button className="button py-3 flex-1 text-base mb-3">
           Participate in IDO
         </button>

@@ -100,7 +100,7 @@ const Contact = () => {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
+              className="grid grid-cols-1 xxs:grid-cols-2 xxs:gap-x-8 xxs:px-5"
             >
               <div className="relative">
                 <label
@@ -168,7 +168,7 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="sm:col-span-2 relative">
+              <div className="xxs:col-span-2 relative">
                 <label htmlFor="subject" className="block text-sm font-medium">
                   Subject <span className="text-purple-2">*</span>
                 </label>
@@ -198,7 +198,7 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="sm:col-span-2 relative">
+              <div className="xxs:col-span-2 relative">
                 <label htmlFor="message" className="block text-sm font-medium">
                   Message <span className="text-purple-2">*</span>
                 </label>
@@ -228,7 +228,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className={"col-span-2 flex justify-center gap-x-3"}>
+              <div className={"col-span-2 flex justify-center gap-x-3 mt-5"}>
                 <HCaptcha
                   sitekey={sitekey}
                   onVerify={setToken}

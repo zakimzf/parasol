@@ -139,7 +139,7 @@ const Brands = () => (
     <Container>
       <div
         className={
-          "gap-x-20 justify-around grid grid-cols-1 px-2 gap-10 m_sm:grid-cols-2 s_lg:grid-cols-3 m_lg:grid-cols-5"
+          "gap-x-20 justify-around grid grid-cols-2 px-2 gap-10 m_sm:grid-cols-2 s_lg:grid-cols-3 m_lg:grid-cols-5"
         }
       >
         {/*{[SolanaLogo, ChainLinkLogo, SeededNetworkLogo, GamesolLogo, SecretumLogo].sort(function () {*/}
