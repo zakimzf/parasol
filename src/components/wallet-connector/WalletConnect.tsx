@@ -1,10 +1,4 @@
-import React, {
-  FC,
-  Fragment,
-  MouseEventHandler,
-  useCallback,
-  useMemo,
-} from "react";
+import React, { Fragment, MouseEventHandler, useCallback, useMemo, } from "react";
 import { useWalletModal } from "./useWalletModal";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Menu, Transition } from "@headlessui/react";
@@ -116,7 +110,7 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
             </Menu.Item>
             <Menu.Item>
               <a
-                onClick={() => navigator.clipboard.writeText(base58)}
+                onClick={() => navigator.clipboard.writeText(base58 as string)}
                 className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
                 <span className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true">
                   <ClipboardCopyIcon/>
