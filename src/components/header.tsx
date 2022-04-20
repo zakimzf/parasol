@@ -3,14 +3,7 @@ import { Fragment } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
-import {
-  AnnotationIcon,
-  BookOpenIcon,
-  InformationCircleIcon,
-  MailIcon,
-  MenuIcon,
-  XIcon,
-} from "@heroicons/react/outline";
+import { AnnotationIcon, BookOpenIcon, MailIcon, MenuIcon, XIcon, } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { WalletConnect } from "./wallet-connector";
 
@@ -246,20 +239,20 @@ const Header = () => (
                   <div
                     className="rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                     <div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-8 sm:p-8">
-                      <Link href={"/about"}>
-                        <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                          <InformationCircleIcon
-                            className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
-                          <div className="ml-4">
-                            <p className="text-base font-medium text-white">About Parasol
-                              Finance
-                            </p>
-                            <p className="mt-1 text-sm text-gray-300">
-                              Learn more about the Parasol Finance project.
-                            </p>
-                          </div>
-                        </a>
-                      </Link>
+                      {/*<Link href={"/about"}>*/}
+                      {/*  <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">*/}
+                      {/*    <InformationCircleIcon*/}
+                      {/*      className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>*/}
+                      {/*    <div className="ml-4">*/}
+                      {/*      <p className="text-base font-medium text-white">About Parasol*/}
+                      {/*        Finance*/}
+                      {/*      </p>*/}
+                      {/*      <p className="mt-1 text-sm text-gray-300">*/}
+                      {/*        Learn more about the Parasol Finance project.*/}
+                      {/*      </p>*/}
+                      {/*    </div>*/}
+                      {/*  </a>*/}
+                      {/*</Link>*/}
                       <Link href={"/frequently-asked-questions"}>
                         <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                           <AnnotationIcon className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
