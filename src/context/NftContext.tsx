@@ -50,6 +50,7 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }: any) => {
 
   const config: NftStoreConfig = {
     paymentMint: new PublicKey(process.env.NEXT_PUBLIC_MINT as any),
+    collectionMint: new PublicKey(process.env.NEXT_PUBLIC_COLLECTION_MINT as any),
   };
   const provider = new Provider(connection, wallet as any, {
     preflightCommitment: "confirmed",
