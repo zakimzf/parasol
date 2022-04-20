@@ -39,19 +39,19 @@ const SubmitProject = () => {
   
   const { connection } = useConnection();
   const walletModal = useWalletModal();
-  
+
   const splRef:any = useRef(null);
   const submitBtnRef:any = useRef(null);
 
   const idosCollectionRef = collection(db, "idos");
   const [coverFile, setcoverFile] = useState<any>();
-  
+
   const [values, setValues] = useState({
     publicKey: walletAddress,
     splToken : "",
     projectIcon: "",
     projectCover : "",
-    projectName : "", 
+    projectName : "",
     symbol: "",
     description : "",
     websiteUrl : "",
@@ -67,7 +67,7 @@ const SubmitProject = () => {
   });
 
   const [errors, setErrors] = useState<any>([]);
-  
+
   const handleChange = (e:any) => {
     let { name, value, classList } = e.target
     if (name != "projectCover") {
@@ -114,7 +114,7 @@ const SubmitProject = () => {
         }
         else el.classList.remove(...errClasses);
       }
-  
+
       elements = document.getElementsByClassName("url_");
       for (let el of elements) {
         const { name, value } = el;
@@ -123,33 +123,33 @@ const SubmitProject = () => {
           el.classList.add(...errClasses);
         }
       }
-  
+
       if (!coverFile) {
         _errors["projectCover"] = "This field is required";
-      }  
+      }
 
       if (!values.package) {
         _errors["package"] = "This field is required";
       }
-    }  
+    }
 
     const { name, value } = splRef.current;
     if (value) {
       const isExist = await isTokenAddressExist(value);
-      
+
       if (isExist) {
         _errors[name] = "This address was already used for run a previous IDO";
         splRef.current.classList.add(...errClasses);
       }
     }
 
-    setErrors(_errors); 
+    setErrors(_errors);
     return _errors;
   }
 
   const validateAllFieldsAndRedirection = async () => {
     const _errors = await validateAllFields();
-    
+
     if (Object.keys(_errors).length == 0) {
       try {
 
@@ -191,19 +191,19 @@ const SubmitProject = () => {
       }
     }
   }
-  
+
   useEffect(() => {
     const getTokeData = () => {
       const address = values.splToken;
       const _errors = errors;
-      
+
       if (address) {
         axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${address}`).then(async (res) => {
           splRef.current?.classList.remove(...errClasses);
           delete _errors["splToken"];
           setErrors(_errors);
-          const { data } = res;  
-          if (await isTokenAddressExist(address))validateAllFields(true);     
+          const { data } = res;
+          if (await isTokenAddressExist(address))validateAllFields(true);
           else if (data) {
             const obj:any = {};
             if (data.name)obj.projectName = data.name;
@@ -216,8 +216,8 @@ const SubmitProject = () => {
             setValues((preValues) => ({ ...preValues, ...obj }));
             // validateAllFields(true);
           }
-        }).catch(error => {        
-          _errors["splToken"] = "Please enter a valid token address" 
+        }).catch(error => {
+          _errors["splToken"] = "Please enter a valid token address"
           setErrors(_errors);
         });
       }
@@ -238,7 +238,7 @@ const SubmitProject = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const _values = { ...values, ["projectCover"]: downloadURL };
-          callback(_values);          
+          callback(_values);
         });
       }
     );
@@ -251,7 +251,7 @@ const SubmitProject = () => {
 
     setcoverFile(file[0]);
   }, []);
-  
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
   return (
@@ -273,7 +273,9 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-6 relative">
                     <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
-                      Enter your Token Address <span className="text-purple-2">*</span>
+                      Enter your Token Address
+                      (Optional)
+                      {/*<span className="text-purple-2">*</span>*/}
                     </label>
                     <input onChange={handleChange} value={values.splToken}
                       type="text"
@@ -286,13 +288,13 @@ const SubmitProject = () => {
                       aria-invalid="true"
                       ref={splRef}
                     />
-                    
+
                     {errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></> }
-                   
+
                   </div>
-                  
+
                   <p className="text-sm text-blue-gray-500 sm:col-span-6">
                     The token information will be fetched from the Solana blockchain.
                   </p>
@@ -343,9 +345,9 @@ const SubmitProject = () => {
                         }
                         <p className="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
                       </div>
-                      
+
                     </div>
-                    
+
                     {errors.projectCover && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectCover}</div> }
                     <p className="mt-3 text-sm text-blue-gray-500">
                       We need a cover in the following format: 1920x1080px.
@@ -437,7 +439,104 @@ const SubmitProject = () => {
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
-                    <h2 className="text-xl font-medium text-blue-gray-900">2. Token &amp; Liquidity</h2>
+                    <h2 className="text-xl font-medium text-blue-gray-900">2. IDO Details</h2>
+                    <p className="mt-1 text-sm text-blue-gray-500">
+                      Calculate the amount of token for your IDO, and the liquidity.
+                    </p>
+                  </div>
+
+                  <div className={"sm:col-span-3 relative"}>
+                    <label htmlFor="token-price" className="block text-sm font-medium text-blue-gray-900">
+                      Token Price
+                    </label>
+                    <div className="mt-1 relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <span className="text-gray-200 sm:text-sm">$</span>
+                      </div>
+                      <input onChange={handleChange} value={values.tokenPrice}
+                        type="number"
+                        name="tokenPrice"
+                        id="token-price"
+                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                        placeholder="0.00"
+                        min="0.01"
+                      />
+                      {!errors.tokenPrice && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
+                          <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
+                          USDC
+                        </span>
+                      </div> }
+                    </div>
+
+                    {errors.tokenPrice && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenPrice}</div></> }
+                  </div>
+
+                  <div className={"sm:col-span-3 relative"}>
+                    <label htmlFor="hard-cap" className="block text-sm font-medium text-blue-gray-900">
+                      Hard Cap
+                    </label>
+                    <div className="mt-1 relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <span className="text-gray-200 sm:text-sm">$</span>
+                      </div>
+                      <input onChange={handleChange} value={values.hardCap}
+                        type="number"
+                        name="hardCap"
+                        id="hard-cap"
+                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                        placeholder="0.00"
+                      />
+                      {!errors.hardCap && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
+                          <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
+                          USDC
+                        </span>
+                      </div>}
+                    </div>
+
+                    {errors.hardCap && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.hardCap}</div></> }
+
+                  </div>
+
+                  <div className="sm:col-span-3 relative">
+                    <label htmlFor="twitter" className="block text-sm font-medium text-blue-gray-900">
+                      IDO Start Date
+                    </label>
+                    <input onChange={handleChange} value={values.twitter}
+                      type="date"
+                      name="twitter"
+                      id="twitter"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
+                    />
+                    {errors.twitter && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.twitter}</div></> }
+                  </div>
+
+                  <div className="sm:col-span-3 relative">
+                    <label htmlFor="telegram" className="block text-sm font-medium text-blue-gray-900">
+                      IDO End Date (usually 3 days)
+                    </label>
+                    <input onChange={handleChange} value={values.telegram}
+                      type="date"
+                      name="telegram"
+                      id="telegram"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
+                    />
+                    {errors.telegram && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div></> }
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
+                  <div className="sm:col-span-6">
+                    <h2 className="text-xl font-medium text-blue-gray-900">3. About Liquidity</h2>
                     <p className="mt-1 text-sm text-blue-gray-500">
                       Calculate the amount of token for your IDO, and the liquidity.
                     </p>
@@ -493,73 +592,40 @@ const SubmitProject = () => {
                         </>
                       )}
                     </Listbox>
-                    
+
                     {errors.dex && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.dex}</div></> }
-                  </div>
 
-                  <div className={"sm:col-span-3 relative"}>
-                    <label htmlFor="token-price" className="block text-sm font-medium text-blue-gray-900">
-                      Token Price
-                    </label>
-                    <div className="mt-1 relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 sm:text-sm">$</span>
-                      </div>
-                      <input onChange={handleChange} value={values.tokenPrice}
-                        type="number"
-                        name="tokenPrice"
-                        id="token-price"
-                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
-                        placeholder="0.00"
-                        min="0.01"
-                      />
-                      {!errors.tokenPrice && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
-                          <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
-                          USDC
-                        </span>
-                      </div> }
-                    </div>
-                    
-                    {errors.tokenPrice && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenPrice}</div></> }
                   </div>
-
-                  <div className={"sm:col-span-3 relative"}>
-                    <label htmlFor="hard-cap" className="block text-sm font-medium text-blue-gray-900">
-                      Hard Cap
-                    </label>
-                    <div className="mt-1 relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 sm:text-sm">$</span>
-                      </div>
-                      <input onChange={handleChange} value={values.hardCap}
-                        type="number"
-                        name="hardCap"
-                        id="hard-cap"
-                        className="block w-full pl-7 pr-12 sm:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
-                        placeholder="0.00"
+                  <div className="sm:col-span-6">
+                    <div className="sm:col-span-3 relative">
+                      <label htmlFor="telegram" className="block text-sm font-medium text-blue-gray-900">
+                        Percentage of the Pool for the Liquidity
+                      </label>
+                      <input
+                        type={"range"}
+                        className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                       />
-                      {!errors.hardCap && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 flex items-center gap-x-1 sm:text-sm" id="price-currency">
-                          <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
-                          USDC
-                        </span>
-                      </div>}
+                      {/*<input onChange={handleChange} value={values.telegram}*/}
+                      {/*  type="date"*/}
+                      {/*  name="telegram"*/}
+                      {/*  id="telegram"*/}
+                      {/*  className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"*/}
+                      {/*/>*/}
+                      {errors.telegram && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div></> }
                     </div>
-                    
-                    {errors.hardCap && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.hardCap}</div></> }
+                    <p className="mt-3 text-sm text-blue-gray-500">
+                      We recommend not less than 50% of the pool to be sent in liquidity.
+                    </p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
-                    <h2 className="text-xl font-medium text-blue-gray-900">3. Social Networks</h2>
+                    <h2 className="text-xl font-medium text-blue-gray-900">4. Social Networks</h2>
                     <p className="mt-1 text-sm text-blue-gray-500">
                       Please indicate your different social networks.
                     </p>
@@ -604,8 +670,8 @@ const SubmitProject = () => {
                     </p>
                   </div>
                   <div className="sm:col-span-5">
-                    <RadioGroup 
-                      value={values.package} 
+                    <RadioGroup
+                      value={values.package}
                       onChange={(pac) => {
                         setValues({ ...values, ["package"]: pac })
                       }}
@@ -698,7 +764,7 @@ const SubmitProject = () => {
                     <div className="flex font-medium items-center text-gray-300 gap-x-3">
                       <span>Price per Token</span>
                       <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
-                      <span>                      
+                      <span>
                         <NumberFormat
                           value={!values.tokenPrice && "0" || values.tokenPrice}
                           displayType={"text"}
