@@ -61,6 +61,9 @@ const SubmitProject = () => {
     hardCap : "",
     twitter : "",
     telegram : "",
+    startTime : "",
+    endTime : "",
+    liquidity: "50",
     package: packages[0],
     isFeatured: false,
     created: Timestamp.now()
@@ -504,33 +507,33 @@ const SubmitProject = () => {
                   </div>
 
                   <div className="sm:col-span-3 relative">
-                    <label htmlFor="twitter" className="block text-sm font-medium text-blue-gray-900">
+                    <label htmlFor="startTime" className="block text-sm font-medium text-blue-gray-900">
                       IDO Start Date
                     </label>
-                    <input onChange={handleChange} value={values.twitter}
+                    <input onChange={handleChange} value={values.startTime}
                       type="date"
-                      name="twitter"
-                      id="twitter"
+                      name="startTime"
+                      id="startTime"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
                     />
-                    {errors.twitter && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.twitter}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.startTime}</div></> }
                   </div>
 
                   <div className="sm:col-span-3 relative">
-                    <label htmlFor="telegram" className="block text-sm font-medium text-blue-gray-900">
+                    <label htmlFor="endTime" className="block text-sm font-medium text-blue-gray-900">
                       IDO End Date (usually 3 days)
                     </label>
-                    <input onChange={handleChange} value={values.telegram}
+                    <input onChange={handleChange} value={values.endTime}
                       type="date"
-                      name="telegram"
-                      id="telegram"
+                      name="endTime"
+                      id="endTime"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
                     />
-                    {errors.telegram && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.endTime}</div></> }
                   </div>
                 </div>
 
@@ -600,22 +603,19 @@ const SubmitProject = () => {
                   </div>
                   <div className="sm:col-span-6">
                     <div className="sm:col-span-3 relative">
-                      <label htmlFor="telegram" className="block text-sm font-medium text-blue-gray-900">
+                      <label htmlFor="liquidity" className="block text-sm font-medium text-blue-gray-900">
                         Percentage of the Pool for the Liquidity
                       </label>
-                      <input
+                      <input 
+                        onChange={handleChange} 
+                        value={values.liquidity}
+                        name="liquidity"
                         type={"range"}
                         className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                       />
-                      {/*<input onChange={handleChange} value={values.telegram}*/}
-                      {/*  type="date"*/}
-                      {/*  name="telegram"*/}
-                      {/*  id="telegram"*/}
-                      {/*  className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"*/}
-                      {/*/>*/}
-                      {errors.telegram && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      {errors.liquidity && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div></> }
+                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.liquidity}</div></> }
                     </div>
                     <p className="mt-3 text-sm text-blue-gray-500">
                       We recommend not less than 50% of the pool to be sent in liquidity.
@@ -677,7 +677,7 @@ const SubmitProject = () => {
                       }}
                     >
                       <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
-                      <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-3">
                         {packages.map((size) => (
                           <RadioGroup.Option
                             as="div"
