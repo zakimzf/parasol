@@ -158,7 +158,6 @@ const SubmitProject = () => {
     const _errors = await validateAllFields();
 
     if (Object.keys(_errors).length == 0) {
-
       try {
         const nftStore = await new NftStore(provider, config).build();
 
