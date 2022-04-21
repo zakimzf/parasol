@@ -39,7 +39,7 @@ const Tiers = function () {
       logo: "/assets/nft-access-keys/covers/Chiller.png",
       video: "/assets/nft-access-keys/videos/Chiller.mp4",
       vestingPeriod: 6,
-      owned: true,
+      // owned: true,
     },
     {
       id: 3,
