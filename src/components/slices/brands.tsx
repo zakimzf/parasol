@@ -138,18 +138,22 @@ const Brands = () => (
   <section className={"pb-6"}>
     <Container>
       <div
-        className={
-          "gap-x-20 justify-around items-center grid grid-cols-2 px-2 gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-5"
-        }
-      >
-        {/*{[SolanaLogo, ChainLinkLogo, SeededNetworkLogo, GamesolLogo, SecretumLogo].sort(function () {*/}
-        {/*  return Math.random() - 0.5*/}
-        {/*})}*/}
-        {SolanaLogo}
-        {ChainLinkLogo}
-        {SeededNetworkLogo}
-        {GamesolLogo}
-        {SecretumLogo}
+        className={"gap-x-20 justify-around items-center grid grid-cols-2 px-2 gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:grid-cols-5"}>
+        <a href={"https://solana.com/"} target={"_blank"} rel="noreferrer">
+          {SolanaLogo}
+        </a>
+        <a href={"https://chain.link/"} target={"_blank"} rel="noreferrer">
+          {ChainLinkLogo}
+        </a>
+        <a href={"https://seeded.network/"} target={"_blank"} rel="noreferrer">
+          {SeededNetworkLogo}
+        </a>
+        <a href={"https://gamesol.io/"} target={"_blank"} rel="noreferrer">
+          {GamesolLogo}
+        </a>
+        <a href={"https://secretum.io/"} target={"_blank"} rel="noreferrer">
+          {SecretumLogo}
+        </a>
       </div>
     </Container>
   </section>
