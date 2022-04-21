@@ -43,16 +43,18 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
   useEffect(() => {
     if (editor) editor.destroy();
 
-    editorContent.blocks.map(async (block: any, index: number) => {
-      if ((await block.type) == "image") {
-        await axios.get(block.data.file.url).catch(function (error) {
-          if (error.response) {
-            delete editorContent.blocks[index];
-          }
-        });
-      }
-    });
-    setEditorContent(editorContent);
+    if(editorContent.blocks){
+      editorContent.blocks.map(async (block: any, index: number) => {
+        if ((await block.type) == "image") {
+          await axios.get(block.data.file.url).catch(function (error) {
+            if (error.response) {
+              delete editorContent.blocks[index];
+            }
+          });
+        }
+      });
+      setEditorContent(editorContent);
+    }
 
     initEditor();
   }, [isOwner]);

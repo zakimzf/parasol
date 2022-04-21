@@ -165,36 +165,38 @@ const SubmitProject = () => {
         const nftStore = await new NftStore(provider, config).build();
 
         const projectKeypair = Keypair.generate();
-        const project = await new Project(provider, nftStore, projectKeypair.publicKey).build();
+        const projectPubKey = projectKeypair.publicKey;
+        const project = await new Project(provider, nftStore, projectPubKey).build();
         const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
-        console.log(projectKeypair, new PublicKey(projectKeypair.publicKey),  projectKeypair.publicKey)
+        
         const index = packages.findIndex(p => p.name === values.package.name);
 
-        const args: any = {
-          projectKind: projectKinds[index],
-          treasuryMint: process.env.NEXT_PUBLIC_TREASURY_MINT,
-          tokenMint: tokenMint,
-          tokenDecimal: 0,
-          tier: projectKinds[index],
-          hardcap: values.hardCap,
-          salePrice: values.tokenPrice,
-          startTime: values.startTime,
-          endTime: values.endTime,
-          uri: `${location.protocol + "//" + location.host}/projects/${projectKeypair.publicKey}`,
-        };
+        // const args: any = {
+        //   projectKind: projectKinds[index],
+        //   treasuryMint: process.env.NEXT_PUBLIC_TREASURY_MINT,
+        //   tokenMint: tokenMint,
+        //   tokenDecimal: 0,
+        //   tier: projectKinds[index],
+        //   hardcap: values.hardCap,
+        //   salePrice: values.tokenPrice,
+        //   startTime: values.startTime,
+        //   endTime: values.endTime,
+        //   uri: `${location.protocol + "//" + location.host}/projects/${projectPubKey?.toBase58()}`,
+        // };
 
-        const tx = await project.create(args, user);
-        console.log(tx)
-        // sign transaction
-        let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
-        // confirm transaction
-        await connection.confirmTransaction(signature, "confirmed");
+        // const tx = await project.create(args, user);
+        // console.log(tx)
+        // // sign transaction
+        // let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
+        // // confirm transaction
+        // await connection.confirmTransaction(signature, "confirmed");
 
         values.publicKey = walletAddress;
+        values.projectKey = projectPubKey?.toBase58()
 
         uploadFiles(coverFile, async (_values: any) => {
-          await setDoc(doc(idosCollectionRef, _values.splToken), _values);
-          router.push(`/projects/${values.splToken}`);
+          await setDoc(doc(idosCollectionRef, _values.projectKey), _values);
+          router.push(`/projects/${values.projectKey}`);
         })
       }
       catch (err) {
