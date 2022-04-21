@@ -140,7 +140,7 @@ const Tiers = function () {
       <section>
         <Container fluid={false}>
           <div className="grid grid-cols-1 sm:grid-cols-2 s_lg:grid-cols-3 m_lg:grid-cols-4 gap-x-7">
-            {ferchTiers
+            {fetchTiers
               ? tiers.map((t: any, index: any) => (
                 <NftCard
                   owned={t.owned}

@@ -91,7 +91,7 @@ const Contact = () => {
         description="You want to write to us then use the form below."
       />
       <section>
-        <div className={"max-w-2xl mx-auto"}>
+        <div className={"max-w-3xl mx-auto"}>
           {sendStatus == 2 ? (
             <div className="p-3 text-center relative bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 rounded-full">
               Thank you for contacting us. Our team will reply as soon as

@@ -16,9 +16,9 @@ import { useDropzone } from "react-dropzone";
 import { useWalletModal } from "../../components/wallet-connector";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Card from "../../components/card";
-import { Keypair, PublicKey } from "@solana/web3.js";
-import { NftContext, NftProvider } from "../../context/NftContext";
-import { NftStore, NftStoreConfig, Project } from "parasol-finance-sdk";
+import { Keypair } from "@solana/web3.js";
+import { NftContext } from "../../context/NftContext";
+import { NftStore, Project } from "parasol-finance-sdk";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -599,7 +599,6 @@ const SubmitProject = () => {
                     </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.dex}</div></> }
                   </div>
                   
-                  
                   <div className="sm:col-span-6">
                     <div className="sm:col-span-3 relative">
                       <label htmlFor="liquidity" className="block text-sm font-medium text-blue-gray-900">
@@ -620,63 +619,7 @@ const SubmitProject = () => {
                       We recommend not less than 50% of the pool to be sent in liquidity.
                     </p>
                   </div>
-
-                  <div className={"md:col-span-3 relative"}>
-                    <label htmlFor="token-price" className="block text-sm font-medium text-blue-gray-900">
-                      Token Price
-                    </label>
-                    <div className="mt-1 relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 md:text-sm">$</span>
-                      </div>
-                      <input onChange={handleChange} value={values.tokenPrice}
-                        type="number"
-                        name="tokenPrice"
-                        id="token-price"
-                        className="block w-full pl-7 pr-12 md:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
-                        placeholder="0.00"
-                        min="0.01"
-                      />
-                      {!errors.tokenPrice && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 flex items-center gap-x-1 md:text-sm" id="price-currency">
-                          <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
-                          USDC
-                        </span>
-                      </div> }
-                    </div>
-                    
-                    {errors.tokenPrice && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.tokenPrice}</div></> }
-                  </div>
-
-                  <div className={"md:col-span-3 relative"}>
-                    <label htmlFor="hard-cap" className="block text-sm font-medium text-blue-gray-900">
-                      Hard Cap
-                    </label>
-                    <div className="mt-1 relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 md:text-sm">$</span>
-                      </div>
-                      <input onChange={handleChange} value={values.hardCap}
-                        type="number"
-                        name="hardCap"
-                        id="hard-cap"
-                        className="block w-full pl-7 pr-12 md:text-sm w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
-                        placeholder="0.00"
-                      />
-                      {!errors.hardCap && <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <span className="text-gray-200 flex items-center gap-x-1 md:text-sm" id="price-currency">
-                          <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
-                          USDC
-                        </span>
-                      </div>}
-                    </div>
-                    
-                    {errors.hardCap && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.hardCap}</div></> }
-                  </div>
+                  
                 </div>
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
@@ -725,7 +668,7 @@ const SubmitProject = () => {
                       Choose the package that best suits your needs, you can read more regarding this pricing <a href={""} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a> .
                     </p>
                   </div>
-                  <div className="sm:col-span-5">
+                  <div className="sm:col-span-12">
                     <RadioGroup
                       value={values.package}
                       onChange={(pac) => {
