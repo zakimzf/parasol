@@ -1,7 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Listbox, Transition } from "@headlessui/react";
-import { SelectorIcon } from "@heroicons/react/solid";
-import { ArrowLeftIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon, SwitchVerticalIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { NftContext } from "../../context/NftContext";
@@ -10,6 +8,8 @@ import Card from "../../components/card";
 import { useWalletModal } from "../../components/wallet-connector";
 import { PublicKey } from "@solana/web3.js";
 import { notification } from "../../utils/functions";
+import { Listbox, Transition } from "@headlessui/react";
+import { SelectorIcon } from "@heroicons/react/solid";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
@@ -71,62 +71,70 @@ const Migrate = () => {
             <div className={"prose prose-lg prose-invert"}>
               <h2>Redeem NFT</h2>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                You can burn your NFT and get back the amount of PSOL you invested by redeeming your NFT.
               </p>
               <p>
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                Be careful about vesting, if you redeem quickly after the purchase you will incur penalties, please refer to the NFT page
+                {" "}<Link href={"/tiers"}>
+                  <a>
+                    here
+                  </a>
+                </Link>.
               </p>
             </div>
             {nfts.length > 0 ? (
-              <Listbox value={selected} onChange={setSelected}>
-                <div className=" mt-1">
-                  <Listbox.Button className="relative w-full py-3 pl-3 pr-10 text-left bg-white bg-opacity-5 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
-                    <span className="block truncate">
-                      {selected ? selected.name + " - " + selected.mint : ""}
-                    </span>
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                      <SelectorIcon
-                        className="w-5 h-5 text-gray-400"
-                        aria-hidden="true"
-                      />
-                    </span>
-                  </Listbox.Button>
-                  <Transition
-                    as={Fragment}
-                    leave="transition ease-in duration-100"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                  >
-                    <Listbox.Options className="absolute w-64 w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                      {nfts.map((nft: any, index: any) => (
-                        <Listbox.Option
-                          key={index}
-                          className={({ active }) =>
-                            `cursor-default select-none relative py-2 px-4 ${
-                              active ? "text-white bg-purple-2" : "text-gray-900"
-                            }`
-                          }
-                          value={nft}
-                        >
-                          {({ selected }) => (
-                            <>
-                              <span
-                                className={`block truncate ${
-                                  selected ? "font-medium" : "font-normal"
-                                }`}
-                              >
-                                {nft.name + " - " + nft.mint}
-                              </span>
-                            </>
-                          )}
-                        </Listbox.Option>
-                      ))}
-                    </Listbox.Options>
-                  </Transition>
-                </div>
-              </Listbox>
+              <div>
+                <label className="block text-sm mb-3 font-medium text-blue-gray-900">
+                  Available NFT Access Keys
+                </label>
+                <Listbox value={selected} onChange={setSelected}>
+                  <div className="relative mt-1">
+                    <Listbox.Button className="relative w-full py-3 pl-3 pr-10 text-left bg-white bg-opacity-5 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                      <span className="block truncate">
+                        {selected ? selected.name + " - " + selected.mint : ""}
+                      </span>
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                        <SelectorIcon
+                          className="w-5 h-5 text-gray-400"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Listbox.Button>
+                    <Transition
+                      as={Fragment}
+                      leave="transition ease-in duration-100"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                    >
+                      <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                        {nfts.map((nft: any, index: any) => (
+                          <Listbox.Option
+                            key={index}
+                            className={({ active }) =>
+                              `cursor-default select-none relative py-2 px-4 ${
+                                active ? "text-white bg-purple-2" : "text-gray-900"
+                              }`
+                            }
+                            value={nft}
+                          >
+                            {({ selected }) => (
+                              <>
+                                <span
+                                  className={`block truncate ${
+                                    selected ? "font-medium" : "font-normal"
+                                  }`}
+                                >
+                                  {nft.name + " - " + nft.mint}
+                                </span>
+                              </>
+                            )}
+                          </Listbox.Option>
+                        ))}
+                      </Listbox.Options>
+                    </Transition>
+                  </div>
+                </Listbox>
+              </div>
             ) : (
               <div className={"prose prose-lg prose-invert"}>
                 <Link href={"/tiers"}>
@@ -140,9 +148,10 @@ const Migrate = () => {
               [
                 nfts.length > 0 ? (
                   <button
-                    className={"button"}
+                    className={"w-full button"}
                     onClick={redeemNFT}
                   >
+                    <SwitchVerticalIcon className={"w-5 h-5"} />
                     Redeem My NFT
                   </button>
                 ) : (
