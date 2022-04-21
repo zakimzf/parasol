@@ -27,12 +27,12 @@ const exchanges = [
 const packages = [
   { name: "Basic", description: "Listing only without Ads.", price: 2100 },
   { name: "Pro", description: "[description]", price: 10500 },
-  { name: "Ultimate", description: "Listing and promotion.", price: 5000 }
+  { name: "Ultimate", description: "Listing and promotion.", price: 21000 }
 ];
 
 const SubmitProject = () => {
   const router = useRouter();
-  const { provider, config, user, nftKinds } = useContext(NftContext);
+  const { provider, config, user, projectKinds } = useContext(NftContext);
 
   const { publicKey, sendTransaction } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
@@ -153,21 +153,23 @@ const SubmitProject = () => {
   const validateAllFieldsAndRedirection = async () => {
     const _errors = await validateAllFields();
 
-    if (Object.keys(_errors).length == 0) {
-      
-      console.log(process.env.NEXT_PUBLIC_TREASURY_MINT)
+    if (Object.keys(_errors).length == 0) {    
+
       try {
         const nftStore = await new NftStore(provider, config).build();
 
         const projectKeypair = Keypair.generate();
         const project =  await new Project(provider, nftStore, projectKeypair.publicKey).build();
         const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
+        
+        const index = packages.findIndex(p => p.name === values.package.name);
+
         const args:any = {
-          projectKind: values.package,
+          projectKind: projectKinds[index],
           treasuryMint: process.env.NEXT_PUBLIC_TREASURY_MINT,
           tokenMint: tokenMint,
           tokenDecimal: 0,
-          tier: values.package,
+          tier: projectKinds[index],
           hardcap: values.hardCap,
           salePrice: values.tokenPrice,
           startTime: values.startTime,
@@ -176,7 +178,7 @@ const SubmitProject = () => {
         };
 
         const tx = await project.create(args, user);
-      
+        console.log(tx)
         // sign transaction
         let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
         // confirm transaction
@@ -286,7 +288,7 @@ const SubmitProject = () => {
                       id="token-address"
                       placeholder={"SPL Token Address"}
                       pattern={"[A-Za-z0-9]*"}
-                      className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ 
+                      className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2
                       ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}` }
                       aria-invalid="true"
                       ref={splRef}
@@ -508,13 +510,13 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="startTime" className="block text-sm font-medium text-blue-gray-900">
-                      IDO Start Date
+                      IDO Start Date <span className="text-purple-2">*</span>
                     </label>
                     <input onChange={handleChange} value={values.startTime}
                       type="date"
                       name="startTime"
                       id="startTime"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
                     {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
@@ -523,13 +525,13 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="endTime" className="block text-sm font-medium text-blue-gray-900">
-                      IDO End Date (usually 3 days)
+                      IDO End Date (usually 3 days) <span className="text-purple-2">*</span>
                     </label>
                     <input onChange={handleChange} value={values.endTime}
                       type="date"
                       name="endTime"
                       id="endTime"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
                     {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
