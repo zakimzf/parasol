@@ -64,7 +64,7 @@ const SubmitProject = () => {
     twitter: "",
     telegram: "",
     startTime: "",
-    endTime!: "",
+    endTime: "",
     liquidity: "50",
     package: packages[0],
     isFeatured: false,
