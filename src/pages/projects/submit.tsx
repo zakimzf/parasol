@@ -16,7 +16,7 @@ import { useDropzone } from "react-dropzone";
 import { useWalletModal } from "../../components/wallet-connector";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Card from "../../components/card";
-import { Keypair } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import { NftContext } from "../../context/NftContext";
 import { NftStore, Project } from "parasol-finance-sdk";
 
@@ -154,17 +154,19 @@ const SubmitProject = () => {
     const _errors = await validateAllFields();
 
     if (Object.keys(_errors).length == 0) {
+      
+      console.log(process.env.NEXT_PUBLIC_TREASURY_MINT)
       try {
         const nftStore = await new NftStore(provider, config).build();
 
         const projectKeypair = Keypair.generate();
         const project =  await new Project(provider, nftStore, projectKeypair.publicKey).build();
-
+        const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
         const args:any = {
           projectKind: values.package,
-          treasuryMint: values.hardCap,
-          tokenMint: values.splToken,
-          tokenDecimal: values.splToken,
+          treasuryMint: process.env.NEXT_PUBLIC_TREASURY_MINT,
+          tokenMint: tokenMint,
+          tokenDecimal: 0,
           tier: values.package,
           hardcap: values.hardCap,
           salePrice: values.tokenPrice,
@@ -173,7 +175,7 @@ const SubmitProject = () => {
           uri: `${location.protocol + "//" + location.host}/projects/${projectKeypair.publicKey}`,
         };
 
-        const tx:any = project.create(args, user);
+        const tx = await project.create(args, user);
       
         // sign transaction
         let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
@@ -188,7 +190,7 @@ const SubmitProject = () => {
         })
       }
       catch (err) {
-        console.log("error")
+        console.log(err)
       }
     }
   }
@@ -512,7 +514,7 @@ const SubmitProject = () => {
                       type="date"
                       name="startTime"
                       id="startTime"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                     />
                     {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
@@ -527,7 +529,7 @@ const SubmitProject = () => {
                       type="date"
                       name="endTime"
                       id="endTime"
-                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 url_"
+                      className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                     />
                     {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
