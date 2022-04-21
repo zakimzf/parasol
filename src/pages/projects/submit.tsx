@@ -47,7 +47,7 @@ const SubmitProject = () => {
   const [coverFile, setcoverFile] = useState<any>();
   const [loading, setLoading] = useState(false)
 
-  const [values, setValues] = useState({
+  const [values, setValues] = useState<any>({
     projectKey: "",
     publicKey: walletAddress,
     splToken: "",
@@ -64,7 +64,7 @@ const SubmitProject = () => {
     twitter: "",
     telegram: "",
     startTime: "",
-    endTime: "",
+    endTime!: "",
     liquidity: "50",
     package: packages[0],
     isFeatured: false,
@@ -230,7 +230,7 @@ const SubmitProject = () => {
             if (data.twitter) obj.twitter = data.twitter;
             if (data.telegram) obj.telegram = data.telegram;
 
-            setValues((preValues) => ({ ...preValues, ...obj }));
+            setValues((preValues: any) => ({ ...preValues, ...obj }));
             // validateAllFields(true);
           }
         }).catch(error => {
