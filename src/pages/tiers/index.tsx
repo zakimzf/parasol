@@ -174,10 +174,9 @@ const Tiers = function () {
             </div>
           </div>
           <div className="relative">
-            <div className="relative md:p-6">
+            <div className="relative pb-6">
               <div className="lg:grid lg:grid-cols-2 lg:gap-6">
                 <div className="prose prose-invert prose-lg lg:max-w-none">
-                  {/*<h2>What is an NFT?</h2>*/}
                   <p>
                     Non-fungible tokens, or NFTs, are the latest cryptocurrency
                     phenomenon to go mainstream in the industry. Non-fungible
@@ -196,7 +195,6 @@ const Tiers = function () {
                   </p>
                 </div>
                 <div className="prose prose-invert prose-lg lg:mt-0">
-                  {/*<h2>NFT’s as Key access</h2>*/}
                   <p>
                     Parasol Finance is adopting a unique and never-before-seen
                     mechanism for our upcoming IDO launchpad.
