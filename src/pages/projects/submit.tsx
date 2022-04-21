@@ -193,6 +193,9 @@ const SubmitProject = () => {
 
         values.publicKey = walletAddress;
         values.projectKey = projectPubKey?.toBase58()
+        delete values.startTime;
+        delete values.endTime;
+        delete values.package;
 
         uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, _values.projectKey), _values);
