@@ -5,12 +5,12 @@ import toast from "react-hot-toast";
 import React from "react";
 import { ref, uploadBytesResumable } from "firebase/storage";
 
-export const getBase64 = (file, cb) => {
-  let reader = new FileReader();
+export const getBase64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
   reader.readAsDataURL(file);
-  reader.onload = () => cb(reader.result);
-  reader.onerror = error => console.log("Error: ", error);
-}
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = error => reject(error);
+});
 
 export const validURL = (str) => {
   const pattern = new RegExp("^(https?:\\/\\/)?" +
