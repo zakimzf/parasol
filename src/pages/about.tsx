@@ -59,7 +59,7 @@ const About = () =>
               className="mt-12  relative sm:max-w-lg sm:mx-auto lg:mt-0 lg:max-w-none lg:mx-0 lg:col-span-6 lg:flex lg:items-center">
               <div className="relative mx-auto w-full rounded-lg shadow-lg lg:max-w-md">
                 <button type="button"
-                  className=" block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                  className=" block w-full bg-white rounded-lg overflow-hidden focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-2">
                   <span className="sr-only">Watch our video to learn more</span>
                   <div
                     className={"absolute rounded-lg -inset-y-12 inset-x-12 w-full h-full"}>

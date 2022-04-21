@@ -5,7 +5,7 @@ import Container from "../container";
 const Projects = () => (
   <section>
     <Container>
-      <div className="md:float-right sm:flex gap-x-3 pt-3 uppercase text-sm grid gap-7 grid-cols-1 s_lg:grid-cols-2 m_lg:grid-cols-3 justify-center xxs:pb-10">
+      <div className="md:float-right sm:flex gap-x-3 pt-3 uppercase text-sm grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 justify-center xs:pb-10">
         <div className="flex gap-x-2 items-center border border-white border-opacity-30 px-5 py-3 rounded-lg text-gray-200">
           712 Participants
           <ChevronDownIcon className="h-5" />
@@ -30,7 +30,7 @@ const Projects = () => (
       </div>
       {/*<h1 className="text-4xl font-medium mb-2">Upcoming IDOs</h1>*/}
       {/*<p className="text-xl font-light text-gray-300 mb-12">We bring new technologies to our community</p>*/}
-      <div className="grid gap-7 grid-cols-1 s_lg:grid-cols-2 m_lg:grid-cols-3">
+      <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
         {/*{*/}
         {/*  projects.map((project, index) => (*/}
         {/*    <ProjectCard Id={project.id} Name={project.name} Description={project.description} Logo={project.logo} Cover={project.cover} key={index}/>*/}

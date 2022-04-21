@@ -100,7 +100,7 @@ const Contact = () => {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="grid grid-cols-1 xxs:grid-cols-2 xxs:gap-x-8 xxs:px-5"
+              className="grid grid-cols-1 xs:grid-cols-2 xs:gap-x-8 xs:px-5"
             >
               <div className="relative">
                 <label
@@ -168,7 +168,7 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="xxs:col-span-2 relative">
+              <div className="xs:col-span-2 relative">
                 <label htmlFor="subject" className="block text-sm font-medium">
                   Subject <span className="text-purple-2">*</span>
                 </label>
@@ -198,7 +198,7 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="xxs:col-span-2 relative">
+              <div className="xs:col-span-2 relative">
                 <label htmlFor="message" className="block text-sm font-medium">
                   Message <span className="text-purple-2">*</span>
                 </label>

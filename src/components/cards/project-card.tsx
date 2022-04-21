@@ -78,7 +78,7 @@ const ProjectCard = ({
           <span>$0.21</span>
         </div>
       </div>
-      <div className="xxs:grid gap-x-3 grid-cols-1 xxs:grid-cols-2">
+      <div className="xs:grid gap-x-3 grid-cols-1 xs:grid-cols-2">
         <button className="button py-3 flex-1 text-base mb-3">
           Participate in IDO
         </button>

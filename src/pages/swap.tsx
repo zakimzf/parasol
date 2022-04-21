@@ -429,7 +429,7 @@ const Swap = () => {
         <meta property="twitter:image" content="/assets/preview/swap.png"/>
       </Head>
       <section className="pt-6 pb-20">
-        <div className="flex flex-col gap-y-6 max-w-md mx-auto mt-6 xxs:px-5 xs:px-0">
+        <div className="flex flex-col gap-y-6 max-w-md mx-auto mt-6 xs:px-5 xs:px-0">
           <div className="bg-[#231f38] bg-opacity-80 shadow-xl rounded-xl shadow-half-strong border border-gray-800 p-8">
             <div className={"flex justify-between items-end mb-4"}>
               <label className="text-sm font-medium">Exchange From:</label>

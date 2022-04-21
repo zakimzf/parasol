@@ -40,9 +40,9 @@ const Hero = () => (
               />
             </svg>
           </a>
-          <h1 className="mt-4 text-3xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-7 lg:text-4xl xl:text-6xl">
+          <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-7 lg:text-4xl xl:text-6xl">
             <span className="md:block">The First Community</span>
-            <span className="text-transparent bg-clip-text bg-purple-2 leading-normal whitespace-nowrap grid m_sm:block">
+            <span className="text-transparent bg-clip-text bg-purple-2 leading-normal whitespace-nowrap grid sm:block">
               <span className="text-white">Governed</span> IDO Platform
             </span>
           </h1>

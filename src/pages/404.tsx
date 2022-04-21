@@ -17,7 +17,7 @@ const Page404 = () => {
           </div>
           <div className="mt-10 flex space-x-3 sm:border-l sm:border-transparent sm:pl-6">
             <Link href={"/"}>
-              <a className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-2 hover:bg-white hover:text-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <a className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-purple-2 hover:bg-white hover:text-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-2">
                 <ArrowLeftIcon className="h-5 mr-2"/>
                 Back Home
               </a>

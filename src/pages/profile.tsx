@@ -90,13 +90,13 @@ const Profile = function () {
               className="mt-6 flex flex-col-reverse justify-stretch space-y-4 space-y-reverse sm:flex-row-reverse sm:justify-end sm:space-x-reverse sm:space-y-0 sm:space-x-3 md:mt-0 md:flex-row md:space-x-3">
               <Link href={"/tiers"}>
                 <a
-                  className="inline-flex gap-x-2 items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-purple-2 bg-white hover:bg-purple-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                  className="inline-flex gap-x-2 items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-purple-2 bg-white hover:bg-purple-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-purple-2">
                   <TrendingUpIcon className={"w-5"}/>
                   Upgrade NFT Level
                 </a>
               </Link>
               {/*<Link href={"/profile/kyc"}>*/}
-              {/*  <a className="inline-flex gap-x-2 items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-purple-2 bg-white hover:bg-purple-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">*/}
+              {/*  <a className="inline-flex gap-x-2 items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-purple-2 bg-white hover:bg-purple-2 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-purple-2">*/}
               {/*    <FingerPrintIcon className={"w-5"} />*/}
               {/*    Apply KYC*/}
               {/*  </a>*/}

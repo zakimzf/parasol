@@ -46,7 +46,7 @@ const NftCard = ({
     >
       <div className="">
         <div className="relative">
-          <span className="absolute top-0 right-0 m-3 items-center justify-center px-2 py-1 font-medium leading-none indigo-500 bg-purple-500 bg-opacity-50 rounded">
+          <span className="absolute top-0 right-0 m-3 items-center justify-center px-2 py-1 font-medium leading-none purple-2 bg-purple-500 bg-opacity-50 rounded">
             {data && (`${data.currentSupply}/${![0, 1].includes(id) ? data.maxSupply : "∞"}`) || "0/0"}
           </span>
           <video

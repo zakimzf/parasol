@@ -67,7 +67,7 @@ const Migrate = () => {
 
   return (
     <section className={"py-6"}>
-      <div className={"mx-auto max-w-md space-y-6 xxs:px-5"}>
+      <div className={"mx-auto max-w-md space-y-6 xs:px-5"}>
         <Link href={"/tiers"}>
           <a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
             <ArrowLeftIcon className={"w-4"} />
@@ -97,7 +97,7 @@ const Migrate = () => {
                 </label>
                 <Listbox value={selected} onChange={setSelected}>
                   <div className="relative mt-1">
-                    <Listbox.Button className="relative w-full py-3 pl-3 pr-10 text-left bg-white bg-opacity-5 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                    <Listbox.Button className="relative w-full py-3 pl-3 pr-10 text-left bg-white bg-opacity-5 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-purple-2 sm:text-sm">
                       <span className="block truncate">
                         {selected ? selected.name + " - " + selected.mint : ""}
                       </span>

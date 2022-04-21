@@ -71,7 +71,7 @@ const Projects = () => (
     />
     <section>
       <Container>
-        <div className="grid gap-7 grid-cols-1 s_lg:grid-cols-2 m_lg:grid-cols-3">
+        <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, index) => (
             <ProjectCard
               Id={project.id}
