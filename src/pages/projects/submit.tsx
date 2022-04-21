@@ -158,7 +158,6 @@ const SubmitProject = () => {
     const _errors = await validateAllFields();
 
     if (Object.keys(_errors).length == 0) {
-
       try {
         const nftStore = await new NftStore(provider, config).build();
 
@@ -243,7 +242,7 @@ const SubmitProject = () => {
   const uploadFiles = (file: any, callback: Function) => {
     //
     if (!file) return;
-    const storageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
+    const storageRef = ref(storage, `projects/${values.projectKey}/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
