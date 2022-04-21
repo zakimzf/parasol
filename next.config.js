@@ -25,6 +25,7 @@ const nextConfig = {
     NEXT_PUBLIC_PAYMENT_MINT: process.env.NEXT_PUBLIC_PAYMENT_MINT || "",
     NEXT_PUBLIC_COLLECTION_MINT: process.env.NEXT_PUBLIC_COLLECTION_MINT || "",
     NEXT_PUBLIC_TREASURY_MINT: process.env.NEXT_PUBLIC_TREASURY_MINT || "",
+    DOMAIN_URL: process.env.DOMAIN_URL || location.protocol + "//" + location.host,
   },
 };
 

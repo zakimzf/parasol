@@ -181,7 +181,7 @@ const SubmitProject = () => {
           liquidPoolFeeBasisPoints: (parseInt(values.liquidity) / 100),
           startTime: new Date(values.startTime),
           endTime: new Date(values.endTime),
-          uri: `${location.protocol + "//" + location.host}/projects/${projectPubKey?.toBase58()}`,
+          uri: `${process.env.DOMAIN_URL}/projects/${projectPubKey?.toBase58()}`,
         }
 
         const tx = await project.create(args, user);
