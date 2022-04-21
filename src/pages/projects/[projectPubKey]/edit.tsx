@@ -23,7 +23,10 @@ const EditProject = () => {
   const idosCollectionRef = collection(db, "idos");
   // const [coverFile, setcoverFile] = useState<any>();
 
+  const { projectPubKey } = router.query;
+  
   const [values, setValues] = useState({
+    projectKey: "",
     publicKey: walletAddress,
     splToken: "",
     projectIcon: "",
@@ -117,15 +120,7 @@ const EditProject = () => {
   const validateAllFieldsAndRedirection = async () => {
     const _errors = await validateAllFields();
     if (Object.keys(_errors).length == 0) {
-      // if (coverFile) {
-      //   uploadFiles(coverFile, async (_values: any) => {
-      //     await setDoc(doc(idosCollectionRef, _values.splToken), _values);
-      //   });
-      // } 
-      // else {
       signWallet();
-      
-      // }
     }
   };
   
@@ -145,56 +140,25 @@ const EditProject = () => {
       if (!sign.detached.verify(message, signature, publicKey.toBytes()))
         throw new Error("Invalid signature!");
 
-      await setDoc(doc(idosCollectionRef, values.splToken), values);
+      await setDoc(doc(idosCollectionRef, values.projectKey), values);
       notification("success", "The IDO was successfully updated.", "Updated IDO Details");
-      router.push(`/projects/${values.splToken}`);
+      router.push(`/projects/${projectPubKey}`);
     } 
     catch (error: any) {
       notification("danger", "Unable to sign the transaction.", "Transaction Error");
     }
   }, [publicKey, signMessage]);
 
-  // const uploadFiles = (file: any, callback: Function) => {
-  //   if (!file) return;
-  //   const storageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
-  //   const uploadTask = uploadBytesResumable(storageRef, file);
-
-  //   uploadTask.on(
-  //     "state_changed",
-  //     (snapshot) => {},
-  //     (error) => console.log(error),
-  //     () => {
-  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-  //         const _values = { ...values, ["projectCover"]: downloadURL };
-  //         console.log(_values)
-  //         callback(_values);
-  //       });
-  //     }
-  //   );
-  // };
-
-  // const onDrop = useCallback((file: any) => {
-  //   const _errors = errors;
-  //   delete _errors["projectCover"];
-  //   setErrors(_errors);
-
-  //   setcoverFile(file[0]);
-  // }, []);
-
-  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-  const { tokenAddress } = router.query;
-
   useEffect(() => {
     const getDataByTokenAddress = async () => {
-      const { data }: any = await axios.get(`/api/projects/${tokenAddress}`);
+      const { data }: any = await axios.get(`/api/projects/${projectPubKey}`);
       if (data) {
         setValues(data);
       } 
       else await router.push("/404");
     };
-    if (tokenAddress) getDataByTokenAddress();
-  }, [tokenAddress]);
+    if (projectPubKey) getDataByTokenAddress();
+  }, [projectPubKey]);
 
   return (
     <section className={"pt-6"}>
@@ -227,78 +191,6 @@ const EditProject = () => {
                       You can edit the general information of your project.
                     </p>
                   </div>
-                  {/* <div className="sm:col-span-6">
-                    <label
-                      htmlFor="project-cover"
-                      className="block text-sm font-medium text-blue-gray-900"
-                    >
-                      Project Cover <span className="text-purple-2">*</span>
-                    </label>
-                    <div
-                      className={`mt-1 border-2 border-dashed bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-md px-6 py-6 flex justify-center ${
-                        coverFile && "border-purple-2"
-                      } ${errors.projectCover && "border-red-600"}`}
-                      {...getRootProps()}
-                    >
-                      <div className="space-y-1 text-center">
-                        {(coverFile && (
-                          <div className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none">
-                            {coverFile.name}
-                          </div>
-                        )) || (
-                          <>
-                            <svg
-                              className="mx-auto h-12 w-12 text-gray-400"
-                              stroke="currentColor"
-                              fill="none"
-                              viewBox="0 0 48 48"
-                              aria-hidden="true"
-                            >
-                              <path
-                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                strokeWidth={2}
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                            <div className="flex text-sm text-gray-200">
-                              <label
-                                htmlFor="file-upload"
-                                className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
-                              >
-                                <input
-                                  {...getInputProps()}
-                                  disabled={true}
-                                  id="file-upload"
-                                  name="projectCover"
-                                  type="file"
-                                  className="sr-only"
-                                />
-                                <span>Upload a file</span>
-                              </label>
-                              {isDragActive ? (
-                                <p className="pl-1">Drop the file here ...</p>
-                              ) : (
-                                <p className="pl-1">or drag and drop</p>
-                              )}
-                            </div>
-                          </>
-                        )}
-                        <p className="text-xs text-gray-400">
-                          PNG, JPG, GIF up to 10MB
-                        </p>
-                      </div>
-                    </div>
-
-                    {errors.projectCover && (
-                      <div className="mt-2 text-sm text-red-600 sm:col-span-6">
-                        {errors.projectCover}
-                      </div>
-                    )}
-                    <p className="mt-3 text-sm text-blue-gray-500">
-                      We need a cover in the following format: 1920x1080px.
-                    </p>
-                  </div> */}
 
                   <div className="sm:col-span-4 relative">
                     <label
