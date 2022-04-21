@@ -109,7 +109,7 @@ const Contact = () => {
                 >
                   Complete Name <span className="text-purple-2">*</span>
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 mb-5">
                   <input
                     onChange={handleChange}
                     value={values.name}
@@ -142,7 +142,7 @@ const Contact = () => {
                 >
                   Email Address <span className="text-purple-2">*</span>
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 mb-5">
                   <input
                     onChange={handleChange}
                     value={values.email}
@@ -172,7 +172,7 @@ const Contact = () => {
                 <label htmlFor="subject" className="block text-sm font-medium">
                   Subject <span className="text-purple-2">*</span>
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 mb-5">
                   <input
                     onChange={handleChange}
                     value={values.subject}
@@ -202,7 +202,7 @@ const Contact = () => {
                 <label htmlFor="message" className="block text-sm font-medium">
                   Message <span className="text-purple-2">*</span>
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 mb-5">
                   <TextareaAutosize
                     onChange={handleChange}
                     value={values.message}

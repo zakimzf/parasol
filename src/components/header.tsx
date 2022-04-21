@@ -85,7 +85,7 @@ const Header = () => (
                             </a>
                           </Link>
                           <Link href={"/tiers"}>
-                            <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                            <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className={
@@ -117,7 +117,7 @@ const Header = () => (
                             </a>
                           </Link>
                           <Link href={"/projects/seeding"}>
-                            <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                            <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                               <svg
                                 className={
                                   "flex-shrink-0 h-6 w-6 text-purple-2"
@@ -183,7 +183,7 @@ const Header = () => (
                             </a>
                           </Link>
                         </div>
-                        <div className="px-5 py-4 bg-[#2a2542] sm:px-8 sm:py-6">
+                        <div className="py-4 bg-[#2a2542] sm:px-8 sm:py-6">
                           <div className="flow-root">
                             <Link href={"/projects/submit"}>
                               <a
@@ -291,7 +291,7 @@ const Header = () => (
                     <div className="rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
                       <div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-8 sm:p-8">
                         <Link href={"/about"}>
-                          <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                          <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                             <InformationCircleIcon
                               className={"flex-shrink-0 h-6 w-6 text-purple-2"}
                             />
@@ -306,7 +306,7 @@ const Header = () => (
                           </a>
                         </Link>
                         <Link href={"/frequently-asked-questions"}>
-                          <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                          <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                             <AnnotationIcon
                               className={"flex-shrink-0 h-6 w-6 text-purple-2"}
                             />
@@ -322,7 +322,7 @@ const Header = () => (
                         </Link>
                         <a
                           href="https://docs.parasol.finance/"
-                          className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
+                          className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
                         >
                           <BookOpenIcon
                             className={"flex-shrink-0 h-6 w-6 text-purple-2"}
@@ -338,7 +338,7 @@ const Header = () => (
                         </a>
                         <a
                           href="https://parasol-finance.medium.com/"
-                          className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
+                          className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -360,7 +360,7 @@ const Header = () => (
                           </div>
                         </a>
                         <Link href={"/contact"}>
-                          <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                          <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                             <MailIcon
                               className={"flex-shrink-0 h-6 w-6 text-purple-2"}
                             />
@@ -486,7 +486,7 @@ const Header = () => (
                           <div className="overflow-hidden">
                             <div className="relative grid gap-8">
                               <Link href={"/projects"}>
-                                <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                                <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                                   <CollectionIcon
                                     className="flex-shrink-0 h-6 w-6 text-purple-2"
                                     aria-hidden="true"
@@ -600,7 +600,7 @@ const Header = () => (
                                 </a>
                               </Link>
                             </div>
-                            <div className="px-5 py-4 sm:px-8 sm:py-6">
+                            <div className="py-4 sm:px-8 sm:py-6">
                               <div className="flow-root">
                                 <Link href={"/projects/submit"}>
                                   <a
@@ -709,7 +709,7 @@ const Header = () => (
                     >
                       <Popover.Panel className="z-100 transform w-screen">
                         <div className="overflow-hidden">
-                          <div className="relative grid gap-3 px-5 py-6 sm:gap-3 sm:p-3">
+                          <div className="relative grid gap-3 py-6 sm:gap-3 sm:p-3">
                             <Link href={"/about"}>
                               <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                                 <InformationCircleIcon

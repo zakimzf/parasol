@@ -13,7 +13,7 @@ const Footer = () => (
             <Image src={Logo} className="h-5" alt={"logo"}/>
           </a>
         </Link>
-        <p className="text-base">
+        <p className="text-base text-center m_sm:text-left">
           Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs
           of both projects and investors alike.
         </p>
