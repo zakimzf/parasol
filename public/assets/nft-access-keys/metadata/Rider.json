@@ -3,8 +3,8 @@
     "symbol": "PKEY",
     "description": "To fulfill your dreams in life, the next step after having the dream is turning it into action and riding on through thick and thin.",
     "seller_fee_basis_points": 2100,
-    "image": "https://beta.app.parasol.finance/assets/nft-access-keys/covers/Rider.png",
-    "animation_url": "https://beta.app.parasol.finance/assets/nft-access-keys/videos/Rider.mp4",
+    "image": "https://parasol.finance/assets/nft-access-keys/covers/Rider.png",
+    "animation_url": "https://parasol.finance/assets/nft-access-keys/videos/Rider.mp4",
     "attributes": [
         {
             "trait_type": "Level",

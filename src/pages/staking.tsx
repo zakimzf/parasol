@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  CheckCircleIcon,
-  DownloadIcon,
-  GlobeAltIcon,
-  LightningBoltIcon,
-  ScaleIcon,
-  UploadIcon,
-} from "@heroicons/react/outline";
+import { CheckCircleIcon, DownloadIcon, UploadIcon, } from "@heroicons/react/outline";
 import { RadioGroup } from "@headlessui/react";
 
 import Container from "../components/container";
@@ -17,6 +10,7 @@ import { NftContext } from "../context/NftContext";
 import { useWalletModal } from "../components/wallet-connector";
 import { notification } from "../utils/functions";
 import Head from "next/head";
+import { ArrowCircleDownIcon, EmojiHappyIcon, ScaleIcon } from "@heroicons/react/solid";
 
 const operations = [
   { id: 0, title: "Stake", description: "Lock your $PSOL for 90 days." },
@@ -26,24 +20,24 @@ const operations = [
 const advantages = [
   {
     id: 1,
-    name: "Lorem ipsum",
+    name: "Free Airdrops on all upcoming IDOs",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-    icon: GlobeAltIcon,
+      "By staking your PSOL tokens you will be immediately eligible for all airdrops that will take place, for each IDO we take a part of the tokens that is planned for airdrops.",
+    icon: ArrowCircleDownIcon,
   },
   {
     id: 2,
-    name: "Lorem ipsum",
+    name: "Have decision-making power",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
+      "We plan to create a DAO within a few months, only people staking PSOL tokens will have decision power.",
     icon: ScaleIcon,
   },
   {
     id: 3,
-    name: "Lorem ipsum",
+    name: "Be Free and Happy with Parasol",
     description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate blanditiis ratione.",
-    icon: LightningBoltIcon,
+      "Our staking is lock-free, you can retrieve your tokens whenever you want and at any time.",
+    icon: EmojiHappyIcon,
   },
 ];
 
@@ -126,10 +120,10 @@ const Staking = () => {
         <meta property="og:image" content="/assets/preview/staking.png"/>
         <meta property="twitter:image" content="/assets/preview/staking.png"/>
       </Head>
-      <div className={"absolute flex flex-col justify-center items-center inset-0 filter backdrop-blur-md z-10"}>
-        <h1 className={"text-4xl mb-2 font-bold"}>Coming Soon</h1>
-        <p className={"text-lg font-medium"}>This feature is not yet available but should be soon.</p>
-      </div>
+      {/*<div className={"absolute flex flex-col justify-center items-center inset-0 filter backdrop-blur-md z-10"}>*/}
+      {/*  <h1 className={"text-4xl mb-2 font-bold"}>Coming Soon</h1>*/}
+      {/*  <p className={"text-lg font-medium"}>This feature is not yet available but should be soon.</p>*/}
+      {/*</div>*/}
       <Heading
         tagline={"Parasol Finance"}
         title={"Parasol Staking"}

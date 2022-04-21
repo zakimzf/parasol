@@ -1,37 +1,6 @@
 import { ChevronDownIcon } from "@heroicons/react/outline";
 
 import Container from "../container";
-import ProjectCard from "../cards/project-card";
-
-const projects = [
-  {
-    id: "flippies",
-    name: "Orion Money",
-    description:
-      "Thetan Arena is an esport game based on blockchain technology",
-    logo: "https://storage.googleapis.com/polkastarter-production-assets/aovnyvd72hvhc5l8ab2e9404jq0h",
-    cover:
-      "https://storage.googleapis.com/polkastarter-production-assets/nfy5nnqh2v55q1dbfcynrqeipzcb",
-  },
-  {
-    id: "flippies",
-    name: "Wilder World",
-    description:
-      "An NFT P2E Metaverse with unique microverses & living NFT pets",
-    logo: "https://storage.googleapis.com/polkastarter-production-assets/hm8u0aagfyir5n1dbfpizmpe0fu9",
-    cover:
-      "https://storage.googleapis.com/polkastarter-production-assets/jiq12ptcg86gphxhluu1b69sp33q",
-  },
-  {
-    id: "flippies",
-    name: "Tina Arena",
-    description:
-      "Thetan Arena is an esport game based on blockchain technology",
-    logo: "https://storage.googleapis.com/polkastarter-production-assets/tcwqly5amlb5m9b5uge0zfl4iwxm",
-    cover:
-      "https://storage.googleapis.com/polkastarter-production-assets/icaa44umdc3z299t6bwd5z81n67v",
-  },
-];
 
 const Projects = () => (
   <section>
@@ -62,16 +31,11 @@ const Projects = () => (
       {/*<h1 className="text-4xl font-medium mb-2">Upcoming IDOs</h1>*/}
       {/*<p className="text-xl font-light text-gray-300 mb-12">We bring new technologies to our community</p>*/}
       <div className="grid gap-7 grid-cols-1 s_lg:grid-cols-2 m_lg:grid-cols-3">
-        {projects.map((project, index) => (
-          <ProjectCard
-            Id={project.id}
-            Name={project.name}
-            Description={project.description}
-            Logo={project.logo}
-            Cover={project.cover}
-            key={index}
-          />
-        ))}
+        {/*{*/}
+        {/*  projects.map((project, index) => (*/}
+        {/*    <ProjectCard Id={project.id} Name={project.name} Description={project.description} Logo={project.logo} Cover={project.cover} key={index}/>*/}
+        {/*  ))*/}
+        {/*}*/}
       </div>
       {/*<div className={"flex justify-center pt-12"}>*/}
       {/*	<Link href={"/ds"}>*/}
