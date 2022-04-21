@@ -120,10 +120,10 @@ const Staking = () => {
         <meta property="og:image" content="/assets/preview/staking.png"/>
         <meta property="twitter:image" content="/assets/preview/staking.png"/>
       </Head>
-      {/*<div className={"absolute flex flex-col justify-center items-center inset-0 filter backdrop-blur-md z-10"}>*/}
-      {/*  <h1 className={"text-4xl mb-2 font-bold"}>Coming Soon</h1>*/}
-      {/*  <p className={"text-lg font-medium"}>This feature is not yet available but should be soon.</p>*/}
-      {/*</div>*/}
+      <div className={"absolute flex flex-col justify-center items-center inset-0 filter backdrop-blur-md z-10"}>
+        <h1 className={"text-4xl mb-2 font-bold"}>Coming Soon</h1>
+        <p className={"text-lg font-medium"}>This feature is not yet available but should be soon.</p>
+      </div>
       <Heading
         tagline={"Parasol Finance"}
         title={"Parasol Staking"}

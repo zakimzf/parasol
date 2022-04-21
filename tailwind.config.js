@@ -5,20 +5,21 @@ module.exports = {
     "./src/utils/**/*.{js,ts,jsx,tsx}",
   ],
   variants: {
-    scrollbar: ["rounded"]
+    scrollbar: ["rounded"],
   },
   theme: {
     extend: {
       colors: {
-        "parasol": "#170F25",
-        "card": "rgba(35,31,56,0.5)",
+        parasol: "#170F25",
+        card: "rgba(35,31,56,0.5)",
         "purple-1": "#7939ff",
-        "purple-2": "#b064fe"
+        "purple-2": "#b064fe",
+        "header-color": "#231f38",
       },
       boxShadow: {
-        "strong": "0 0 1rem rgba(0, 0, 0, .3)",
+        strong: "0 0 1rem rgba(0, 0, 0, .3)",
         "half-strong": "0 0 1rem rgba(0, 0, 0, .1)",
-      }
+      },
     },
   },
   plugins: [
@@ -26,4 +27,4 @@ module.exports = {
     require("@tailwindcss/forms"),
     require("tailwind-scrollbar"),
   ],
-}
+};

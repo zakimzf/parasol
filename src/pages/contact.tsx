@@ -91,7 +91,7 @@ const Contact = () => {
         description="You want to write to us then use the form below."
       />
       <section>
-        <div className={"max-w-2xl mx-auto"}>
+        <div className={"max-w-3xl mx-auto"}>
           {sendStatus == 2 ? (
             <div className="p-3 text-center relative bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 rounded-full">
               Thank you for contacting us. Our team will reply as soon as
@@ -100,7 +100,7 @@ const Contact = () => {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-8"
+              className="grid grid-cols-1 xs:grid-cols-2 xs:gap-x-8 xs:px-5"
             >
               <div className="relative">
                 <label
@@ -109,7 +109,7 @@ const Contact = () => {
                 >
                   Complete Name <span className="text-purple-2">*</span>
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 mb-5">
                   <input
                     onChange={handleChange}
                     value={values.name}
@@ -142,7 +142,7 @@ const Contact = () => {
                 >
                   Email Address <span className="text-purple-2">*</span>
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 mb-5">
                   <input
                     onChange={handleChange}
                     value={values.email}
@@ -168,11 +168,11 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="sm:col-span-2 relative">
+              <div className="xs:col-span-2 relative">
                 <label htmlFor="subject" className="block text-sm font-medium">
                   Subject <span className="text-purple-2">*</span>
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 mb-5">
                   <input
                     onChange={handleChange}
                     value={values.subject}
@@ -198,11 +198,11 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="sm:col-span-2 relative">
+              <div className="xs:col-span-2 relative">
                 <label htmlFor="message" className="block text-sm font-medium">
                   Message <span className="text-purple-2">*</span>
                 </label>
-                <div className="mt-1">
+                <div className="mt-1 mb-5">
                   <TextareaAutosize
                     onChange={handleChange}
                     value={values.message}
@@ -228,7 +228,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className={"col-span-2 flex justify-center gap-x-3"}>
+              <div className={"col-span-2 flex justify-center gap-x-3 mt-5"}>
                 <HCaptcha
                   sitekey={sitekey}
                   onVerify={setToken}

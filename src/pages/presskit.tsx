@@ -49,7 +49,7 @@ const PressKit = () => {
             {assets.map((asset) => (
               <li key={asset.source} className="relative">
                 <a href={asset.source} target={"_blank"} rel="noreferrer">
-                  <div className="group flex items-center justify-center w-full aspect-square rounded-lg bg-white bg-opacity-10 p-6 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
+                  <div className="group flex items-center justify-center w-full aspect-square rounded-lg bg-white bg-opacity-10 p-6 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-purple-2 overflow-hidden">
                     <img src={asset.source} alt="" className="m-3 pointer-events-none group-hover:opacity-75" />
                     <button type="button" className="absolute inset-0 focus:outline-none">
                       <span className="sr-only">View details for {asset.title}</span>
@@ -69,7 +69,7 @@ const PressKit = () => {
             {otherAssets.map((asset) => (
               <li key={asset.source} className="relative">
                 <a href={asset.source} target={"_blank"} rel="noreferrer">
-                  <div className="group flex items-center justify-center w-full aspect-square rounded-lg bg-white bg-opacity-10 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-indigo-500 overflow-hidden">
+                  <div className="group flex items-center justify-center w-full aspect-square rounded-lg bg-white bg-opacity-10 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-gray-100 focus-within:ring-purple-2 overflow-hidden">
                     <img src={asset.preview} alt="" className="object-fill pointer-events-none group-hover:opacity-75" />
                     <button type="button" className="absolute inset-0 focus:outline-none">
                       <span className="sr-only">View details for {asset.title}</span>

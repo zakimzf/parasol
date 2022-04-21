@@ -47,14 +47,22 @@ const Migrate = () => {
       const signature = await sendTransaction(tx, connection, {
         signers: [mintKeypair],
       });
-      notification("information", "Migrating NFT right now...", "Pending Transaction");
+      notification(
+        "information",
+        "Migrating NFT right now...",
+        "Pending Transaction"
+      );
       await connection.confirmTransaction(signature, "confirmed");
     }
     catch (err) {
       notification("danger", "Unable to Migrate the NFT.", "Transaction Error");
       return false;
     }
-    notification("success", "Successfully migrated the NFT.", "Transaction Success");
+    notification(
+      "success",
+      "Successfully migrated the NFT.",
+      "Transaction Success"
+    );
 
     setNfts([]);
     getNFTList();
@@ -62,7 +70,7 @@ const Migrate = () => {
 
   return (
     <section className={"py-6"}>
-      <div className={"mx-auto max-w-md space-y-6"}>
+      <div className={"mx-auto max-w-md space-y-6 xs:px-5"}>
         <Link href={"/tiers"}>
           <a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
             <ArrowLeftIcon className={"w-4"} />

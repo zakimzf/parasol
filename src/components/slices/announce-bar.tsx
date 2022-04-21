@@ -4,7 +4,7 @@ const AnnounceBar = () => (
       className="max-w-7xl mx-auto flex whitespace-nowrap justify-between justify-center gap-x-4 py-3 px-3 sm:px-6 lg:px-5">
       <a href="https://explorer.solana.com/address/Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ" target="_blank"
         className="flex justify-center truncate items-center gap-1 font-bold text-sm text-white -bg-gray-900 border border-purple-200 rounded-full px-4 py-1" rel="noreferrer">
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-5" fill="none" viewBox="0 0 24 24"
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />

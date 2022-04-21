@@ -16,9 +16,9 @@ import { useDropzone } from "react-dropzone";
 import { useWalletModal } from "../../components/wallet-connector";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import Card from "../../components/card";
-import { Keypair, PublicKey } from "@solana/web3.js";
-import { NftContext, NftProvider } from "../../context/NftContext";
-import { NftStore, NftStoreConfig, Project } from "parasol-finance-sdk";
+import { Keypair } from "@solana/web3.js";
+import { NftContext } from "../../context/NftContext";
+import { NftStore, Project } from "parasol-finance-sdk";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -261,9 +261,9 @@ const SubmitProject = () => {
         description={"Create your presale in a few clicks by holding PSOL tokens."}/>
       <Container>
         <form  onSubmit={handleSubmit}>
-          <div className="grid grid-cols-9">
-            <div className="col-span-6">
-              <form className="space-y-12 pr-16 divide-y- divide-gray-400">
+          <div className="grid md:grid-cols-9">
+            <div className="md:col-span-6">
+              <form className="space-y-12 md:pr-16 divide-y- divide-gray-400">
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
                     <h2 className="text-xl font-medium text-blue-gray-900">1. General Information</h2>
@@ -543,7 +543,7 @@ const SubmitProject = () => {
                     </p>
                   </div>
 
-                  <div className="sm:col-span-6 relative">
+                  <div className="md:col-span-6 relative">
                     <Listbox value={values.dex} onChange={handleChange}>
                       {({ open }) => (
                         <>
@@ -596,9 +596,9 @@ const SubmitProject = () => {
 
                     {errors.dex && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.dex}</div></> }
-
+                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.dex}</div></> }
                   </div>
+                  
                   <div className="sm:col-span-6">
                     <div className="sm:col-span-3 relative">
                       <label htmlFor="liquidity" className="block text-sm font-medium text-blue-gray-900">
@@ -619,6 +619,7 @@ const SubmitProject = () => {
                       We recommend not less than 50% of the pool to be sent in liquidity.
                     </p>
                   </div>
+                  
                 </div>
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
@@ -667,7 +668,7 @@ const SubmitProject = () => {
                       Choose the package that best suits your needs, you can read more regarding this pricing <a href={""} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a> .
                     </p>
                   </div>
-                  <div className="sm:col-span-5">
+                  <div className="sm:col-span-12">
                     <RadioGroup
                       value={values.package}
                       onChange={(pac) => {
@@ -723,7 +724,7 @@ const SubmitProject = () => {
                 </div>
               </form>
             </div>
-            <div className="col-span-3">
+            <div className="mt-5 md:col-span-3">
               <div className="sticky flex flex-col gap-y-6 top-20">
                 <Card padded={true}>
                   <h2 className="flex gap-x-2 items-center text-2xl font-bold">

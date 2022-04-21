@@ -64,7 +64,7 @@ const FrequentlyAskedQuestion = () => (
     <Heading tagline={"Getting Help"} title={"Frequently Asked Questions"}
       description={"The most common questions are answered below."}/>
     <section>
-      <div className={"max-w-3xl mx-auto"}>
+      <div className={"max-w-3xl mx-auto xs:px-5"}>
         <dl className="mt-6 space-y-6 divide-y divide-gray-500">
           {faqs.map((faq) => <Disclosure as="div" key={faq.question} className="pt-6">
             {({ open }) => (
