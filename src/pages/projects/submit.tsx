@@ -36,33 +36,34 @@ const SubmitProject = () => {
 
   const { publicKey, sendTransaction } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
-  
+
   const { connection } = useConnection();
   const walletModal = useWalletModal();
 
-  const splRef:any = useRef(null);
-  const submitBtnRef:any = useRef(null);
+  const splRef: any = useRef(null);
+  const submitBtnRef: any = useRef(null);
 
   const idosCollectionRef = collection(db, "idos");
   const [coverFile, setcoverFile] = useState<any>();
 
   const [values, setValues] = useState({
+    projectKey: "",
     publicKey: walletAddress,
-    splToken : "",
+    splToken: "",
     projectIcon: "",
-    projectCover : "",
-    projectName : "",
+    projectCover: "",
+    projectName: "",
     symbol: "",
-    description : "",
-    websiteUrl : "",
-    whitepaperUrl : "",
+    description: "",
+    websiteUrl: "",
+    whitepaperUrl: "",
     dex: exchanges[0],
-    tokenPrice : "",
-    hardCap : "",
-    twitter : "",
-    telegram : "",
-    startTime : "",
-    endTime : "",
+    tokenPrice: "",
+    hardCap: "",
+    twitter: "",
+    telegram: "",
+    startTime: "",
+    endTime: "",
     liquidity: "50",
     package: packages[0],
     isFeatured: false,
@@ -71,7 +72,7 @@ const SubmitProject = () => {
 
   const [errors, setErrors] = useState<any>([]);
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: any) => {
     let { name, value, classList } = e.target
     if (name != "projectCover") {
       if (classList.contains("required_") && !value.trim()) {
@@ -105,10 +106,10 @@ const SubmitProject = () => {
   }
 
   const validateAllFields = async (justSPL = false) => {
-    const _errors:any = [];
+    const _errors: any = [];
 
     if (!justSPL) {
-      let elements:any = document.getElementsByClassName("required_");
+      let elements: any = document.getElementsByClassName("required_");
       for (let el of elements) {
         const { name, value } = el;
         if (!value.trim()) {
@@ -144,6 +145,11 @@ const SubmitProject = () => {
         _errors[name] = "This address was already used for run a previous IDO";
         splRef.current.classList.add(...errClasses);
       }
+
+      await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${value}`).catch(error => {
+        _errors[name] = "Please enter a valid token address"
+        splRef.current.classList.add(...errClasses);
+      });
     }
 
     setErrors(_errors);
@@ -153,18 +159,18 @@ const SubmitProject = () => {
   const validateAllFieldsAndRedirection = async () => {
     const _errors = await validateAllFields();
 
-    if (Object.keys(_errors).length == 0) {    
+    if (Object.keys(_errors).length == 0) {
 
       try {
         const nftStore = await new NftStore(provider, config).build();
 
         const projectKeypair = Keypair.generate();
-        const project =  await new Project(provider, nftStore, projectKeypair.publicKey).build();
+        const project = await new Project(provider, nftStore, projectKeypair.publicKey).build();
         const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
-        
+        console.log(projectKeypair, new PublicKey(projectKeypair.publicKey),  projectKeypair.publicKey)
         const index = packages.findIndex(p => p.name === values.package.name);
 
-        const args:any = {
+        const args: any = {
           projectKind: projectKinds[index],
           treasuryMint: process.env.NEXT_PUBLIC_TREASURY_MINT,
           tokenMint: tokenMint,
@@ -183,9 +189,9 @@ const SubmitProject = () => {
         let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
         // confirm transaction
         await connection.confirmTransaction(signature, "confirmed");
-        
+
         values.publicKey = walletAddress;
-        
+
         uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, _values.splToken), _values);
           router.push(`/projects/${values.splToken}`);
@@ -208,15 +214,15 @@ const SubmitProject = () => {
           delete _errors["splToken"];
           setErrors(_errors);
           const { data } = res;
-          if (await isTokenAddressExist(address))validateAllFields(true);
+          if (await isTokenAddressExist(address)) validateAllFields(true);
           else if (data) {
-            const obj:any = {};
-            if (data.name)obj.projectName = data.name;
-            if (data.symbol)obj.symbol = data.symbol;
-            if (data.icon)obj.projectIcon = data.icon;
-            if (data.website)obj.websiteUrl = data.website;
-            if (data.twitter)obj.twitter = data.twitter;
-            if (data.telegram)obj.telegram = data.telegram;
+            const obj: any = {};
+            if (data.name) obj.projectName = data.name;
+            if (data.symbol) obj.symbol = data.symbol;
+            if (data.icon) obj.projectIcon = data.icon;
+            if (data.website) obj.websiteUrl = data.website;
+            if (data.twitter) obj.twitter = data.twitter;
+            if (data.telegram) obj.telegram = data.telegram;
 
             setValues((preValues) => ({ ...preValues, ...obj }));
             // validateAllFields(true);
@@ -230,7 +236,7 @@ const SubmitProject = () => {
     getTokeData();
   }, [values.splToken]);
 
-  const uploadFiles = (file:any, callback:Function) => {
+  const uploadFiles = (file: any, callback: Function) => {
     //
     if (!file) return;
     const storageRef = ref(storage, `projects/${values.splToken}/${file.name}`);
@@ -238,7 +244,7 @@ const SubmitProject = () => {
 
     uploadTask.on(
       "state_changed",
-      (snapshot) => {},
+      (snapshot) => { },
       (error) => console.log(error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
@@ -262,9 +268,9 @@ const SubmitProject = () => {
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
-        description={"Create your presale in a few clicks by holding PSOL tokens."}/>
+        description={"Create your presale in a few clicks by holding PSOL tokens."} />
       <Container>
-        <form  onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <div className="grid md:grid-cols-9">
             <div className="md:col-span-6">
               <form className="space-y-12 md:pr-16 divide-y- divide-gray-400">
@@ -289,14 +295,14 @@ const SubmitProject = () => {
                       placeholder={"SPL Token Address"}
                       pattern={"[A-Za-z0-9]*"}
                       className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2
-                      ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}` }
+                      ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
                       aria-invalid="true"
                       ref={splRef}
                     />
 
                     {errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></>}
 
                   </div>
 
@@ -317,43 +323,43 @@ const SubmitProject = () => {
                       <div className="space-y-1 text-center">
 
                         {coverFile && <div className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none">{coverFile.name}</div> ||
-                        <>
-                          <svg
-                            className="mx-auto h-12 w-12 text-gray-400"
-                            stroke="currentColor"
-                            fill="none"
-                            viewBox="0 0 48 48"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                              strokeWidth={2}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                          <div className="flex text-sm text-gray-200">
-                            <label
-                              htmlFor="file-upload"
-                              className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
+                          <>
+                            <svg
+                              className="mx-auto h-12 w-12 text-gray-400"
+                              stroke="currentColor"
+                              fill="none"
+                              viewBox="0 0 48 48"
+                              aria-hidden="true"
                             >
-                              <input {...getInputProps()} disabled={true} id="file-upload" name="projectCover" type="file" className="sr-only" />
-                              <span>Upload a file</span>
-                            </label>
-                            {
-                              isDragActive ?
-                                <p className="pl-1">Drop the file here ...</p> :
-                                <p className="pl-1">or drag and drop</p>
-                            }
-                          </div>
-                        </>
+                              <path
+                                d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                                strokeWidth={2}
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                            <div className="flex text-sm text-gray-200">
+                              <label
+                                htmlFor="file-upload"
+                                className="relative cursor-pointer font-medium text-purple-2 hover:text-purple-1 focus-within:outline-none"
+                              >
+                                <input {...getInputProps()} disabled={true} id="file-upload" name="projectCover" type="file" className="sr-only" />
+                                <span>Upload a file</span>
+                              </label>
+                              {
+                                isDragActive ?
+                                  <p className="pl-1">Drop the file here ...</p> :
+                                  <p className="pl-1">or drag and drop</p>
+                              }
+                            </div>
+                          </>
                         }
                         <p className="text-xs text-gray-400">PNG, JPG, GIF up to 10MB</p>
                       </div>
 
                     </div>
 
-                    {errors.projectCover && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectCover}</div> }
+                    {errors.projectCover && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectCover}</div>}
                     <p className="mt-3 text-sm text-blue-gray-500">
                       We need a cover in the following format: 1920x1080px.
                     </p>
@@ -371,7 +377,7 @@ const SubmitProject = () => {
                     />
                     {errors.projectName && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectName}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.projectName}</div></>}
                   </div>
 
                   <div className="sm:col-span-2 relative">
@@ -386,7 +392,7 @@ const SubmitProject = () => {
                     />
                     {errors.symbol && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.symbol}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.symbol}</div></>}
                   </div>
 
                   <div className="sm:col-span-6 relative">
@@ -404,7 +410,7 @@ const SubmitProject = () => {
                       </TextareaAutosize>
                       {errors.description && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.description}</div></> }
+                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.description}</div></>}
                     </div>
                     <p className="mt-3 text-sm text-blue-gray-500">
                       Brief description of your project, no HTML or Markdown accepted.
@@ -423,7 +429,7 @@ const SubmitProject = () => {
                     />
                     {errors.websiteUrl && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.websiteUrl}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.websiteUrl}</div></>}
                   </div>
 
                   <div className="sm:col-span-6 relative">
@@ -438,7 +444,7 @@ const SubmitProject = () => {
                     />
                     {errors.whitepaperUrl && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.whitepaperUrl}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.whitepaperUrl}</div></>}
                   </div>
                 </div>
 
@@ -471,12 +477,12 @@ const SubmitProject = () => {
                           <img className="w-4" src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png" alt="USDC" />
                           USDC
                         </span>
-                      </div> }
+                      </div>}
                     </div>
 
                     {errors.tokenPrice && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenPrice}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenPrice}</div></>}
                   </div>
 
                   <div className={"sm:col-span-3 relative"}>
@@ -504,7 +510,7 @@ const SubmitProject = () => {
 
                     {errors.hardCap && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.hardCap}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.hardCap}</div></>}
 
                   </div>
 
@@ -520,7 +526,7 @@ const SubmitProject = () => {
                     />
                     {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.startTime}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.startTime}</div></>}
                   </div>
 
                   <div className="sm:col-span-3 relative">
@@ -535,7 +541,7 @@ const SubmitProject = () => {
                     />
                     {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.endTime}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.endTime}</div></>}
                   </div>
                 </div>
 
@@ -557,7 +563,7 @@ const SubmitProject = () => {
                               className="w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg px-3 py-2 text-left cursor-default">
                               <span className="block truncate">{values.dex.name}</span>
                               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true"/>
+                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                               </span>
                             </Listbox.Button>
 
@@ -584,7 +590,7 @@ const SubmitProject = () => {
                                         </span>
                                         {selected ? (
                                           <span className={`${active ? "text-white" : "text-indigo-600"} absolute inset-y-0 right-0 flex items-center pr-4`}>
-                                            <CheckIcon className="h-5 w-5" aria-hidden="true"/>
+                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                           </span>
                                         ) : null}
                                       </>
@@ -600,16 +606,16 @@ const SubmitProject = () => {
 
                     {errors.dex && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.dex}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.dex}</div></>}
                   </div>
-                  
+
                   <div className="sm:col-span-6">
                     <div className="sm:col-span-3 relative">
                       <label htmlFor="liquidity" className="block text-sm font-medium text-blue-gray-900">
                         Percentage of the Pool for the Liquidity
                       </label>
-                      <input 
-                        onChange={handleChange} 
+                      <input
+                        onChange={handleChange}
                         value={values.liquidity}
                         name="liquidity"
                         type={"range"}
@@ -617,13 +623,13 @@ const SubmitProject = () => {
                       />
                       {errors.liquidity && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.liquidity}</div></> }
+                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.liquidity}</div></>}
                     </div>
-                    <p className="mt-3 text-sm text-blue-gray-500">
+                    <p className={`mt-3 text-sm text-blue-gray-500 ${parseInt(values.liquidity) < 50 && "font-bold text-yellow-500"}`}>
                       We recommend not less than 50% of the pool to be sent in liquidity.
                     </p>
                   </div>
-                  
+
                 </div>
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
@@ -646,7 +652,7 @@ const SubmitProject = () => {
                     />
                     {errors.twitter && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.twitter}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.twitter}</div></>}
                   </div>
 
                   <div className="sm:col-span-3 relative">
@@ -661,7 +667,7 @@ const SubmitProject = () => {
                     />
                     {errors.telegram && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                       <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div></> }
+                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.telegram}</div></>}
                   </div>
                 </div>
 
@@ -724,7 +730,7 @@ const SubmitProject = () => {
                       </div>
                     </RadioGroup>
                   </div>
-                  {errors.package && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.package}</div> }
+                  {errors.package && <div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.package}</div>}
                 </div>
               </form>
             </div>
@@ -737,7 +743,7 @@ const SubmitProject = () => {
                   <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
                     <img className="h-8"
                       src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
-                      alt="USDC"/>
+                      alt="USDC" />
                     <div className="flex items-end gap-x-2 text-4xl font-bold">
                       <NumberFormat
                         value={!values.hardCap && "0" || values.hardCap}
@@ -753,7 +759,7 @@ const SubmitProject = () => {
                   <div className="flex-col space-y-3 mt-6">
                     <div className="flex font-medium items-center text-gray-300 gap-x-3">
                       <span>Hard Cap</span>
-                      <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
+                      <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
                       <span>
                         <NumberFormat
                           value={!values.hardCap && "0" || values.hardCap}
@@ -766,7 +772,7 @@ const SubmitProject = () => {
                     </div>
                     <div className="flex font-medium items-center text-gray-300 gap-x-3">
                       <span>Price per Token</span>
-                      <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
+                      <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
                       <span>
                         <NumberFormat
                           value={!values.tokenPrice && "0" || values.tokenPrice}
@@ -792,7 +798,7 @@ const SubmitProject = () => {
                       <>
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                           xmlns="http://www.w3.org/2000/svg">
-                          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z"/>
+                          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" />
                         </svg>
                         Create IDO Now
                       </>
