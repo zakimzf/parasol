@@ -16,7 +16,7 @@ export default function handler (
 }
 
 const getProjectByAddress = async (projectPubKey:any) => {
-  const docRef = doc(db, "idos", projectPubKey);
+  const docRef = doc(db, "ido-metadata", projectPubKey);
   const docSnap = await getDoc(docRef);
 
   return docSnap.data();

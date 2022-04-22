@@ -23,7 +23,7 @@ export const validURL = (str) => {
 }
 
 export const isTokenAddressExist = async (id) => {
-  const docRef = doc(db, "idos", id);
+  const docRef = doc(db, "ido-metadata", id);
   const docSnap = await getDoc(docRef);
   return docSnap.exists();
 }

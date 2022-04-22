@@ -32,7 +32,7 @@ interface props {
 }
 
 const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, isCoverupdated, coverFile }) => {
-  const idosCollectionRef: any = doc(db, "idos", projectPubKey);
+  const idosCollectionRef: any = doc(db, "ido-metadata", projectPubKey);
   const [editor, setEditor] = useState<any>(null);
   const [saveState, setSaveState] = useState(false);
 
