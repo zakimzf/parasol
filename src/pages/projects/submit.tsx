@@ -169,7 +169,7 @@ const SubmitProject = () => {
         const index = packages.findIndex(p => p.name === values.package.name);
 
         const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
-
+        console.log(`${process.env.DOMAIN_URL}/projects/api/${projectPubKey?.toBase58()}`)
         const args: any = {
           projectKind: projectKinds[index].address,
           treasuryMint: new PublicKey(treasuryMint),
@@ -181,7 +181,7 @@ const SubmitProject = () => {
           liquidPoolFeeBasisPoints: (parseInt(values.liquidity) / 100),
           startTime: new Date(values.startTime),
           endTime: new Date(values.endTime),
-          uri: `${process.env.DOMAIN_URL}/projects/${projectPubKey?.toBase58()}`,
+          uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
         }
 
         const tx = await project.create(args, user);
@@ -193,13 +193,10 @@ const SubmitProject = () => {
 
         values.publicKey = walletAddress;
         values.projectKey = projectPubKey?.toBase58()
-        delete values.startTime;
-        delete values.endTime;
-        delete values.package;
-
+        
         uploadFiles(coverFile, async (_values: any) => {
-          await setDoc(doc(idosCollectionRef, _values.projectKey), _values);
-          router.push(`/projects/${values.projectKey}`);
+          await setDoc(doc(idosCollectionRef, values.projectKey), _values);
+          router.push(`/projects//${values.projectKey}`);
         })
       }
       catch (err) {
@@ -208,7 +205,7 @@ const SubmitProject = () => {
     }
     setLoading(false);
   }
-
+  
   useEffect(() => {
     const getTokeData = () => {
       const address = values.splToken;
@@ -254,7 +251,19 @@ const SubmitProject = () => {
       (error) => console.log(error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          const _values = { ...values, ["projectCover"]: downloadURL };
+          const _values = {
+            projectIcon: values.projectIcon,
+            projectCover: downloadURL,
+            projectName: values.projectName,
+            symbol: values.symbol,
+            description: values.description,
+            websiteUrl: values.websiteUrl,
+            whitepaperUrl: values.whitepaperUrl,
+            dex: values.dex,
+            twitter: values.twitter,
+            telegram: values.telegram,
+            created: Timestamp.now()
+          }
           callback(_values);
         });
       }

@@ -163,8 +163,6 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
             });
         });
         if (isCoverupdated) {
-          const imgRef: any = ref(storage, oldCover);
-          await deleteObject(imgRef)
           const storageRef = ref(storage, `projects/${projectPubKey}/${coverFile.name}`);
           const uploadTask = uploadBytesResumable(storageRef, coverFile);
           await uploadTask.on(
@@ -177,6 +175,8 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
                   content: JSON.stringify(outputData),
                   projectCover: cover,
                 });
+                const imgRef: any = ref(storage, oldCover);
+                deleteObject(imgRef)
               });
             }
           );
