@@ -1,22 +1,26 @@
 import Link from "next/link";
-import { BadgeCheckIcon } from "@heroicons/react/solid";
 
 import Card from "../card";
+import { BadgeCheckIcon } from "@heroicons/react/solid";
 
 type ProjectDetails = {
   Id: String;
   Logo?: string;
   Cover?: string;
+  Featured?: boolean,
   Name: String;
   Description: String;
+  Price: number
 };
 
 const ProjectCard = ({
   Id,
   Name,
   Description,
+  Featured,
   Logo,
   Cover,
+  Price,
 }: ProjectDetails) => {
   return (
     <Card>
@@ -44,7 +48,7 @@ const ProjectCard = ({
           <Link href={`/projects/${Id}`}>
             <a>{Name}</a>
           </Link>
-          <BadgeCheckIcon className={"h-7 text-purple-2"} />
+          {Featured && <BadgeCheckIcon className={"h-7 text-purple-2"} />}
         </h2>
         <p className="text text-gray-300 font-extralight">{Description}</p>
         <div className="flex gap-x-3">
