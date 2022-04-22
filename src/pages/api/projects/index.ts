@@ -11,7 +11,7 @@ export default async function handler (
 }
 
 const getAllProjects = async () => {
-  const idosCollectionRef = collection(db, "idos");
+  const idosCollectionRef = collection(db, "ido-metadata");
   const data = await getDocs(idosCollectionRef);
   return data.docs.map((doc: any) => ({ ...doc.data(), id: doc.id }));
 }
