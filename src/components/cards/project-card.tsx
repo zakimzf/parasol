@@ -10,7 +10,7 @@ type ProjectDetails = {
   Featured?: boolean,
   Name: String;
   Description: String;
-  Price: number
+  Price?: number
 };
 
 const ProjectCard = ({
