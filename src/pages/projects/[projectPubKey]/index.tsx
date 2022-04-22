@@ -112,7 +112,7 @@ const ProjectDetails = () => {
                         {ido.description}
                       </p>
                     </div>
-                    {walletAddress == ido.publicKey &&
+                    {walletAddress && walletAddress == ido.publicKey &&
                       (
                         <div className={"flex ml-auto justify-items-end items-center"}>
                           <Link href={`/projects/${projectPubKey}/edit`}>
