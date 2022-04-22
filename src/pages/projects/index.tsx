@@ -13,6 +13,7 @@ interface project {
   description: string;
   cover: string;
   symbol: string;
+  status: string,
   startTime: Date;
   endTime: Date;
 }
@@ -49,6 +50,7 @@ const Projects = () => {
                 description={project.description}
                 logo={project.logo}
                 cover={project.cover}
+                status={project.status}
                 startTime={project.startTime}
                 endTime={project.endTime}
               />
