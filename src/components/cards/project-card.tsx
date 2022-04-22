@@ -11,6 +11,8 @@ type ProjectDetails = {
   Name: String;
   Description: String;
   Price?: number
+  startTime: any;
+  endTime: any;
 };
 
 const ProjectCard = ({
@@ -21,7 +23,11 @@ const ProjectCard = ({
   Logo,
   Cover,
   Price,
+  startTime,
+  endTime
 }: ProjectDetails) => {
+  const startTime_ = new Date(startTime).toISOString().slice(0, 10);
+  const endTime_ = new Date(endTime).toISOString().slice(0, 10);
   return (
     <Card>
       {Cover && (
@@ -57,12 +63,12 @@ const ProjectCard = ({
               IDO Start Date
             </div>
             <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
-            <span>XXX</span>
+            <span>{startTime_}</span>
           </div>
           <div className="flex font-medium items-center text-gray-300 gap-x-3">
             <span>IDO End Date</span>
             <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
-            <span>XXX</span>
+            <span>{endTime_}</span>
           </div>
         </div>
         <div className="flex gap-x-3">

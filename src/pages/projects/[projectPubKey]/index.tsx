@@ -34,7 +34,7 @@ const ProjectDetails = () => {
   const [coverFile, setCoverFile] = useState("")
 
   const { projectPubKey } = router.query;
-  
+
   const [ido, setIdo] = useState<any>(null);
 
   useEffect(() => {
