@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import React, { Fragment, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import dynamic from "next/dynamic";
@@ -19,12 +19,16 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { doc, updateDoc } from "firebase/firestore";
 import { db, storage } from "../../../utils/firebase";
 import { getBase64 } from "../../../utils/functions";
+import { NftStore, Project } from "parasol-finance-sdk";
+import { NftContext } from "../../../context/NftContext";
+import { PublicKey } from "@solana/web3.js";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
 });
 
 const ProjectDetails = () => {
+  const { provider, config } = useContext(NftContext);
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const router = useRouter();
@@ -33,15 +37,19 @@ const ProjectDetails = () => {
   const [tempCover, setTempCover] = useState("")
   const [coverFile, setCoverFile] = useState("")
 
-  const { projectPubKey } = router.query;
+  const { projectPubKey }:any = router.query;
   
   const [ido, setIdo] = useState<any>(null);
 
   useEffect(() => {
     const getDataByTokenAddress = async () => {
-      const { data }: any = await axios.get(`/api/projects/${projectPubKey}`);
-      setCover(data.projectCover)
-      setTempCover(data.projectCover)
+      const nftStore = await new NftStore(provider, config).build();
+      const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
+      const data = await project.data()
+      
+      // const { data }: any = await axios.get(`/api/projects/${projectPubKey}`);
+      // setCover(data.projectCover)
+      // setTempCover(data.projectCover)
       if (data) {
         if (data.splToken) {
           const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
@@ -56,7 +64,7 @@ const ProjectDetails = () => {
         }
         else setIdo(data);
       }
-      else await router.push("/404");
+      else await router.push("/404"); 
     };
     if (projectPubKey) getDataByTokenAddress();
   }, [projectPubKey]);
@@ -101,18 +109,18 @@ const ProjectDetails = () => {
                   <div className="flex mb-6 gap-x-5">
                     <img
                       className="rounded-full h-16 p-1 m-0"
-                      src={ido.projectIcon}
-                      alt={ido.projectName}
+                      src={ido.icon}
+                      alt={ido.name}
                     />
                     <div className={"w-1/2"}>
                       <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
-                        {ido.projectName}
+                        {ido.name}
                       </a>
                       <p className="truncate max-w-prose text-sm lg:text-base text-gray-200">
                         {ido.description}
                       </p>
                     </div>
-                    {walletAddress && walletAddress == ido.publicKey &&
+                    {walletAddress && walletAddress == ido.creator &&
                       (
                         <div className={"flex ml-auto justify-items-end items-center"}>
                           <Link href={`/projects/${projectPubKey}/edit`}>
@@ -127,10 +135,10 @@ const ProjectDetails = () => {
                       )
                     }
                   </div>
-                  {walletAddress && walletAddress == ido.publicKey &&
+                  {walletAddress && walletAddress == ido.creator &&
                     <>
                       <div className={"relative"}>
-                        <img src={tempCover || ido.projectCover} className={"mb-6 rounded-lg"} alt={ido.name} />
+                        <img src={tempCover || ido.cover} className={"mb-6 rounded-lg"} alt={ido.name} />
                         <div className={"flex justify-center items-center absolute duration-300 scale-105 cursor-pointer filter backdrop-blur-sm top-0 w-full h-full"} {...getRootProps()}>
                           {isDragActive ? <p className="pl-1">Drop the file here ...</p> : <CloudUploadIcon className={"w-32 text-white "} />}
                         </div>
@@ -140,7 +148,7 @@ const ProjectDetails = () => {
                   }
                   <SRLWrapper>
 
-                    {(!walletAddress || walletAddress != ido.publicKey) && <img src={ido.projectCover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name} />}
+                    {(!walletAddress || walletAddress != ido.creator) && <img src={ido.cover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name} />}
 
                     <Tab.Group>
                       <Tab.List className={"mb-3"}>
@@ -191,11 +199,11 @@ const ProjectDetails = () => {
                           <div className={"prose markdown prose-lg prose-invert"}>
                             <EditorJs
                               content={ido.content || "{}"}
-                              isOwner={walletAddress && walletAddress == ido.publicKey || false}
+                              isOwner={walletAddress && walletAddress == ido.creator || false}
                               projectPubKey={projectPubKey}
                               coverFile={coverFile}
                               isCoverupdated={tempCover != ""}
-                              oldCover={ido.projectCover}
+                              oldCover={ido.cover}
                             />
                           </div>
                         </Tab.Panel>
@@ -209,7 +217,7 @@ const ProjectDetails = () => {
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Name</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.projectName}</td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.name}</td>
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Symbol</td>
@@ -253,7 +261,7 @@ const ProjectDetails = () => {
                       config={{
                         url: window.location.href,
                         identifier: ido.tokenAddress,
-                        title: ido.projectName
+                        title: ido.name
                       }}
                     />
                   </div>
@@ -263,7 +271,7 @@ const ProjectDetails = () => {
                     <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
                       <div className={"relative px-6 pt-6 pb-6"}>
                         <h2 className="flex gap-x-2 items-center text-2xl font-bold">
-                          {ido.projectName}
+                          {ido.name}
                           {ido.isFeatured && (
                             <BadgeCheckIcon className={"h-7 text-purple-2"} />
                           )}
@@ -312,7 +320,7 @@ const ProjectDetails = () => {
                             </span>
                           </div>
                         </div>
-                        {walletAddress ? walletAddress == ido.publicKey ? (
+                        {walletAddress ? walletAddress == ido.creator ? (
                           <button className={"w-full button mt-8"} id="saveEditor">
                             <PencilAltIcon className={"w-6"} />
                             Save Changes
@@ -337,7 +345,7 @@ const ProjectDetails = () => {
                       </div>
                     </div>
                     <div className={"flex flex-col justify-center items-center"}>
-                      <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.projectName} Ends In:</p>
+                      <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.name} Ends In:</p>
                       <Countdown
                         renderer={countdownRenderer}
                         intervalDelay={0}
