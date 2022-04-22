@@ -23,13 +23,16 @@ import axios from "axios";
 const Quote = require("@editorjs/quote");
 
 interface props {
-  tokenAddress: any;
+  projectPubKey: any;
   isOwner: boolean;
   content: any;
+  oldCover: string;
+  isCoverupdated: boolean;
+  coverFile: any;
 }
 
-const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
-  const idosCollectionRef: any = doc(db, "idos", tokenAddress);
+const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, isCoverupdated, coverFile }) => {
+  const idosCollectionRef: any = doc(db, "idos", projectPubKey);
   const [editor, setEditor] = useState<any>(null);
   const [saveState, setSaveState] = useState(false);
 
@@ -43,16 +46,18 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
   useEffect(() => {
     if (editor) editor.destroy();
 
-    editorContent.blocks.map(async (block: any, index: number) => {
-      if ((await block.type) == "image") {
-        await axios.get(block.data.file.url).catch(function (error) {
-          if (error.response) {
-            delete editorContent.blocks[index];
-          }
-        });
-      }
-    });
-    setEditorContent(editorContent);
+    if (editorContent.blocks) {
+      editorContent.blocks.map(async (block: any, index: number) => {
+        if ((await block.type) == "image") {
+          await axios.get(block.data.file.url).catch(function (error) {
+            if (error.response) {
+              delete editorContent.blocks[index];
+            }
+          });
+        }
+      });
+      setEditorContent(editorContent);
+    }
 
     initEditor();
   }, [isOwner]);
@@ -93,7 +98,7 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
                 return new Promise((resolve, reject) => {
                   const storageRef = ref(
                     storage,
-                    `projects/${tokenAddress}/editor/${dateTime + file.name}`
+                    `projects/${projectPubKey}/editor/${dateTime + file.name}`
                   );
 
                   const task = uploadBytesResumable(storageRef, file);
@@ -157,6 +162,25 @@ const EditorJs: React.FC<props> = ({ tokenAddress, isOwner, content }) => {
               // console.log(error)
             });
         });
+        if (isCoverupdated) {
+          const storageRef = ref(storage, `projects/${projectPubKey}/${coverFile.name}`);
+          const uploadTask = uploadBytesResumable(storageRef, coverFile);
+          await uploadTask.on(
+            "state_changed",
+            (snapshot) => { },
+            (error) => console.log(error),
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref).then(async (cover) => {
+                await updateDoc(idosCollectionRef, {
+                  content: JSON.stringify(outputData),
+                  projectCover: cover,
+                });
+                const imgRef: any = ref(storage, oldCover);
+                deleteObject(imgRef)
+              });
+            }
+          );
+        }
         await updateDoc(idosCollectionRef, {
           content: JSON.stringify(outputData),
         });

@@ -2,25 +2,21 @@ import { doc, getDoc } from "firebase/firestore";
 import type { NextApiRequest, NextApiResponse } from "next"
 import { db } from "../../../utils/firebase";
 
-type Data = {
-  name: string
-}
-
 export default function handler (
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse
 ) {
   const getProject = async () => {
-    const { tokenAddress, cover } = req.query;
-    let data:any = await getProjectByAddress(tokenAddress);
+    const { projectPubKey, cover } = req.query;
+    let data:any = await getProjectByAddress(projectPubKey);
     if (cover == "") res.status(301).redirect(data.projectCover)
     else res.status(200).json(data)
   }
   getProject();
 }
 
-const getProjectByAddress = async (tokenAddress:any) => {
-  const docRef = doc(db, "idos", tokenAddress);
+const getProjectByAddress = async (projectPubKey:any) => {
+  const docRef = doc(db, "idos", projectPubKey);
   const docSnap = await getDoc(docRef);
 
   return docSnap.data();

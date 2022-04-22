@@ -6103,10 +6103,10 @@ pako@~1.0.2:
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.11.tgz#6c9599d340d54dfd3946380252a35705a6b992bf"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
-parasol-finance-sdk@0.6.9:
-  version "0.6.9"
-  resolved "https://registry.yarnpkg.com/parasol-finance-sdk/-/parasol-finance-sdk-0.6.9.tgz#73e2c087253895a85d5d5f161337f5e677dfced0"
-  integrity sha512-te1xuGtLUdoGS1d3p7/FiyODI2XStJoXxG8huOe2LT6RVxIfqBinSBdvgvVN2aLyPscx020k9VDPfI8hxKQq7A==
+parasol-finance-sdk@0.6.13:
+  version "0.6.13"
+  resolved "https://registry.yarnpkg.com/parasol-finance-sdk/-/parasol-finance-sdk-0.6.13.tgz#a44efc0a3cf3e65e23376b8bcba6b45d8cb28f71"
+  integrity sha512-Ss5/TMgENbPOvg2o7SS+NkQQp3SWbCMaZcNk5eULrsUn5vQyhKLeqoV+vvxXMlsetRKcDblZFoyfL+Ybvug48Q==
   dependencies:
     "@metaplex-foundation/mpl-token-metadata" "^1.2.5"
     "@nfteyez/sol-rayz" "^0.10.2"
