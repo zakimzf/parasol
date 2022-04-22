@@ -626,6 +626,11 @@ const Header = () => (
               {/*            );*/}
               {/*          }}*/}
               {/*        </Popover>*/}
+              <Link href={"/tiers"}>
+                <a className="font-bold text-sm hover:text-gray-300 text-white">
+                  NFT Access Keys
+                </a>
+              </Link>
               <Link href={"/staking"}>
                 <a className="font-bold text-sm hover:text-gray-300 text-white">
                   Staking

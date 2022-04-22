@@ -67,7 +67,7 @@ const Migrate = () => {
 
   return (
     <section className={"py-6"}>
-      <div className={"mx-auto max-w-md space-y-6 xs:px-5"}>
+      <div className={"mx-auto max-w-md px-6 lg:px-0 space-y-6"}>
         <Link href={"/tiers"}>
           <a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
             <ArrowLeftIcon className={"w-4"} />
