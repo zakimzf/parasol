@@ -12,7 +12,6 @@ type NftDetails = {
   name: string;
   amount: number;
   vestingPeriod: number;
-  offset?: number;
   index: number;
   buyNFT: any;
   connected: any;
@@ -27,7 +26,6 @@ const NftCard = ({
   poster,
   video,
   vestingPeriod,
-  offset,
   index,
   buyNFT,
   connected,

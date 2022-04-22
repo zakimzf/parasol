@@ -35,8 +35,8 @@ const Migrate = () => {
   const [selected, setSelected] = useState<any>();
 
   const getNFTList = async () => {
-    const nftsmetadata = await user.getNFTList();
-    setNfts(nftsmetadata);
+    const nftsMetadata = await user.getNFTList();
+    setNfts(nftsMetadata);
   };
 
   const redeemNFT = async () => {
