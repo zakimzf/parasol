@@ -143,7 +143,7 @@ const Tiers = function () {
             {fetchTiers
               ? tiers.map((t: any, index: any) => (
                 <NftCard
-                  owned={t.owned}
+                  owned={nfts.some(x => x.attributes[0]["value"] == t.name)}
                   key={t.id}
                   id={t.id}
                   name={t.name}
