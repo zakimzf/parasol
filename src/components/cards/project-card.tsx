@@ -34,7 +34,7 @@ const ProjectCard = ({
         </Link>
       )}
       {/*<label className="absolute z-10 top-3 right-3 p-2 bg-opacity-100 text-xs uppercase font-medium rounded-md bg-purple-1">Whitelist Opened</label>*/}
-      <div className={`relative px-3 ${Logo ? "pt-16" : "pt-6"} pb-6`}>
+      <div className={`flex flex-col px-6 ${Logo ? "pt-16" : "pt-6"} pb-6`}>
         {Logo && (
           <img
             className="absolute w-20 h-20 border-4 border-gray-700 bg-gray-700 -top-10 rounded-xl"
@@ -81,8 +81,8 @@ const ProjectCard = ({
             <span>${price}</span>
           </div>
         </div>
-        <div className="xs:grid gap-x-3 grid-cols-1 xs:grid-cols-2">
-          <button className="button py-3 flex-1 text-base mb-3">
+        <div className="flex gap-x-3">
+          <button className="button py-3 flex-1 text-base mb-3 whitespace-nowrap">
             Participate in IDO
           </button>
           <button className="button py-3 flex-1 text-base mb-3">More Info</button>
