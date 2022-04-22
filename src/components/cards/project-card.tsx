@@ -51,7 +51,7 @@ const ProjectCard = ({
           {Featured && <BadgeCheckIcon className={"h-7 text-purple-2"} />}
         </h2>
         <p className="text text-gray-300 font-extralight">{Description}</p>
-         <div className="flex-col space-y-3 mt-6 mb-8">
+        <div className="flex-col space-y-3 mt-6 mb-8">
           <div className="flex font-medium items-center text-gray-300 gap-x-3">
             <div className="flex items-center gap-x-1">
               IDO Start Date
