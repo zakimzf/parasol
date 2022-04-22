@@ -70,7 +70,6 @@ interface project {
   description: string;
   cover: string;
   symbol: string;
-  tokenPrice: number;
   startTime: Date;
   endTime: Date;
 }
@@ -86,6 +85,7 @@ const Projects = () => {
     }
     getProjects();
   }, [])
+  
   return (
     <>
       <Heading
@@ -105,7 +105,6 @@ const Projects = () => {
                 Description={project.description}
                 Logo={project.logo}
                 Cover={project.cover}
-                price={project.tokenPrice}
                 key={index}
               />
             ))}
