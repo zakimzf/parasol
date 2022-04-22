@@ -1,10 +1,11 @@
 import Container from "../../components/container";
 import Heading from "../../components/heading";
 import Apply from "../../components/slices/apply";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RpcHelper } from "parasol-finance-sdk";
 import { NftContext } from "../../context/NftContext";
 import ProjectCard from "../../components/cards/project-card";
+import Head from "next/head";
 
 interface project {
   id: string;
@@ -32,6 +33,12 @@ const Projects = () => {
   console.log(projects)
   return (
     <>
+      <Head>
+        <title>Parasol Finance ($PSOL) | Projects Seeding</title>
+        <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding" />
+        <meta property="og:image" content="/assets/preview/projects.png" />
+        <meta property="twitter:image" content="/assets/preview/projects.png" />
+      </Head>
       <Heading
         tagline={"Parasol Launchpad"}
         title={"Upcoming Projects"}
