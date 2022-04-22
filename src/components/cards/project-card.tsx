@@ -43,14 +43,14 @@ const ProjectCard = ({
   const endTime_ = new Date(endTime).toISOString().slice(0, 10);
   return (
     <Card>
-      <div className={"relative"}>
-        <label className="absolute z-10 top-3 right-3 p-2 bg-opacity-70 text-xs uppercase font-medium rounded-md bg-purple-1">
-          Status: {status}
-        </label>
-        <div className={"w-full flex justify-center py-1 font-bold items-center absolute bg-white bg-opacity-10 z-10 bottom-0"}>
-          <Countdown date={startTime} renderer={countdownRenderer} />
-        </div>
-        {cover && (
+      {cover && (
+        <div className={"relative"}>
+          <label className="absolute z-10 top-3 right-3 p-2 bg-opacity-70 text-xs uppercase font-medium rounded-md bg-purple-1">
+              IDO Status: {status}
+          </label>
+          <div className={"w-full flex justify-center py-1 font-bold items-center absolute bg-white bg-opacity-10 z-10 bottom-0"}>
+            <Countdown date={startTime} renderer={countdownRenderer} />
+          </div>
           <Link href={`/projects/${id}`}>
             <a style={{ position: "relative" }}>
               <img
@@ -60,8 +60,8 @@ const ProjectCard = ({
               />
             </a>
           </Link>
-        )}
-      </div>
+        </div>
+      )}
       <div className={`flex flex-col px-6 ${logo ? "pt-16" : "pt-6"} pb-6`}>
         {logo && (
           <img
