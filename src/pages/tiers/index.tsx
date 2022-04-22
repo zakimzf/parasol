@@ -87,6 +87,10 @@ const Tiers = function () {
     nftKindData();
   }, []);
 
+  const activeNft = (items: [any], tiers: any) => {
+    return items.some(x => x.attributes[0]["value"] == tiers.name);
+  };
+
   return (
     <>
       <Head>
@@ -141,7 +145,7 @@ const Tiers = function () {
             {fetchTiers
               ? tiers.map((t: any, index: any) => (
                 <NftCard
-                  owned={nfts.some(x => x.attributes[0]["value"] == t.name)}
+                  owned={activeNft(nfts, t)}
                   key={t.id}
                   id={t.id}
                   name={t.name}
