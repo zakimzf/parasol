@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/tiers", "destination": "https://nft.parasol.finance" },
+    { "source": "/swap", "destination": "https://swap.parasol.finance" }
+  ]
+}
