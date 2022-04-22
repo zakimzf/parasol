@@ -43,12 +43,12 @@ const Projects = () => {
           <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
             {projects.map((project, index) => (
               <ProjectCard
-                Id={project.id}
-                Name={project.name}
-                Description={project.description}
-                Logo={project.logo}
-                Cover={project.cover}
                 key={index}
+                id={project.id}
+                name={project.name}
+                description={project.description}
+                logo={project.logo}
+                cover={project.cover}
                 startTime={project.startTime}
                 endTime={project.endTime}
               />
