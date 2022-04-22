@@ -42,7 +42,7 @@ const NftCard = ({
     <article
       onMouseOver={playVideo}
       onMouseOut={pauseVideo}
-      className={"card cursor-pointer lg:mx-0 overflow-hidden mb-5"}
+      className={`card cursor-pointer ${owned ? "scale-105" : ""} lg:mx-0 overflow-hidden mb-5`}
     >
       <div className="">
         <div className="relative">
