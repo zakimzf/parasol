@@ -312,6 +312,11 @@ const SubmitProject = () => {
 
   const [selectedIdoOptions, setSelectedIdoOptions] = useState(idoOptions[0])
 
+  const changeScenario = (value: any) => {
+    setSelectedIdoOptions(value)
+    setValues({ ...values, tokenDecimals: 0, splToken: "" });
+  }
+  
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
@@ -341,7 +346,7 @@ const SubmitProject = () => {
                   {/*  </div>*/}
                   {/*)}*/}
                   <div className="sm:col-span-12">
-                    <RadioGroup value={selectedIdoOptions} onChange={setSelectedIdoOptions}>
+                    <RadioGroup value={selectedIdoOptions} onChange={changeScenario}>
                       <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                         {idoOptions.map((idoOption) => (
                           <RadioGroup.Option
