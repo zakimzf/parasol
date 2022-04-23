@@ -304,18 +304,18 @@ const SubmitProject = () => {
                       Choose the scenario that corresponds to you.
                     </p>
                   </div>
-                  {selectedIdoOptions.id == 2 && (
-                    <div className={"sm:col-span-6 flex ml-auto justify-items-end items-center"}>
-                      <Link href={"/tools/token-creator"}>
-                        <a
-                          type="button"
-                          className="inline-flex items-center gap-x-1 px-3.5 py-2 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm text-white bg-white bg-opacity-30 text-purple-2 hover:bg-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-2">
-                          <PlusCircleIcon className={"w-4"} />
-                          Create SPL Token
-                        </a>
-                      </Link>
-                    </div>
-                  )}
+                  {/*{selectedIdoOptions.id == 2 && (*/}
+                  {/*  <div className={"sm:col-span-6 flex ml-auto justify-items-end items-center"}>*/}
+                  {/*    <Link href={"/tools/token-creator"}>*/}
+                  {/*      <a*/}
+                  {/*        type="button"*/}
+                  {/*        className="inline-flex items-center gap-x-1 px-3.5 py-2 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm text-white bg-white bg-opacity-30 text-purple-2 hover:bg-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-2">*/}
+                  {/*        <PlusCircleIcon className={"w-4"} />*/}
+                  {/*        Create SPL Token*/}
+                  {/*      </a>*/}
+                  {/*    </Link>*/}
+                  {/*  </div>*/}
+                  {/*)}*/}
                   <div className="sm:col-span-12">
                     <RadioGroup value={selectedIdoOptions} onChange={setSelectedIdoOptions}>
                       <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
