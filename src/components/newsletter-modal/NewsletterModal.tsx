@@ -27,24 +27,7 @@ export const NewsletterModal: FC = () => {
     setVisible(false)
     setValue("")
   };
-  let featuredNewsletters = [
-    {
-      name: "SOL",
-      icon: newsletters.find(x => x.symbol === "SOL")?.logoURI
-    },
-    {
-      name: "PSOL",
-      icon: newsletters.find(x => x.symbol === "PSOL")?.logoURI
-    },
-    {
-      name: "USDC",
-      icon: newsletters.find(x => x.symbol === "USDC")?.logoURI
-    },
-    {
-      name: "USDT",
-      icon: newsletters.find(x => x.symbol === "USDT")?.logoURI
-    }
-  ]
+  
   return (
     <Transition.Root show={visible} as={Fragment}>
       <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={close}>
