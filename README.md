@@ -1,6 +1,6 @@
 <p align="center">
   <p align="center">
-    <img src="https://parasol.finance/icon.png" height="100" alt="Parasol Finance" />
+    <img src="https://parasol.finance/assets/icons/icon.png" height="100" alt="Parasol Finance" />
   </p>
   <h3 align="center">
     Parasol Finance

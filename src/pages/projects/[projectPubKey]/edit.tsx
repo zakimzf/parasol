@@ -20,7 +20,7 @@ const EditProject = () => {
 
   const walletModal = useWalletModal();
 
-  const idosCollectionRef = collection(db, "idos");
+  const idosCollectionRef = collection(db, "ido-metadata");
   // const [coverFile, setcoverFile] = useState<any>();
 
   const { projectPubKey } = router.query;

@@ -43,7 +43,7 @@ const SubmitProject = () => {
   const splRef: any = useRef(null);
   const submitBtnRef: any = useRef(null);
 
-  const idosCollectionRef = collection(db, "idos");
+  const idosCollectionRef = collection(db, "ido-metadata");
   const [coverFile, setcoverFile] = useState<any>();
   const [loading, setLoading] = useState(false)
 
@@ -97,7 +97,6 @@ const SubmitProject = () => {
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     if (walletAddress) {
-      const preContent = submitBtnRef.current.innerHTML;
       setLoading(true)
       await validateAllFieldsAndRedirection();
     }
@@ -194,16 +193,17 @@ const SubmitProject = () => {
         values.publicKey = walletAddress;
         values.projectKey = projectPubKey?.toBase58()
         
-        uploadFiles(coverFile, async (_values: any) => {
+        await uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, values.projectKey), _values);
-          router.push(`/projects//${values.projectKey}`);
+          router.push(`/projects/${values.projectKey}`);
+          setLoading(false);
         })
       }
       catch (err) {
         console.log(err)
+        setLoading(false);
       }
     }
-    setLoading(false);
   }
   
   useEffect(() => {
@@ -252,9 +252,9 @@ const SubmitProject = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const _values = {
-            projectIcon: values.projectIcon,
-            projectCover: downloadURL,
-            projectName: values.projectName,
+            icon: values.projectIcon,
+            cover: downloadURL,
+            name: values.projectName,
             symbol: values.symbol,
             description: values.description,
             websiteUrl: values.websiteUrl,
