@@ -25,9 +25,9 @@ const exchanges = [
 ]
 
 const packages = [
-  { name: "Basic", description: "Listing only without Ads.", price: 2100 },
-  { name: "Pro", description: "[description]", price: 10500 },
-  { name: "Ultimate", description: "Listing and promotion.", price: 21000 }
+  { name: "Basic", description: "IDO Listing only without Ads.", price: 2100, fees: 3 },
+  { name: "Pro", description: "IDO Listing and Ads", price: 10500, fees: 2 },
+  { name: "Ultimate", description: "IDO Listing, Ads and AMA.", price: 21000, fees: 1 }
 ];
 
 const idoOptions = [
@@ -776,11 +776,11 @@ const SubmitProject = () => {
                     >
                       <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
                       <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                        {packages.map((size) => (
+                        {packages.map((plan) => (
                           <RadioGroup.Option
                             as="div"
-                            key={size.name}
-                            value={size}
+                            key={plan.name}
+                            value={plan}
                             className={({ active }) => "relative border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none"}
                           >
                             {({ active, checked }) => (
@@ -788,15 +788,18 @@ const SubmitProject = () => {
                                 <div className="flex-1 flex">
                                   <div className="flex flex-col">
                                     <RadioGroup.Label as="span" className="block text-sm font-medium">
-                                      {size.name}
+                                      {plan.name}
                                     </RadioGroup.Label>
                                     <RadioGroup.Description as="span" className="mt-1 flex items-center text-sm">
-                                      {size.description}
+                                      {plan.description}
+                                    </RadioGroup.Description>
+                                    <RadioGroup.Description as="span" className="mt-1 font-medium flex items-center text-sm">
+                                      Token Fees: {plan.fees}&#37;
                                     </RadioGroup.Description>
                                     <RadioGroup.Description as="span" className="mt-3 flex items-center gap-x-2 text-sm font-medium">
                                       <img className="h-4" src={"/assets/logos/parasol-logo-mark-reverse-rgb.svg"} alt="psol" />
                                       <NumberFormat
-                                        value={!size.price && "0" || size.price}
+                                        value={!plan.price && "0" || plan.price}
                                         displayType={"text"}
                                         thousandSeparator={true}
                                       />
