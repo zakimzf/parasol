@@ -796,7 +796,7 @@ const SubmitProject = () => {
                                     <RadioGroup.Description as="span" className="mt-1 font-medium flex items-center text-sm">
                                       Token Fees: {plan.fees}&#37;
                                     </RadioGroup.Description>
-                                    <RadioGroup.Description as="span" className="mt-3 flex items-center gap-x-2 text-sm font-medium">
+                                    <RadioGroup.Description as="span" className="mt-2 flex items-center gap-x-2 text-sm font-medium">
                                       <img className="h-4" src={"/assets/logos/parasol-logo-mark-reverse-rgb.svg"} alt="psol" />
                                       <NumberFormat
                                         value={!plan.price && "0" || plan.price}
