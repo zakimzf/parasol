@@ -6,13 +6,13 @@ export enum NewsletterChooserMode {
   Output
 }
 
-export interface NewsletterChooserContextState {
+export interface NewsletterModalContextState {
   visible: boolean;
   setVisible: (open: boolean) => void;
 }
 
-export const NewsletterChooserContext = createContext<NewsletterChooserContextState>({} as NewsletterChooserContextState);
+export const NewsletterModalContext = createContext<NewsletterModalContextState>({} as NewsletterModalContextState);
 
-export function useNewsletterModal (): NewsletterChooserContextState {
-  return useContext(NewsletterChooserContext);
+export function useNewsletterModal (): NewsletterModalContextState {
+  return useContext(NewsletterModalContext);
 }

@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import { PublicKey } from "@solana/web3.js";
 
 import { NewsletterModal } from "./NewsletterModal";
-import { NewsletterChooserContext, NewsletterChooserMode } from "./useNewsletterModal";
+import { NewsletterModalContext, NewsletterChooserMode } from "./useNewsletterModal";
 
 type NewsletterChooserProps = {
   children: React.ReactNode,
@@ -10,11 +10,11 @@ type NewsletterChooserProps = {
 
 export const NewsletterModalProvider: FC<NewsletterChooserProps> = ({ children }: NewsletterChooserProps) => {
   const [visible, setVisible] = useState(false);
-  return <NewsletterChooserContext.Provider
+  return <NewsletterModalContext.Provider
     value={{
       visible, setVisible,
     }}>
     {children}
     <NewsletterModal />
-  </NewsletterChooserContext.Provider>
+  </NewsletterModalContext.Provider>
 };
