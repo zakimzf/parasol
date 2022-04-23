@@ -9,12 +9,6 @@ export enum NewsletterChooserMode {
 export interface NewsletterChooserContextState {
   visible: boolean;
   setVisible: (open: boolean) => void;
-  mode: NewsletterChooserMode;
-  setMode: (open: NewsletterChooserMode) => void;
-  input: PublicKey;
-  output: PublicKey;
-  setInput: (newsletter: PublicKey) => void;
-  setOutput: (newsletter: PublicKey) => void;
 }
 
 export const NewsletterChooserContext = createContext<NewsletterChooserContextState>({} as NewsletterChooserContextState);
