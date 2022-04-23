@@ -6,22 +6,12 @@ import { RpcHelper } from "parasol-finance-sdk";
 import { NftContext } from "../../context/NftContext";
 import ProjectCard from "../../components/cards/project-card";
 import Head from "next/head";
-
-interface project {
-  id: string;
-  name: string;
-  logo: string;
-  description: string;
-  cover: string;
-  symbol: string;
-  status: string,
-  startTime: Date;
-  endTime: Date;
-}
+import { Project } from "../../constants";
+import Layout from "../../components/layout";
 
 const Projects = () => {
   const { provider } = useContext(NftContext);
-  const [projects, setProjects] = useState<project[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
 
   useEffect(() => {
     const getProjects = async () => {

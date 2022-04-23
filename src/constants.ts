@@ -3,6 +3,18 @@ let Alex = require("../public/assets/team/alex.png");
 let Anthony = require("../public/assets/team/anthony.png");
 let Tom = require("../public/assets/team/tom.png");
 
+export interface Project {
+  id: string;
+  name: string;
+  logo: string;
+  description: string;
+  cover: string;
+  symbol: string;
+  status: string,
+  startTime: Date;
+  endTime: Date;
+}
+
 export const people = [
   {
     name: "Alex Sadovskij",
