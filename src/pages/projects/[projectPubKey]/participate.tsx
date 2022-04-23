@@ -178,28 +178,12 @@ const ProjectParticipate = () => {
                       <div className="p-2">
                         <h2 className="flex gap-x-2 items-center text-3xl font-bold">
                          Participate Now!
-                          {/*{ido.name}*/}
-                          {/*{ido.isFeatured && (*/}
-                          {/*  <BadgeCheckIcon className={"h-7 text-purple-2"} />*/}
-                          {/*)}*/}
                         </h2>
-                        {/*<div className="flex text-white gap-x-3 mt-3 mb-6 items-center">*/}
-                        {/*  <img*/}
-                        {/*    className="h-8"*/}
-                        {/*    src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"*/}
-                        {/*    alt="USDC"*/}
-                        {/*  />*/}
-                        {/*  <div className="flex items-end gap-x-2 text-4xl font-bold">*/}
-                        {/*    <NumberFormat*/}
-                        {/*      value={ido.hardCap}*/}
-                        {/*      displayType={"text"}*/}
-                        {/*      thousandSeparator={true}*/}
-                        {/*    />*/}
-                        {/*    <span>USDC</span>*/}
-                        {/*  </div>*/}
-                        {/*</div>*/}
                         <p className="text-lg text-gray-300 line-clamp-2 mt-5 font-medium">
                           To participate in the IDO, please enter your desired amount and choose your NFT.
+                        </p>
+                        <p className={"mt-3 text-purple-2 font-medium"}>
+                          Your IDO&apos;s allocation is $50.
                         </p>
                         <div className={"mt-6"}>
                           <label htmlFor="account-number" className="block text-sm font-medium">
@@ -267,6 +251,22 @@ const ProjectParticipate = () => {
                             ))}
                           </div>
                         </RadioGroup>
+                        {/*<div className={"mt-6"}>*/}
+                        {/*  <label className="flex justify-between block mb-2 text-sm font-medium">*/}
+                        {/*    <span>dsds</span>*/}
+                        {/*    <span>*/}
+                        {/*      Time Left: <Countdown date={ido.endTime} />*/}
+                        {/*    </span>*/}
+                        {/*  </label>*/}
+                        {/*  <div className="w-full bg-gray-200 rounded-full mb-6">*/}
+                        {/*    <div className="flex justify-center items-center bg-gradient-to-r from-purple-1 to-purple-2 uppercase py-3 text-xs rounded-l-full h-5 w-4/5">*/}
+                        {/*      Sale: 75%*/}
+                        {/*    </div>*/}
+                        {/*  </div>*/}
+                        {/*</div>*/}
+                        {/*<div className="w-full bg-gray-200 h-5 mb-6">*/}
+                        {/*  <div className="bg-blue-600 h-5" style="width: 25%"></div>*/}
+                        {/*</div>*/}
                         <button className={"w-full mt-8 button"}>
                           <PaperAirplaneIcon className={"w-6 h-6"}/>
                           Participate Now
