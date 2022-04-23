@@ -29,12 +29,13 @@ interface props {
   oldCover: string;
   isCoverupdated: boolean;
   coverFile: any;
+  loading: boolean;
+  setLoading: any;
 }
 
-const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, isCoverupdated, coverFile }) => {
-  const idosCollectionRef: any = doc(db, "idos", projectPubKey);
+const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, isCoverupdated, coverFile, loading, setLoading }) => {
+  const idosCollectionRef: any = doc(db, "ido-metadata", projectPubKey);
   const [editor, setEditor] = useState<any>(null);
-  const [saveState, setSaveState] = useState(false);
 
   const { publicKey, signMessage } = useWallet();
 
@@ -145,42 +146,39 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
   }, [editor]);
 
   useEffect(() => {
-    if (saveState) saveChanges();
-  }, [saveState]);
+    if (loading) saveChanges();
+  }, [loading]);
+
+  const changeCover = async () => {
+    if (isCoverupdated) {
+      const storageRef = ref(storage, `projects/${projectPubKey}/${coverFile.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, coverFile);
+      await uploadTask.on(
+        "state_changed",
+        (snapshot) => { },
+        (error) => console.log(error),
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then(async (cover) => {
+            await updateDoc(idosCollectionRef, {
+              cover,
+            });
+            const imgRef: any = ref(storage, oldCover);
+            deleteObject(imgRef)
+          });
+        }
+      );
+    }
+  }
 
   const saveChanges = async () => {
+    await changeCover();
     await editor
       .save()
       .then(async (outputData: any) => {
         imagesToRemove.map((url: string) => {
           const imgRef: any = ref(storage, url);
           deleteObject(imgRef)
-            .then(() => {
-              // console.log("deleted")
-            })
-            .catch((error) => {
-              // console.log(error)
-            });
         });
-        if (isCoverupdated) {
-          const storageRef = ref(storage, `projects/${projectPubKey}/${coverFile.name}`);
-          const uploadTask = uploadBytesResumable(storageRef, coverFile);
-          await uploadTask.on(
-            "state_changed",
-            (snapshot) => { },
-            (error) => console.log(error),
-            () => {
-              getDownloadURL(uploadTask.snapshot.ref).then(async (cover) => {
-                await updateDoc(idosCollectionRef, {
-                  content: JSON.stringify(outputData),
-                  projectCover: cover,
-                });
-                const imgRef: any = ref(storage, oldCover);
-                deleteObject(imgRef)
-              });
-            }
-          );
-        }
         await updateDoc(idosCollectionRef, {
           content: JSON.stringify(outputData),
         });
@@ -193,7 +191,7 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       .catch((error: any) => {
         notification("danger", "Unable to save your changes.", "Update IDO");
       });
-    setSaveState(false);
+    setLoading(false);
   };
 
   const signWallet = useCallback(async () => {
@@ -214,8 +212,8 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       if (!sign.detached.verify(message, signature, publicKey.toBytes()))
         throw new Error("Invalid signature!");
 
-      setSaveState(true);
-    } 
+      setLoading(true);
+    }
     catch (error: any) {
       notification(
         "danger",

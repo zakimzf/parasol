@@ -43,7 +43,7 @@ const SubmitProject = () => {
   const splRef: any = useRef(null);
   const submitBtnRef: any = useRef(null);
 
-  const idosCollectionRef = collection(db, "idos");
+  const idosCollectionRef = collection(db, "ido-metadata");
   const [coverFile, setcoverFile] = useState<any>();
   const [loading, setLoading] = useState(false)
 

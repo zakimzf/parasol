@@ -28,6 +28,7 @@ const EditorJs = dynamic(() => import("../../../components/editorjs"), {
 });
 
 const ProjectDetails = () => {
+  const [loading, setLoading] = useState(false);
   const { provider, config } = useContext(NftContext);
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
@@ -48,8 +49,7 @@ const ProjectDetails = () => {
       const data = await project.data()
       
       // const { data }: any = await axios.get(`/api/projects/${projectPubKey}`);
-      // setCover(data.projectCover)
-      // setTempCover(data.projectCover)
+      setCover(data.cover)
       if (data) {
         if (data.splToken) {
           const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
@@ -204,6 +204,8 @@ const ProjectDetails = () => {
                               coverFile={coverFile}
                               isCoverupdated={tempCover != ""}
                               oldCover={ido.cover}
+                              loading={loading}
+                              setLoading={setLoading}
                             />
                           </div>
                         </Tab.Panel>
@@ -213,7 +215,7 @@ const ProjectDetails = () => {
                               <tbody className="divide-y divide-gray-800">
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Address</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{projectPubKey}</td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.tokenAddress}</td>
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Name</td>
@@ -321,9 +323,8 @@ const ProjectDetails = () => {
                           </div>
                         </div>
                         {walletAddress ? walletAddress == ido.creator ? (
-                          <button className={"w-full button mt-8"} id="saveEditor">
-                            <PencilAltIcon className={"w-6"} />
-                            Save Changes
+                          <button className={"w-full button mt-8"} id="saveEditor" disabled={loading}>
+                            {loading ? "Saving..." : "Save Changes"}
                           </button>
                         ) : (
                           <>
