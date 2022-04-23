@@ -159,8 +159,6 @@ const SubmitProject = () => {
           _errors["endTime"] = "You cannot create an IDO longer than 14 days";
         }
       }
-
-      // console.log(values.startTime, diffDays, nowTime > stTime,  stTime > enTime)
     }
 
     if (selectedIdoOptions.id == 1) {
@@ -189,47 +187,46 @@ const SubmitProject = () => {
 
     if (Object.keys(_errors).length == 0) {
       try {
-        console.log("good")
-        // const nftStore = await new NftStore(provider, config).build();
+        const nftStore = await new NftStore(provider, config).build();
 
-        // const projectKeypair = Keypair.generate();
-        // const projectPubKey = projectKeypair.publicKey;
-        // const project = await new Project(provider, nftStore, projectPubKey).build();
-        // const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
+        const projectKeypair = Keypair.generate();
+        const projectPubKey = projectKeypair.publicKey;
+        const project = await new Project(provider, nftStore, projectPubKey).build();
+        const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
 
-        // const index = packages.findIndex(p => p.name === values.package.name);
+        const index = packages.findIndex(p => p.name === values.package.name);
 
-        // const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
-        // console.log(`${process.env.DOMAIN_URL}/projects/api/${projectPubKey?.toBase58()}`)
-        // const args: any = {
-        //   projectKind: projectKinds[index].address,
-        //   treasuryMint: new PublicKey(treasuryMint),
-        //   tokenMint: tokenMint,
-        //   tokenDecimals: 0,
-        //   tier: index,
-        //   hardCap: values.hardCap,
-        //   salePrice: values.tokenPrice,
-        //   liquidPoolFeeBasisPoints: (parseInt(values.liquidity) / 100),
-        //   startTime: new Date(values.startTime),
-        //   endTime: new Date(values.endTime),
-        //   uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
-        // }
+        const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
+        console.log(`${process.env.DOMAIN_URL}/projects/api/${projectPubKey?.toBase58()}`)
+        const args: any = {
+          projectKind: projectKinds[index].address,
+          treasuryMint: new PublicKey(treasuryMint),
+          tokenMint: tokenMint,
+          tokenDecimals: values.tokenDecimals,
+          tier: index,
+          hardCap: values.hardCap,
+          salePrice: values.tokenPrice,
+          liquidPoolFeeBasisPoints: (parseInt(values.liquidity) / 100),
+          startTime: new Date(values.startTime),
+          endTime: new Date(values.endTime),
+          uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
+        }
 
-        // const tx = await project.create(args, user);
+        const tx = await project.create(args, user);
 
-        // // sign transaction
-        // let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
-        // // confirm transaction
-        // await connection.confirmTransaction(signature, "confirmed");
+        // sign transaction
+        let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
+        // confirm transaction
+        await connection.confirmTransaction(signature, "confirmed");
 
-        // values.publicKey = walletAddress;
-        // values.projectKey = projectPubKey?.toBase58()
+        values.publicKey = walletAddress;
+        values.projectKey = projectPubKey?.toBase58()
 
-        // await uploadFiles(coverFile, async (_values: any) => {
-        //   await setDoc(doc(idosCollectionRef, values.projectKey), _values);
-        //   router.push(`/projects/${values.projectKey}`);
-        setLoading(false);
-        // })
+        await uploadFiles(coverFile, async (_values: any) => {
+          await setDoc(doc(idosCollectionRef, values.projectKey), _values);
+          router.push(`/projects/${values.projectKey}`);
+          setLoading(false);
+        })
       }
       catch (err) {
         console.log(err)
