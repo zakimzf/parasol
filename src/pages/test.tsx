@@ -2,12 +2,12 @@ import Container from "../components/container";
 import { useNewsletterModal } from "../components/newsletter-modal/useNewsletterModal";
 
 const Test = () => {
-  const { setVisible } = useNewsletterModal();
+  const { setReminder } = useNewsletterModal();
   return (
     <section>
       <Container>
         <button
-          onClick={() => setVisible(true)}
+          onClick={() => setReminder(true)}
           className={"button text-sm px-10"}>
           Try Reminder
         </button>
