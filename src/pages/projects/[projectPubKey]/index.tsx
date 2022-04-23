@@ -48,7 +48,6 @@ const ProjectDetails = () => {
       const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
       const data = await project.data()
       
-      // const { data }: any = await axios.get(`/api/projects/${projectPubKey}`);
       setCover(data.cover)
       if (data) {
         if (data.splToken) {
@@ -109,7 +108,7 @@ const ProjectDetails = () => {
                   <div className="flex mb-6 gap-x-5">
                     <img
                       className="rounded-full h-16 p-1 m-0"
-                      src={ido.icon}
+                      src={ido.icon || "/assets/icons/dollar.svg"}
                       alt={ido.name}
                     />
                     <div className={"w-1/2"}>
@@ -215,7 +214,7 @@ const ProjectDetails = () => {
                               <tbody className="divide-y divide-gray-800">
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Address</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.tokenAddress}</td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.tokenMint}</td>
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Name</td>
@@ -227,12 +226,12 @@ const ProjectDetails = () => {
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.decimals}</td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.tokenDecimals}</td>
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDT)</td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm">
-                                    <NumberFormat value={ido.priceUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} />
+                                    <NumberFormat value={ido.salePrice} displayType={"text"} thousandSeparator={true} prefix={"$"} />
                                   </td>
                                 </tr>
                                 <tr>
