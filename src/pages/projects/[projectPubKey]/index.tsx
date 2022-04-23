@@ -15,9 +15,6 @@ import NumberFormat from "react-number-format";
 import Disqus from "disqus-react";
 import Countdown from "react-countdown";
 import { useDropzone } from "react-dropzone";
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import { doc, updateDoc } from "firebase/firestore";
-import { db, storage } from "../../../utils/firebase";
 import { getBase64 } from "../../../utils/functions";
 import { NftStore, Project } from "parasol-finance-sdk";
 import { NftContext } from "../../../context/NftContext";
@@ -106,11 +103,13 @@ const ProjectDetails = () => {
               <div className="grid md:grid-cols-9">
                 <div className="md:col-span-6 md:pr-16">
                   <div className="flex mb-6 gap-x-5">
-                    <img
-                      className="rounded-full h-16 p-1 m-0"
-                      src={ido.icon || "/assets/icons/dollar.svg"}
-                      alt={ido.name}
-                    />
+                    {ido.icon && (
+                      <img
+                        className="rounded-full h-16 p-1 m-0"
+                        src={ido.icon}
+                        alt={ido.name}
+                      />
+                    )}
                     <div className={"w-1/2"}>
                       <a id="features" className="pb-3 text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
                         {ido.name}
@@ -173,16 +172,18 @@ const ProjectDetails = () => {
                                 </a>
                               )}
                             </Tab>
-                            <Tab as={Fragment}>
-                              {({ selected }) => (
-                                <a
-                                  href={"#wp"}
-                                  className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
-                                  aria-current={selected ? "page" : undefined}>
-                                  White Paper
-                                </a>
-                              )}
-                            </Tab>
+                            {ido.whitepaperUrl && (
+                              <Tab as={Fragment}>
+                                {({ selected }) => (
+                                  <a
+                                    href={"#wp"}
+                                    className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                                    aria-current={selected ? "page" : undefined}>
+                                    White Paper
+                                  </a>
+                                )}
+                              </Tab>
+                            )}
                             {ido.websiteUrl && <a
                               href={ido.websiteUrl}
                               target={"_blank"}
@@ -196,20 +197,24 @@ const ProjectDetails = () => {
                       <Tab.Panels>
                         <Tab.Panel>
                           <div className={"prose markdown prose-lg prose-invert"}>
-                            <EditorJs
-                              content={ido.content || "{}"}
-                              isOwner={walletAddress && walletAddress == ido.creator || false}
-                              projectPubKey={projectPubKey}
-                              coverFile={coverFile}
-                              isCoverupdated={tempCover != ""}
-                              oldCover={ido.cover}
-                              loading={loading}
-                              setLoading={setLoading}
-                            />
+                            {ido.content ? (
+                              <EditorJs
+                                content={ido.content || "{}"}
+                                isOwner={walletAddress && walletAddress == ido.creator || false}
+                                projectPubKey={projectPubKey}
+                                coverFile={coverFile}
+                                isCoverupdated={tempCover != ""}
+                                oldCover={ido.cover}
+                                loading={loading}
+                                setLoading={setLoading}
+                              />
+                            ) : (
+                              <p>This IDO has no content at the moment.</p>
+                            )}
                           </div>
                         </Tab.Panel>
-                        <Tab.Panel>
-                          <div className="overflow-hidden shadow pt-5 ring-1 ring-black ring-opacity-5 -rounded-md">
+                        <Tab.Panel className={"pt-6"}>
+                          <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 -rounded-md">
                             <table className="min-w-full divide-y divide-gray-800 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg">
                               <tbody className="divide-y divide-gray-800">
                                 <tr>
@@ -250,9 +255,11 @@ const ProjectDetails = () => {
                             </table>
                           </div>
                         </Tab.Panel>
-                        <Tab.Panel>
-                          <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-full my-3 min-h-screen border-none"} />
-                        </Tab.Panel>
+                        {ido.whitepaperUrl && (
+                          <Tab.Panel className={"pt-6"}>
+                            <iframe src={ido.whitepaperUrl + "#toolbar=0&navpanes=0"} className={"w-full my-3 min-h-screen border-none"} />
+                          </Tab.Panel>
+                        )}
                       </Tab.Panels>
                     </Tab.Group>
                   </SRLWrapper>
