@@ -4,12 +4,17 @@ import { useNewsletterModal } from "./useNewsletterModal";
 import { BellIcon } from "@heroicons/react/outline";
 
 export const NewsletterModal: FC = () => {
-  const { reminder, setReminder } = useNewsletterModal();
-  const [value, setValue] = useState("")
+  const { reminder, setReminder, projectKey, setProjectKey } = useNewsletterModal();
+  const [value, setEmail] = useState("")
+
+  const activedReminder = () => {
+    console.log(value, projectKey);
+  }
 
   const close = () => {
     setReminder(false)
-    setValue("")
+    setEmail("")
+    setProjectKey("");
   };
 
   return (
@@ -57,6 +62,7 @@ export const NewsletterModal: FC = () => {
                         Enter Email Address
                       </label>
                       <input
+                        onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         name="emailAddress"
                         id="email-address"
@@ -70,7 +76,7 @@ export const NewsletterModal: FC = () => {
                   <button
                     type="button"
                     className="button text-sm gap-x-1 py-3"
-                    onClick={() => setReminder(true)}>
+                    onClick={activedReminder}>
                     <BellIcon className={"w-4"} />
                     Subscribe
                   </button>

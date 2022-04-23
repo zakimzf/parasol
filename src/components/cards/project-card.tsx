@@ -40,9 +40,10 @@ const ProjectCard = ({
   startTime,
   endTime
 }: ProjectDetails) => {
-  const { setReminder } = useNewsletterModal();
+  const { setReminder, setProjectKey } = useNewsletterModal();
   const startTime_ = new Date(startTime).toISOString().slice(0, 10);
   const endTime_ = new Date(endTime).toISOString().slice(0, 10);
+  
   return (
     <Card>
       {cover && (
@@ -96,7 +97,10 @@ const ProjectCard = ({
         <div className="flex gap-x-3">
           {startTime >= Date.now() ? (
             <button
-              onClick={() => setReminder(true)}
+              onClick={() => {
+                setReminder(true);
+                setProjectKey(id + "");
+              }}
               className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap">
               <BellIcon className={"w-5 h-5"} />
               Set a Reminder

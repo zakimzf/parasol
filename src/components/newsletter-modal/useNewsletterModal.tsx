@@ -1,14 +1,10 @@
 import { createContext, useContext } from "react";
-import { PublicKey } from "@solana/web3.js";
-
-export enum NewsletterChooserMode {
-  Input,
-  Output
-}
 
 export interface NewsletterModalContextState {
   reminder: boolean;
   setReminder: (open: boolean) => void;
+  projectKey: string;
+  setProjectKey: (id: string) => void;
 }
 
 export const NewsletterModalContext = createContext<NewsletterModalContextState>({} as NewsletterModalContextState);
