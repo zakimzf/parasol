@@ -787,7 +787,7 @@ const SubmitProject = () => {
                               <>
                                 <div className="flex-1 flex">
                                   <div className="flex flex-col">
-                                    <RadioGroup.Label as="span" className="block text-sm font-medium">
+                                    <RadioGroup.Label as="span" className="block text-base font-medium">
                                       {plan.name}
                                     </RadioGroup.Label>
                                     <RadioGroup.Description as="span" className="mt-2 flex items-center text-sm">
