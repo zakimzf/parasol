@@ -71,6 +71,7 @@ const SubmitProject = () => {
     startTime: "",
     endTime: "",
     liquidity: "50",
+    tokenDecimals: 0,
     package: packages[0],
     isFeatured: false,
     created: Timestamp.now()
@@ -139,19 +140,21 @@ const SubmitProject = () => {
       }
     }
 
-    const { name, value } = splRef.current;
-    if (value) {
-      const isExist = await isTokenAddressExist(value);
+    if (selectedIdoOptions.id == 1) {
+      const { name, value } = splRef.current;
+      if (value) {
+        const isExist = await isTokenAddressExist(value);
 
-      if (isExist) {
-        _errors[name] = "This address was already used for run a previous IDO";
-        splRef.current.classList.add(...errClasses);
+        if (isExist) {
+          _errors[name] = "This address was already used for run a previous IDO";
+          splRef.current.classList.add(...errClasses);
+        }
+
+        await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${value}`).catch(error => {
+          _errors[name] = "Please enter a valid token address"
+          splRef.current.classList.add(...errClasses);
+        });
       }
-
-      await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${value}`).catch(error => {
-        _errors[name] = "Please enter a valid token address"
-        splRef.current.classList.add(...errClasses);
-      });
     }
 
     setErrors(_errors);
@@ -167,33 +170,33 @@ const SubmitProject = () => {
 
         const projectKeypair = Keypair.generate();
         const projectPubKey = projectKeypair.publicKey;
-        const project = await new Project(provider, nftStore, projectPubKey).build();
-        const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
+        // const project = await new Project(provider, nftStore, projectPubKey).build();
+        // const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
 
-        const index = packages.findIndex(p => p.name === values.package.name);
+        // const index = packages.findIndex(p => p.name === values.package.name);
 
-        const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
-        console.log(`${process.env.DOMAIN_URL}/projects/api/${projectPubKey?.toBase58()}`)
-        const args: any = {
-          projectKind: projectKinds[index].address,
-          treasuryMint: new PublicKey(treasuryMint),
-          tokenMint: tokenMint,
-          tokenDecimals: 0,
-          tier: index,
-          hardCap: values.hardCap,
-          salePrice: values.tokenPrice,
-          liquidPoolFeeBasisPoints: (parseInt(values.liquidity) / 100),
-          startTime: new Date(values.startTime),
-          endTime: new Date(values.endTime),
-          uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
-        }
+        // const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
+        // console.log(`${process.env.DOMAIN_URL}/projects/api/${projectPubKey?.toBase58()}`)
+        // const args: any = {
+        //   projectKind: projectKinds[index].address,
+        //   treasuryMint: new PublicKey(treasuryMint),
+        //   tokenMint: tokenMint,
+        //   tokenDecimals: 0,
+        //   tier: index,
+        //   hardCap: values.hardCap,
+        //   salePrice: values.tokenPrice,
+        //   liquidPoolFeeBasisPoints: (parseInt(values.liquidity) / 100),
+        //   startTime: new Date(values.startTime),
+        //   endTime: new Date(values.endTime),
+        //   uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
+        // }
 
-        const tx = await project.create(args, user);
+        // const tx = await project.create(args, user);
 
-        // sign transaction
-        let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
-        // confirm transaction
-        await connection.confirmTransaction(signature, "confirmed");
+        // // sign transaction
+        // let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
+        // // confirm transaction
+        // await connection.confirmTransaction(signature, "confirmed");
 
         values.publicKey = walletAddress;
         values.projectKey = projectPubKey?.toBase58()
@@ -209,6 +212,7 @@ const SubmitProject = () => {
         setLoading(false);
       }
     }
+    else setLoading(false);
   }
 
   useEffect(() => {
@@ -363,7 +367,7 @@ const SubmitProject = () => {
                           id="token-address"
                           placeholder={"SPL Token Address"}
                           pattern={"[A-Za-z0-9]*"}
-                          className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
+                          className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 ${selectedIdoOptions.id && "required_"} ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
                           aria-invalid="true"
                           ref={splRef}
                         />
@@ -379,23 +383,23 @@ const SubmitProject = () => {
                   ) : (
                     <div className="sm:col-span-12 relative">
                       <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
-                          Token Decimals <span className="text-purple-2">*</span>
+                        Token Decimals <span className="text-purple-2">*</span>
                       </label>
                       <input
-                        // onChange={handleChange} value={values.splToken}
+                        onChange={handleChange} value={values.tokenDecimals}
                         type="number"
                         min={0}
                         max={18}
                         name="tokenDecimals"
                         id="token-decimals"
                         placeholder={"Enter Decimals"}
-                        className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
-                        // aria-invalid="true"
-                        // ref={splRef}
+                        className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 ${(errors.tokenDecimals && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
+                      // aria-invalid="true"
+                      // ref={splRef}
                       />
-                      {/*{errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">*/}
-                      {/*  <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />*/}
-                      {/*</div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></>}*/}
+                      {errors.tokenDecimals && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenDecimals}</div></>}
                     </div>
                   )}
                 </div>
