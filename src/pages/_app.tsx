@@ -22,6 +22,7 @@ import Footer from "../components/footer";
 import { TokenModalProvider } from "../components/token-chooser/TokenModalProvider";
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
+import { ReminderModalProvider } from "../components/reminder-modal/ReminderModalProvider";
 import { NftProvider } from "../context/NftContext";
 import Router from "next/router";
 import NProgress from "nprogress";
@@ -76,27 +77,27 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | Community Governed Launchpad on Solana.</title>
-        <meta charSet="UTF-8"/>
-        <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-        <meta name="title" content="Parasol Finance ($PSOL) | Community Governed Launchpad on Solana."/>
+        <meta charSet="UTF-8" />
+        <link rel="icon" href="/assets/icons/favicon.svg" type="image/svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="title" content="Parasol Finance ($PSOL) | Community Governed Launchpad on Solana." />
         <meta name="description"
-          content="Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs of both projects and investors alike."/>
-        <meta name="keywords" content="parasol,parasol-finance,launchpad,solana,ido,ico,cryptocurrencies,binance"/>
-        <meta property="og:type" content="website"/>
-        <meta property="og:url" content="https://www.parasol.finance/"/>
-        <meta property="og:title" content="Parasol Finance ($PSOL) | Community Governed Launchpad on Solana."/>
+          content="Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs of both projects and investors alike." />
+        <meta name="keywords" content="parasol,parasol-finance,launchpad,solana,ido,ico,cryptocurrencies,binance" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://www.parasol.finance/" />
+        <meta property="og:title" content="Parasol Finance ($PSOL) | Community Governed Launchpad on Solana." />
         <meta property="og:description"
-          content="Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs of both projects and investors alike."/>
-        <meta property="twitter:card" content="summary_large_image"/>
-        <meta property="twitter:site" content="@parasol_finance"/>
-        <meta property="twitter:creator" content="@parasol_finance"/>
-        <meta property="twitter:url" content="https://www.parasol.finance/"/>
-        <meta property="twitter:title" content="Parasol Finance ($PSOL) | Community Governed Launchpad on Solana."/>
+          content="Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs of both projects and investors alike." />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:site" content="@parasol_finance" />
+        <meta property="twitter:creator" content="@parasol_finance" />
+        <meta property="twitter:url" content="https://www.parasol.finance/" />
+        <meta property="twitter:title" content="Parasol Finance ($PSOL) | Community Governed Launchpad on Solana." />
         <meta property="twitter:description"
-          content="Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs of both projects and investors alike."/>
-        <meta property="og:image" content="/assets/preview/default.png"/>
-        <meta property="twitter:image" content="/assets/preview/default.png"/>
+          content="Parasol Finance is the first-ever community governed IDO platform built on Solana with the needs of both projects and investors alike." />
+        <meta property="og:image" content="/assets/preview/default.png" />
+        <meta property="twitter:image" content="/assets/preview/default.png" />
       </Head>
       <body>
         <ConnectionProvider endpoint={endpoint}>
@@ -105,25 +106,27 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
             autoConnect={true}
           >
             <WalletModalProvider>
-              <AnnounceBar/>
+              <AnnounceBar />
               <div className={"sticky top-0 w-full z-50"}>
                 <Toaster
                   containerClassName={"!absolute !inset-0 w-full h-screen"}
                   containerStyle={{}}
                   position={"top-right"}
-                  gutter={0}/>
+                  gutter={0} />
               </div>
-              <Header/>
+              <Header />
               <main role="main">
                 <SimpleReactLightbox>
                   <TokenModalProvider>
-                    <NftProvider {...pageProps} >
-                      <Component {...pageProps} />
-                    </NftProvider>
+                    <ReminderModalProvider>
+                      <NftProvider {...pageProps} >
+                        <Component {...pageProps} />
+                      </NftProvider>
+                    </ReminderModalProvider>
                   </TokenModalProvider>
                 </SimpleReactLightbox>
               </main>
-              <Footer/>
+              <Footer />
             </WalletModalProvider>
           </WalletProvider>
         </ConnectionProvider>

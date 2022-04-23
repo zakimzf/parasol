@@ -4,6 +4,7 @@ import Card from "../card";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { BellIcon, CollectionIcon } from "@heroicons/react/outline";
 import Countdown from "react-countdown";
+import { useReminderModal } from "../reminder-modal/useReminderModal";
 
 type ProjectDetails = {
   id: String;
@@ -39,8 +40,10 @@ const ProjectCard = ({
   startTime,
   endTime
 }: ProjectDetails) => {
+  const { setReminder, setProjectKey } = useReminderModal();
   const startTime_ = new Date(startTime).toISOString().slice(0, 10);
   const endTime_ = new Date(endTime).toISOString().slice(0, 10);
+  
   return (
     <Card>
       {cover && (
@@ -93,15 +96,20 @@ const ProjectCard = ({
         </div>
         <div className="flex gap-x-3">
           {startTime >= Date.now() ? (
-            <button className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap">
+            <button
+              onClick={() => {
+                setReminder(true);
+                setProjectKey(id);
+              }}
+              className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap">
               <BellIcon className={"w-5 h-5"} />
-                  Set a Reminder
+              Set a Reminder
             </button>
           ) : (
             <Link href={`/projects/${id}/participate`} passHref>
               <button className="button py-3 flex-1 text-base whitespace-nowrap">
                 <CollectionIcon className={"w-5 h-5"} />
-                  Participate in IDO
+                Participate in IDO
               </button>
             </Link>
           )}
