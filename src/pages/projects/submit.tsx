@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Listbox, RadioGroup, Transition } from "@headlessui/react"
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
+import { CheckIcon, PlusCircleIcon, SelectorIcon } from "@heroicons/react/solid"
 import Container from "../../components/container";
 import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
@@ -19,6 +19,7 @@ import Card from "../../components/card";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { NftContext } from "../../context/NftContext";
 import { NftStore, Project } from "parasol-finance-sdk";
+import Link from "next/link";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -29,6 +30,11 @@ const packages = [
   { name: "Pro", description: "[description]", price: 10500 },
   { name: "Ultimate", description: "Listing and promotion.", price: 21000 }
 ];
+
+const idoOptions = [
+  { id: 1, title: "SPL Token Ready", description: "I already have an SPL token" },
+  { id: 2, title: "TGE after IDO", description: "I want to create token at the end of the IDO." },
+]
 
 const SubmitProject = () => {
   const router = useRouter();
@@ -192,7 +198,7 @@ const SubmitProject = () => {
 
         values.publicKey = walletAddress;
         values.projectKey = projectPubKey?.toBase58()
-        
+
         await uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, values.projectKey), _values);
           router.push(`/projects/${values.projectKey}`);
@@ -205,7 +211,7 @@ const SubmitProject = () => {
       }
     }
   }
-  
+
   useEffect(() => {
     const getTokeData = () => {
       const address = values.splToken;
@@ -280,6 +286,8 @@ const SubmitProject = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
+  const [selectedIdoOptions, setSelectedIdoOptions] = useState(idoOptions[0])
+
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
@@ -291,39 +299,85 @@ const SubmitProject = () => {
               <form className="space-y-12 md:pr-16 divide-y- divide-gray-400">
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
-                    <h2 className="text-xl font-medium text-blue-gray-900">1. General Information</h2>
+                    <h2 className="text-xl font-medium text-blue-gray-900">1. Choose a Launch Option</h2>
                     <p className="mt-1 text-sm text-blue-gray-500">
-                      Please provide your SPL token address.
+                      Choose the scenario that corresponds to you.
                     </p>
                   </div>
-
-                  <div className="sm:col-span-6 relative">
-                    <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
-                      Enter your Token Address
-                      (Optional)
-                      {/*<span className="text-purple-2">*</span>*/}
-                    </label>
-                    <input onChange={handleChange} value={values.splToken}
-                      type="text"
-                      name="splToken"
-                      id="token-address"
-                      placeholder={"SPL Token Address"}
-                      pattern={"[A-Za-z0-9]*"}
-                      className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2
-                      ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
-                      aria-invalid="true"
-                      ref={splRef}
-                    />
-
-                    {errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></>}
-
+                  {selectedIdoOptions.id == 2 && (
+                    <div className={"sm:col-span-6 flex ml-auto justify-items-end items-center"}>
+                      <Link href={"/tools/token-creator"}>
+                        <a
+                          type="button"
+                          className="inline-flex items-center gap-x-1 px-3.5 py-2 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm text-white bg-white bg-opacity-30 text-purple-2 hover:bg-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-2">
+                          <PlusCircleIcon className={"w-4"} />
+                          Create SPL Token
+                        </a>
+                      </Link>
+                    </div>
+                  )}
+                  <div className="sm:col-span-12">
+                    <RadioGroup value={selectedIdoOptions} onChange={setSelectedIdoOptions}>
+                      <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                        {idoOptions.map((idoOption) => (
+                          <RadioGroup.Option
+                            key={idoOption.id}
+                            value={idoOption}
+                            className={({ active }) => "relative border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none"}>
+                            {({ checked, active }) => (
+                              <>
+                                <div className="flex-1 flex">
+                                  <div className="flex flex-col">
+                                    <RadioGroup.Label as="span" className="block text-sm font-medium">
+                                      {idoOption.title}
+                                    </RadioGroup.Label>
+                                    <RadioGroup.Description as="span" className="mt-1 flex items-center text-sm">
+                                      {idoOption.description}
+                                    </RadioGroup.Description>
+                                  </div>
+                                </div>
+                                <CheckCircleIcon
+                                  className={`${!checked ? "invisible" : ""} h-5 w-5 text-purple-2`}
+                                  aria-hidden={true}
+                                />
+                                <div
+                                  className={`${checked ? "border-purple-2" : "border-transparent"} border-2 absolute -inset-px rounded-lg pointer-events-none`}
+                                  aria-hidden={true}
+                                />
+                              </>
+                            )}
+                          </RadioGroup.Option>
+                        ))}
+                      </div>
+                    </RadioGroup>
                   </div>
 
-                  <p className="text-sm text-blue-gray-500 sm:col-span-6">
-                    The token information will be fetched from the Solana blockchain.
-                  </p>
+                  {selectedIdoOptions.id == 1 && (
+                    <>
+                      <div className="sm:col-span-12 relative">
+                        <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
+                          Enter your Token Address <span className="text-purple-2">*</span>
+                        </label>
+                        <input onChange={handleChange} value={values.splToken}
+                          type="text"
+                          name="splToken"
+                          id="token-address"
+                          placeholder={"SPL Token Address"}
+                          pattern={"[A-Za-z0-9]*"}
+                          className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
+                          aria-invalid="true"
+                          ref={splRef}
+                        />
+                        {errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                          <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                        </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></>}
+                      </div>
+
+                      <p className="text-sm text-blue-gray-500 sm:col-span-6">
+                        The token information will be fetched from the Solana blockchain.
+                      </p>
+                    </>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
@@ -604,7 +658,7 @@ const SubmitProject = () => {
                                           {dex.name}
                                         </span>
                                         {selected ? (
-                                          <span className={`${active ? "text-white" : "text-indigo-600"} absolute inset-y-0 right-0 flex items-center pr-4`}>
+                                          <span className={`${active ? "text-white" : "text-purple-2"} absolute inset-y-0 right-0 flex items-center pr-4`}>
                                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                           </span>
                                         ) : null}
@@ -688,7 +742,7 @@ const SubmitProject = () => {
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
-                    <h2 className="text-xl font-medium text-blue-gray-900">4. Choose Pricing</h2>
+                    <h2 className="text-xl font-medium text-blue-gray-900">5. Choose Pricing</h2>
                     <p className="mt-1 text-sm text-blue-gray-500">
                       Choose the package that best suits your needs, you can read more regarding this pricing <a href={""} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a> .
                     </p>
