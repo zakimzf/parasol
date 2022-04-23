@@ -114,8 +114,18 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                   position={"top-right"}
                   gutter={0} />
               </div>
+              {/*<div className={"absolute pointer-events-none- w-full h-screen z-0 opacity-5"}>*/}
+              {/*  <div className="absolute inset-0">*/}
+              {/*    <img*/}
+              {/*      className="h-full w-full object-cover"*/}
+              {/*      src="https://firebasestorage.googleapis.com/v0/b/project-finance-devnet.appspot.com/o/projects%2FBWR9XQTVAkfGHvDaUa482hamGimPTbELS7PRUKjYFxaF%2Fsecretum.jpg?alt=media&token=017d12ed-6920-41e9-94cb-3960f9d032fc"*/}
+              {/*      alt="People working on laptops"*/}
+              {/*    />*/}
+              {/*    <div className="absolute inset-0 bg-purple-2 bg-opacity-30 backdrop-blur-sm" />*/}
+              {/*  </div>*/}
+              {/*</div>*/}
               <Header />
-              <main role="main">
+              <main role="main" className={"relative-"}>
                 <SimpleReactLightbox>
                   <TokenModalProvider>
                     <ReminderModalProvider>
