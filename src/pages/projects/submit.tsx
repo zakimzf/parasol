@@ -138,6 +138,29 @@ const SubmitProject = () => {
       if (!values.package) {
         _errors["package"] = "This field is required";
       }
+
+      if (values.startTime && values.endTime) {
+        const nowTime = new Date();
+        const stTime: any = new Date(values.startTime);
+        const enTime: any = new Date(values.endTime);
+        const diffTime = Math.abs(enTime - stTime);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const stRef = document.getElementById("startTime");
+        const enRef = document.getElementById("endTime");
+
+        stRef?.classList.remove(...errClasses);
+        enRef?.classList.remove(...errClasses);
+        if (nowTime > stTime) {
+          stRef?.classList.add(...errClasses);
+          _errors["startTime"] = "start time should be greater than today";
+        }
+        else if (diffDays > 14) {
+          enRef?.classList.add(...errClasses);
+          _errors["endTime"] = "You cannot create an IDO longer than 14 days";
+        }
+      }
+
+      // console.log(values.startTime, diffDays, nowTime > stTime,  stTime > enTime)
     }
 
     if (selectedIdoOptions.id == 1) {
@@ -166,10 +189,11 @@ const SubmitProject = () => {
 
     if (Object.keys(_errors).length == 0) {
       try {
-        const nftStore = await new NftStore(provider, config).build();
+        console.log("good")
+        // const nftStore = await new NftStore(provider, config).build();
 
-        const projectKeypair = Keypair.generate();
-        const projectPubKey = projectKeypair.publicKey;
+        // const projectKeypair = Keypair.generate();
+        // const projectPubKey = projectKeypair.publicKey;
         // const project = await new Project(provider, nftStore, projectPubKey).build();
         // const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
 
@@ -198,14 +222,14 @@ const SubmitProject = () => {
         // // confirm transaction
         // await connection.confirmTransaction(signature, "confirmed");
 
-        values.publicKey = walletAddress;
-        values.projectKey = projectPubKey?.toBase58()
+        // values.publicKey = walletAddress;
+        // values.projectKey = projectPubKey?.toBase58()
 
-        await uploadFiles(coverFile, async (_values: any) => {
-          await setDoc(doc(idosCollectionRef, values.projectKey), _values);
-          router.push(`/projects/${values.projectKey}`);
-          setLoading(false);
-        })
+        // await uploadFiles(coverFile, async (_values: any) => {
+        //   await setDoc(doc(idosCollectionRef, values.projectKey), _values);
+        //   router.push(`/projects/${values.projectKey}`);
+        setLoading(false);
+        // })
       }
       catch (err) {
         console.log(err)
@@ -367,7 +391,7 @@ const SubmitProject = () => {
                           id="token-address"
                           placeholder={"SPL Token Address"}
                           pattern={"[A-Za-z0-9]*"}
-                          className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 ${selectedIdoOptions.id && "required_"} ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
+                          className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
                           aria-invalid="true"
                           ref={splRef}
                         />
@@ -393,9 +417,7 @@ const SubmitProject = () => {
                         name="tokenDecimals"
                         id="token-decimals"
                         placeholder={"Enter Decimals"}
-                        className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 ${(errors.tokenDecimals && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
-                      // aria-invalid="true"
-                      // ref={splRef}
+                        className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ ${(errors.tokenDecimals && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
                       />
                       {errors.tokenDecimals && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
@@ -618,7 +640,6 @@ const SubmitProject = () => {
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
                     {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.startTime}</div></>}
                   </div>
 
@@ -633,7 +654,6 @@ const SubmitProject = () => {
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
                     {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.endTime}</div></>}
                   </div>
                 </div>
