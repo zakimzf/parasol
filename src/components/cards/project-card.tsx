@@ -4,7 +4,7 @@ import Card from "../card";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { BellIcon, CollectionIcon } from "@heroicons/react/outline";
 import Countdown from "react-countdown";
-import { useNewsletterModal } from "../newsletter-modal/useNewsletterModal";
+import { useReminderModal } from "../reminder-modal/useReminderModal";
 
 type ProjectDetails = {
   id: String;
@@ -40,7 +40,7 @@ const ProjectCard = ({
   startTime,
   endTime
 }: ProjectDetails) => {
-  const { setReminder, setProjectKey } = useNewsletterModal();
+  const { setReminder, setProjectKey } = useReminderModal();
   const startTime_ = new Date(startTime).toISOString().slice(0, 10);
   const endTime_ = new Date(endTime).toISOString().slice(0, 10);
   

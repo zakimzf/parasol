@@ -19,14 +19,14 @@ import { getBase64 } from "../../../utils/functions";
 import { NftStore, Project } from "parasol-finance-sdk";
 import { NftContext } from "../../../context/NftContext";
 import { PublicKey } from "@solana/web3.js";
-import { useNewsletterModal } from "../../../components/newsletter-modal/useNewsletterModal";
+import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
 });
 
 const ProjectDetails = () => {
-  const { setReminder } = useNewsletterModal();
+  const { setReminder } = useReminderModal();
   const [loading, setLoading] = useState(false);
   const { provider, config } = useContext(NftContext);
   const { publicKey } = useWallet();

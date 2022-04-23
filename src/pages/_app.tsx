@@ -22,7 +22,7 @@ import Footer from "../components/footer";
 import { TokenModalProvider } from "../components/token-chooser/TokenModalProvider";
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
-import { NewsletterModalProvider } from "../components/newsletter-modal/NewsletterModalProvider";
+import { ReminderModalProvider } from "../components/reminder-modal/ReminderModalProvider";
 import { NftProvider } from "../context/NftContext";
 import Router from "next/router";
 import NProgress from "nprogress";
@@ -118,11 +118,11 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
               <main role="main">
                 <SimpleReactLightbox>
                   <TokenModalProvider>
-                    <NewsletterModalProvider>
+                    <ReminderModalProvider>
                       <NftProvider {...pageProps} >
                         <Component {...pageProps} />
                       </NftProvider>
-                    </NewsletterModalProvider>
+                    </ReminderModalProvider>
                   </TokenModalProvider>
                 </SimpleReactLightbox>
               </main>

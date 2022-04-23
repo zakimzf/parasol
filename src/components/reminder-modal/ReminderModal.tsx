@@ -1,18 +1,18 @@
-import React, { FC, Fragment, useEffect, useRef, useState } from "react";
+import React, { FC, Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { useNewsletterModal } from "./useNewsletterModal";
+import { useReminderModal } from "./useReminderModal";
 import { BellIcon } from "@heroicons/react/outline";
 import { db } from "../../utils/firebase";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
-export const NewsletterModal: FC = () => {
-  const { reminder, setReminder, projectKey, setProjectKey } = useNewsletterModal();
+export const ReminderModal: FC = () => {
+  const { reminder, setReminder, projectKey, setProjectKey } = useReminderModal();
   const [saved, setSaved] = useState(false)
   const [email, setEmail] = useState("")
   const remindersCollectionRef = collection(db, "reminders");
   const emailRef = useRef<any>(null);
 
-  const activedReminder = async (e: any) => {
+  const activatedReminder = async (e: any) => {
     e.preventDefault();
     await addDoc(remindersCollectionRef, { email, projectKey });
     setSaved(true);
@@ -56,7 +56,7 @@ export const NewsletterModal: FC = () => {
             <div
               className="inline-block align-bottom rounded-xl text-left overflow-hidden shadow-strong transform transition-all sm:align-middle sm:max-w-sm sm:w-full">
 
-              <form role="form" ref={emailRef} onSubmit={activedReminder}>
+              <form role="form" ref={emailRef} onSubmit={activatedReminder}>
                 <div className="bg-[#231f38] text-gray-100 p-5 sm:py-7">
                   <div className="sm:flex sm:items-start">
                     <div className="mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-purple-2 bg-opacity-20 sm:mx-0 sm:h-10 sm:w-10">
