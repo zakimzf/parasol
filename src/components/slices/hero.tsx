@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CollectionIcon } from "@heroicons/react/outline";
+import { ShoppingBagIcon } from "@heroicons/react/outline";
 
 import FloatingParasol from "../utils/floating-illustration";
 
@@ -56,10 +56,10 @@ const Hero = () => (
             </p>
           </div>
           <div className="mt-8 grid lg:flex gap-3 grid-cols-1 lg:grid-cols-2 justify-start">
-            <Link href={"/projects"}>
+            <Link href={"/tiers"}>
               <a className="button px-10 bg-none bg-purple-2 py-3 text-base">
-                <CollectionIcon className={"w-5 h-5"} />
-                View Upcoming IDOs
+                <ShoppingBagIcon className={"w-5 h-5"} />
+                Buy NFT Access Key
               </a>
             </Link>
             <Link href={"/swap"}>

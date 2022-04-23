@@ -1,5 +1,7 @@
 {
-  "redirects": [],
+  "redirects": [
+    { "source": "/nft-store", "destination": "/tiers" }
+  ],
   "headers": [
     {
       "source": "/api/(.*)",

@@ -19,12 +19,14 @@ import { getBase64 } from "../../../utils/functions";
 import { NftStore, Project } from "parasol-finance-sdk";
 import { NftContext } from "../../../context/NftContext";
 import { PublicKey } from "@solana/web3.js";
+import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
 });
 
 const ProjectDetails = () => {
+  const { setReminder } = useReminderModal();
   const [loading, setLoading] = useState(false);
   const { provider, config } = useContext(NftContext);
   const { publicKey } = useWallet();
@@ -90,11 +92,12 @@ const ProjectDetails = () => {
 
   return (
     <>
-
       <Head>
         <title>Parasol Finance ($PSOL)</title>
-        <meta property="og:image" content={`/api/projects/${projectPubKey}?cover`} />
-        <meta property="twitter:image" content={`/api/projects/${projectPubKey}?cover`} />
+        {/*<meta property="og:image" content={`/api/projects/${projectPubKey}?cover`} />*/}
+        {/*<meta property="twitter:image" content={`/api/projects/${projectPubKey}?cover`} />*/}
+        <meta property="og:image" content="/assets/preview/projects.png" />
+        <meta property="twitter:image" content="/assets/preview/projects.png" />
       </Head>
       {ido &&
         <>
@@ -335,7 +338,9 @@ const ProjectDetails = () => {
                         ) : (
                           <>
                             {ido.startTime >= Date.now() ? (
-                              <button className="w-full button">
+                              <button
+                                onClick={() => setReminder(true)}
+                                className="w-full button">
                                 <BellIcon className={"w-5 h-5"} />
                                 Set a Reminder
                               </button>
