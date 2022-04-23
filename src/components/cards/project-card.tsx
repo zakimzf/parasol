@@ -114,7 +114,9 @@ const ProjectCard = ({
             </Link>
           )}
           <Link href={`/projects/${id}`} passHref>
-            <button className="button py-3 flex-1 text-base">More Info</button>
+            <button className="button py-3 flex-1 text-base">
+              <span className={"hidden lg:block"}>More</span> Info
+            </button>
           </Link>
         </div>
       </div>
