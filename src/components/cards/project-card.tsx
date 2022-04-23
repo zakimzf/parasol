@@ -99,7 +99,7 @@ const ProjectCard = ({
             <button
               onClick={() => {
                 setReminder(true);
-                setProjectKey(id + "");
+                setProjectKey(id);
               }}
               className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap">
               <BellIcon className={"w-5 h-5"} />

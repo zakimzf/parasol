@@ -9,7 +9,7 @@ type NewsletterChooserProps = {
 
 export const NewsletterModalProvider: FC<NewsletterChooserProps> = ({ children }: NewsletterChooserProps) => {
   const [reminder, setReminder] = useState(false);
-  const [projectKey, setProjectKey] = useState<string>("");
+  const [projectKey, setProjectKey] = useState<any>();
   return <NewsletterModalContext.Provider
     value={{
       reminder, setReminder, projectKey, setProjectKey

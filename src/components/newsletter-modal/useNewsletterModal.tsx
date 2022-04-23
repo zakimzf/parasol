@@ -4,7 +4,7 @@ export interface NewsletterModalContextState {
   reminder: boolean;
   setReminder: (open: boolean) => void;
   projectKey: string;
-  setProjectKey: (id: string) => void;
+  setProjectKey: (id: any) => void;
 }
 
 export const NewsletterModalContext = createContext<NewsletterModalContextState>({} as NewsletterModalContextState);
