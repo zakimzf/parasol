@@ -6,7 +6,7 @@ type ContainerProps = {
 };
 
 const Container = ({ children, fluid }: ContainerProps) => (
-  <div className={`mx-auto ${fluid ? "px-20" : "max-w-7xl"} px-5 `}>{children}</div>
+  <div className={`mx-auto ${fluid ? "px-20" : "max-w-7xl"} px-5`}>{children}</div>
 )
 
 export default Container
