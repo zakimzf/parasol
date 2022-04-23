@@ -4,16 +4,16 @@ import { useNewsletterModal } from "./useNewsletterModal";
 import { BellIcon } from "@heroicons/react/outline";
 
 export const NewsletterModal: FC = () => {
-  const { visible, setVisible } = useNewsletterModal();
+  const { reminder, setReminder } = useNewsletterModal();
   const [value, setValue] = useState("")
 
   const close = () => {
-    setVisible(false)
+    setReminder(false)
     setValue("")
   };
 
   return (
-    <Transition.Root show={visible} as={Fragment}>
+    <Transition.Root show={reminder} as={Fragment}>
       <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={close}>
         <div
           className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -70,14 +70,14 @@ export const NewsletterModal: FC = () => {
                   <button
                     type="button"
                     className="button text-sm gap-x-1 py-3"
-                    onClick={() => setVisible(true)}>
+                    onClick={() => setReminder(true)}>
                     <BellIcon className={"w-4"} />
                     Subscribe
                   </button>
                   <button
                     type="button"
                     className="button text-sm py-3"
-                    onClick={() => setVisible(false)}>
+                    onClick={() => setReminder(false)}>
                     Close
                   </button>
                 </div>

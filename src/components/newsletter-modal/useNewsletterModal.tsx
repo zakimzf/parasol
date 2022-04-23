@@ -7,8 +7,8 @@ export enum NewsletterChooserMode {
 }
 
 export interface NewsletterModalContextState {
-  visible: boolean;
-  setVisible: (open: boolean) => void;
+  reminder: boolean;
+  setReminder: (open: boolean) => void;
 }
 
 export const NewsletterModalContext = createContext<NewsletterModalContextState>({} as NewsletterModalContextState);
