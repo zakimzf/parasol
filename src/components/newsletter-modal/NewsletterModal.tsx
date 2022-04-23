@@ -70,6 +70,10 @@ export const NewsletterModal: FC = () => {
                         className={"mt-1 block w-full bg-black bg-opacity-10 shadow-xl shadow-half-strong border border-gray-600 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"}
                       />
                     </Dialog.Description>
+                    {/*When the user subscribed*/}
+                    <Dialog.Description as={"p"} className={"mt-3 text-xs text-gray-300"}>
+                      🥳 Congrats! You will receive a notification.
+                    </Dialog.Description>
                   </div>
                 </div>
                 <div className="flex gap-x-2 mt-5 sm:mt-4 flex-row-reverse">

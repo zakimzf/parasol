@@ -22,10 +22,13 @@ import Footer from "../components/footer";
 import { TokenModalProvider } from "../components/token-chooser/TokenModalProvider";
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
+import { NewsletterModalProvider } from "../components/newsletter-modal/NewsletterModalProvider";
 import { NftProvider } from "../context/NftContext";
+import Router from "next/router";
+import NProgress from "nprogress";
 
 import "../styles/globals.scss";
-import { NewsletterModalProvider } from "../components/newsletter-modal/NewsletterModalProvider";
+import "nprogress/nprogress.css";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   const network: WalletAdapterNetwork = getWalletAdapterNetwork(
@@ -45,6 +48,20 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
     ],
     [network]
   );
+  React.useEffect(() => {
+    const handleRouteStart = () => NProgress.start();
+    const handleRouteDone = () => NProgress.done();
+
+    Router.events.on("routeChangeStart", handleRouteStart);
+    Router.events.on("routeChangeComplete", handleRouteDone);
+    Router.events.on("routeChangeError", handleRouteDone);
+
+    return () => {
+      Router.events.off("routeChangeStart", handleRouteStart);
+      Router.events.off("routeChangeComplete", handleRouteDone);
+      Router.events.off("routeChangeError", handleRouteDone);
+    };
+  }, []);
   useEffect(() => {
     (window as any).$crisp = [];
     (window as any).CRISP_WEBSITE_ID = "212516d5-ff63-4686-a490-d9f77ff93710";
