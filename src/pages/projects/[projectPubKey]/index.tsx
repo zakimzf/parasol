@@ -7,7 +7,7 @@ import { useWalletModal } from "../../../components/wallet-connector";
 import Head from "next/head";
 import Container from "../../../components/container";
 import Link from "next/link";
-import { BadgeCheckIcon, CloudUploadIcon, PencilAltIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon, BellIcon, CloudUploadIcon, PencilAltIcon } from "@heroicons/react/outline";
 import { SRLWrapper } from "simple-react-lightbox";
 import { Tab } from "@headlessui/react";
 import { ExternalLinkIcon, FireIcon } from "@heroicons/react/solid";
@@ -36,7 +36,7 @@ const ProjectDetails = () => {
   const [coverFile, setCoverFile] = useState("")
 
   const { projectPubKey }:any = router.query;
-  
+
   const [ido, setIdo] = useState<any>(null);
 
   useEffect(() => {
@@ -44,7 +44,7 @@ const ProjectDetails = () => {
       const nftStore = await new NftStore(provider, config).build();
       const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
       const data = await project.data()
-      
+
       setCover(data.cover)
       if (data) {
         if (data.splToken) {
@@ -60,7 +60,7 @@ const ProjectDetails = () => {
         }
         else setIdo(data);
       }
-      else await router.push("/404"); 
+      else await router.push("/404");
     };
     if (projectPubKey) getDataByTokenAddress();
   }, [projectPubKey]);
@@ -302,7 +302,7 @@ const ProjectDetails = () => {
                         <div className="prose prose-lg prose-invert">
                           <p>{ido.description}</p>
                         </div>
-                        <div className="flex-col space-y-3 mt-6">
+                        <div className="flex-col space-y-3 mt-6 mb-8">
                           <div className="flex font-medium items-center text-gray-300 gap-x-3">
                             <span>Hard Cap</span>
                             <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
@@ -334,12 +334,26 @@ const ProjectDetails = () => {
                           </button>
                         ) : (
                           <>
-                            <Link href={`/projects/${projectPubKey}/participate`}>
-                              <a className={"w-full flex items-center justify-center gap-x-2 mt-8 bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}>
-                                <FireIcon className={"w-6"} />
-                                Participate to Sale
-                              </a>
-                            </Link>
+                            {ido.startTime >= Date.now() ? (
+                              <button className="w-full button">
+                                <BellIcon className={"w-5 h-5"} />
+                                Set a Reminder
+                              </button>
+                            ) : (
+                              <>
+                                <Link href={`/projects/${projectPubKey}/participate`} passHref>
+                                  <button className="w-full button">
+                                    <FireIcon className={"w-6"} />
+                                    Participate to Sale
+                                  </button>
+                                </Link>
+                                {ido.endTime >= Date.now() && (
+                                  <p className={"text-sm text-center mt-3 mb-1 text-gray-300"}>
+                                    Sale close in <Countdown date={ido.endTime} />
+                                  </p>
+                                )}
+                              </>
+                            )}
                           </>
                         ) : (
                           <button
@@ -351,14 +365,16 @@ const ProjectDetails = () => {
                         )}
                       </div>
                     </div>
-                    <div className={"flex flex-col justify-center items-center"}>
-                      <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.name} Ends In:</p>
-                      <Countdown
-                        renderer={countdownRenderer}
-                        intervalDelay={0}
-                        precision={3}
-                        date={Date.now() + 210000000} />
-                    </div>
+                    {ido.startTime >= Date.now() && (
+                      <div className={"flex flex-col justify-center items-center"}>
+                        <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.name} Ends In:</p>
+                        <Countdown
+                          renderer={countdownRenderer}
+                          intervalDelay={0}
+                          precision={3}
+                          date={ido.startTime} />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
