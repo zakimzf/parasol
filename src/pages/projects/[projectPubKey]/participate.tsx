@@ -1,41 +1,46 @@
 import Container from "../../../components/container";
 import Card from "../../../components/card";
-import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { NftContext } from "../../../context/NftContext";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { RadioGroup } from "@headlessui/react"
+
 import { useRouter } from "next/router";
-import { useWalletModal } from "../../../components/wallet-connector";
 import { NftStore, Project } from "parasol-finance-sdk";
 import { PublicKey } from "@solana/web3.js";
 import axios from "axios";
 import NumberFormat from "react-number-format";
-import { BadgeCheckIcon, GlobeAltIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon, CheckIcon, GlobeAltIcon } from "@heroicons/react/outline";
 import Layout from "../../../components/layout";
 import { ClockIcon, FireIcon } from "@heroicons/react/solid";
 
-const nfts = [
-  {
-    name: "",
-    mint: "",
-  }
-]
-
 const ProjectParticipate = () => {
-  const { setReminder } = useReminderModal();
-  const [loading, setLoading] = useState(false);
   const { provider, config } = useContext(NftContext);
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const router = useRouter();
-  const walletModal = useWalletModal();
   const [cover, setCover] = useState("");
-  const [tempCover, setTempCover] = useState("")
-  const [coverFile, setCoverFile] = useState("")
+  const [selected, setSelected] = useState<any>();
 
   const { projectPubKey }:any = router.query;
 
   const [ido, setIdo] = useState<any>(null);
+
+  const { nfts, setNfts, user, wallet } = React.useContext(NftContext);
+
+  useEffect(() => setSelected(nfts[0]), [nfts]);
+
+  useEffect(() => {
+    if (!wallet.connected) return;
+    if (user) {
+      getNFTList();
+    }
+  }, [wallet.connected, user]);
+
+  const getNFTList = async () => {
+    const nftsmetadata = await user.getNFTList();
+    setNfts(nftsmetadata);
+  };
 
   useEffect(() => {
     const getDataByTokenAddress = async () => {
@@ -151,27 +156,79 @@ const ProjectParticipate = () => {
                           <BadgeCheckIcon className={"h-7 text-purple-2"} />
                         )}
                       </h2>
-                      <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
-                        <img
-                          className="h-8"
-                          src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
-                          alt="USDC"
-                        />
-                        <div className="flex items-end gap-x-2 text-4xl font-bold">
-                          <NumberFormat
-                            value={ido.hardCap}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                          />
-                          <span>USDC</span>
+                      {/*<div className="flex text-white gap-x-3 mt-3 mb-6 items-center">*/}
+                      {/*  <img*/}
+                      {/*    className="h-8"*/}
+                      {/*    src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"*/}
+                      {/*    alt="USDC"*/}
+                      {/*  />*/}
+                      {/*  <div className="flex items-end gap-x-2 text-4xl font-bold">*/}
+                      {/*    <NumberFormat*/}
+                      {/*      value={ido.hardCap}*/}
+                      {/*      displayType={"text"}*/}
+                      {/*      thousandSeparator={true}*/}
+                      {/*    />*/}
+                      {/*    <span>USDC</span>*/}
+                      {/*  </div>*/}
+                      {/*</div>*/}
+                      <div className="text-lg text-gray-300 line-clamp-2 mt-5 font-medium">
+                        <p>{ido.description}</p>
+                      </div>
+                      {/*<div className="prose prose-lg prose-invert">*/}
+                      {/*  <p>{ido.description}</p>*/}
+                      {/*</div>*/}
+                      {/*{nfts.length}*/}
+                      {/*{nfts.map((nft: any, index: any) => (*/}
+                      {/*  <p key={nft.name}>{nft.name}</p>*/}
+                      {/*))}*/}
+                      <RadioGroup className={"mt-6"} value={selected} onChange={setSelected}>
+                        <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+                        <div className="space-y-2">
+                          {nfts.map((nft: any) => (
+                            <RadioGroup.Option
+                              key={nft.name}
+                              value={nft}
+                              className={({ active, checked }) => `${active ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60" : ""} ${checked ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5" : "border-2 border-transparent bg-white bg-opacity-5"} relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`}>
+                              {({ active, checked }) => (
+                                <>
+                                  <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center">
+                                      <div className="text-sm">
+                                        <RadioGroup.Label
+                                          as="p"
+                                          className={`font-medium ${checked ? "text-white" : ""}`}>
+                                          <div className="flex items-center">
+                                            <div className="mr-4">
+                                              <img className={"w-12 h-12 rounded-md"} src={nft.image} alt={nft.name} />
+                                              {/*<pre>{JSON.stringify(nft, null, 4)}</pre>*/}
+                                            </div>
+                                            <div>
+                                              <p className="text-sm">{nft.name}</p>
+                                              <h4 className="text-xl whitespace-nowrap">
+                                                {nft.attributes[0].value}
+                                              </h4>
+                                            </div>
+                                          </div>
+                                        </RadioGroup.Label>
+                                        {/*<RadioGroup.Description*/}
+                                        {/*  as="span"*/}
+                                        {/*  className={"inline"}>*/}
+                                        {/*  DS*/}
+                                        {/*</RadioGroup.Description>*/}
+                                      </div>
+                                    </div>
+                                    {checked && (
+                                      <div className="flex-shrink-0 text-purple-2">
+                                        <CheckIcon className="w-6 h-6" />
+                                      </div>
+                                    )}
+                                  </div>
+                                </>
+                              )}
+                            </RadioGroup.Option>
+                          ))}
                         </div>
-                      </div>
-                      <div className="prose prose-lg prose-invert">
-                        <p>{ido.description}</p>
-                      </div>
-                      <div className="prose prose-lg prose-invert">
-                        <p>{ido.description}</p>
-                      </div>
+                      </RadioGroup>
                       <button className={"w-full mt-8 button"}>
                         <FireIcon className={"w-6 h-6"} />
                         Participate Now
@@ -181,7 +238,7 @@ const ProjectParticipate = () => {
                 </div>
               </div>
               <div>
-                <pre>{JSON.stringify(ido, null, 4)}</pre>
+                {/*<pre>{JSON.stringify(ido, null, 4)}</pre>*/}
                 {/*<Tab.Group>*/}
                 {/*  <Tab.List className={"mb-3"}>*/}
                 {/*    <div className="border-b border-gray-500">*/}
