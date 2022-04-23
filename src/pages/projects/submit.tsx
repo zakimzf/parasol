@@ -25,10 +25,15 @@ const exchanges = [
 ]
 
 const packages = [
-  { name: "Basic", description: "Listing only without Ads.", price: 2100 },
-  { name: "Pro", description: "[description]", price: 10500 },
-  { name: "Ultimate", description: "Listing and promotion.", price: 21000 }
+  { name: "Basic", description: "IDO Listing only without Ads.", price: 2100, fees: 3 },
+  { name: "Pro", description: "IDO Listing and Ads", price: 10500, fees: 2 },
+  { name: "Ultimate", description: "IDO Listing, Ads and AMA.", price: 21000, fees: 1 }
 ];
+
+const idoOptions = [
+  { id: 1, title: "SPL Token Ready", description: "I already have an SPL token" },
+  { id: 2, title: "TGE after IDO", description: "I want to create token at the end of the IDO." },
+]
 
 const SubmitProject = () => {
   const router = useRouter();
@@ -66,6 +71,7 @@ const SubmitProject = () => {
     startTime: "",
     endTime: "",
     liquidity: "50",
+    tokenDecimals: 0,
     package: packages[0],
     isFeatured: false,
     created: Timestamp.now()
@@ -132,21 +138,44 @@ const SubmitProject = () => {
       if (!values.package) {
         _errors["package"] = "This field is required";
       }
+
+      if (values.startTime && values.endTime) {
+        const nowTime = new Date();
+        const stTime: any = new Date(values.startTime);
+        const enTime: any = new Date(values.endTime);
+        const diffTime = Math.abs(enTime - stTime);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const stRef = document.getElementById("startTime");
+        const enRef = document.getElementById("endTime");
+
+        stRef?.classList.remove(...errClasses);
+        enRef?.classList.remove(...errClasses);
+        if (nowTime > stTime) {
+          stRef?.classList.add(...errClasses);
+          _errors["startTime"] = "start time should be greater than today";
+        }
+        else if (diffDays > 14) {
+          enRef?.classList.add(...errClasses);
+          _errors["endTime"] = "You cannot create an IDO longer than 14 days";
+        }
+      }
     }
 
-    const { name, value } = splRef.current;
-    if (value) {
-      const isExist = await isTokenAddressExist(value);
+    if (selectedIdoOptions.id == 1) {
+      const { name, value } = splRef.current;
+      if (value) {
+        const isExist = await isTokenAddressExist(value);
 
-      if (isExist) {
-        _errors[name] = "This address was already used for run a previous IDO";
-        splRef.current.classList.add(...errClasses);
+        if (isExist) {
+          _errors[name] = "This address was already used for run a previous IDO";
+          splRef.current.classList.add(...errClasses);
+        }
+
+        await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${value}`).catch(error => {
+          _errors[name] = "Please enter a valid token address"
+          splRef.current.classList.add(...errClasses);
+        });
       }
-
-      await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${value}`).catch(error => {
-        _errors[name] = "Please enter a valid token address"
-        splRef.current.classList.add(...errClasses);
-      });
     }
 
     setErrors(_errors);
@@ -173,7 +202,7 @@ const SubmitProject = () => {
           projectKind: projectKinds[index].address,
           treasuryMint: new PublicKey(treasuryMint),
           tokenMint: tokenMint,
-          tokenDecimals: 0,
+          tokenDecimals: values.tokenDecimals,
           tier: index,
           hardCap: values.hardCap,
           salePrice: values.tokenPrice,
@@ -192,7 +221,7 @@ const SubmitProject = () => {
 
         values.publicKey = walletAddress;
         values.projectKey = projectPubKey?.toBase58()
-        
+
         await uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, values.projectKey), _values);
           router.push(`/projects/${values.projectKey}`);
@@ -204,8 +233,9 @@ const SubmitProject = () => {
         setLoading(false);
       }
     }
+    else setLoading(false);
   }
-  
+
   useEffect(() => {
     const getTokeData = () => {
       const address = values.splToken;
@@ -280,6 +310,13 @@ const SubmitProject = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
 
+  const [selectedIdoOptions, setSelectedIdoOptions] = useState(idoOptions[0])
+
+  const changeScenario = (value: any) => {
+    setSelectedIdoOptions(value)
+    setValues({ ...values, tokenDecimals: 0, splToken: "" });
+  }
+  
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
@@ -291,39 +328,104 @@ const SubmitProject = () => {
               <form className="space-y-12 md:pr-16 divide-y- divide-gray-400">
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
-                    <h2 className="text-xl font-medium text-blue-gray-900">1. General Information</h2>
+                    <h2 className="text-xl font-medium text-blue-gray-900">1. Choose a Launch Option</h2>
                     <p className="mt-1 text-sm text-blue-gray-500">
-                      Please provide your SPL token address.
+                      Choose the scenario that corresponds to you.
                     </p>
                   </div>
-
-                  <div className="sm:col-span-6 relative">
-                    <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
-                      Enter your Token Address
-                      (Optional)
-                      {/*<span className="text-purple-2">*</span>*/}
-                    </label>
-                    <input onChange={handleChange} value={values.splToken}
-                      type="text"
-                      name="splToken"
-                      id="token-address"
-                      placeholder={"SPL Token Address"}
-                      pattern={"[A-Za-z0-9]*"}
-                      className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2
-                      ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
-                      aria-invalid="true"
-                      ref={splRef}
-                    />
-
-                    {errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></>}
-
+                  {/*{selectedIdoOptions.id == 2 && (*/}
+                  {/*  <div className={"sm:col-span-6 flex ml-auto justify-items-end items-center"}>*/}
+                  {/*    <Link href={"/tools/token-creator"}>*/}
+                  {/*      <a*/}
+                  {/*        type="button"*/}
+                  {/*        className="inline-flex items-center gap-x-1 px-3.5 py-2 border border-transparent text-sm leading-4 font-medium rounded-full shadow-sm text-white bg-white bg-opacity-30 text-purple-2 hover:bg-purple-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-2">*/}
+                  {/*        <PlusCircleIcon className={"w-4"} />*/}
+                  {/*        Create SPL Token*/}
+                  {/*      </a>*/}
+                  {/*    </Link>*/}
+                  {/*  </div>*/}
+                  {/*)}*/}
+                  <div className="sm:col-span-12">
+                    <RadioGroup value={selectedIdoOptions} onChange={changeScenario}>
+                      <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
+                        {idoOptions.map((idoOption) => (
+                          <RadioGroup.Option
+                            key={idoOption.id}
+                            value={idoOption}
+                            className={({ active }) => "relative border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none"}>
+                            {({ checked, active }) => (
+                              <>
+                                <div className="flex-1 flex">
+                                  <div className="flex flex-col">
+                                    <RadioGroup.Label as="span" className="block text-sm font-medium">
+                                      {idoOption.title}
+                                    </RadioGroup.Label>
+                                    <RadioGroup.Description as="span" className="mt-1 flex items-center text-sm">
+                                      {idoOption.description}
+                                    </RadioGroup.Description>
+                                  </div>
+                                </div>
+                                <CheckCircleIcon
+                                  className={`${!checked ? "invisible" : ""} h-5 w-5 text-purple-2`}
+                                  aria-hidden={true}
+                                />
+                                <div
+                                  className={`${checked ? "border-purple-2" : "border-transparent"} border-2 absolute -inset-px rounded-lg pointer-events-none`}
+                                  aria-hidden={true}
+                                />
+                              </>
+                            )}
+                          </RadioGroup.Option>
+                        ))}
+                      </div>
+                    </RadioGroup>
                   </div>
 
-                  <p className="text-sm text-blue-gray-500 sm:col-span-6">
-                    The token information will be fetched from the Solana blockchain.
-                  </p>
+                  {selectedIdoOptions.id == 1 ? (
+                    <>
+                      <div className="sm:col-span-12 relative">
+                        <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
+                          Enter your Token Address <span className="text-purple-2">*</span>
+                        </label>
+                        <input onChange={handleChange} value={values.splToken}
+                          type="text"
+                          name="splToken"
+                          id="token-address"
+                          placeholder={"SPL Token Address"}
+                          pattern={"[A-Za-z0-9]*"}
+                          className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
+                          aria-invalid="true"
+                          ref={splRef}
+                        />
+                        {errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                          <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                        </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></>}
+                      </div>
+
+                      <p className="text-sm text-blue-gray-500 sm:col-span-6">
+                        The token information will be fetched from the Solana blockchain.
+                      </p>
+                    </>
+                  ) : (
+                    <div className="sm:col-span-12 relative">
+                      <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
+                        Token Decimals <span className="text-purple-2">*</span>
+                      </label>
+                      <input
+                        onChange={handleChange} value={values.tokenDecimals}
+                        type="number"
+                        min={0}
+                        max={18}
+                        name="tokenDecimals"
+                        id="token-decimals"
+                        placeholder={"Enter Decimals"}
+                        className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ ${(errors.tokenDecimals && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
+                      />
+                      {errors.tokenDecimals && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                        <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
+                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenDecimals}</div></>}
+                    </div>
+                  )}
                 </div>
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
@@ -540,7 +642,6 @@ const SubmitProject = () => {
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
                     {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.startTime}</div></>}
                   </div>
 
@@ -555,7 +656,6 @@ const SubmitProject = () => {
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
                     />
                     {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                     </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.endTime}</div></>}
                   </div>
                 </div>
@@ -604,7 +704,7 @@ const SubmitProject = () => {
                                           {dex.name}
                                         </span>
                                         {selected ? (
-                                          <span className={`${active ? "text-white" : "text-indigo-600"} absolute inset-y-0 right-0 flex items-center pr-4`}>
+                                          <span className={`${active ? "text-white" : "text-purple-2"} absolute inset-y-0 right-0 flex items-center pr-4`}>
                                             <CheckIcon className="h-5 w-5" aria-hidden="true" />
                                           </span>
                                         ) : null}
@@ -688,7 +788,7 @@ const SubmitProject = () => {
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">
-                    <h2 className="text-xl font-medium text-blue-gray-900">4. Choose Pricing</h2>
+                    <h2 className="text-xl font-medium text-blue-gray-900">5. Choose Pricing</h2>
                     <p className="mt-1 text-sm text-blue-gray-500">
                       Choose the package that best suits your needs, you can read more regarding this pricing <a href={""} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a> .
                     </p>
@@ -702,27 +802,30 @@ const SubmitProject = () => {
                     >
                       <RadioGroup.Label className="block text-sm font-medium text-blue-gray-900">Choose Package</RadioGroup.Label>
                       <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                        {packages.map((size) => (
+                        {packages.map((plan) => (
                           <RadioGroup.Option
                             as="div"
-                            key={size.name}
-                            value={size}
+                            key={plan.name}
+                            value={plan}
                             className={({ active }) => "relative border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none"}
                           >
                             {({ active, checked }) => (
                               <>
                                 <div className="flex-1 flex">
                                   <div className="flex flex-col">
-                                    <RadioGroup.Label as="span" className="block text-sm font-medium">
-                                      {size.name}
+                                    <RadioGroup.Label as="span" className="block text-base font-medium">
+                                      {plan.name}
                                     </RadioGroup.Label>
-                                    <RadioGroup.Description as="span" className="mt-1 flex items-center text-sm">
-                                      {size.description}
+                                    <RadioGroup.Description as="span" className="mt-2 flex items-center text-sm">
+                                      {plan.description}
                                     </RadioGroup.Description>
-                                    <RadioGroup.Description as="span" className="mt-3 flex items-center gap-x-2 text-sm font-medium">
+                                    <RadioGroup.Description as="span" className="mt-1 font-medium flex items-center text-sm">
+                                      Token Fees: {plan.fees}&#37;
+                                    </RadioGroup.Description>
+                                    <RadioGroup.Description as="span" className="mt-2 flex items-center gap-x-2 text-sm font-medium">
                                       <img className="h-4" src={"/assets/logos/parasol-logo-mark-reverse-rgb.svg"} alt="psol" />
                                       <NumberFormat
-                                        value={!size.price && "0" || size.price}
+                                        value={!plan.price && "0" || plan.price}
                                         displayType={"text"}
                                         thousandSeparator={true}
                                       />
