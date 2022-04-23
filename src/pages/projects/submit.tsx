@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Listbox, RadioGroup, Transition } from "@headlessui/react"
-import { CheckIcon, PlusCircleIcon, SelectorIcon } from "@heroicons/react/solid"
+import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
 import Container from "../../components/container";
 import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
@@ -19,7 +19,6 @@ import Card from "../../components/card";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { NftContext } from "../../context/NftContext";
 import { NftStore, Project } from "parasol-finance-sdk";
-import Link from "next/link";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -352,7 +351,7 @@ const SubmitProject = () => {
                     </RadioGroup>
                   </div>
 
-                  {selectedIdoOptions.id == 1 && (
+                  {selectedIdoOptions.id == 1 ? (
                     <>
                       <div className="sm:col-span-12 relative">
                         <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
@@ -377,6 +376,27 @@ const SubmitProject = () => {
                         The token information will be fetched from the Solana blockchain.
                       </p>
                     </>
+                  ) : (
+                    <div className="sm:col-span-12 relative">
+                      <label htmlFor="email-address" className="block text-sm font-medium text-blue-gray-900">
+                          Token Decimals <span className="text-purple-2">*</span>
+                      </label>
+                      <input
+                        // onChange={handleChange} value={values.splToken}
+                        type="number"
+                        min={0}
+                        max={18}
+                        name="tokenDecimals"
+                        id="token-decimals"
+                        placeholder={"Enter Decimals"}
+                        className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 ${(errors.splToken && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
+                        // aria-invalid="true"
+                        // ref={splRef}
+                      />
+                      {/*{errors.splToken && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">*/}
+                      {/*  <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />*/}
+                      {/*</div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.splToken}</div></>}*/}
+                    </div>
                   )}
                 </div>
 
