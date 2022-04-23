@@ -313,7 +313,7 @@ const ProjectDetails = () => {
                             <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
                             <span>
                               <NumberFormat
-                                value={ido.tokenPrice}
+                                value={ido.salePrice}
                                 displayType={"text"}
                                 thousandSeparator={true}
                                 prefix={"$"}
