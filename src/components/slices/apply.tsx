@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const Apply = () => (
-  <section className="pt-24 pb-12">
+  <section className="pb-12">
     <div className="max-w-7xl mx-auto text-center">
       <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
         <span className="block">Want to Launch your Project?</span>

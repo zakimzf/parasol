@@ -20,7 +20,6 @@ const Projects = () => {
     }
     getProjects();
   }, [])
-  console.log(projects)
   return (
     <>
       <Head>
@@ -36,26 +35,28 @@ const Projects = () => {
           "There is the list of the next IDOs and projects on Parasol."
         }
       />
-      <section>
-        <Container>
-          <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project, index) => (
-              <ProjectCard
-                key={index}
-                id={project.id}
-                name={project.name}
-                description={project.description}
-                logo={project.logo}
-                cover={project.cover}
-                status={project.status}
-                startTime={project.startTime}
-                endTime={project.endTime}
-              />
-            ))}
-          </div>
-        </Container>
-      </section>
-      <Apply />
+      <Layout>
+        <section>
+          <Container>
+            <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+              {projects.map((project, index) => (
+                <ProjectCard
+                  key={index}
+                  id={project.id}
+                  name={project.name}
+                  description={project.description}
+                  logo={project.logo}
+                  cover={project.cover}
+                  status={project.status}
+                  startTime={project.startTime}
+                  endTime={project.endTime}
+                />
+              ))}
+            </div>
+          </Container>
+        </section>
+        <Apply />
+      </Layout>
     </>
   )
 };

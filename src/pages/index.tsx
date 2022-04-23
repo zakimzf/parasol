@@ -2,13 +2,13 @@ import type { NextPage } from "next"
 import Hero from "../components/slices/hero";
 import Layout from "../components/layout";
 import Brands from "../components/slices/brands";
-import Projects from "./projects";
+import Projects from "../components/slices/projects";
 
 const Home: NextPage = () =>
   <Layout>
     <Hero />
-    <Projects />
     <Brands/>
+    <Projects />
   </Layout>
 
 export default Home;
