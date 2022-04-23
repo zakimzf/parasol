@@ -1,34 +1,73 @@
 import Container from "../../components/container";
 import Heading from "../../components/heading";
 import Apply from "../../components/slices/apply";
+import React, { useContext, useEffect, useState } from "react";
+import { RpcHelper } from "parasol-finance-sdk";
+import { NftContext } from "../../context/NftContext";
+import ProjectCard from "../../components/cards/project-card";
+import Head from "next/head";
 
-const Projects = () => (
-  <>
-    <Heading
-      tagline={"Parasol Launchpad"}
-      title={"Upcoming Projects"}
-      description={
-        "There is the list of the next IDOs and projects on Parasol."
-      }
-    />
-    <section>
-      <Container>
-        <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
-          {/*{projects.map((project, index) => (*/}
-          {/*  <ProjectCard*/}
-          {/*    Id={project.id}*/}
-          {/*    Name={project.name}*/}
-          {/*    Description={project.description}*/}
-          {/*    Logo={project.logo}*/}
-          {/*    Cover={project.cover}*/}
-          {/*    key={index}*/}
-          {/*  />*/}
-          {/*))}*/}
-        </div>
-      </Container>
-    </section>
-    <Apply />
-  </>
-);
+interface project {
+  id: string;
+  name: string;
+  logo: string;
+  description: string;
+  cover: string;
+  symbol: string;
+  status: string,
+  startTime: Date;
+  endTime: Date;
+}
+
+const Projects = () => {
+  const { provider } = useContext(NftContext);
+  const [projects, setProjects] = useState<project[]>([])
+
+  useEffect(() => {
+    const getProjects = async () => {
+      const helper = new RpcHelper(provider);
+      await helper.getProjectList().then((p: any) => setProjects(p))
+    }
+    getProjects();
+  }, [])
+  console.log(projects)
+  return (
+    <>
+      <Head>
+        <title>Parasol Finance ($PSOL) | Projects Seeding</title>
+        <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding" />
+        <meta property="og:image" content="/assets/preview/projects.png" />
+        <meta property="twitter:image" content="/assets/preview/projects.png" />
+      </Head>
+      <Heading
+        tagline={"Parasol Launchpad"}
+        title={"Upcoming Projects"}
+        description={
+          "There is the list of the next IDOs and projects on Parasol."
+        }
+      />
+      <section>
+        <Container>
+          <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={index}
+                id={project.id}
+                name={project.name}
+                description={project.description}
+                logo={project.logo}
+                cover={project.cover}
+                status={project.status}
+                startTime={project.startTime}
+                endTime={project.endTime}
+              />
+            ))}
+          </div>
+        </Container>
+      </section>
+      <Apply />
+    </>
+  )
+};
 
 export default Projects;
