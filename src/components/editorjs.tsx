@@ -155,8 +155,8 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       const uploadTask = uploadBytesResumable(storageRef, coverFile);
       await uploadTask.on(
         "state_changed",
-        (snapshot) => { },
-        (error) => console.log(error),
+        (snapshot) => {},
+        (error) => notification("danger", "Unable to save your cover.", "Update IDO"),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (cover) => {
             await updateDoc(idosCollectionRef, {
@@ -164,6 +164,12 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
             });
             const imgRef: any = ref(storage, oldCover);
             deleteObject(imgRef)
+            notification(
+              "success",
+              "Cover was successfully saved.",
+              "Update IDO"
+            );
+            setLoading(false);
           });
         }
       );
@@ -171,27 +177,38 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
   }
 
   const saveChanges = async () => {
-    await changeCover();
-    await editor
-      .save()
-      .then(async (outputData: any) => {
-        imagesToRemove.map((url: string) => {
-          const imgRef: any = ref(storage, url);
-          deleteObject(imgRef)
+    try {
+      await changeCover();
+      await editor
+        .save()
+        .then(async (outputData: any) => {
+          imagesToRemove.map((url: string) => {
+            const imgRef: any = ref(storage, url);
+            deleteObject(imgRef)
+          });
+          await updateDoc(idosCollectionRef, {
+            content: JSON.stringify(outputData),
+          });
+          notification(
+            "success",
+            "Content was successfully saved.",
+            "Update IDO"
+          );
+        })
+        .catch((error: any) => {
+          notification("danger", "Unable to save your content.", "Update IDO");
         });
-        await updateDoc(idosCollectionRef, {
-          content: JSON.stringify(outputData),
-        });
-        notification(
-          "success",
-          "Content was successfully saved.",
-          "Update IDO"
-        );
-      })
-      .catch((error: any) => {
-        notification("danger", "Unable to save your changes.", "Update IDO");
-      });
-    setLoading(false);
+        
+      if (!isCoverupdated) setLoading(false);
+    }
+    catch (error) {
+      setLoading(false);
+      notification(
+        "danger",
+        "Unable to save your changes.",
+        "Update IDO"
+      );
+    }
   };
 
   const signWallet = useCallback(async () => {
