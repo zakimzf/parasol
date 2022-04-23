@@ -118,13 +118,13 @@ const Tiers = function () {
             </div>
             <div className={"flex gap-x-2 md:justify-end items-center justify-center mt-5"}>
               <Link href={"/tiers/migrate"}>
-                <a className="flex gap-x-2 items-center uppercase bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
+                <a className="flex gap-x-2 items-center bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
                   <UploadIcon className={"w-4"} />
                   Migrate
                 </a>
               </Link>
               <Link href={"/tiers/redeem"}>
-                <a className="flex gap-x-2 items-center uppercase bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
+                <a className="flex gap-x-2 items-center bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
                   <SwitchVerticalIcon className={"w-4"} />
                   Redeem
                 </a>
