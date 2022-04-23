@@ -25,9 +25,9 @@ const Projects = () => {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | Projects Seeding</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding" />
-        <meta property="og:image" content="/assets/preview/projects.png" />
-        <meta property="twitter:image" content="/assets/preview/projects.png" />
+        <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding"/>
+        <meta property="og:image" content="/assets/preview/projects.png"/>
+        <meta property="twitter:image" content="/assets/preview/projects.png"/>
       </Head>
       <Heading
         tagline={"Parasol Launchpad"}
@@ -56,12 +56,11 @@ const Projects = () => {
                     />
                   );
                 }
-              })
-              }
+              })}
             </div>
           </Container>
         </section>
-        <Apply />
+        <Apply/>
       </Layout>
     </>
   )

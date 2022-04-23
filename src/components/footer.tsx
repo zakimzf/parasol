@@ -70,11 +70,11 @@ const Footer = () => (
           <div>
             <h3 className="text-sm font-bold  tracking-wider uppercase">Parasol Finance</h3>
             <ul role="list" className="mt-4 space-y-4">
-              {/*<li>*/}
-              {/*  <Link href={"/about"}>*/}
-              {/*    <a className="text-base">About Parasol</a>*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
+              <li>
+                <Link href={"/about"}>
+                  <a className="text-base">About Parasol</a>
+                </Link>
+              </li>
               <li>
                 <a href="https://docs.parasol.finance" target="_blank"
                   className="text-base" rel="noreferrer">Documentation

@@ -30,7 +30,7 @@ export const people = [
     name: "Clint.Network",
     role: "Chief Technology Officer",
     picture: Clint,
-    twitter: "https://twitter.com/clint_network",
+    twitter: "https://twitter.com/thisisclint21",
     linkedin: "https://www.linkedin.com/in/clintnetwork/",
     github: "https://github.com/clintnetwork",
     telegram: "https://t.me/clintnetwork"
