@@ -5,8 +5,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { NftContext } from "../../context/NftContext";
 import { Project } from "../../constants";
 import { RpcHelper } from "parasol-finance-sdk";
-import ProjectCard from "../cards/project-card";
 import Link from "next/link";
+import ProjectCard from "../cards/project-card";
 
 const Projects = () => {
   const { provider } = useContext(NftContext);
@@ -80,23 +80,31 @@ const Projects = () => {
           </p>
         </div>
         <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project, index) => {
-            if (project.status == "PUBLISHED") {
-              return (
-                <ProjectCard
-                  key={index}
-                  id={project.id}
-                  name={project.name}
-                  description={project.description}
-                  logo={project.logo}
-                  cover={project.cover}
-                  status={project.status}
-                  startTime={project.startTime}
-                  endTime={project.endTime}
-                />
-              );
-            }
-          })}
+          {projects.length > 0 ? (
+            <>
+              {projects.map((project, index) => {
+                if (project.status == "PUBLISHED") {
+                  return <ProjectCard
+                    key={index}
+                    id={project.id}
+                    name={project.name}
+                    description={project.description}
+                    logo={project.logo}
+                    cover={project.cover}
+                    status={project.status}
+                    startTime={project.startTime}
+                    endTime={project.endTime}
+                  />
+                }
+              })}
+            </>
+          ) : (
+            <>
+              {[0, 1, 2].map(key => (
+                <ProjectCard key={key} loading={true}/>
+              ))}
+            </>
+          )}
         </div>
         <div className={"flex justify-center pt-12"}>
         	<Link href={"/projects"}>
