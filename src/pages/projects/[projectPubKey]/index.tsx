@@ -121,7 +121,7 @@ const ProjectDetails = () => {
                         {ido.description}
                       </p>
                     </div>
-                    {walletAddress && walletAddress == ido.creator &&
+                    {walletAddress && walletAddress == ido.owner &&
                       (
                         <div className={"flex ml-auto justify-items-end items-center"}>
                           <Link href={`/projects/${projectPubKey}/edit`}>
@@ -136,7 +136,7 @@ const ProjectDetails = () => {
                       )
                     }
                   </div>
-                  {walletAddress && walletAddress == ido.creator &&
+                  {walletAddress && walletAddress == ido.owner &&
                     <>
                       <div className={"relative"}>
                         <img src={tempCover || ido.cover} className={"mb-6 rounded-lg"} alt={ido.name} />
@@ -149,7 +149,7 @@ const ProjectDetails = () => {
                   }
                   <SRLWrapper>
 
-                    {(!walletAddress || walletAddress != ido.creator) && <img src={ido.cover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name} />}
+                    {(!walletAddress || walletAddress != ido.owner) && <img src={ido.cover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name} />}
 
                     <Tab.Group>
                       <Tab.List className={"mb-3"}>
@@ -200,10 +200,10 @@ const ProjectDetails = () => {
                       <Tab.Panels>
                         <Tab.Panel>
                           <div className={"prose markdown prose-lg prose-invert"}>
-                            {walletAddress && walletAddress == ido.creator || ido.content ? (
+                            {walletAddress && walletAddress == ido.owner || ido.content ? (
                               <EditorJs
                                 content={ido.content || "{}"}
-                                isOwner={walletAddress && walletAddress == ido.creator || false}
+                                isOwner={walletAddress && walletAddress == ido.owner || false}
                                 projectPubKey={projectPubKey}
                                 coverFile={coverFile}
                                 isCoverupdated={tempCover != ""}
@@ -331,7 +331,7 @@ const ProjectDetails = () => {
                             </span>
                           </div>
                         </div>
-                        {walletAddress ? walletAddress == ido.creator ? (
+                        {walletAddress ? walletAddress == ido.owner ? (
                           <button className={"w-full button mt-8"} id="saveEditor" disabled={loading}>
                             {loading ? "Saving..." : "Save Changes"}
                           </button>
