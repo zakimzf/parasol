@@ -71,7 +71,7 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
         {content}
       </button>
     );
-    
+
   return (
     <Menu as="div" className={`relative z-10 inline-block text-left ${Width == "full" ? "w-full" : ""}`}>
       <div>
