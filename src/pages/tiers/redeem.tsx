@@ -17,15 +17,8 @@ const Migrate = () => {
   const { connection } = useConnection();
   const walletModal = useWalletModal();
 
-  const { nfts, setNfts, user, wallet } = React.useContext(NftContext);
+  const { nfts, setNfts, user, wallet, getNFTList } = React.useContext(NftContext);
   const [isPending, setPending] = useState(false);
-
-  useEffect(() => {
-    if (!wallet.connected) return;
-    if (user) {
-      getNFTList();
-    }
-  }, [wallet.connected, user]);
 
   useEffect(() => setSelected(nfts[0]), [nfts]);
 
@@ -34,11 +27,6 @@ const Migrate = () => {
   }, [walletModal.visible]);
 
   const [selected, setSelected] = useState<any>();
-
-  const getNFTList = async () => {
-    const nftsMetadata = await user.getNFTList();
-    setNfts(nftsMetadata);
-  };
 
   const redeemNFT = async () => {
     const mintAddress = new PublicKey(selected.mint);

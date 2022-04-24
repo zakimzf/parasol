@@ -88,6 +88,7 @@ const Tiers = function () {
   }, []);
 
   const activeNft = (items: [any], tiers: any) => {
+    console.log(items, tiers)
     return items.some(x => x.attributes[0]["value"] == tiers.name);
   };
 
