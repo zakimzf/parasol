@@ -94,10 +94,8 @@ const ProjectDetails = () => {
     <>
       <Head>
         <title>Parasol Finance ($PSOL)</title>
-        {/*<meta property="og:image" content={`/api/projects/${projectPubKey}?cover`} />*/}
-        {/*<meta property="twitter:image" content={`/api/projects/${projectPubKey}?cover`} />*/}
-        <meta property="og:image" content="/assets/preview/projects.png" />
-        <meta property="twitter:image" content="/assets/preview/projects.png" />
+        <meta property="og:image" content={`/api/projects/${projectPubKey}/cover`} />
+        <meta property="twitter:image" content={`/api/projects/${projectPubKey}/cover`} />
       </Head>
       {ido &&
         <>
