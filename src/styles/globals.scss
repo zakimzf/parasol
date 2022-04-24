@@ -40,6 +40,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: url("/assets/ellipses.svg") no-repeat top -200px center #17122b;
   color: theme("colors.white");
