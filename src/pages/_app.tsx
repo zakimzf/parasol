@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useContext, useEffect, useMemo, useState } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { ConnectionProvider, WalletProvider, } from "@solana/wallet-adapter-react";
 import {
@@ -23,8 +23,8 @@ import { TokenModalProvider } from "../components/token-chooser/TokenModalProvid
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
 import { ReminderModalProvider } from "../components/reminder-modal/ReminderModalProvider";
-import { NftProvider } from "../context/NftContext";
-import Router from "next/router";
+import { NftContext, NftProvider } from "../context/NftContext";
+import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 
 import "../styles/globals.scss";
@@ -73,6 +73,14 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
       d.getElementsByTagName("body")[0].appendChild(s);
     })();
   });
+
+  const [siteBg, setSiteBg] = useState<any>();
+  const router = useRouter()
+
+  useEffect(() => {
+    setSiteBg("");
+  }, [router.query])
+
   return (
     <>
       <Head>
@@ -118,7 +126,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                 <div className="absolute inset-0">
                   <img
                     className="h-full mask-image w-full blur object-cover"
-                    src="https://firebasestorage.googleapis.com/v0/b/project-finance-devnet.appspot.com/o/projects%2F4hCbayb7xEtmFpUhrYvjbgxJh342t8gBDezgNgGFUADk%2Fpexels-philippe-donn-1114688.jpg?alt=media&token=c479611d-5518-461a-acd4-88ab5c4b4768"
+                    src={siteBg}
                     alt="IDO Cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-b from-[#b064fe4D]" />
@@ -131,7 +139,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                   <TokenModalProvider>
                     <ReminderModalProvider>
                       <NftProvider {...pageProps} >
-                        <Component {...pageProps} />
+                        <Component {...pageProps} setSiteBg={setSiteBg} />
                       </NftProvider>
                     </ReminderModalProvider>
                   </TokenModalProvider>

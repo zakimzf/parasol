@@ -17,7 +17,7 @@ import { useReminderModal } from "../../../components/reminder-modal/useReminder
 
 const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
 
-const ProjectParticipate = () => {
+const ProjectParticipate = ({ setSiteBg }: any) => {
   const { provider, config } = useContext(NftContext);
   const { publicKey } = useWallet();
   const { setReminder, setProjectKey } = useReminderModal();
@@ -53,6 +53,7 @@ const ProjectParticipate = () => {
       const data = await project.data()
 
       setCover(data.cover)
+      setSiteBg(data.cover)
       if (data) {
         if (data.splToken) {
           const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
