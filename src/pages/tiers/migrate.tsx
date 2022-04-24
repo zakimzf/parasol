@@ -100,7 +100,7 @@ const Migrate = () => {
                   <label className="block text-sm mb-3 font-medium text-blue-gray-900">
                   Eligible NFTs for Migration
                   </label>
-                  <RadioGroup className={"mt-6"} value={selected} onChange={setSelected}>
+                  <RadioGroup value={selected} onChange={setSelected}>
                     <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
                     <div className="space-y-2">
                       {nfts.map((nft: any) => (
