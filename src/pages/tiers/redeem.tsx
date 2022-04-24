@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { ArrowLeftIcon, SwitchVerticalIcon } from "@heroicons/react/outline";
+import React, { useEffect, useState } from "react";
+import { ArrowLeftIcon, CheckIcon, SwitchVerticalIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { NftContext } from "../../context/NftContext";
@@ -8,9 +8,8 @@ import Card from "../../components/card";
 import { useWalletModal } from "../../components/wallet-connector";
 import { PublicKey } from "@solana/web3.js";
 import { notification } from "../../utils/functions";
-import { Listbox, Transition } from "@headlessui/react";
-import { SelectorIcon } from "@heroicons/react/solid";
 import Head from "next/head";
+import { RadioGroup } from "@headlessui/react";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
@@ -103,53 +102,51 @@ const Migrate = () => {
                   <label className="block text-sm mb-3 font-medium text-blue-gray-900">
                   Available NFT Access Keys
                   </label>
-                  <Listbox value={selected} onChange={setSelected}>
-                    <div className="relative mt-1">
-                      <Listbox.Button className="relative w-full py-3 pl-3 pr-10 text-left bg-white bg-opacity-5 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-purple-2 sm:text-sm">
-                        <span className="block truncate">
-                          {selected ? selected.name + " - " + selected.mint : ""}
-                        </span>
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                          <SelectorIcon
-                            className="w-5 h-5 text-gray-400"
-                            aria-hidden="true"
-                          />
-                        </span>
-                      </Listbox.Button>
-                      <Transition
-                        as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                      >
-                        <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                          {nfts.map((nft: any, index: any) => (
-                            <Listbox.Option
-                              key={index}
-                              className={({ active }) =>
-                                `cursor-default select-none relative py-2 px-4 ${
-                                  active ? "text-white bg-purple-2" : "text-gray-900"
-                                }`
-                              }
-                              value={nft}
-                            >
-                              {({ selected }) => (
-                                <>
-                                  <span
-                                    className={`block truncate ${
-                                      selected ? "font-medium" : "font-normal"
-                                    }`}
-                                  >
-                                    {nft.name + " - " + nft.mint}
-                                  </span>
-                                </>
-                              )}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Transition>
+                  <RadioGroup className={"mt-6"} value={selected} onChange={setSelected}>
+                    <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+                    <div className="space-y-2">
+                      {nfts.map((nft: any) => (
+                        <RadioGroup.Option
+                          key={nft.name}
+                          value={nft}
+                          className={({
+                            active,
+                            checked
+                          }) => `${active ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60" : ""} ${checked ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5" : "border-2 border-transparent bg-white bg-opacity-5"} relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none`}>
+                          {({ active, checked }) => (
+                            <>
+                              <div className="flex items-center justify-between w-full">
+                                <div className="flex items-center">
+                                  <div className="text-sm">
+                                    <RadioGroup.Label
+                                      as="p"
+                                      className={`font-medium ${checked ? "text-white" : ""}`}>
+                                      <div className="flex items-center">
+                                        <div className="mr-4">
+                                          <img className={"w-12 h-12 rounded-md"} src={nft.image} alt={nft.name}/>
+                                        </div>
+                                        <div>
+                                          <p className="text-xs">{nft.name}</p>
+                                          <h2 className="text-lg whitespace-nowrap">
+                                            {nft.attributes[0].value}
+                                          </h2>
+                                        </div>
+                                      </div>
+                                    </RadioGroup.Label>
+                                  </div>
+                                </div>
+                                {checked && (
+                                  <div className="flex-shrink-0 text-purple-2">
+                                    <CheckIcon className="w-6 h-6"/>
+                                  </div>
+                                )}
+                              </div>
+                            </>
+                          )}
+                        </RadioGroup.Option>
+                      ))}
                     </div>
-                  </Listbox>
+                  </RadioGroup>
                 </div>
               ) : (
                 <div className={"prose prose-lg prose-invert"}>
