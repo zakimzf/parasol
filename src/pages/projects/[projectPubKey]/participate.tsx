@@ -4,7 +4,6 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { NftContext } from "../../../context/NftContext";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react"
-
 import { useRouter } from "next/router";
 import { NftStore, Project } from "parasol-finance-sdk";
 import { PublicKey } from "@solana/web3.js";
@@ -17,6 +16,8 @@ import { useReminderModal } from "../../../components/reminder-modal/useReminder
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { SRLWrapper } from "simple-react-lightbox";
+import { ScrollPercentage } from "react-scroll-percentage";
+import NProgress from "nprogress";
 import { slugify } from "../../../utils/functions";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
@@ -41,6 +42,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const { nfts, setNfts, user, wallet } = React.useContext(NftContext);
 
   useEffect(() => setSelected(nfts[0]), [nfts]);
+
+  React.useEffect(() => {
+    NProgress.configure({ showSpinner: false, trickle: false });
+  }, []);
 
   useEffect(() => {
     if (!wallet.connected) return;
@@ -300,11 +305,15 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     </ul>
                   </div>
                   <div className={"flex-1"}>
-                    <div className={"prose prose-lg prose-invert max-w-full"}>
-                      <SRLWrapper>
-                        <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"}/>
-                      </SRLWrapper>
-                    </div>
+                    <ScrollPercentage
+                      as="div"
+                      onChange={(percentage) => NProgress.set(percentage)}>
+                      <div className={"prose prose-lg prose-invert max-w-full"}>
+                        <SRLWrapper>
+                          <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"}/>
+                        </SRLWrapper>
+                      </div>
+                    </ScrollPercentage>
                   </div>
                 </div>
               </Layout>
