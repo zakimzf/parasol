@@ -111,7 +111,7 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
               <Menu.Item>
                 <ul className={"space-y-4"}>
                   {nfts.map((nft: any) => (<>
-                    <div className="relative rounded-lg shadow-md cursor-pointer flex focus:outline-none">
+                    <div className="relative flex focus:outline-none">
                       <div className="flex items-center justify-between w-full">
                         <div className="flex items-center">
                           <div className="text-sm">
@@ -137,7 +137,7 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
             <Menu.Item>
               <a
                 onClick={() => navigator.clipboard.writeText(base58 as string)}
-                className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
+                className="-m-3 p-3 cursor-pointer flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
                 <span className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true">
                   <ClipboardCopyIcon />
                 </span>
@@ -149,12 +149,10 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
             <Menu.Item>
               <a
                 onClick={disconnectWallet}
-                className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5"
-              >
+                className="-m-3 p-3 flex cursor-pointer items-center rounded-lg hover:bg-white hover:bg-opacity-5">
                 <span
                   className="flex-shrink-0 h-6 w-6 text-purple-2"
-                  aria-hidden="true"
-                >
+                  aria-hidden="true">
                   <LogoutIcon />
                 </span>
                 <div className="ml-4">
