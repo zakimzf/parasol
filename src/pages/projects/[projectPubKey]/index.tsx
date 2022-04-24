@@ -280,7 +280,7 @@ const ProjectDetails = () => {
                 <div className="md:col-span-3">
                   <div className="sticky flex flex-col gap-y-6 top-20">
                     <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
-                      <div className={"relative px-6 pt-6 pb-6"}>
+                      <div className={"relative p-6"}>
                         <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                           {ido.name}
                           {ido.isFeatured && (

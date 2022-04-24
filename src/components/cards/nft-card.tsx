@@ -12,7 +12,6 @@ type NftDetails = {
   name: string;
   amount: number;
   vestingPeriod: number;
-  offset?: number;
   index: number;
   buyNFT: any;
   connected: any;
@@ -27,7 +26,6 @@ const NftCard = ({
   poster,
   video,
   vestingPeriod,
-  offset,
   index,
   buyNFT,
   connected,
@@ -42,7 +40,7 @@ const NftCard = ({
     <article
       onMouseOver={playVideo}
       onMouseOut={pauseVideo}
-      className={"card cursor-pointer lg:mx-0 overflow-hidden mb-5"}
+      className={`card cursor-pointer ${owned ? "scale-105" : ""} lg:mx-0 overflow-hidden mb-5`}
     >
       <div className="">
         <div className="relative">
