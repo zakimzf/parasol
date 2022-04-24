@@ -93,7 +93,7 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-2 origin-top-right bg-[#231f38] rounded-lg shadow-lg divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 w-60 mt-2 origin-top-right bg-[#231f38] rounded-lg shadow-lg divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="relative grid gap-6 gap-8 px-7 py-8">
             {/*<Menu.Item>*/}
             {/*  <Link href={"/profile"}>*/}
