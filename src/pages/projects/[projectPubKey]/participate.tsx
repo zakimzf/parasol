@@ -4,16 +4,25 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import { NftContext } from "../../../context/NftContext";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react"
-
 import { useRouter } from "next/router";
 import { NftStore, Project } from "parasol-finance-sdk";
 import { PublicKey } from "@solana/web3.js";
 import axios from "axios";
 import NumberFormat from "react-number-format";
-import { BellIcon, CheckIcon, GlobeAltIcon } from "@heroicons/react/outline";
+import { ArrowLeftIcon, BellIcon, CheckIcon, ChevronRightIcon, GlobeAltIcon } from "@heroicons/react/outline";
 import Layout from "../../../components/layout";
 import { BadgeCheckIcon, ClockIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import { SRLWrapper } from "simple-react-lightbox";
+import { ScrollPercentage } from "react-scroll-percentage";
+import NProgress from "nprogress";
+import { slugify } from "../../../utils/functions";
+
+const EditorJs = dynamic(() => import("../../../components/editorjs"), {
+  ssr: false,
+});
 
 const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
 
@@ -34,6 +43,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
   useEffect(() => setSelected(nfts[0]), [nfts]);
 
+  React.useEffect(() => {
+    NProgress.configure({ showSpinner: false, trickle: false });
+  }, []);
+
   useEffect(() => {
     if (!wallet.connected) return;
     if (user) {
@@ -49,26 +62,30 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   useEffect(() => {
     const getDataByTokenAddress = async () => {
       const nftStore = await new NftStore(provider, config).build();
-      const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
-      const data = await project.data()
-
-      setCover(data.cover)
-      setBackgroundCover(data.cover)
-      if (data) {
-        if (data.splToken) {
-          const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
-          const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.splToken}`);
-          axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
-            const responseOne = responses[0]
-            const responseTwo = responses[1]
-            setIdo({ ...data, ...responseOne.data, ...responseTwo.data });
-          })).catch(errors => {
-            // react on errors.
-          })
+      try {
+        const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
+        const data = await project.data();
+        setCover(data.cover)
+        setBackgroundCover(data.cover)
+        if (data) {
+          if (data.splToken) {
+            const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
+            const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.splToken}`);
+            axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+              const responseOne = responses[0]
+              const responseTwo = responses[1]
+              setIdo({ ...data, ...responseOne.data, ...responseTwo.data });
+            })).catch(errors => {
+              // react on errors.
+            })
+          }
+          else setIdo(data);
         }
-        else setIdo(data);
+        else await router.push("/404");
       }
-      else await router.push("/404");
+      catch {
+        await router.push("/404");
+      }
     };
     if (projectPubKey) getDataByTokenAddress();
   }, [projectPubKey]);
@@ -78,7 +95,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       {ido && (
         <>
           {ido.startTime >= Date.now() && (
-            <div className={"absolute flex flex-col justify-center items-center pb-12 inset-0 filter backdrop-blur-md z-10"}>
+            <div className={"absolute flex flex-col items-center pt-52 pb-12 inset-0 filter backdrop-blur-md z-10"}>
               <h1 className={"text-4xl mb-3 font-bold"}>Scheduled IDO</h1>
               <p className={"text-lg mb-6 font-medium"}>This IDO is not yet launched, come back later.</p>
               <button
@@ -96,8 +113,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
             <div className={"px-0"}>
               <Layout short={true}>
                 <div className="grid md:grid-cols-8">
-                  <div className="md:col-span-5 pt-6 md:pr-16">
-                    <h1 className="flex gap-x-3 mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-6 lg:text-5xl xl:text-6xl">
+                  <div className="md:col-span-5 pt-10 md:pr-16">
+                    <Link href={`/projects/${projectPubKey}`}>
+                      <a className="inline-flex gap-x-2 items-center rounded-lg text-gray-300">
+                        <ArrowLeftIcon className={"w-4"} />
+                        Back to Project
+                      </a>
+                    </Link>
+                    <h1 className="flex gap-x-3 text-4xl tracking-tight font-extrabold text-white mt-5 sm:leading-none lg:text-5xl xl:text-6xl">
                       <span className={"text-purple-2"}>{ido.name}</span>
                       <span>Presale</span>
                       {ido.isFeatured && (
@@ -252,22 +275,6 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             ))}
                           </div>
                         </RadioGroup>
-                        {/*<div className={"mt-6"}>*/}
-                        {/*  <label className="flex justify-between block mb-2 text-sm font-medium">*/}
-                        {/*    <span>dsds</span>*/}
-                        {/*    <span>*/}
-                        {/*      Time Left: <Countdown date={ido.endTime} />*/}
-                        {/*    </span>*/}
-                        {/*  </label>*/}
-                        {/*  <div className="w-full bg-gray-200 rounded-full mb-6">*/}
-                        {/*    <div className="flex justify-center items-center bg-gradient-to-r from-purple-1 to-purple-2 uppercase py-3 text-xs rounded-l-full h-5 w-4/5">*/}
-                        {/*      Sale: 75%*/}
-                        {/*    </div>*/}
-                        {/*  </div>*/}
-                        {/*</div>*/}
-                        {/*<div className="w-full bg-gray-200 h-5 mb-6">*/}
-                        {/*  <div className="bg-blue-600 h-5" style="width: 25%"></div>*/}
-                        {/*</div>*/}
                         <button className={"w-full mt-8 button"}>
                           <PaperAirplaneIcon className={"w-6 h-6"}/>
                           Participate Now
@@ -276,56 +283,38 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     </Card>
                   </div>
                 </div>
-                <div>
-                  {/*<pre>{JSON.stringify(ido, null, 4)}</pre>*/}
-                  {/*<Tab.Group>*/}
-                  {/*  <Tab.List className={"mb-3"}>*/}
-                  {/*    <div className="border-b border-gray-500">*/}
-                  {/*      <nav className="-mb-px flex space-x-8" aria-label="Tabs">*/}
-                  {/*        <Tab as={Fragment}>*/}
-                  {/*          {({ selected }) => (*/}
-                  {/*            <a*/}
-                  {/*              href={"#details"}*/}
-                  {/*              className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}*/}
-                  {/*              aria-current={selected ? "page" : undefined}>*/}
-                  {/*              Project Details*/}
-                  {/*            </a>*/}
-                  {/*          )}*/}
-                  {/*        </Tab>*/}
-                  {/*        <Tab as={Fragment}>*/}
-                  {/*          {({ selected }) => (*/}
-                  {/*            <a*/}
-                  {/*              href={"#details"}*/}
-                  {/*              className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}*/}
-                  {/*              aria-current={selected ? "page" : undefined}>*/}
-                  {/*              Token Details*/}
-                  {/*            </a>*/}
-                  {/*          )}*/}
-                  {/*        </Tab>*/}
-                  {/*        <Tab as={Fragment}>*/}
-                  {/*          {({ selected }) => (*/}
-                  {/*            <a*/}
-                  {/*              href={"#details"}*/}
-                  {/*              className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}*/}
-                  {/*              aria-current={selected ? "page" : undefined}>*/}
-                  {/*              White Paper*/}
-                  {/*            </a>*/}
-                  {/*          )}*/}
-                  {/*        </Tab>*/}
-                  {/*      </nav>*/}
-                  {/*    </div>*/}
-                  {/*  </Tab.List>*/}
-                  {/*  <Tab.Panels>*/}
-                  {/*    <Tab.Panel>*/}
-                  {/*      <div className={"prose prose-lg prose-invert py-6"}>*/}
-                  {/*        <h2>Lorem ipsum dolor sit amet</h2>*/}
-                  {/*        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>*/}
-                  {/*        <h2>Lorem ipsum dolor sit amet</h2>*/}
-                  {/*        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>*/}
-                  {/*      </div>*/}
-                  {/*    </Tab.Panel>*/}
-                  {/*  </Tab.Panels>*/}
-                  {/*</Tab.Group>*/}
+                <div className={"flex gap-x-12"}>
+                  <div className={"w-48"}>
+                    <ul role="list" className="pt-4 divide-y-divide-gray-200-divide-opacity-10">
+                      {JSON.parse(ido.content).blocks.map((block: any) => {
+                        if (block.type === "header" && block.data.level == 2) {
+                          return (
+                            <li
+                              key={block.id}
+                              className="relative py-2">
+                              <a href={`#${slugify(block.data.text)}`} className="block focus:outline-none">
+                                <p className={`${block.data.level > 2 ? "pl-3-" : ""} flex items-center gap-x-1 text-sm font-medium text-gray-300 hover:text-gray-200  hover:translate-x-3 duration-300`}>
+                                  <ChevronRightIcon className={"w-3 h-3"} />
+                                  <span className={"flex-1 truncate"}>{block.data.text}</span>
+                                </p>
+                              </a>
+                            </li>
+                          )
+                        }
+                      })}
+                    </ul>
+                  </div>
+                  <div className={"flex-1"}>
+                    <ScrollPercentage
+                      as="div"
+                      onChange={(percentage) => NProgress.set(percentage)}>
+                      <div className={"prose prose-lg prose-invert max-w-full"}>
+                        <SRLWrapper>
+                          <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"}/>
+                        </SRLWrapper>
+                      </div>
+                    </ScrollPercentage>
+                  </div>
                 </div>
               </Layout>
             </div>

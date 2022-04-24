@@ -66,7 +66,7 @@ const Migrate = () => {
           <Link href={"/tiers"}>
             <a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
               <ArrowLeftIcon className={"w-4"} />
-            Back
+              Back
             </a>
           </Link>
           <Card padded={true}>
