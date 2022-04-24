@@ -17,6 +17,7 @@ import { useReminderModal } from "../../../components/reminder-modal/useReminder
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { SRLWrapper } from "simple-react-lightbox";
+import { slugify } from "../../../utils/functions";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
@@ -286,7 +287,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             <li
                               key={block.id}
                               className="relative py-2">
-                              <a href={`#${block.data.text.split(" ")[0]}`} className="block focus:outline-none">
+                              <a href={`#${slugify(block.data.text)}`} className="block focus:outline-none">
                                 <p className={`${block.data.level > 2 ? "pl-3-" : ""} flex items-center gap-x-1 text-sm font-medium text-gray-300 hover:text-gray-200  hover:translate-x-3 duration-300`}>
                                   <ChevronRightIcon className={"w-3 h-3"} />
                                   <span className={"flex-1 truncate"}>{block.data.text}</span>

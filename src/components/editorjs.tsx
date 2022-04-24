@@ -10,7 +10,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { sign } from "tweetnacl";
 
 import "node-snackbar/dist/snackbar.min.css";
-import { notification } from "../utils/functions";
+import { notification, slugify } from "../utils/functions";
 import ImageTool from "@editorjs/image";
 import { deleteObject, getDownloadURL, ref, uploadBytesResumable, } from "firebase/storage";
 import axios from "axios";
@@ -132,7 +132,7 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       onReady: () => {
         var headers = document.getElementsByClassName("ce-header");
         for (var i = 0; i < headers.length; i++) {
-          headers[i].setAttribute("id", headers[i].innerHTML.split(" ")[0]);
+          headers[i].setAttribute("id", slugify(headers[i].innerHTML));
         }
       },
       data: editorContent,
