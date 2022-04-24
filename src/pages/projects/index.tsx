@@ -6,7 +6,7 @@ import { RpcHelper } from "parasol-finance-sdk";
 import { NftContext } from "../../context/NftContext";
 import Head from "next/head";
 import { Project } from "../../constants";
-import Layout from "../../components/layout";
+import ProjectCard from "../../components/cards/project-card";
 
 const Projects = () => {
   const { provider } = useContext(NftContext);
