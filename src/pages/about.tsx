@@ -16,7 +16,7 @@ const About = () =>
       <meta property="og:image" content="/assets/preview/about.png"/>
       <meta property="twitter:image" content="/assets/preview/about.png"/>
     </Head>
-    <Layout gap={24}>
+    <Layout>
       <section className={"relative pt-12"}>
         <Container>
           <div className="lg:grid lg:grid-cols-12 lg:gap-8">

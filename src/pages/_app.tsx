@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { ConnectionProvider, WalletProvider, } from "@solana/wallet-adapter-react";
 import {
@@ -24,7 +24,7 @@ import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
 import { ReminderModalProvider } from "../components/reminder-modal/ReminderModalProvider";
 import { NftProvider } from "../context/NftContext";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 
 import "../styles/globals.scss";
@@ -73,6 +73,14 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
       d.getElementsByTagName("body")[0].appendChild(s);
     })();
   });
+
+  const [siteBg, setBackgroundCover] = useState<any>();
+  const router = useRouter()
+
+  useEffect(() => {
+    setBackgroundCover("");
+  }, [router.query])
+
   return (
     <>
       <Head>
@@ -114,13 +122,24 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                   position={"top-right"}
                   gutter={0} />
               </div>
+              <div className={"absolute pointer-events-none w-full h-screen z-0 opacity-30"}>
+                <div className="absolute inset-0">
+                  <img
+                    className="h-full mask-image w-full blur object-cover"
+                    src={siteBg}
+                    alt="IDO Cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#b064fe4D]" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#0000004D]" />
+                </div>
+              </div>
               <Header />
-              <main role="main">
+              <main role="main" className={"relative-"}>
                 <SimpleReactLightbox>
                   <TokenModalProvider>
                     <ReminderModalProvider>
                       <NftProvider {...pageProps} >
-                        <Component {...pageProps} />
+                        <Component {...pageProps} setBackgroundCover={setBackgroundCover} />
                       </NftProvider>
                     </ReminderModalProvider>
                   </TokenModalProvider>
