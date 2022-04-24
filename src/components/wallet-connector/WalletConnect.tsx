@@ -1,8 +1,9 @@
-import React, { Fragment, MouseEventHandler, useCallback, useMemo, } from "react";
+import React, { Fragment, MouseEventHandler, useCallback, useContext, useMemo, } from "react";
 import { useWalletModal } from "./useWalletModal";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Menu, Transition } from "@headlessui/react";
 import { ClipboardCopyIcon, LogoutIcon } from "@heroicons/react/outline";
+import { NftContext } from "../../context/NftContext";
 
 type WalletConnectDetail = {
   Width: String;
@@ -10,29 +11,31 @@ type WalletConnectDetail = {
 
 const WalletConnect = ({ Width }: WalletConnectDetail) => {
   // export const WalletConnect: FC = () => {
+  const { nfts, getNFTList } = useContext(NftContext);
   const { publicKey, wallet, disconnect } = useWallet();
   const { setVisible } = useWalletModal();
   const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const content = useMemo(() => {
     if (!wallet || !base58) return null;
+    getNFTList();
     return base58.slice(0, 7) + ".." + base58.slice(-5);
   }, [wallet, base58]);
 
   const disconnectWallet: MouseEventHandler<HTMLAnchorElement> = useCallback(
     (event) => {
-      if (!event.defaultPrevented) disconnect().catch(() => {});
+      if (!event.defaultPrevented) disconnect().catch(() => { });
     },
     [disconnect]
   );
+
+  console.log(nfts)
 
   // if (!base58) return <button>Test</button>;
   if (!wallet)
     return (
       <button
         onClick={() => setVisible(true)}
-        className={`inline-flex items-center px-4 py-2 gap-x-2 text-base font-medium rounded-md bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 text-white hover:bg-white hover:text-purple-2 hover:from-purple-2 hover:to-purple-1 ${
-          Width == "full" ? "w-full items-center justify-center" : ""
-        }`}
+        className={`inline-flex items-center px-4 py-2 gap-x-2 text-base font-medium rounded-md bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 text-white hover:bg-white hover:text-purple-2 hover:from-purple-2 hover:to-purple-1 ${Width == "full" ? "w-full items-center justify-center" : "" }`}
       >
         <svg
           className="h-3"
@@ -105,11 +108,16 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
             {/*  </Link>*/}
             {/*</Menu.Item>*/}
             <Menu.Item>
+              <ul>
+                <li>test</li>
+              </ul>
+            </Menu.Item>
+            <Menu.Item>
               <a
                 onClick={() => navigator.clipboard.writeText(base58 as string)}
                 className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
                 <span className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true">
-                  <ClipboardCopyIcon/>
+                  <ClipboardCopyIcon />
                 </span>
                 <div className="ml-4">
                   <p className="text-base font-medium whitespace-nowrap text-white">Copy Address</p>

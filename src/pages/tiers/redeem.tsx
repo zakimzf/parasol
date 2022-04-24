@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ArrowLeftIcon, CheckIcon, SwitchVerticalIcon } from "@heroicons/react/outline";
 import Link from "next/link";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -16,7 +16,7 @@ const Migrate = () => {
   const { connection } = useConnection();
   const walletModal = useWalletModal();
 
-  const { nfts, setNfts, user, wallet, getNFTList } = React.useContext(NftContext);
+  const { nfts, setNfts, user, wallet, getNFTList } = useContext(NftContext);
   const [isPending, setPending] = useState(false);
 
   useEffect(() => setSelected(nfts[0]), [nfts]);
@@ -52,6 +52,8 @@ const Migrate = () => {
     setNfts([]);
     getNFTList();
   };
+
+  console.log(nfts)
 
   return (
     <>
