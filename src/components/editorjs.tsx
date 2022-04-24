@@ -3,16 +3,16 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
-import React, {useCallback, useEffect, useState} from "react";
-import {doc, updateDoc} from "firebase/firestore";
-import {db, storage} from "../utils/firebase";
-import {useWallet} from "@solana/wallet-adapter-react";
-import {sign} from "tweetnacl";
+import React, { useCallback, useEffect, useState } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { db, storage } from "../utils/firebase";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { sign } from "tweetnacl";
 
 import "node-snackbar/dist/snackbar.min.css";
-import {notification} from "../utils/functions";
+import { notification } from "../utils/functions";
 import ImageTool from "@editorjs/image";
-import {deleteObject, getDownloadURL, ref, uploadBytesResumable,} from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable, } from "firebase/storage";
 import axios from "axios";
 
 const Quote = require("@editorjs/quote");
