@@ -39,7 +39,6 @@ const Tiers = function () {
       logo: "/assets/nft-access-keys/covers/Chiller.png",
       video: "/assets/nft-access-keys/videos/Chiller.mp4",
       vestingPeriod: 6,
-      // owned: true,
     },
     {
       id: 3,
@@ -51,7 +50,7 @@ const Tiers = function () {
     },
   ]);
 
-  const { provider, nfts, setNfts, nftKinds, wallet, user } =
+  const { provider, nfts, nftKinds, wallet, user } =
     React.useContext(NftContext);
 
   const buyNFT = async (index: number) => {
@@ -79,8 +78,7 @@ const Tiers = function () {
       const tiersDataArray: any = tiers;
       await Promise.all(
         nftKinds.map(async (nftKind: any) => {
-          const data = await nftKind.data();
-          tiersDataArray[nftKind.tier].data = data;
+          tiersDataArray[nftKind.tier].data = await nftKind.data();
         })
       );
       setTiers(tiersDataArray);
@@ -88,6 +86,11 @@ const Tiers = function () {
     };
     nftKindData();
   }, []);
+
+  const activeNft = (items: [any], tiers: any) => {
+    console.log(items, tiers)
+    return items.some(x => x.attributes[0]["value"] == tiers.name);
+  };
 
   return (
     <>
@@ -100,7 +103,7 @@ const Tiers = function () {
       <section>
         <Container>
           <div className={"grid md:grid-cols-3 pt-10 pb-16"}>
-            <div className={"flex gap-x-2 items-center"} />
+            <div className={"flex gap-x-2 items-center"}/>
             <div>
               <div className="text-center">
                 <h2 className="text-base font-semibold tracking-wider mb-3 text-purple-400 uppercase">
@@ -120,13 +123,13 @@ const Tiers = function () {
             <div className={"flex gap-x-2 md:justify-end items-center justify-center mt-5"}>
               <Link href={"/tiers/migrate"}>
                 <a className="inline-flex relative gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-300">
-                  <UploadIcon className={"w-4"} />
+                  <UploadIcon className={"w-4"}/>
                   Migrate
                 </a>
               </Link>
               <Link href={"/tiers/redeem"}>
                 <a className="inline-flex gap-x-2 items-center border border-white border-opacity-30 hover:bg-white hover:bg-opacity-5 px-5 py-3 rounded-lg text-gray-200">
-                  <SwitchVerticalIcon className={"w-4"} />
+                  <SwitchVerticalIcon className={"w-4"}/>
                   Redeem
                 </a>
               </Link>
@@ -140,7 +143,7 @@ const Tiers = function () {
             {fetchTiers
               ? tiers.map((t: any, index: any) => (
                 <NftCard
-                  owned={t.owned}
+                  owned={activeNft(nfts, t)}
                   key={t.id}
                   id={t.id}
                   name={t.name}

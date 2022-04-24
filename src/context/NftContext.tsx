@@ -17,6 +17,7 @@ interface Context {
   wallet: any;
   config: any;
   provider: any,
+  getNFTList: () => void;
 }
 
 export const NftContext = createContext<Context>({
@@ -31,6 +32,7 @@ export const NftContext = createContext<Context>({
   migrator: null,
   wallet: null,
   config: null,
+  getNFTList: () => {},
 });
 
 export const NftProvider: React.FC<React.ReactNode> = ({ children }: any) => {
@@ -80,6 +82,19 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }: any) => {
   const setData = (n: any): void => {
     setNfts(n);
   };
+
+  useEffect(() => {
+    if (!wallet.connected) return;
+    if (user) {
+      getNFTList();
+    }
+  }, [wallet.connected, user]);
+
+  const getNFTList = async () => {
+    const nftsMetadata = await user.getNFTList();
+    setNfts(nftsMetadata);
+  };
+
   return (
     <NftContext.Provider
       value={{
@@ -94,6 +109,7 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }: any) => {
         migrator,
         config,
         wallet: useWallet(),
+        getNFTList,
       }}
     >
       {children}
