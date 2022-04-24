@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useMemo, useState } from "react";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { ConnectionProvider, WalletProvider, } from "@solana/wallet-adapter-react";
 import {
@@ -23,7 +23,7 @@ import { TokenModalProvider } from "../components/token-chooser/TokenModalProvid
 import { getWalletAdapterNetwork } from "../core/solana-network";
 import { WalletModalProvider } from "../components/wallet-connector";
 import { ReminderModalProvider } from "../components/reminder-modal/ReminderModalProvider";
-import { NftContext, NftProvider } from "../context/NftContext";
+import { NftProvider } from "../context/NftContext";
 import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 
@@ -74,11 +74,11 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
     })();
   });
 
-  const [siteBg, setSiteBg] = useState<any>();
+  const [siteBg, setBackgroundCover] = useState<any>();
   const router = useRouter()
 
   useEffect(() => {
-    setSiteBg("");
+    setBackgroundCover("");
   }, [router.query])
 
   return (
@@ -139,7 +139,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                   <TokenModalProvider>
                     <ReminderModalProvider>
                       <NftProvider {...pageProps} >
-                        <Component {...pageProps} setSiteBg={setSiteBg} />
+                        <Component {...pageProps} setBackgroundCover={setBackgroundCover} />
                       </NftProvider>
                     </ReminderModalProvider>
                   </TokenModalProvider>

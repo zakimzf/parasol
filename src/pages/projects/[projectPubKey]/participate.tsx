@@ -17,7 +17,7 @@ import { useReminderModal } from "../../../components/reminder-modal/useReminder
 
 const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
 
-const ProjectParticipate = ({ setSiteBg }: any) => {
+const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const { provider, config } = useContext(NftContext);
   const { publicKey } = useWallet();
   const { setReminder, setProjectKey } = useReminderModal();
@@ -53,7 +53,7 @@ const ProjectParticipate = ({ setSiteBg }: any) => {
       const data = await project.data()
 
       setCover(data.cover)
-      setSiteBg(data.cover)
+      setBackgroundCover(data.cover)
       if (data) {
         if (data.splToken) {
           const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
@@ -149,7 +149,7 @@ const ProjectParticipate = ({ setSiteBg }: any) => {
                         </div>
                       </div>
                     </div>
-                    <div className={"flex gap-x-6 mt-12"}>
+                    <div className={"flex gap-x-10 mt-12"}>
                       {ido.twitter && (
                         <a href={ido.twitter} target={"_blank"} rel={"noreferrer"} className={"flex items-center gap-x-2 text-sm"}>
                           <GlobeAltIcon className={"w-5 text-gray-300"}/>
