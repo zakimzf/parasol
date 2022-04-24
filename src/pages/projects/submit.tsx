@@ -206,7 +206,7 @@ const SubmitProject = () => {
           tier: index,
           hardCap: values.hardCap,
           salePrice: values.tokenPrice,
-          liquidPoolFeeBasisPoints: (parseInt(values.liquidity) / 100),
+          lpFeeBasisPoints: (parseInt(values.liquidity) / 100),
           startTime: new Date(values.startTime),
           endTime: new Date(values.endTime),
           uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
@@ -224,7 +224,7 @@ const SubmitProject = () => {
 
         await uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, values.projectKey), _values);
-          router.push(`/projects/${values.projectKey}`);
+          await router.push(`/projects/${values.projectKey}`);
           setLoading(false);
         })
       }
