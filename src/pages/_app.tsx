@@ -114,7 +114,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                   position={"top-right"}
                   gutter={0} />
               </div>
-              <div className={"absolute pointer-events-none- w-full h-screen z-0 opacity-30"}>
+              <div className={"absolute pointer-events-none w-full h-screen z-0 opacity-30"}>
                 <div className="absolute inset-0">
                   <img
                     className="h-full mask-image w-full blur object-cover"
