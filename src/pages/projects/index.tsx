@@ -4,10 +4,9 @@ import Apply from "../../components/slices/apply";
 import React, { useContext, useEffect, useState } from "react";
 import { RpcHelper } from "parasol-finance-sdk";
 import { NftContext } from "../../context/NftContext";
-import ProjectCard from "../../components/cards/project-card";
 import Head from "next/head";
 import { Project } from "../../constants";
-import Layout from "../../components/layout";
+import ProjectCard from "../../components/cards/project-card";
 
 const Projects = () => {
   const { provider } = useContext(NftContext);
@@ -36,32 +35,36 @@ const Projects = () => {
           "There is the list of the next IDOs and projects on Parasol."
         }
       />
-      <Layout>
-        <section>
-          <Container>
-            <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
-              {projects.map((project, index) => {
-                if (project.status == "PUBLISHED") {
-                  return (
-                    <ProjectCard
-                      key={index}
-                      id={project.id}
-                      name={project.name}
-                      description={project.description}
-                      logo={project.logo}
-                      cover={project.cover}
-                      status={project.status}
-                      startTime={project.startTime}
-                      endTime={project.endTime}
-                    />
-                  );
-                }
-              })}
-            </div>
-          </Container>
-        </section>
-        <Apply/>
-      </Layout>
+      <section>
+        <Container>
+          <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+            {projects.length > 0 ? (
+              <>
+                {projects.map((project, index) => (
+                  <ProjectCard
+                    key={index}
+                    id={project.id}
+                    name={project.name}
+                    description={project.description}
+                    logo={project.logo}
+                    cover={project.cover}
+                    status={project.status}
+                    startTime={project.startTime}
+                    endTime={project.endTime}
+                  />
+                ))}
+              </>
+            ) : (
+              <>
+                {[0, 1, 2].map(key => (
+                  <ProjectCard key={key} loading={true}/>
+                ))}
+              </>
+            )}
+          </div>
+        </Container>
+      </section>
+      <Apply />
     </>
   )
 };
