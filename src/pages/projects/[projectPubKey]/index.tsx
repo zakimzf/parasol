@@ -200,7 +200,7 @@ const ProjectDetails = () => {
                       <Tab.Panels>
                         <Tab.Panel>
                           <div className={"prose markdown prose-lg prose-invert"}>
-                            {ido.content ? (
+                            {walletAddress && walletAddress == ido.creator || ido.content ? (
                               <EditorJs
                                 content={ido.content || "{}"}
                                 isOwner={walletAddress && walletAddress == ido.creator || false}
