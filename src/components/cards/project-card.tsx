@@ -71,7 +71,7 @@ const ProjectCard = ({
       ) : (
         <img
           className="w-full aspect-video rounded-t-lg"
-          src={"/assets/preview/projects.png"}
+          src={"/assets/preview/placeholder.png"}
           alt={"placeholder"}
         />
       )}
