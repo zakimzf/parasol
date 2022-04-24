@@ -281,7 +281,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   <div className={"w-48"}>
                     <ul role="list" className="pt-4 divide-y-divide-gray-200-divide-opacity-10">
                       {JSON.parse(ido.content).blocks.map((block: any) => {
-                        if (block.type === "header") {
+                        if (block.type === "header" && block.data.level == 2) {
+                          console.log(block)
                           return (
                             <li
                               key={block.id}
@@ -300,9 +301,6 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   </div>
                   <div className={"flex-1"}>
                     <div className={"prose prose-lg prose-invert max-w-full"}>
-                      {/*<h1>*/}
-                      {/*  Fuck off*/}
-                      {/*</h1>*/}
                       <SRLWrapper>
                         <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"}/>
                       </SRLWrapper>
