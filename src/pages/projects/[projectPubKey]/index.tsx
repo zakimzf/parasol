@@ -206,7 +206,7 @@ const ProjectDetails = () => {
                                 isOwner={walletAddress && walletAddress == ido.creator || false}
                                 projectPubKey={projectPubKey}
                                 coverFile={coverFile}
-                                isCoverupdated={tempCover != ""}
+                                isCoverUpdated={tempCover != ""}
                                 oldCover={ido.cover}
                                 loading={loading}
                                 setLoading={setLoading}

@@ -3,37 +3,32 @@ import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Embed from "@editorjs/embed";
 import Table from "@editorjs/table";
-import React, { useCallback, useEffect, useState } from "react";
-import { doc, updateDoc } from "firebase/firestore";
-import { db, storage } from "../utils/firebase";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { sign } from "tweetnacl";
+import React, {useCallback, useEffect, useState} from "react";
+import {doc, updateDoc} from "firebase/firestore";
+import {db, storage} from "../utils/firebase";
+import {useWallet} from "@solana/wallet-adapter-react";
+import {sign} from "tweetnacl";
 
 import "node-snackbar/dist/snackbar.min.css";
-import { notification } from "../utils/functions";
+import {notification} from "../utils/functions";
 import ImageTool from "@editorjs/image";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import {deleteObject, getDownloadURL, ref, uploadBytesResumable,} from "firebase/storage";
 import axios from "axios";
 
 const Quote = require("@editorjs/quote");
 
 interface props {
   projectPubKey: any;
-  isOwner: boolean;
   content: any;
-  oldCover: string;
-  isCoverupdated: boolean;
-  coverFile: any;
-  loading: boolean;
-  setLoading: any;
+  isOwner?: boolean;
+  oldCover?: string;
+  isCoverUpdated?: boolean;
+  coverFile?: any;
+  loading?: boolean;
+  setLoading?: any;
 }
 
-const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, isCoverupdated, coverFile, loading, setLoading }) => {
+const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, isCoverUpdated, coverFile, loading, setLoading }) => {
   const idosCollectionRef: any = doc(db, "ido-metadata", projectPubKey);
   const [editor, setEditor] = useState<any>(null);
 
@@ -150,7 +145,7 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
   }, [loading]);
 
   const changeCover = async () => {
-    if (isCoverupdated) {
+    if (isCoverUpdated) {
       const storageRef = ref(storage, `projects/${projectPubKey}/${coverFile.name}`);
       const uploadTask = uploadBytesResumable(storageRef, coverFile);
       await uploadTask.on(
@@ -199,7 +194,7 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
           notification("danger", "Unable to save your content.", "Update IDO");
         });
         
-      if (!isCoverupdated) setLoading(false);
+      if (!isCoverUpdated) setLoading(false);
     }
     catch (error) {
       setLoading(false);

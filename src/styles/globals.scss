@@ -142,7 +142,7 @@ input[type="number"] {
 
 .image-tool__image-picture {
   margin: 0;
-  @apply rounded-lg cursor-pointer transition-transform duration-300;
+  @apply w-full rounded-lg cursor-pointer transition-transform duration-300;
 }
 
 .image-tool .cdx-button>svg {
