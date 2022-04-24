@@ -28,7 +28,8 @@ type CountdownProps = {
   seconds: number
 }
 
-const countdownRenderer = ({ days, hours, minutes, seconds }: CountdownProps) => <span>{days} Days - {hours}h {minutes}m {seconds}s</span>
+const countdownRenderer = ({ days, hours, minutes, seconds }: CountdownProps) =>
+  <span>{days} Days - {hours}h {minutes}m {seconds}s</span>
 
 const ProjectCard = ({
   id,
@@ -50,11 +51,13 @@ const ProjectCard = ({
       {cover ? (
         <div className={"relative"}>
           <label className="absolute z-10 top-3 right-3 p-2 bg-opacity-70 text-xs uppercase font-medium rounded-md bg-purple-1">
-              IDO Status: {status}
+            IDO Status: {status}
           </label>
-          <div className={"w-full flex justify-center py-1 font-bold items-center absolute bg-white bg-opacity-10 z-10 bottom-0"}>
-            <Countdown date={startTime} renderer={countdownRenderer} />
-          </div>
+          {startTime >= Date.now() ? (
+            <div className={"w-full flex justify-center py-1 font-bold items-center absolute bg-white bg-opacity-10 z-10 bottom-0"}>
+              <Countdown date={startTime} renderer={countdownRenderer}/>
+            </div>
+          ) : ""}
           <Link href={`/projects/${id}`}>
             <a style={{ position: "relative" }}>
               <img

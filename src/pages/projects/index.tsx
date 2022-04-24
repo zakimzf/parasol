@@ -5,23 +5,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { RpcHelper } from "parasol-finance-sdk";
 import { NftContext } from "../../context/NftContext";
 import Head from "next/head";
-import ProjectCard from "../../components/cards/project-card";
-
-interface project {
-  id: string;
-  name: string;
-  logo: string;
-  description: string;
-  cover: string;
-  symbol: string;
-  status: string,
-  startTime: Date;
-  endTime: Date;
-}
+import { Project } from "../../constants";
+import Layout from "../../components/layout";
 
 const Projects = () => {
   const { provider } = useContext(NftContext);
-  const [projects, setProjects] = useState<project[]>([])
+  const [projects, setProjects] = useState<Project[]>([])
 
   useEffect(() => {
     const getProjects = async () => {
@@ -35,9 +24,9 @@ const Projects = () => {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | Projects Seeding</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding" />
-        <meta property="og:image" content="/assets/preview/projects.png" />
-        <meta property="twitter:image" content="/assets/preview/projects.png" />
+        <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding"/>
+        <meta property="og:image" content="/assets/preview/projects.png"/>
+        <meta property="twitter:image" content="/assets/preview/projects.png"/>
       </Head>
       <Heading
         tagline={"Parasol Launchpad"}
