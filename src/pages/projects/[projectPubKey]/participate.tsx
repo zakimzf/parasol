@@ -85,7 +85,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       {ido && (
         <>
           {ido.startTime >= Date.now() && (
-            <div className={"absolute flex flex-col justify-center items-center pb-12 inset-0 filter backdrop-blur-md z-10"}>
+            <div className={"absolute flex flex-col items-center pt-52 pb-12 inset-0 filter backdrop-blur-md z-10"}>
               <h1 className={"text-4xl mb-3 font-bold"}>Scheduled IDO</h1>
               <p className={"text-lg mb-6 font-medium"}>This IDO is not yet launched, come back later.</p>
               <button
@@ -296,6 +296,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   </div>
                   <div className={"flex-1"}>
                     <div className={"prose prose-lg prose-invert max-w-full"}>
+                      {/*<h1>*/}
+                      {/*  Fuck off*/}
+                      {/*</h1>*/}
                       <SRLWrapper>
                         <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"}/>
                       </SRLWrapper>
