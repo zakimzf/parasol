@@ -25,7 +25,6 @@ export const ReminderModal: FC = () => {
     setProjectKey("");
     setReminder(false)
   };
-  console.log(saved)
 
   return (
     <Transition.Root show={reminder} as={Fragment}>

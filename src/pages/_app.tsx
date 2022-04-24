@@ -114,14 +114,6 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
             autoConnect={true}
           >
             <WalletModalProvider>
-              <AnnounceBar />
-              <div className={"sticky top-0 w-full z-50"}>
-                <Toaster
-                  containerClassName={"!absolute !inset-0 w-full h-screen"}
-                  containerStyle={{}}
-                  position={"top-right"}
-                  gutter={0} />
-              </div>
               <div className={"absolute pointer-events-none w-full h-screen z-0 opacity-30"}>
                 <div className="absolute inset-0">
                   <img
@@ -132,6 +124,14 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                   <div className="absolute inset-0 bg-gradient-to-b from-[#b064fe4D]" />
                   <div className="absolute inset-0 bg-gradient-to-b from-[#0000004D]" />
                 </div>
+              </div>
+              <AnnounceBar />
+              <div className={"sticky top-0 w-full z-50"}>
+                <Toaster
+                  containerClassName={"!absolute !inset-0 w-full h-screen"}
+                  containerStyle={{}}
+                  position={"top-right"}
+                  gutter={0} />
               </div>
               <Header />
               <main role="main" className={"relative-"}>
