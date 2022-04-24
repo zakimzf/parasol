@@ -56,26 +56,30 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   useEffect(() => {
     const getDataByTokenAddress = async () => {
       const nftStore = await new NftStore(provider, config).build();
-      const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
-      const data = await project.data()
-
-      setCover(data.cover)
-      setBackgroundCover(data.cover)
-      if (data) {
-        if (data.splToken) {
-          const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
-          const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.splToken}`);
-          axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
-            const responseOne = responses[0]
-            const responseTwo = responses[1]
-            setIdo({ ...data, ...responseOne.data, ...responseTwo.data });
-          })).catch(errors => {
-            // react on errors.
-          })
+      try {
+        const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
+        const data = await project.data();
+        setCover(data.cover)
+        setBackgroundCover(data.cover)
+        if (data) {
+          if (data.splToken) {
+            const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
+            const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.splToken}`);
+            axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+              const responseOne = responses[0]
+              const responseTwo = responses[1]
+              setIdo({ ...data, ...responseOne.data, ...responseTwo.data });
+            })).catch(errors => {
+              // react on errors.
+            })
+          }
+          else setIdo(data);
         }
-        else setIdo(data);
+        else await router.push("/404");
       }
-      else await router.push("/404");
+      catch {
+        await router.push("/404");
+      }
     };
     if (projectPubKey) getDataByTokenAddress();
   }, [projectPubKey]);
