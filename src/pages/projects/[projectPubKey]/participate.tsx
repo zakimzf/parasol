@@ -113,7 +113,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
             <div className={"px-0"}>
               <Layout short={true}>
                 <div className="grid md:grid-cols-8">
-                  <div className="md:col-span-5 pt-12 md:pr-16">
+                  <div className="md:col-span-5 pt-10 md:pr-16">
                     <Link href={`/projects/${projectPubKey}`}>
                       <a className="inline-flex gap-x-2 items-center rounded-lg text-gray-300">
                         <ArrowLeftIcon className={"w-4"} />
