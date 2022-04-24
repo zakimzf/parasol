@@ -11,7 +11,7 @@ import {
 export const toolsMenu = [
   {
     name: "Create SPL Token",
-    description: "Create a Solana Token (SPL) in seconds",
+    description: "Create a Solana Token in few seconds.",
     href: "/tools/spl-creator",
     icon: PlusCircleIcon,
   },
