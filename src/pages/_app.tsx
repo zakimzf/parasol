@@ -114,16 +114,17 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                   position={"top-right"}
                   gutter={0} />
               </div>
-              {/*<div className={"absolute pointer-events-none- w-full h-screen z-0 opacity-5"}>*/}
-              {/*  <div className="absolute inset-0">*/}
-              {/*    <img*/}
-              {/*      className="h-full w-full object-cover"*/}
-              {/*      src="https://firebasestorage.googleapis.com/v0/b/project-finance-devnet.appspot.com/o/projects%2FBWR9XQTVAkfGHvDaUa482hamGimPTbELS7PRUKjYFxaF%2Fsecretum.jpg?alt=media&token=017d12ed-6920-41e9-94cb-3960f9d032fc"*/}
-              {/*      alt="People working on laptops"*/}
-              {/*    />*/}
-              {/*    <div className="absolute inset-0 bg-purple-2 bg-opacity-30 backdrop-blur-sm" />*/}
-              {/*  </div>*/}
-              {/*</div>*/}
+              <div className={"absolute pointer-events-none- w-full h-screen z-0 opacity-30"}>
+                <div className="absolute inset-0">
+                  <img
+                    className="h-full mask-image w-full blur object-cover"
+                    src="https://firebasestorage.googleapis.com/v0/b/project-finance-devnet.appspot.com/o/projects%2F4hCbayb7xEtmFpUhrYvjbgxJh342t8gBDezgNgGFUADk%2Fpexels-philippe-donn-1114688.jpg?alt=media&token=c479611d-5518-461a-acd4-88ab5c4b4768"
+                    alt="IDO Cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#b064fe4D]" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-[#0000004D]" />
+                </div>
+              </div>
               <Header />
               <main role="main" className={"relative-"}>
                 <SimpleReactLightbox>

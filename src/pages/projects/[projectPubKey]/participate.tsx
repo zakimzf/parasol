@@ -194,7 +194,7 @@ const ProjectParticipate = () => {
                               type="text"
                               name="price"
                               id="price"
-                              className="w-full p-3 block bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 pr-12"
+                              className="w-full p-3 block placeholder:text-gray-300 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 pr-12"
                               placeholder="0.00"
                               aria-describedby="price-currency"
                             />
