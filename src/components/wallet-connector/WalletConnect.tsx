@@ -1,23 +1,45 @@
-import React, { Fragment, MouseEventHandler, useCallback, useContext, useMemo, } from "react";
+import React, { Fragment, MouseEventHandler, useCallback, useContext, useEffect, useMemo, useState, } from "react";
 import { useWalletModal } from "./useWalletModal";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { Menu, Transition } from "@headlessui/react";
 import { ClipboardCopyIcon, LogoutIcon } from "@heroicons/react/outline";
-import { NftContext } from "../../context/NftContext";
+import { PublicKey } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { AnchorProvider, Migrator, NftKind, NftStore, NftStoreConfig, ProjectKind, RpcHelper, User } from "parasol-finance-sdk";
 
 type WalletConnectDetail = {
   Width: String;
+  nfts?: Array<any>;
 };
 
 const WalletConnect = ({ Width }: WalletConnectDetail) => {
-  // export const WalletConnect: FC = () => {
-  const { nfts, getNFTList } = useContext(NftContext);
-  const { publicKey, wallet, disconnect } = useWallet();
+  const { connection } = useConnection();
+  const { publicKey, wallet, disconnect, connected }: any = useWallet();
+  const wallet_ = useWallet();
   const { setVisible } = useWalletModal();
   const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
+  const [nfts, setNfts] = useState<any>([])
+
+  const getNFTList = async () => {
+    const config: NftStoreConfig = {
+      paymentMint: new PublicKey(process.env.NEXT_PUBLIC_PAYMENT_MINT as string),
+      collectionMint: new PublicKey(process.env.NEXT_PUBLIC_COLLECTION_MINT as string),
+    };
+    const provider = new AnchorProvider(connection, wallet_ as any, {
+      preflightCommitment: "confirmed",
+    });
+    const nftStore = await new NftStore(provider, config).build();
+    const user = await new User(provider, nftStore).build();
+    if (user) setNfts(await user.getNFTList());
+    console.log(nfts)
+  }
+
+  useEffect(() => {
+    if (!connected) return;
+    getNFTList();
+  }, [connected]);
+
   const content = useMemo(() => {
     if (!wallet || !base58) return null;
-    getNFTList();
     return base58.slice(0, 7) + ".." + base58.slice(-5);
   }, [wallet, base58]);
 
@@ -28,14 +50,11 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
     [disconnect]
   );
 
-  console.log(nfts)
-
-  // if (!base58) return <button>Test</button>;
   if (!wallet)
     return (
       <button
         onClick={() => setVisible(true)}
-        className={`inline-flex items-center px-4 py-2 gap-x-2 text-base font-medium rounded-md bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 text-white hover:bg-white hover:text-purple-2 hover:from-purple-2 hover:to-purple-1 ${Width == "full" ? "w-full items-center justify-center" : "" }`}
+        className={`inline-flex items-center px-4 py-2 gap-x-2 text-base font-medium rounded-md bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2 text-white hover:bg-white hover:text-purple-2 hover:from-purple-2 hover:to-purple-1 ${Width == "full" ? "w-full items-center justify-center" : ""}`}
       >
         <svg
           className="h-3"
@@ -52,7 +71,7 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
         {content}
       </button>
     );
-
+    
   return (
     <Menu as="div" className={`relative z-10 inline-block text-left ${Width == "full" ? "w-full" : ""}`}>
       <div>
@@ -107,11 +126,14 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
             {/*    </a>*/}
             {/*  </Link>*/}
             {/*</Menu.Item>*/}
-            <Menu.Item>
-              <ul>
-                <li>test</li>
-              </ul>
-            </Menu.Item>
+            {nfts.length > 0 && (
+              <Menu.Item>
+                <ul>
+                  {nfts.map((nft: any) => (<><img src={nft.image} alt={nft.name} /></>))}
+                </ul>
+              </Menu.Item>
+            )}
+
             <Menu.Item>
               <a
                 onClick={() => navigator.clipboard.writeText(base58 as string)}

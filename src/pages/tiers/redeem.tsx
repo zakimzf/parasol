@@ -53,8 +53,6 @@ const Migrate = () => {
     getNFTList();
   };
 
-  console.log(nfts)
-
   return (
     <>
       <Head>
