@@ -12,25 +12,25 @@ export const toolsMenu = [
   {
     name: "Create SPL Token",
     description: "Create a Solana Token (SPL) in seconds",
-    href: "/tools/mint",
+    href: "/tools/spl-creator",
     icon: PlusCircleIcon,
   },
   {
     name: "Airdrop Tool",
     description: "Simplifies the sending of tokens to your community",
-    href: "/tools/airdrop",
+    href: "https://forms.gle/eWqpaPdGMX8joTem9",
     icon: CloudDownloadIcon,
   },
   {
     name: "NFT Mint & Drop",
     description: "Helps you to mint and send NFTs.",
-    href: "/tools/nft",
+    href: "https://forms.gle/eWqpaPdGMX8joTem9",
     icon: PhotographIcon,
   },
   {
     name: "Market Maker",
     description: "Create liquidity and put your coin on the market",
-    href: "/tools/market-maker",
+    href: "https://forms.gle/eWqpaPdGMX8joTem9",
     icon: TrendingUpIcon,
   }
 ]

@@ -241,7 +241,7 @@ const Header = () => (
                           {toolsMenu.map((item) => (
                             <a
                               key={item.name}
-                              href={"https://forms.gle/eWqpaPdGMX8joTem9"}
+                              href={item.href}
                               className="-m-3 p-3 p flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
                             >
                               <item.icon
@@ -662,7 +662,7 @@ const Header = () => (
                               {toolsMenu.map((item) => (
                                 <a
                                   key={item.name}
-                                  href={"https://forms.gle/eWqpaPdGMX8joTem9"}
+                                  href={item.href}
                                   className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
                                 >
                                   <item.icon
