@@ -282,12 +282,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <ul role="list" className="pt-4 divide-y-divide-gray-200-divide-opacity-10">
                       {JSON.parse(ido.content).blocks.map((block: any) => {
                         if (block.type === "header" && block.data.level == 2) {
-                          console.log(block)
                           return (
                             <li
                               key={block.id}
                               className="relative py-2">
-                              <a href="#" className="block focus:outline-none">
+                              <a href={`#${block.data.text.split(" ")[0]}`} className="block focus:outline-none">
                                 <p className={`${block.data.level > 2 ? "pl-3-" : ""} flex items-center gap-x-1 text-sm font-medium text-gray-300 hover:text-gray-200  hover:translate-x-3 duration-300`}>
                                   <ChevronRightIcon className={"w-3 h-3"} />
                                   <span className={"flex-1 truncate"}>{block.data.text}</span>

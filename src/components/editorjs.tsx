@@ -129,6 +129,12 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
           }
         }
       },
+      onReady: () => {
+        var headers = document.getElementsByClassName("ce-header");
+        for (var i = 0; i < headers.length; i++) {
+          headers[i].setAttribute("id", headers[i].innerHTML.split(" ")[0]);
+        }
+      },
       data: editorContent,
     });
     setEditor(editor_);
@@ -153,7 +159,7 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       const uploadTask = uploadBytesResumable(storageRef, coverFile);
       await uploadTask.on(
         "state_changed",
-        (snapshot) => {},
+        (snapshot) => { },
         (error) => notification("danger", "Unable to save your cover.", "Update IDO"),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (cover) => {
@@ -196,7 +202,7 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
         .catch((error: any) => {
           notification("danger", "Unable to save your content.", "Update IDO");
         });
-        
+
       if (!isCoverUpdated) setLoading(false);
     }
     catch (error) {
