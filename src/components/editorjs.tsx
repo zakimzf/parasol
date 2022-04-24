@@ -124,7 +124,7 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       onChange: (api: any, event: any) => {
         if (event.type == "block-removed") {
           const index = event.detail.index;
-          if (blocksArray[index].type == "image") {
+          if (blocksArray && blocksArray[index].type == "image") {
             const url = blocksArray[index].data.file.url;
             setImagesToRemove((preValue: Array<string>) => [...preValue, url]);
             blocksArray.splice(index, 1);
