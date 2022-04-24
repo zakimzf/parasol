@@ -68,6 +68,9 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       tools: {
         header: {
           class: Header,
+          config: {
+            defaultLevel: 2
+          },
           inlineToolbar: true,
         },
         list: {
