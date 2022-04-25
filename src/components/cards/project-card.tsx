@@ -29,7 +29,7 @@ type CountdownProps = {
 }
 
 const countdownRenderer = ({ days, hours, minutes, seconds }: CountdownProps) =>
-  <span>{days} Days - {hours}h {minutes}m {seconds}s</span>
+  days == 0 ? <span>{hours}h {minutes}m {seconds}s</span> : <span>{days} Days - {hours}h {minutes}m {seconds}s</span>
 
 const ProjectCard = ({
   id,
