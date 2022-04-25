@@ -141,7 +141,8 @@ const EditProject = () => {
       const project = await new Project(provider, nftStore, new PublicKey(projectPubKey || "")).build();
       const data = await project.data()
       data.projectKey = projectPubKey;
-      if (data) {
+      
+      if (walletAddress && data && data.owner == walletAddress) {
         setValues(data);
       }
       else await router.push("/404");
