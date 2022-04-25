@@ -82,7 +82,7 @@ const Projects = () => {
         <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
           {projects.length > 0 ? (
             <>
-              {projects.map((project, index) => {
+              {projects.slice(0, 3).map((project, index) => {
                 if (project.status == "PUBLISHED") {
                   return <ProjectCard
                     key={index}
