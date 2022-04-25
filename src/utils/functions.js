@@ -13,7 +13,7 @@ export const getBase64 = file => new Promise((resolve, reject) => {
 });
 
 export const validURL = (str) => {
-  const pattern = new RegExp("^(https?:\\/\\/)?" +
+  const pattern = new RegExp("^(https?:\\/\\/)" +
     "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
     "((\\d{1,3}\\.){3}\\d{1,3}))" +
     "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
@@ -47,9 +47,7 @@ export const notification = (type, message, title = "") => {
   toast.custom((t) => (
     <div
       style={{ marginRight: "1rem" }}
-      className={`${
-        t.visible ? "animate-enter" : "animate-leave"
-      } max-w-md w-full mt-6 bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
+      className={`${t.visible ? "animate-enter" : "animate-leave" } max-w-md w-full mt-6 bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
     >
       <div className="flex-1 w-0 p-4">
         <div className="flex items-start">
@@ -80,16 +78,14 @@ export const notification = (type, message, title = "") => {
 export const uploadFile = (file, tokenAddress, notify, updateIdoCover = false, idosCollectionRef = null) => {
   if (!file) return;
   let res = {};
-  
+
   const storageRef = ref(storage, `projects/${tokenAddress && (updateIdoCover ? tokenAddress : tokenAddress + "/images") || "files"}/${file.name}`);
 
   const task = uploadBytesResumable(storageRef, file);
 
   task.on(
     "state_changed",
-    (snapshot) => {
-      // console.log(snapshot)
-    },
+    (snapshot) => { },
     (error) => notify(false),
     () => {
       if (updateIdoCover) {
@@ -105,6 +101,17 @@ export const uploadFile = (file, tokenAddress, notify, updateIdoCover = false, i
       }
     }
   );
-  
+
   return res
+}
+
+export const slugify = (text) => {
+  return text
+    .toString()                     
+    .toLowerCase()                 
+    .normalize("NFD")        
+    .trim()                  
+    .replace(/\s+/g, "-")    
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-");
 }

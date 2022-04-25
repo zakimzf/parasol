@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -50,8 +50,7 @@ const Tiers = function () {
     },
   ]);
 
-  const { provider, nfts, nftKinds, wallet, user } =
-    React.useContext(NftContext);
+  const { provider, nfts, nftKinds, wallet, user } = useContext(NftContext);
 
   const buyNFT = async (index: number) => {
     try {
@@ -88,7 +87,6 @@ const Tiers = function () {
   }, []);
 
   const activeNft = (items: [any], tiers: any) => {
-    console.log(items, tiers)
     return items.some(x => x.attributes[0]["value"] == tiers.name);
   };
 
@@ -96,14 +94,14 @@ const Tiers = function () {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | NFT Access Keys</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | NFT Access Keys"/>
+        <meta name="title" content="Parasol Finance ($PSOL) | NFT Access Keys" />
         <meta property="og:image" content="/assets/preview/tiers.png" />
         <meta property="twitter:image" content="/assets/preview/tiers.png" />
       </Head>
       <section>
         <Container>
           <div className={"grid md:grid-cols-3 pt-10 pb-16"}>
-            <div className={"flex gap-x-2 items-center"}/>
+            <div className={"flex gap-x-2 items-center"} />
             <div>
               <div className="text-center">
                 <h2 className="text-base font-semibold tracking-wider mb-3 text-purple-400 uppercase">

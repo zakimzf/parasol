@@ -19,7 +19,7 @@ const Projects = () => {
     }
     getProjects();
   }, [])
-  console.log(projects)
+  
   return (
     <>
       <Head>

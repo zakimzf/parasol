@@ -40,6 +40,10 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: url("/assets/ellipses.svg") no-repeat top -200px center #17122b;
   color: theme("colors.white");
@@ -142,7 +146,7 @@ input[type="number"] {
 
 .image-tool__image-picture {
   margin: 0;
-  @apply rounded-lg cursor-pointer transition-transform duration-300;
+  @apply w-full rounded-lg cursor-pointer transition-transform duration-300;
 }
 
 .image-tool .cdx-button>svg {
