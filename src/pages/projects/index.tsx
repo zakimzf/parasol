@@ -60,7 +60,7 @@ const Projects = () => {
                 </>
               ) : (
                 <>
-                  {[0, 1, 2].map(key => (
+                  {[0, 1, 2, 3, 4 ,5].map(key => (
                     <ProjectCard key={key} loading={true}/>
                   ))}
                 </>
