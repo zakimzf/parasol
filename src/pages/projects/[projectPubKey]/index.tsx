@@ -44,25 +44,29 @@ const ProjectDetails = () => {
   useEffect(() => {
     const getDataByTokenAddress = async () => {
       const nftStore = await new NftStore(provider, config).build();
-      const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
-      const data = await project.data()
-
-      setCover(data.cover)
-      if (data) {
-        if (data.splToken) {
-          const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
-          const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.splToken}`);
-          axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
-            const responseOne = responses[0]
-            const responseTwo = responses[1]
-            setIdo({ ...data, ...responseOne.data, ...responseTwo.data });
-          })).catch(errors => {
-            // react on errors.
-          })
+      try {
+        const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
+        const data = await project.data()
+        setCover(data.cover)
+        if (data) {
+          if (data.splToken) {
+            const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
+            const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.splToken}`);
+            axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
+              const responseOne = responses[0]
+              const responseTwo = responses[1]
+              setIdo({ ...data, ...responseOne.data, ...responseTwo.data });
+            })).catch(errors => {
+              // react on errors.
+            })
+          }
+          else setIdo(data);
         }
-        else setIdo(data);
+        else await router.push("/404");
       }
-      else await router.push("/404");
+      catch {
+        await router.push("/404");
+      }
     };
     if (projectPubKey) getDataByTokenAddress();
   }, [projectPubKey]);
@@ -121,7 +125,7 @@ const ProjectDetails = () => {
                         {ido.description}
                       </p>
                     </div>
-                    {walletAddress && walletAddress == ido.creator &&
+                    {walletAddress && walletAddress == ido.owner &&
                       (
                         <div className={"flex ml-auto justify-items-end items-center"}>
                           <Link href={`/projects/${projectPubKey}/edit`}>
@@ -136,7 +140,7 @@ const ProjectDetails = () => {
                       )
                     }
                   </div>
-                  {walletAddress && walletAddress == ido.creator &&
+                  {walletAddress && walletAddress == ido.owner &&
                     <>
                       <div className={"relative"}>
                         <img src={tempCover || ido.cover} className={"mb-6 rounded-lg"} alt={ido.name} />
@@ -149,7 +153,7 @@ const ProjectDetails = () => {
                   }
                   <SRLWrapper>
 
-                    {(!walletAddress || walletAddress != ido.creator) && <img src={ido.cover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name} />}
+                    {(!walletAddress || walletAddress != ido.owner) && <img src={ido.cover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name} />}
 
                     <Tab.Group>
                       <Tab.List className={"mb-3"}>
@@ -200,13 +204,13 @@ const ProjectDetails = () => {
                       <Tab.Panels>
                         <Tab.Panel>
                           <div className={"prose markdown prose-lg prose-invert"}>
-                            {ido.content ? (
+                            {walletAddress && walletAddress == ido.owner || ido.content ? (
                               <EditorJs
                                 content={ido.content || "{}"}
-                                isOwner={walletAddress && walletAddress == ido.creator || false}
+                                isOwner={walletAddress && walletAddress == ido.owner || false}
                                 projectPubKey={projectPubKey}
                                 coverFile={coverFile}
-                                isCoverupdated={tempCover != ""}
+                                isCoverUpdated={tempCover != ""}
                                 oldCover={ido.cover}
                                 loading={loading}
                                 setLoading={setLoading}
@@ -331,7 +335,7 @@ const ProjectDetails = () => {
                             </span>
                           </div>
                         </div>
-                        {walletAddress ? walletAddress == ido.creator ? (
+                        {walletAddress ? walletAddress == ido.owner ? (
                           <button className={"w-full button mt-8"} id="saveEditor" disabled={loading}>
                             {loading ? "Saving..." : "Save Changes"}
                           </button>

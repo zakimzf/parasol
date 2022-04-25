@@ -10,30 +10,25 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { sign } from "tweetnacl";
 
 import "node-snackbar/dist/snackbar.min.css";
-import { notification } from "../utils/functions";
+import { notification, slugify } from "../utils/functions";
 import ImageTool from "@editorjs/image";
-import {
-  deleteObject,
-  getDownloadURL,
-  ref,
-  uploadBytesResumable,
-} from "firebase/storage";
+import { deleteObject, getDownloadURL, ref, uploadBytesResumable, } from "firebase/storage";
 import axios from "axios";
 
 const Quote = require("@editorjs/quote");
 
 interface props {
   projectPubKey: any;
-  isOwner: boolean;
   content: any;
-  oldCover: string;
-  isCoverupdated: boolean;
-  coverFile: any;
-  loading: boolean;
-  setLoading: any;
+  isOwner?: boolean;
+  oldCover?: string;
+  isCoverUpdated?: boolean;
+  coverFile?: any;
+  loading?: boolean;
+  setLoading?: any;
 }
 
-const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, isCoverupdated, coverFile, loading, setLoading }) => {
+const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, isCoverUpdated, coverFile, loading, setLoading }) => {
   const idosCollectionRef: any = doc(db, "ido-metadata", projectPubKey);
   const [editor, setEditor] = useState<any>(null);
 
@@ -73,6 +68,9 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       tools: {
         header: {
           class: Header,
+          config: {
+            defaultLevel: 2
+          },
           inlineToolbar: true,
         },
         list: {
@@ -124,11 +122,17 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
       onChange: (api: any, event: any) => {
         if (event.type == "block-removed") {
           const index = event.detail.index;
-          if (blocksArray[index].type == "image") {
+          if (blocksArray && blocksArray[index].type == "image") {
             const url = blocksArray[index].data.file.url;
             setImagesToRemove((preValue: Array<string>) => [...preValue, url]);
             blocksArray.splice(index, 1);
           }
+        }
+      },
+      onReady: () => {
+        var headers = document.getElementsByClassName("ce-header");
+        for (var i = 0; i < headers.length; i++) {
+          headers[i].setAttribute("id", slugify(headers[i].innerHTML));
         }
       },
       data: editorContent,
@@ -150,12 +154,12 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
   }, [loading]);
 
   const changeCover = async () => {
-    if (isCoverupdated) {
+    if (isCoverUpdated) {
       const storageRef = ref(storage, `projects/${projectPubKey}/${coverFile.name}`);
       const uploadTask = uploadBytesResumable(storageRef, coverFile);
       await uploadTask.on(
         "state_changed",
-        (snapshot) => {},
+        (snapshot) => { },
         (error) => notification("danger", "Unable to save your cover.", "Update IDO"),
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (cover) => {
@@ -198,8 +202,8 @@ const EditorJs: React.FC<props> = ({ projectPubKey, isOwner, content, oldCover, 
         .catch((error: any) => {
           notification("danger", "Unable to save your content.", "Update IDO");
         });
-        
-      if (!isCoverupdated) setLoading(false);
+
+      if (!isCoverUpdated) setLoading(false);
     }
     catch (error) {
       setLoading(false);

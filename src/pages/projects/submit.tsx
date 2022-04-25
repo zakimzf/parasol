@@ -198,7 +198,7 @@ const SubmitProject = () => {
         const index = packages.findIndex(p => p.name === values.package.name);
 
         const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
-        console.log(`${process.env.DOMAIN_URL}/projects/api/${projectPubKey?.toBase58()}`)
+        
         const args: any = {
           projectKind: projectKinds[index].address,
           treasuryMint: new PublicKey(treasuryMint),
@@ -207,7 +207,7 @@ const SubmitProject = () => {
           tier: index,
           hardCap: values.hardCap,
           salePrice: values.tokenPrice,
-          liquidPoolFeeBasisPoints: (parseInt(values.liquidity) / 100),
+          lpFeeBasisPoints: Number(values.liquidity) / 100,
           startTime: new Date(values.startTime),
           endTime: new Date(values.endTime),
           uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
@@ -225,12 +225,11 @@ const SubmitProject = () => {
 
         await uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, values.projectKey), _values);
-          router.push(`/projects/${values.projectKey}`);
+          await router.push(`/projects/${values.projectKey}`);
           setLoading(false);
         })
       }
       catch (err) {
-        console.log(err)
         setLoading(false);
       }
     }
@@ -279,7 +278,7 @@ const SubmitProject = () => {
     uploadTask.on(
       "state_changed",
       (snapshot) => { },
-      (error) => console.log(error),
+      (error) => { },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           const _values = {
