@@ -899,6 +899,18 @@ const SubmitProject = () => {
                         />
                       </span>
                     </div>
+                    <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                      <span>Liquidity Percentage</span>
+                      <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                      <span>
+                        <NumberFormat
+                          value={!values.liquidity && "0" || values.liquidity}
+                          displayType={"text"}
+                          thousandSeparator={true}
+                          prefix={"%"}
+                        />
+                      </span>
+                    </div>
                   </div>
                   <p className={"text-sm text-gray-400 mt-6"}>
                     Find more information on the listing process by consulting our documentation <a href={"https://docs.parasol.finance/"} className={"text-purple-2"} target={"_blank"} rel="noreferrer">here</a>.
