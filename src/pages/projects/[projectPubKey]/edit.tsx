@@ -128,7 +128,7 @@ const EditProject = () => {
         telegram: values.telegram,
       });
       notification("success", "The IDO was successfully updated.", "Updated IDO Details");
-      // router.push(`/projects/${projectPubKey}`);
+      router.push(`/projects/${projectPubKey}`);
     }
     catch (error: any) {
       notification("danger", "Unable to sign the transaction.", "Transaction Error");
