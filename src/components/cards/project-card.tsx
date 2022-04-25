@@ -75,7 +75,7 @@ const ProjectCard = ({
           alt={"placeholder"}
         />
       )}
-      <div className={`flex flex-col px-6 ${logo ? "pt-16" : "pt-6"} pb-6`}>
+      <div className={`flex relative z-10 flex-col px-6 ${logo ? "pt-16" : "pt-6"} pb-6`}>
         {logo && (
           <img
             className="absolute w-20 h-20 border-4 border-gray-700 bg-gray-700 -top-10 rounded-xl"
