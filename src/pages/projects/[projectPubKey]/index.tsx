@@ -144,7 +144,7 @@ const ProjectDetails = () => {
                     <>
                       <div className={"relative"}>
                         <img src={tempCover || ido.cover} className={"mb-6 rounded-lg w-full"} alt={ido.name} />
-                        <div className={"flex justify-center items-center absolute duration-300 scale-105 cursor-pointer filter backdrop-blur-sm top-0 w-full h-full"} {...getRootProps()}>
+                        <div className={"flex justify-center items-center absolute duration-300 cursor-pointer filter bg-black bg-opacity-50 hover:backdrop-blur-sm rounded-lg top-0 w-full h-full"} {...getRootProps()}>
                           {isDragActive ? <p className="pl-1">Drop the file here ...</p> : <CloudUploadIcon className={"w-32 text-white "} />}
                         </div>
                         <input {...getInputProps()} disabled={true} id="file-upload" name="projectCover" type="file" className="sr-only" />
