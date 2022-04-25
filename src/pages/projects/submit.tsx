@@ -206,7 +206,7 @@ const SubmitProject = () => {
           tier: index,
           hardCap: values.hardCap,
           salePrice: values.tokenPrice,
-          lpFeeBasisPoints: 100 * Number(values.liquidity),
+          lpFeeBasisPoints: Number(values.liquidity) / 100,
           startTime: new Date(values.startTime),
           endTime: new Date(values.endTime),
           uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
