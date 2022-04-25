@@ -735,7 +735,6 @@ const SubmitProject = () => {
                         type={"range"}
                         className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
                       />
-                      <div>30%</div>
                       {errors.liquidity && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
                       </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.liquidity}</div></>}
