@@ -143,7 +143,7 @@ const ProjectDetails = () => {
                   {walletAddress && walletAddress == ido.owner &&
                     <>
                       <div className={"relative"}>
-                        <img src={tempCover || ido.cover} className={"mb-6 rounded-lg"} alt={ido.name} />
+                        <img src={tempCover || ido.cover} className={"mb-6 rounded-lg w-full"} alt={ido.name} />
                         <div className={"flex justify-center items-center absolute duration-300 scale-105 cursor-pointer filter backdrop-blur-sm top-0 w-full h-full"} {...getRootProps()}>
                           {isDragActive ? <p className="pl-1">Drop the file here ...</p> : <CloudUploadIcon className={"w-32 text-white "} />}
                         </div>
@@ -152,9 +152,7 @@ const ProjectDetails = () => {
                     </>
                   }
                   <SRLWrapper>
-
                     {(!walletAddress || walletAddress != ido.owner) && <img src={ido.cover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name} />}
-
                     <Tab.Group>
                       <Tab.List className={"mb-3"}>
                         <div className="border-b border-gray-500">

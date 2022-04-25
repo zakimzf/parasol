@@ -49,7 +49,7 @@ const ProjectCard = ({
       {cover && (
         <div className={"relative"}>
           <label className="absolute z-10 top-3 right-3 p-2 bg-opacity-70 text-xs uppercase font-medium rounded-md bg-purple-1">
-              IDO Status: {status}
+            {status}
           </label>
           <div className={"w-full flex justify-center py-1 font-bold items-center absolute bg-white bg-opacity-10 z-10 bottom-0"}>
             <Countdown date={startTime} renderer={countdownRenderer} />
