@@ -113,8 +113,8 @@ const ProjectCard = ({
                 </div>
               </div>
               <div className="flex gap-x-3">
-                <button className={"button w-3/5 text-sm py-1 rounded-full !bg-none bg-[#5d5774]"}>&nbsp;</button>
-                <button className={"button w-2/5 text-sm py-1 !bg-none rounded-full !bg-[#5d5774]"}>&nbsp;</button>
+                <button className={"button cursor-default w-3/5 text-sm py-1 rounded-full !bg-none bg-[#5d5774] hover:bg-[#5d5774]"}>&nbsp;</button>
+                <button className={"button cursor-default w-2/5 text-sm py-1 !bg-none rounded-full !bg-[#5d5774]"}>&nbsp;</button>
               </div>
             </div>
           </div>
