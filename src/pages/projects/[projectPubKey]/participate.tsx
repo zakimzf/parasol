@@ -283,7 +283,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           </label>
                           <div className="mt-2 relative rounded-md shadow-sm">
                             <input
-                              readOnly={walletAddress === undefined || nfts.length === 0}
+                              readOnly={walletAddress === undefined || nfts.length === 0 || ido.startTime > Date.now()}
                               type="number"
                               name="amount"
                               id="amount"
@@ -375,14 +375,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           </div>
                         </RadioGroup>
                         {walletAddress ? (
-                          <button disabled={nfts.length == 0} className={`w-full ${nfts.length == 0 ? "opacity-90 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
+                          <button disabled={nfts.length == 0 || ido.startTime > Date.now()} className={`w-full ${nfts.length == 0 ? "opacity-90 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
                             <PaperAirplaneIcon className={"w-6 h-6"} />
                             Participate Now
                           </button>
                         ) : (
                           <button
                             onClick={() => walletAddress ?? walletModal.setVisible(true)}
-                            className={"w-full mt-5 button"}>
+                            className={"w-full mt-8 button"}>
                             Connect Wallet
                           </button>
                         )}
