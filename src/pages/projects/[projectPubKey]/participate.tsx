@@ -338,7 +338,31 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               </RadioGroup.Option>
                             )) :
                               (
-                                <Link href={"/tiers"}>Buy your NFT access key now!</Link>
+                                <Link href={"/tiers"}>
+                                  <a className="border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none">
+                                    <div className="flex items-center justify-between w-full">
+                                      <div className="flex items-center">
+                                        <div className="text-sm">
+                                          <p className="font-medium text-white">
+                                            <div className="flex items-center">
+                                              <div className="mr-4">
+                                                {/*<Image width={32} height={32} src={Logo} className="h-5" alt="logo" />*/}
+                                                <img className="w-12 h-12 rounded-md" src="https://parasol.finance/assets/nft-access-keys/covers/Dreamer.png" alt="PSOL KEY #2" />
+                                              </div>
+                                              <div>
+                                                <p className="text-xs">You don&apos;t have an NFT currently.</p>
+                                                <h2 className="text-lg whitespace-nowrap">Buy your NFT Access Key!</h2>
+                                              </div>
+                                            </div>
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="flex-shrink-0 text-purple-2 px-3">
+                                        <ArrowRightIcon className={"w-5"} />
+                                      </div>
+                                    </div>
+                                  </a>
+                                </Link>
                               )
                             }
                           </div>
