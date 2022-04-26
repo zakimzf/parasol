@@ -185,7 +185,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     <section className={"relative overflow-hidden py-12"}>
       {ido && (
         <>
-          {/* {ido.startTime >= Date.now() && (
+          {ido.startTime >= Date.now() && (
             <div className={"absolute flex flex-col items-center pt-52 pb-12 inset-0 filter backdrop-blur-md z-10"}>
               <h1 className={"text-4xl mb-3 font-bold"}>Scheduled IDO</h1>
               <p className={"text-lg mb-6 font-medium"}>This IDO is not yet launched, come back later.</p>
@@ -199,7 +199,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                 Set a Reminder
               </button>
             </div>
-          )} */}
+          )}
           <Container>
             <div className={"px-0"}>
               <Layout short={true}>
