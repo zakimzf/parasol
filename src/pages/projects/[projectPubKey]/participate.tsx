@@ -230,7 +230,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <div className="flex gap-x-12 lg:flex-row my-3">
                       <div className="flex items-center">
                         {ido.icon && <div className="mr-4">
-                          <img alt="FOXY" className="w-10" src={ido.icon} />
+                          <img alt={ido.name} className="w-10" src={ido.icon} />
                         </div>}
                         <div>
                           <p className="text-sm">Token Symbol</p>
