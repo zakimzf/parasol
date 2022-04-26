@@ -57,8 +57,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const [allocation, setallocation] = useState(0)
 
   useEffect(() => {
-    setNftMint(nfts[0])
-    setallocation(nftAllocation[nfts[0].attributes[0].value]);
+    if (nfts && nfts[0]) {
+      setNftMint(nfts[0])
+      setallocation(nftAllocation[nfts[0].attributes[0].value]);
+    }
   }, [nfts]);
 
   React.useEffect(() => {
