@@ -71,7 +71,7 @@ const SubmitProject = () => {
     startTime: "",
     endTime: "",
     liquidity: "50",
-    tokenDecimals: 0,
+    rewardDecimals: 0,
     package: packages[0],
     isFeatured: false,
     created: Timestamp.now()
@@ -191,17 +191,17 @@ const SubmitProject = () => {
         const projectKeypair = Keypair.generate();
         const projectPubKey = projectKeypair.publicKey;
         const project = await new Project(provider, nftStore, projectPubKey).build();
-        const tokenMint = values.splToken ? new PublicKey(values.splToken) : null;
+        const rewardToken = values.splToken ? new PublicKey(values.splToken) : null;
 
         const index = packages.findIndex(p => p.name === values.package.name);
 
         const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
-        console.log(tokenMint)
+
         const args: any = {
           projectKind: projectKinds[index].address,
           treasuryMint: new PublicKey(treasuryMint),
-          tokenMint: tokenMint,
-          tokenDecimals: values.tokenDecimals,
+          rewardToken: rewardToken,
+          rewardDecimals: values.rewardDecimals,
           tier: index,
           hardCap: values.hardCap,
           salePrice: values.tokenPrice,
@@ -313,7 +313,7 @@ const SubmitProject = () => {
 
   const changeScenario = (value: any) => {
     setSelectedIdoOptions(value)
-    setValues({ ...values, tokenDecimals: 0, splToken: "" });
+    setValues({ ...values, rewardDecimals: 0, splToken: "" });
   }
   
   return (
@@ -411,18 +411,18 @@ const SubmitProject = () => {
                         Token Decimals <span className="text-purple-2">*</span>
                       </label>
                       <input
-                        onChange={handleChange} value={values.tokenDecimals}
+                        onChange={handleChange} value={values.rewardDecimals}
                         type="number"
                         min={0}
                         max={18}
-                        name="tokenDecimals"
+                        name="rewardDecimals"
                         id="token-decimals"
                         placeholder={"Enter Decimals"}
-                        className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ ${(errors.tokenDecimals && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
+                        className={`mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_ ${(errors.rewardDecimals && "border-red-600 text-red-600 placeholder-red-600 focus:outline-none focus:ring-red-600 border-2 focus:border-red-600 sm:text-sm rounded-md")}`}
                       />
-                      {errors.tokenDecimals && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                      {errors.rewardDecimals && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                         <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.tokenDecimals}</div></>}
+                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.rewardDecimals}</div></>}
                     </div>
                   )}
                 </div>

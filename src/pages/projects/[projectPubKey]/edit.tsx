@@ -3,7 +3,7 @@ import NumberFormat from "react-number-format";
 import axios from "axios";
 import { ExclamationCircleIcon, PencilAltIcon } from "@heroicons/react/outline";
 import { collection, doc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
 import { useWalletModal } from "../../../components/wallet-connector";
@@ -18,12 +18,13 @@ import { PublicKey } from "@solana/web3.js";
 const EditProject = () => {
   const router = useRouter();
 
-  const { publicKey, signMessage } = useWallet();
+  const { publicKey, signMessage, sendTransaction } = useWallet();
+  const { connection } = useConnection();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
   const walletModal = useWalletModal();
 
-  const { provider, config } = useContext(NftContext);
+  const { provider, config, user, wallet } = useContext(NftContext);
 
   const { projectPubKey }: any = router.query;
 
@@ -32,6 +33,7 @@ const EditProject = () => {
   const [loading, setLoading] = useState(false);
 
   const [errors, setErrors] = useState<any>([]);
+  const [project, setProject] = useState<any>()
 
   const handleChange = (e: any) => {
     let { name, value, classList } = e.target;
@@ -53,16 +55,14 @@ const EditProject = () => {
         errors[name] = "";
       }
     }
-    console.log(name, value)
+    
     setValues({ ...values, [name]: value });
-    console.log(values)
   };
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     if (walletAddress && walletAddress == values.owner) {
       setLoading(true);
       await validateAllFieldsAndRedirection();
-      setLoading(false);
     }
     else {
       notification("warning", "You cannot update this IDO.", "Forbidden");
@@ -90,6 +90,23 @@ const EditProject = () => {
         el.classList.add(...errClasses);
       }
     }
+
+    if (values.startTime && values.endTime) {
+      const stTime: any = new Date(values.startTime);
+      const enTime: any = new Date(values.endTime);
+      const diffTime = Math.abs(enTime - stTime);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      const stRef = document.getElementById("startTime");
+      const enRef = document.getElementById("endTime");
+
+      stRef?.classList.remove(...errClasses);
+      enRef?.classList.remove(...errClasses);
+
+      if (diffDays > 14) {
+        enRef?.classList.add(...errClasses);
+        _errors["endTime"] = "You cannot create an IDO longer than 14 days";
+      }
+    }
     setErrors(_errors);
     return _errors;
   };
@@ -103,22 +120,40 @@ const EditProject = () => {
 
   const signWallet = async () => {
     try {
-      // `publicKey` will be null if the wallet isn't connected
-      if (!publicKey) throw new Error("Wallet not connected!");
-      // `signMessage` will be undefined if the wallet doesn't support it
-      if (!signMessage)
-        throw new Error("Wallet does not support message signing!");
-
-      // Encode anything as bytes
-      const message = new TextEncoder().encode("I agree to change the details of this IDO.");
-      // Sign the bytes using the wallet
-      const signature = await signMessage(message);
-      // Verify that the bytes were signed using the private key that matches the known public key
-      if (!sign.detached.verify(message, signature, publicKey.toBytes()))
-        throw new Error("Invalid signature!");
-      // await setDoc(doc(idosCollectionRef, values.projectKey), values);
-
       const idosCollectionRef = doc(db, "ido-metadata", projectPubKey);
+      if (values.status == "DRAFT") {
+        const tx = await project.update({
+          treasuryMint: new PublicKey(values.treasuryMint),
+          lpFeeBasisPoints: values.lpFeeBasisPoints,
+          rewardDecimals: values.rewardDecimals,
+          hardCap: values.hardCap,
+          salePrice: values.tokenPrice,
+          startTime: new Date(values.startTime),
+          endTime: new Date(`${values.endTime} 23:59:59`),
+        }, user)
+
+        const signature = await sendTransaction(tx, connection);
+
+        await connection.confirmTransaction(signature, "confirmed");
+      }
+      else {
+        // `publicKey` will be null if the wallet isn't connected
+        if (!publicKey) throw new Error("Wallet not connected!");
+        // `signMessage` will be undefined if the wallet doesn't support it
+        if (!signMessage)
+          throw new Error("Wallet does not support message signing!");
+
+        // Encode anything as bytes
+        const message = new TextEncoder().encode("I agree to change the details of this IDO.");
+        // Sign the bytes using the wallet
+        const signature = await signMessage(message);
+        // Verify that the bytes were signed using the private key that matches the known public key
+        
+        if (!sign.detached.verify(message, signature, publicKey.toBytes()))
+          throw new Error("Invalid signature!");
+        // await setDoc(doc(idosCollectionRef, values.projectKey), values);
+      }
+
       await updateDoc(idosCollectionRef, {
         name: values.name,
         description: values.description,
@@ -130,25 +165,32 @@ const EditProject = () => {
       notification("success", "The IDO was successfully updated.", "Updated IDO Details");
       router.push(`/projects/${projectPubKey}`);
     }
-    catch (error: any) {
+    catch (error) {
+      setLoading(false);
       notification("danger", "Unable to sign the transaction.", "Transaction Error");
     }
+    
+    setLoading(false);
   }
 
   useEffect(() => {
     const getDataByTokenAddress = async () => {
       const nftStore = await new NftStore(provider, config).build();
       const project = await new Project(provider, nftStore, new PublicKey(projectPubKey || "")).build();
+      setProject(project);
       const data = await project.data()
       data.projectKey = projectPubKey;
       
-      if (walletAddress && data && data.owner == walletAddress) {
+      if (wallet.connected && data && data.owner == walletAddress) {
+        data.startTime = data.startTime.toISOString().slice(0, 10);
+        data.endTime = data.endTime.toISOString().slice(0, 10);
         setValues(data);
       }
-      else await router.push("/404");
+      else router.push("/404");
     };
-    if (projectPubKey) getDataByTokenAddress();
-  }, [projectPubKey]);
+    
+    if (projectPubKey && provider && config && wallet.connected) getDataByTokenAddress();
+  }, [projectPubKey, provider, config, wallet.connected]);
 
   return (
     <section className={"pt-6"}>
@@ -312,6 +354,40 @@ const EditProject = () => {
                     </div>
 
                     <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
+
+                      {values.status == "DRAFT" && (
+                        <>
+                          <div className="sm:col-span-3 relative">
+                            <label htmlFor="startTime" className="block text-sm font-medium text-blue-gray-900">
+                              IDO Start Date <span className="text-purple-2">*</span>
+                            </label>
+                            <input onChange={handleChange} value={values.startTime}
+                              type="date"
+                              name="startTime"
+                              id="startTime"
+                              className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                            />
+                            {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.startTime}</div></>}
+                          </div>
+
+                          <div className="sm:col-span-3 relative">
+                            <label htmlFor="endTime" className="block text-sm font-medium text-blue-gray-900">
+                              IDO End Date (usually 3 days) <span className="text-purple-2">*</span>
+                            </label>
+                            <input onChange={handleChange} value={values.endTime}
+                              type="date"
+                              name="endTime"
+                              id="endTime"
+                              className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                            />
+                            {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.endTime}</div></>}
+                          </div>
+                        </>
+                      )
+                      }
+
                       <div className="sm:col-span-6">
                         <h2 className="text-xl font-medium text-blue-gray-900">
                           2. Social Networks
