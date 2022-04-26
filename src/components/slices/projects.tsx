@@ -1,19 +1,25 @@
 import { ChevronDoubleRightIcon, ChevronDownIcon, ClockIcon, CollectionIcon } from "@heroicons/react/outline";
 
 import Container from "../container";
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useEffect, useMemo, useState } from "react";
 import { NftContext } from "../../context/NftContext";
 import { Project } from "../../constants";
 import { RpcHelper } from "parasol-finance-sdk";
 import Link from "next/link";
 import ProjectCard from "../cards/project-card";
 import { Menu, Transition } from "@headlessui/react";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const Projects = () => {
+  const { publicKey } = useWallet();
+  const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
   const [status, setStatus] = useState<string>("PUBLISHED");
-  const filteredProjects = projects.filter((e) => e.status === status).slice(0, 3);
+  const filteredProjects = projects
+    .filter((e) => e.status === status)
+    .filter((e) => e.endTime > new Date())
+    .slice(0, 3);
 
   useEffect(() => {
     const getProjects = async () => {

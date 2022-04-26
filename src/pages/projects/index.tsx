@@ -11,7 +11,7 @@ import Layout from "../../components/layout";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 const Projects = () => {
-  const { publicKey, sendTransaction } = useWallet();
+  const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
