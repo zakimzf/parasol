@@ -58,6 +58,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const [allocation, setallocation] = useState(0)
   const [usdcBalance, setUsdcBalance] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [participatedAmount, setParticipatedAmount] = useState(0);
 
   useEffect(() => {
     if (nfts && nfts[0]) {
@@ -68,16 +69,25 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
   useEffect(() => {
     const getUsdcBalance = async () => {
-      const projectData = await project.data();
-      const usdcMint = new PublicKey(projectData.treasuryMint);
-      const ata = await user.getAssociatedTokenAccountFor(usdcMint)
-      const balance = await helper.getTokenBalance(ata)
-      setUsdcBalance(balance);
+      try {
+        const projectData = await project.data();
+        const nftMintAccountKey = new PublicKey(nftMint.mint);
+        const participatedAmount_ = await user.getParticipateAmount(nftMintAccountKey, new PublicKey(projectPubKey), projectData.salePrice, projectData.rewardDecimals);
+        setParticipatedAmount(participatedAmount_);
+        
+        const usdcMint = new PublicKey(projectData.treasuryMint);
+        const ata = await user.getAssociatedTokenAccountFor(usdcMint)
+        const balance = await helper.getTokenBalance(ata)
+        setUsdcBalance(balance);
+      }
+      catch (error) {
+        console.log(error)
+      }
     }
 
-    if (project && user && wallet.connected && helper) getUsdcBalance();
+    if (project && user && wallet.connected && helper && nftMint) getUsdcBalance();
     else setUsdcBalance(0);
-  }, [project, user, wallet.connected, helper])
+  }, [project, user, wallet.connected, helper, nftMint])
 
   useEffect(() => {
     NProgress.configure({ showSpinner: false, trickle: false });
@@ -94,7 +104,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     const nftsmetadata = await user.getNFTList();
     setNfts(nftsmetadata);
   };
-  
+
   const isToday = (value: Date) => {
     const today = new Date()
     return value.getDate() == today.getDate() && value.getMonth() == today.getMonth() && value.getFullYear() == today.getFullYear()
@@ -109,7 +119,6 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
         const data = await project.data();
         setCover(data.cover)
         setBackgroundCover(data.cover)
-        console.log(data)
         if (data) {
           if (data.rewardToken) {
             const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.rewardToken}`);
@@ -319,6 +328,13 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             prefix={"$"}
                           />.
                         </p>
+                        <p className={"mt-3 text-purple-2 font-medium"}>Allocation remaining :  {" "}
+                          <NumberFormat
+                            value={allocation - participatedAmount}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />.</p>
                         <div className={"mt-6"}>
                           <div className={"flex justify-between items-end mb-4"}>
                             <label htmlFor="amount" className="text-sm font-medium">Participation Amount</label>
