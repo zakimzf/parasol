@@ -66,7 +66,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
   useEffect(() => {
     const getUsdcBalance = async () => {
-      if (project) {
+      if (project && user) {
         const projectData = await project.data();
         const usdcMint = new PublicKey(projectData.treasuryMint);
         const ata = await user.getAssociatedTokenAccountFor(usdcMint)
@@ -76,7 +76,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     }
     
     if (project) getUsdcBalance();
-  }, [project])
+  }, [project, wallet])
 
   useEffect(() => {
     NProgress.configure({ showSpinner: false, trickle: false });
