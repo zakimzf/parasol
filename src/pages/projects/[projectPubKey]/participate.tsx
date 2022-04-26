@@ -43,6 +43,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const { nfts, setNfts, user, wallet } = React.useContext(NftContext);
   const [project, setProject] = useState<any>(null);
   const [amount, setAmount] = useState<any>();
+  const [allocation, setallocation] = useState(0)
 
   useEffect(() => setNftMint(nfts[0]), [nfts]);
 
@@ -96,32 +97,43 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
   const submitParticipation = async () => {
     try {
-      if ( amount > 0 && nftMint ) {
-        const projectData = await project.data();
+      if (nftMint) {
+        if (amount > 0) {
+          const projectData = await project.data();
 
-        const treasuryMint = new PublicKey(projectData.treasuryMint);
-        const nftMintAccountKey = new PublicKey(nftMint.mint);
-  
-        const tx = await project.participate(
-          {
-            treasuryMint,
-            nftMint: nftMintAccountKey,
-            amount,
-          },
-          user
-        )
-        
-        const signature = await sendTransaction(tx, connection);
-        
-        await connection.confirmTransaction(signature, "confirmed");
+          const treasuryMint = new PublicKey(projectData.treasuryMint);
+          const nftMintAccountKey = new PublicKey(nftMint.mint);
+
+          const tx = await project.participate(
+            {
+              treasuryMint,
+              nftMint: nftMintAccountKey,
+              amount,
+            },
+            user
+          )
+
+          const signature = await sendTransaction(tx, connection);
+          
+          await connection.confirmTransaction(signature, "confirmed");
+          notification("success", "Successfully", "Transaction Success");
+        }
+        else {
+          notification("danger", "Please enter an amount.");
+        }
       }
       else {
-        console.log("error")
+        notification("danger", "No Nft.");
       }
     }
     catch (error) {
       notification("danger", "Transaction creation failed.", "Transaction Error");
     }
+  }
+
+  const setNftAndAllocation = (nft: any) => {
+    console.log(nft)
+    setNftMint(nft);
   }
 
   return (
@@ -241,7 +253,13 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           To participate in the IDO, please enter your desired amount and choose your NFT.
                         </p>
                         <p className={"mt-3 text-purple-2 font-medium"}>
-                          Your IDO&apos;s allocation is $50.
+                          Your IDO&apos;s allocation is {" "}
+                          <NumberFormat
+                            value={allocation}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />.
                         </p>
                         <div className={"mt-6"}>
                           <label htmlFor="account-number" className="block text-sm font-medium">
@@ -266,7 +284,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             </div>
                           </div>
                         </div>
-                        <RadioGroup className={"mt-6"} value={nftMint} onChange={setNftMint}>
+                        <RadioGroup className={"mt-6"} value={nftMint} onChange={(nft) => setNftAndAllocation(nft)}>
                           <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
                           <div className="space-y-2">
                             {nfts.map((nft: any) => (
