@@ -55,6 +55,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const [project, setProject] = useState<any>(null);
   const [amount, setAmount] = useState<any>();
   const [allocation, setallocation] = useState(0)
+  const [usdcBalance, setUsdcBalance] = useState(0)
 
   useEffect(() => {
     if (nfts && nfts[0]) {
@@ -63,7 +64,21 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     }
   }, [nfts]);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const getUsdcBalance = async () => {
+      if (project) {
+        const projectData = await project.data();
+        const usdcMint = new PublicKey(projectData.treasuryMint);
+        const ata = await user.getAssociatedTokenAccountFor(usdcMint)
+        const balance = await helper.getTokenBalance(ata)
+        setUsdcBalance(balance);
+      }
+    }
+    
+    if (project) getUsdcBalance();
+  }, [project])
+
+  useEffect(() => {
     NProgress.configure({ showSpinner: false, trickle: false });
   }, []);
 
@@ -113,6 +128,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
   const submitParticipation = async () => {
     try {
+      const psolAmount = await helper.getTokenBalance(user.paymentAta);
+      console.log(user.paymentAta)
       if (nftMint) {
         if (amount > 0) {
           const projectData = await project.data();
@@ -282,7 +299,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             <label htmlFor="amount" className="text-sm font-medium">Participation Amount</label>
                             <div className="flex gap-x-2 items-center text-xs font-medium">
                               <label>
-                                Balance: 50 USDC
+                                Balance: {usdcBalance} USDC
                               </label>
                               <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"}>
                                 Half
