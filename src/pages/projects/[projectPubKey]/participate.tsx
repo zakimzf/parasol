@@ -15,10 +15,11 @@ import {
   BellIcon,
   CheckIcon,
   ChevronRightIcon,
-  GlobeAltIcon
+  GlobeAltIcon,
+  HandIcon
 } from "@heroicons/react/outline";
 import Layout from "../../../components/layout";
-import { BadgeCheckIcon, ClockIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
+import { BadgeCheckIcon, ClockIcon } from "@heroicons/react/solid";
 import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -407,7 +408,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         </RadioGroup>
                         {walletAddress ? (
                           <button disabled={nfts.length == 0 || ido.startTime > Date.now()} className={`w-full ${nfts.length == 0 ? "opacity-90 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
-                            <PaperAirplaneIcon className={"w-6 h-6"} />
+                            <HandIcon className={"w-6 h-6"} />
                             Participate Now
                           </button>
                         ) : (
