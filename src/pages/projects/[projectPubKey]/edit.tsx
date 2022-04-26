@@ -63,7 +63,6 @@ const EditProject = () => {
     if (walletAddress && walletAddress == values.owner) {
       setLoading(true);
       await validateAllFieldsAndRedirection();
-      setLoading(false);
     }
     else {
       notification("warning", "You cannot update this IDO.", "Forbidden");
@@ -167,9 +166,11 @@ const EditProject = () => {
       router.push(`/projects/${projectPubKey}`);
     }
     catch (error) {
-      console.log(error)
+      setLoading(false);
       notification("danger", "Unable to sign the transaction.", "Transaction Error");
     }
+    
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -179,17 +180,17 @@ const EditProject = () => {
       setProject(project);
       const data = await project.data()
       data.projectKey = projectPubKey;
-      console.log(data)
-      if (walletAddress && data && data.owner == walletAddress) {
+      
+      if (wallet.connected && data && data.owner == walletAddress) {
         data.startTime = data.startTime.toISOString().slice(0, 10);
         data.endTime = data.endTime.toISOString().slice(0, 10);
         setValues(data);
       }
-      else console.log(walletAddress)
-      // else router.push("/404");
+      else router.push("/404");
     };
-    if (projectPubKey) getDataByTokenAddress();
-  }, [projectPubKey]);
+    
+    if (projectPubKey && provider && config && wallet.connected) getDataByTokenAddress();
+  }, [projectPubKey, provider, config, wallet.connected]);
 
   return (
     <section className={"pt-6"}>
