@@ -56,6 +56,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const [amount, setAmount] = useState<any>();
   const [allocation, setallocation] = useState(0)
   const [usdcBalance, setUsdcBalance] = useState(0)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     if (nfts && nfts[0]) {
@@ -126,29 +127,33 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   }, [projectPubKey]);
 
   const submitParticipation = async () => {
+    setLoading(true);
     try {
-      const psolAmount = await helper.getTokenBalance(user.paymentAta);
-      console.log(user.paymentAta)
       if (nftMint) {
         if (amount > 0) {
-          const projectData = await project.data();
+          if (amount <= allocation) {
+            const projectData = await project.data();
 
-          const treasuryMint = new PublicKey(projectData.treasuryMint);
-          const nftMintAccountKey = new PublicKey(nftMint.mint);
+            const treasuryMint = new PublicKey(projectData.treasuryMint);
+            const nftMintAccountKey = new PublicKey(nftMint.mint);
 
-          const tx = await project.participate(
-            {
-              treasuryMint,
-              nftMint: nftMintAccountKey,
-              amount,
-            },
-            user
-          )
+            const tx = await project.participate(
+              {
+                treasuryMint,
+                nftMint: nftMintAccountKey,
+                amount,
+              },
+              user
+            )
 
-          const signature = await sendTransaction(tx, connection);
+            const signature = await sendTransaction(tx, connection);
 
-          await connection.confirmTransaction(signature, "confirmed");
-          notification("success", "Successfully", "Transaction Success");
+            await connection.confirmTransaction(signature, "confirmed");
+            notification("success", "Successfully", "Transaction Success");
+          }
+          else {
+            notification("danger", "more than allocation.");
+          }
         }
         else {
           notification("danger", "Please enter an amount.");
@@ -161,6 +166,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     catch (error) {
       notification("danger", "Transaction creation failed.", "Transaction Error");
     }
+
+    setLoading(false);
   }
 
   const setNftAndAllocation = (nft: any) => {
