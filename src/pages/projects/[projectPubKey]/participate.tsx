@@ -278,9 +278,20 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           />.
                         </p>
                         <div className={"mt-6"}>
-                          <label htmlFor="account-number" className="block text-sm font-medium">
-                            Participation Amount
-                          </label>
+                          <div className={"flex justify-between items-end mb-4"}>
+                            <label htmlFor="amount" className="text-sm font-medium">Participation Amount</label>
+                            <div className="flex gap-x-2 items-center text-xs font-medium">
+                              <label>
+                                Balance: 50 USDC
+                              </label>
+                              <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"}>
+                                Half
+                              </button>
+                              <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"}>
+                                Max
+                              </button>
+                            </div>
+                          </div>
                           <div className="mt-2 relative rounded-md shadow-sm">
                             <input
                               readOnly={walletAddress === undefined || nfts.length === 0 || ido.startTime > Date.now()}
