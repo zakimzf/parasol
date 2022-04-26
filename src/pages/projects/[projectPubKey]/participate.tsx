@@ -58,6 +58,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const [allocation, setallocation] = useState(0)
   const [usdcBalance, setUsdcBalance] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [allocationDetails, setAllocationDetails] = useState(false);
+  const [participatedAmount, setParticipatedAmount] = useState(0);
 
   useEffect(() => {
     if (nfts && nfts[0]) {
@@ -65,19 +67,28 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       setallocation(nftAllocation[nfts[0].attributes[0].value]);
     }
   }, [nfts]);
-
-  useEffect(() => {
-    const getUsdcBalance = async () => {
+  
+  const getUsdcBalance = async () => {
+    try {
       const projectData = await project.data();
+      const nftMintAccountKey = new PublicKey(nftMint.mint);
+      const participatedAmount_ = await user.getParticipateAmount(nftMintAccountKey, new PublicKey(projectPubKey), projectData.salePrice, projectData.rewardDecimals);
+      setParticipatedAmount(participatedAmount_);
+      
       const usdcMint = new PublicKey(projectData.treasuryMint);
       const ata = await user.getAssociatedTokenAccountFor(usdcMint)
       const balance = await helper.getTokenBalance(ata)
       setUsdcBalance(balance);
     }
+    catch (error) {
+      console.log(error)
+    }
+  }
 
-    if (project && user && wallet.connected && helper) getUsdcBalance();
+  useEffect(() => {
+    if (project && user && wallet.connected && helper && nftMint) getUsdcBalance();
     else setUsdcBalance(0);
-  }, [project, user, wallet.connected, helper])
+  }, [project, user, wallet.connected, helper, nftMint])
 
   useEffect(() => {
     NProgress.configure({ showSpinner: false, trickle: false });
@@ -94,7 +105,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     const nftsmetadata = await user.getNFTList();
     setNfts(nftsmetadata);
   };
-  
+
   const isToday = (value: Date) => {
     const today = new Date()
     return value.getDate() == today.getDate() && value.getMonth() == today.getMonth() && value.getFullYear() == today.getFullYear()
@@ -109,7 +120,6 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
         const data = await project.data();
         setCover(data.cover)
         setBackgroundCover(data.cover)
-        console.log(data)
         if (data) {
           if (data.rewardToken) {
             const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.rewardToken}`);
@@ -138,7 +148,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     try {
       if (nftMint) {
         if (amount > 0) {
-          if (amount <= allocation) {
+          if (amount <= (allocation - participatedAmount)) {
             const projectData = await project.data();
 
             const treasuryMint = new PublicKey(projectData.treasuryMint);
@@ -156,6 +166,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
             const signature = await sendTransaction(tx, connection);
 
             await connection.confirmTransaction(signature, "confirmed");
+            getUsdcBalance();
             notification("success", "Successfully", "Transaction Success");
           }
           else {
@@ -228,15 +239,17 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     </p>
                     <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">Token Sale Details</p>
                     <div className="flex gap-x-12 lg:flex-row my-3">
-                      <div className="flex items-center">
-                        {ido.icon && <div className="mr-4">
-                          <img alt={ido.name} className="w-10" src={ido.icon} />
-                        </div>}
-                        <div>
-                          <p className="text-sm">Token Symbol</p>
-                          <h4 className="text-xl whitespace-nowrap">{ido.symbol}</h4>
+                      {ido.symbol && (
+                        <div className="flex items-center">
+                          {ido.icon && <div className="mr-4">
+                            <img alt="FOXY" className="w-10" src={ido.icon} />
+                          </div>}
+                          <div>
+                            <p className="text-sm">Token Symbol</p>
+                            <h4 className="text-xl whitespace-nowrap">${ido.symbol}</h4>
+                          </div>
                         </div>
-                      </div>
+                      )}
                       <div className="flex items-center">
                         <div className="mr-4">
                           <img className={"w-10 h-10"} src={"/assets/logos/usdc-logo.svg"} alt={"USDC"} />
@@ -310,15 +323,50 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         <p className="text-lg text-gray-300 line-clamp-2 mt-5 font-medium">
                           To participate in the IDO, please enter your desired amount and choose your NFT.
                         </p>
-                        <p className={"mt-3 text-purple-2 font-medium"}>
-                          Your IDO&apos;s allocation is {" "}
-                          <NumberFormat
-                            value={allocation}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />.
-                        </p>
+                        <div
+                          onClick={() => setAllocationDetails(!allocationDetails)}
+                          className={"flex cursor-pointer justify-between gap-x-2 mt-3"}>
+                          <div className={"text-purple-2 font-medium"}>
+                            Your IDO&apos;s allocation is {" "}
+                            <NumberFormat
+                              value={allocation - participatedAmount}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"$"}
+                            />.
+                          </div>
+                          <div className={"flex gap-x-2 items-center justify-end w-16"}>
+                            <div className="bg-gray-400 h-2 flex-1 rounded-full">
+                              <div style={{ width: `${(participatedAmount / allocation * 100).toFixed(0)}%` }}
+                                className="bg-purple-2 h-2 rounded-full"/>
+                            </div>
+                            <p className={"text-xs"}>{(participatedAmount / allocation * 100).toFixed(1)}%</p>
+                          </div>
+                        </div>
+                        {allocationDetails && (
+                          <div className={"mt-3 text-sm space-y-2 text-gray-300"}>
+                            <p className={"flex items-center gap-x-1"}>
+                              <ChevronRightIcon className={"w-3 h-3"} />
+                              You initially received an allocation of {" "}
+                              <NumberFormat
+                                value={allocation}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"$"}
+                              />
+                            </p>
+                            <p className={"flex items-center gap-x-1"}>
+                              <ChevronRightIcon className={"w-3 h-3"} />
+                              You have participated in the amount of {" "}
+                              <NumberFormat
+                                value={participatedAmount}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"$"}
+                              />
+                            </p>
+                          </div>
+                        )}
                         <div className={"mt-6"}>
                           <div className={"flex justify-between items-end mb-4"}>
                             <label htmlFor="amount" className="text-sm font-medium">Participation Amount</label>
