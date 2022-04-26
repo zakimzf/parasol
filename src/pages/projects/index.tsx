@@ -1,15 +1,18 @@
 import Container from "../../components/container";
 import Heading from "../../components/heading";
 import Apply from "../../components/slices/apply";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import { RpcHelper } from "parasol-finance-sdk";
 import { NftContext } from "../../context/NftContext";
 import Head from "next/head";
 import { Project } from "../../constants";
 import ProjectCard from "../../components/cards/project-card";
 import Layout from "../../components/layout";
+import { useWallet } from "@solana/wallet-adapter-react";
 
 const Projects = () => {
+  const { publicKey, sendTransaction } = useWallet();
+  const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
   const [status, setStatus] = useState<string>("PUBLISHED");
@@ -23,8 +26,9 @@ const Projects = () => {
   const finishedProjects = projects
     .filter((e) => e.status === "FINISHED")
     .slice(0, 9);
+  console.log(projects)
   const draftProjects = projects
-    .filter((e) => e.status === "DRAFT");
+    .filter((e: any) => e.status === "DRAFT" && e.owner == walletAddress);
 
   useEffect(() => {
     const getProjects = async () => {
