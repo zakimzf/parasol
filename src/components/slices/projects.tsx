@@ -82,9 +82,11 @@ const Projects = () => {
         <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
           {projects.length > 0 ? (
             <>
-              {projects.slice(0, 3).map((project, index) => {
-                if (project.status == "PUBLISHED") {
-                  return <ProjectCard
+              {projects
+                .filter((e) => e.status === "PUBLISHED")
+                .slice(0, 3)
+                .map((project, index) => (
+                  <ProjectCard
                     key={index}
                     id={project.id}
                     name={project.name}
@@ -95,8 +97,7 @@ const Projects = () => {
                     startTime={project.startTime}
                     endTime={project.endTime}
                   />
-                }
-              })}
+                ))}
             </>
           ) : (
             <>
