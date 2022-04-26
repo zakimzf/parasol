@@ -224,9 +224,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">Token Sale Details</p>
                     <div className="flex gap-x-12 lg:flex-row my-3">
                       <div className="flex items-center">
-                        <div className="mr-4">
-                          {ido.icon && <img alt="FOXY" className="w-10" src={ido.icon} /> }
-                        </div>
+                        {ido.icon && <div className="mr-4">
+                          <img alt="FOXY" className="w-10" src={ido.icon} />
+                        </div>}
                         <div>
                           <p className="text-sm">Token Symbol</p>
                           <h4 className="text-xl whitespace-nowrap">{ido.symbol}</h4>
