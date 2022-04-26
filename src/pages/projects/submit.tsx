@@ -196,7 +196,7 @@ const SubmitProject = () => {
         const index = packages.findIndex(p => p.name === values.package.name);
 
         const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
-        console.log(tokenMint)
+
         const args: any = {
           projectKind: projectKinds[index].address,
           treasuryMint: new PublicKey(treasuryMint),
