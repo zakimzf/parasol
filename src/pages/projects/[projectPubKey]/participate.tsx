@@ -225,11 +225,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <div className="flex gap-x-12 lg:flex-row my-3">
                       <div className="flex items-center">
                         <div className="mr-4">
-                          <img alt="FOXY" className="w-10" src="https://raw.githubusercontent.com/sol-farm/token-logos/main/tuTULIP.png" />
+                          {ido.icon && <img alt="FOXY" className="w-10" src={ido.icon} /> }
                         </div>
                         <div>
                           <p className="text-sm">Token Symbol</p>
-                          <h4 className="text-xl whitespace-nowrap">SCRM</h4>
+                          <h4 className="text-xl whitespace-nowrap">{ido.symbol}</h4>
                         </div>
                       </div>
                       <div className="flex items-center">
