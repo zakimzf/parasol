@@ -152,7 +152,7 @@ const ProjectDetails = () => {
                     </>
                   }
                   <SRLWrapper>
-                    {(!walletAddress || walletAddress != ido.owner) && <img src={ido.cover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105"} alt={ido.name} />}
+                    {(!walletAddress || walletAddress != ido.owner) && <img src={ido.cover} className={"mb-6 rounded-lg cursor-pointer ease transition-transform duration-300 hover:scale-105 w-full"} alt={ido.name} />}
                     <Tab.Group>
                       <Tab.List className={"mb-3"}>
                         <div className="border-b border-gray-500">
