@@ -10,7 +10,7 @@ import Link from "next/link";
 import { BadgeCheckIcon, BellIcon, CloudUploadIcon, PencilAltIcon } from "@heroicons/react/outline";
 import { SRLWrapper } from "simple-react-lightbox";
 import { Tab } from "@headlessui/react";
-import { ExternalLinkIcon, FireIcon } from "@heroicons/react/solid";
+import { ExternalLinkIcon, FireIcon, XCircleIcon } from "@heroicons/react/solid";
 import NumberFormat from "react-number-format";
 import Disqus from "disqus-react";
 import Countdown from "react-countdown";
@@ -348,16 +348,23 @@ const ProjectDetails = () => {
                               </button>
                             ) : (
                               <>
-                                <Link href={`/projects/${projectPubKey}/participate`} passHref>
-                                  <button className="w-full button">
-                                    <FireIcon className={"w-6"} />
-                                    Participate to Sale
+                                {ido.endTime >= Date.now() ? (
+                                  <>
+                                    <Link href={`/projects/${projectPubKey}/participate`} passHref>
+                                      <button className="w-full button">
+                                        <FireIcon className={"w-6"} />
+                                        Participate to Sale
+                                      </button>
+                                    </Link>
+                                    <p className={"text-sm text-center mt-6 text-gray-300"}>
+                                      Sale close in <Countdown date={ido.endTime} />
+                                    </p>
+                                  </>
+                                ) : (
+                                  <button disabled={true} className="w-full opacity-90 cursor-not-allowed button">
+                                    <XCircleIcon className={"w-6"} />
+                                    Sale is Over
                                   </button>
-                                </Link>
-                                {ido.endTime >= Date.now() && (
-                                  <p className={"text-sm text-center mt-3 mb-1 text-gray-300"}>
-                                    Sale close in <Countdown date={ido.endTime} />
-                                  </p>
                                 )}
                               </>
                             )}
@@ -372,7 +379,7 @@ const ProjectDetails = () => {
                         )}
                       </div>
                     </div>
-                    {ido.startTime >= Date.now() ? (
+                    {ido.startTime >= Date.now() && (
                       <div className={"flex flex-col justify-center items-center"}>
                         <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.name} Starts In:</p>
                         <Countdown
@@ -381,19 +388,6 @@ const ProjectDetails = () => {
                           precision={3}
                           date={ido.startTime} />
                       </div>
-                    ) : (
-                      <>
-                        {ido.endTime > Date.now() ? (
-                          <div className={"flex flex-col justify-center items-center"}>
-                            <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.name} Ends In:</p>
-                            <Countdown
-                              renderer={countdownRenderer}
-                              intervalDelay={0}
-                              precision={3}
-                              date={ido.endTime} />
-                          </div>
-                        ) : null}
-                      </>
                     )}
                   </div>
                 </div>
