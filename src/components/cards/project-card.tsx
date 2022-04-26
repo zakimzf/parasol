@@ -75,14 +75,7 @@ const ProjectCard = ({
           alt={"placeholder"}
         />
       )}
-      <div className={`flex relative z-10 flex-col px-6 ${logo ? "pt-16" : "pt-6"} pb-6`}>
-        {logo && (
-          <img
-            className="absolute w-20 h-20 border-4 border-gray-700 bg-gray-700 -top-10 rounded-xl"
-            src={logo}
-            alt={`${id}-logo`}
-          />
-        )}
+      <div className={"flex relative z-10 flex-col p-6"}>
         {loading ? (
           <div className="animate-pulse flex space-x-4">
             <div className="flex-1 space-y-6 py-1">
@@ -120,7 +113,13 @@ const ProjectCard = ({
           </div>
         ) : (
           <>
-            <h2 className="flex gap-x-2 items-center text-2xl mb-2 font-bold">
+            <h2 className="flex gap-x-3 items-center text-2xl mb-2 font-bold">
+              {logo && (
+                <img
+                  className="w-6 h-6 border-4 border-gray-700 bg-gray-700 rounded-md"
+                  src={logo}
+                  alt={`${id}-logo`}/>
+              )}
               <Link href={`/projects/${id}`}>
                 <a>{name}</a>
               </Link>
