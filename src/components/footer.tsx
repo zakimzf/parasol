@@ -70,11 +70,11 @@ const Footer = () => (
           <div>
             <h3 className="text-sm font-bold  tracking-wider uppercase">Parasol Finance</h3>
             <ul role="list" className="mt-4 space-y-4">
-              {/*<li>*/}
-              {/*  <Link href={"/about"}>*/}
-              {/*    <a className="text-base">About Parasol</a>*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
+              <li>
+                <Link href={"/about"}>
+                  <a className="text-base">About Parasol</a>
+                </Link>
+              </li>
               <li>
                 <a href="https://docs.parasol.finance" target="_blank"
                   className="text-base" rel="noreferrer">Documentation
@@ -96,13 +96,13 @@ const Footer = () => (
           <div className="mt-12 md:mt-0">
             <h3 className="text-sm font-bold  tracking-wider uppercase">Useful Links</h3>
             <ul role="list" className="mt-4 space-y-4">
-              {/*<li>*/}
-              {/*  <Link href={"/projects/submit"}>*/}
-              {/*    <a className="text-base" rel="noreferrer">*/}
-              {/*      Apply for IDO*/}
-              {/*    </a>*/}
-              {/*  </Link>*/}
-              {/*</li>*/}
+              <li>
+                <Link href={"/projects/submit"}>
+                  <a className="text-base" rel="noreferrer">
+                    Apply for IDO
+                  </a>
+                </Link>
+              </li>
               <li>
                 <a href="/whitepaper.pdf" className="text-base">
                   WhitePaper

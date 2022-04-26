@@ -11,7 +11,7 @@ module.exports = {
     extend: {
       colors: {
         parasol: "#170F25",
-        card: "rgba(35,31,56,1)",
+        card: "rgba(35,31,56,.7)",
         "purple-1": "#7939ff",
         "purple-2": "#b064fe",
         "header-color": "#231f38",
