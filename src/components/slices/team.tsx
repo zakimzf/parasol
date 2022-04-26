@@ -2,15 +2,18 @@ import Image from "next/image";
 
 import Container from "../container";
 import { people } from "../../constants";
+import React from "react";
 
 const Team = () => (
   <section>
     <Container>
       <div className="space-y-12">
-        <div className="space-y-5 sm:space-y-4 md:max-w-xl lg:max-w-3xl xl:max-w-none">
-          <h2 className="text-3xl font-medium tracking-tight sm:text-4xl">Our Team</h2>
-          <p className="text-xl text-gray-300">
-						Here is our team composed of the most brilliant wankers
+        <div className={"mb-12"}>
+          <a className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
+            Our Team
+          </a>
+          <p className="truncate mt-1 max-w-prose text-sm lg:text-base text-gray-200">
+            Here is our team composed of the most brilliant wanker
           </p>
         </div>
         <ul role="list"

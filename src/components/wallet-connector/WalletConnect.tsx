@@ -50,7 +50,7 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
     [disconnect]
   );
 
-  if (!wallet)
+  if (!wallet || content == null)
     return (
       <button
         onClick={() => setVisible(true)}
