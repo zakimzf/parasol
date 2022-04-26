@@ -414,9 +414,17 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           </div>
                         </RadioGroup>
                         {walletAddress ? (
-                          <button disabled={nfts.length == 0 || ido.startTime > Date.now()} className={`w-full ${nfts.length == 0 ? "opacity-90 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
-                            <HandIcon className={"w-6 h-6"} />
-                            Participate Now
+                          <button disabled={nfts.length == 0 || ido.startTime > Date.now() || loading} className={`w-full ${nfts.length == 0 ? "opacity-90 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
+                            {
+                              !loading ? (
+                                <>
+                                  <HandIcon className={"w-6 h-6"} />
+                                  Participate Now
+                                </>
+                              ) : (
+                                <>Loading ...</>
+                              )
+                            }
                           </button>
                         ) : (
                           <button
