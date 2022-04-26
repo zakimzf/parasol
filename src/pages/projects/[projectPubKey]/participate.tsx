@@ -94,6 +94,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     const nftsmetadata = await user.getNFTList();
     setNfts(nftsmetadata);
   };
+  
+  const isToday = (value: Date) => {
+    const today = new Date()
+    return value.getDate() == today.getDate() && value.getMonth() == today.getMonth() && value.getFullYear() == today.getFullYear()
+  }
 
   useEffect(() => {
     const getDataByTokenAddress = async () => {
@@ -280,11 +285,19 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       )}
                       <div className={"flex items-center gap-x-2 text-sm"}>
                         <ClockIcon className={"w-5 text-gray-300"} />
-                        Start At: {ido.startTime.toDateString()}
+                        {isToday(ido.startTime) ? (
+                          <span>Starts At: {ido.startTime.toLocaleString()}</span>
+                        ) : (
+                          <span>Starts At: {ido.startTime.toDateString()}</span>
+                        )}
                       </div>
                       <div className={"flex items-center gap-x-2 text-sm"}>
                         <ClockIcon className={"w-5 text-gray-300"} />
-                        End At: {ido.endTime.toDateString()}
+                        {isToday(ido.endTime) ? (
+                          <span>Ends At: {ido.startTime.toLocaleString()}</span>
+                        ) : (
+                          <span>Ends At: {ido.endTime.toDateString()}</span>
+                        )}
                       </div>
                     </div>
                   </div>
