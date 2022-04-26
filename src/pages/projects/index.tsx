@@ -12,6 +12,17 @@ import Layout from "../../components/layout";
 const Projects = () => {
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
+  const [status, setStatus] = useState<string>("PUBLISHED");
+  const filteredProjects = projects
+    // .filter((e) => e.status === status)
+    .filter((e) => e.status === "PUBLISHED")
+    // .filter((e) => e.status !== "DRAFT")
+    // .filter((e) => e.status !== "FINISHED")
+    // .filter((e) => e.status !== "CLOSED")
+    .slice(0, 9);
+  const finishedProjects = projects
+    .filter((e) => e.status === "FINISHED")
+    .slice(0, 9);
 
   useEffect(() => {
     const getProjects = async () => {
@@ -39,12 +50,12 @@ const Projects = () => {
       <Layout>
         <section>
           <Container>
-            <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
-              {projects.length > 0 ? (
-                <>
-                  {projects.map((project, index) => {
-                    if (project.status == "PUBLISHED") {
-                      return <ProjectCard
+            {projects.length > 0 ? (
+              <>
+                {filteredProjects.length > 0 ? (
+                  <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+                    {filteredProjects.map((project, index) => (
+                      <ProjectCard
                         key={index}
                         id={project.id}
                         name={project.name}
@@ -55,17 +66,52 @@ const Projects = () => {
                         startTime={project.startTime}
                         endTime={project.endTime}
                       />
-                    }
-                  })}
-                </>
-              ) : (
-                <>
-                  {[0, 1, 2, 3, 4 ,5].map(key => (
-                    <ProjectCard key={key} loading={true}/>
-                  ))}
-                </>
-              )}
-            </div>
+                    ))}
+                  </div>
+                ) : (
+                  <h1 className={"py-12 font-medium text-gray-300 text-center"}>There is no IDO corresponding to these criteria.</h1>
+                )}
+              </>
+            ) : (
+              <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+                {[0, 1, 2, 3, 4, 5].map(key => (
+                  <ProjectCard key={key} loading={true}/>
+                ))}
+              </div>
+            )}
+          </Container>
+        </section>
+        <section>
+          <Container>
+            {finishedProjects.length > 0 && (
+              <>
+                <div className={"mb-12"}>
+                  <a className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
+                    Finished IDOs
+                  </a>
+                  <p className="truncate mt-1 max-w-prose text-sm lg:text-base text-gray-200">
+                    Find here all the finished IDOS, you can claim your tokens if you have participated.
+                  </p>
+                </div>
+                {finishedProjects.length > 0 && (
+                  <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+                    {finishedProjects.map((project, index) => (
+                      <ProjectCard
+                        key={index}
+                        id={project.id}
+                        name={project.name}
+                        description={project.description}
+                        logo={project.logo}
+                        cover={project.cover}
+                        status={project.status}
+                        startTime={project.startTime}
+                        endTime={project.endTime}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
           </Container>
         </section>
         <Apply />
