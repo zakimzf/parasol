@@ -3391,7 +3391,7 @@ __metadata:
     next-transpile-modules: ^9.0.0
     node-snackbar: ^0.1.16
     nprogress: ^0.2.0
-    parasol-finance-sdk: 0.7.1
+    parasol-finance-sdk: 0.7.7
     postcss: ^8.4.6
     raw-loader: ^4.0.2
     react: ^17.0.2
@@ -8689,9 +8689,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parasol-finance-sdk@npm:0.7.1":
-  version: 0.7.1
-  resolution: "parasol-finance-sdk@npm:0.7.1"
+"parasol-finance-sdk@npm:0.7.7":
+  version: 0.7.7
+  resolution: "parasol-finance-sdk@npm:0.7.7"
   dependencies:
     "@metaplex-foundation/mpl-token-metadata": ^1.2.5
     "@nfteyez/sol-rayz": ^0.10.2
@@ -8703,7 +8703,7 @@ __metadata:
     "@project-serum/anchor": ^0.24.2
     "@solana/spl-token": ^0.1.8
     "@solana/web3.js": ^1.39.1
-  checksum: 0a3091f94e52e2c7ef43ca30aefe30c930fe4af6f60868ef98d32bf7cfa4887d74ec922dc04c6e98d0861dd41ce76fe1a8a754aa2dd02888deff0c317cfbcbc2
+  checksum: cd74e9f1d2d0473f5dcaabb1ae2ae250bc0a0f5baa42ea32a70dcef5f9f8b8670ea9f041cd5c0efe8ff75e2461ec7e5e1ef508f9e8f631a6de2dcb9ab5376fbd
   languageName: node
   linkType: hard
 
