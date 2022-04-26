@@ -58,6 +58,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const [allocation, setallocation] = useState(0)
   const [usdcBalance, setUsdcBalance] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [allocationDetails, setAllocationDetails] = useState(false);
   const [participatedAmount, setParticipatedAmount] = useState(0);
 
   useEffect(() => {
@@ -322,7 +323,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         <p className="text-lg text-gray-300 line-clamp-2 mt-5 font-medium">
                           To participate in the IDO, please enter your desired amount and choose your NFT.
                         </p>
-                        <div className={"flex justify-between gap-x-2 mt-3"}>
+                        <div
+                          onClick={() => setAllocationDetails(!allocationDetails)}
+                          className={"flex cursor-pointer justify-between gap-x-2 mt-3"}>
                           <div className={"text-purple-2 font-medium"}>
                             Your IDO&apos;s allocation is {" "}
                             <NumberFormat
@@ -340,6 +343,30 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             <p className={"text-xs"}>{(participatedAmount / allocation * 100).toFixed(1)}%</p>
                           </div>
                         </div>
+                        {allocationDetails && (
+                          <div className={"mt-3 text-sm space-y-2 text-gray-300"}>
+                            <p className={"flex items-center gap-x-1"}>
+                              <ChevronRightIcon className={"w-3 h-3"} />
+                              You initially received an allocation of {" "}
+                              <NumberFormat
+                                value={allocation}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"$"}
+                              />
+                            </p>
+                            <p className={"flex items-center gap-x-1"}>
+                              <ChevronRightIcon className={"w-3 h-3"} />
+                              You have participated in the amount of {" "}
+                              <NumberFormat
+                                value={participatedAmount}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"$"}
+                              />
+                            </p>
+                          </div>
+                        )}
                         <div className={"mt-6"}>
                           <div className={"flex justify-between items-end mb-4"}>
                             <label htmlFor="amount" className="text-sm font-medium">Participation Amount</label>
