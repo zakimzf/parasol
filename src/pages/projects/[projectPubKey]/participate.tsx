@@ -114,7 +114,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
           )
 
           const signature = await sendTransaction(tx, connection);
-          
+
           await connection.confirmTransaction(signature, "confirmed");
           notification("success", "Successfully", "Transaction Success");
         }
@@ -287,7 +287,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         <RadioGroup className={"mt-6"} value={nftMint} onChange={(nft) => setNftAndAllocation(nft)}>
                           <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
                           <div className="space-y-2">
-                            {nfts.map((nft: any) => (
+                            {nfts.length > 0 ? nfts.map((nft: any) => (
                               <RadioGroup.Option
                                 key={nft.name}
                                 value={nft}
@@ -326,7 +326,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                   </>
                                 )}
                               </RadioGroup.Option>
-                            ))}
+                            )) :
+                              (
+                                <Link href={"/tiers"}>Buy your NFT access key now!</Link>
+                              )
+                            }
                           </div>
                         </RadioGroup>
                         <button className={"w-full mt-8 button"} onClick={submitParticipation}>
