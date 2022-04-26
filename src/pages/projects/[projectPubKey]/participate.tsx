@@ -5,11 +5,18 @@ import { NftContext } from "../../../context/NftContext";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react"
 import { useRouter } from "next/router";
-import { NftStore, Project, RpcHelper } from "parasol-finance-sdk";
-import { Keypair, PublicKey } from "@solana/web3.js";
+import { NftStore, Project } from "parasol-finance-sdk";
+import { PublicKey } from "@solana/web3.js";
 import axios from "axios";
 import NumberFormat from "react-number-format";
-import { ArrowLeftIcon, BellIcon, CheckIcon, ChevronRightIcon, GlobeAltIcon } from "@heroicons/react/outline";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  BellIcon,
+  CheckIcon,
+  ChevronRightIcon,
+  GlobeAltIcon
+} from "@heroicons/react/outline";
 import Layout from "../../../components/layout";
 import { BadgeCheckIcon, ClockIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
 import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
@@ -19,6 +26,7 @@ import { SRLWrapper } from "simple-react-lightbox";
 import { ScrollPercentage } from "react-scroll-percentage";
 import NProgress from "nprogress";
 import { notification, slugify } from "../../../utils/functions";
+import { useWalletModal } from "../../../components/wallet-connector";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
@@ -32,6 +40,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const { connection } = useConnection();
   const { setReminder, setProjectKey } = useReminderModal();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
+  const walletModal = useWalletModal();
   const router = useRouter();
   const [cover, setCover] = useState("");
   const [nftMint, setNftMint] = useState<any>();
@@ -333,10 +342,18 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             }
                           </div>
                         </RadioGroup>
-                        <button className={"w-full mt-8 button"} onClick={submitParticipation}>
-                          <PaperAirplaneIcon className={"w-6 h-6"} />
-                          Participate Now
-                        </button>
+                        {walletAddress ? (
+                          <button disabled={nfts.length == 0} className={`w-full ${nfts.length == 0 ? "opacity-90 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
+                            <PaperAirplaneIcon className={"w-6 h-6"} />
+                            Participate Now
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => walletAddress ?? walletModal.setVisible(true)}
+                            className={"w-full mt-5 button"}>
+                            Connect Wallet
+                          </button>
+                        )}
                       </div>
                     </Card>
                   </div>
