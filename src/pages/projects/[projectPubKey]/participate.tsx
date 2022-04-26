@@ -2,23 +2,32 @@ import Container from "../../../components/container";
 import Card from "../../../components/card";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { NftContext } from "../../../context/NftContext";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react"
 import { useRouter } from "next/router";
 import { NftStore, Project } from "parasol-finance-sdk";
 import { PublicKey } from "@solana/web3.js";
 import axios from "axios";
 import NumberFormat from "react-number-format";
-import { ArrowLeftIcon, BellIcon, CheckIcon, ChevronRightIcon, GlobeAltIcon } from "@heroicons/react/outline";
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  BellIcon,
+  CheckIcon,
+  ChevronRightIcon,
+  GlobeAltIcon,
+  HandIcon
+} from "@heroicons/react/outline";
 import Layout from "../../../components/layout";
-import { BadgeCheckIcon, ClockIcon, PaperAirplaneIcon } from "@heroicons/react/solid";
+import { BadgeCheckIcon, ClockIcon } from "@heroicons/react/solid";
 import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { SRLWrapper } from "simple-react-lightbox";
 import { ScrollPercentage } from "react-scroll-percentage";
 import NProgress from "nprogress";
-import { slugify } from "../../../utils/functions";
+import { notification, slugify } from "../../../utils/functions";
+import { useWalletModal } from "../../../components/wallet-connector";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
@@ -26,24 +35,51 @@ const EditorJs = dynamic(() => import("../../../components/editorjs"), {
 
 const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
 
+const nftAllocation: any = { "Dreamer": 21, "Rider": 210, "Chiller": 2100, "MoonWalker": 21000 };
+
 const ProjectParticipate = ({ setBackgroundCover }: any) => {
-  const { provider, config } = useContext(NftContext);
-  const { publicKey } = useWallet();
+  const { provider, config, helper, nftKinds } = useContext(NftContext);
+  const { publicKey, sendTransaction } = useWallet();
+  const { connection } = useConnection();
   const { setReminder, setProjectKey } = useReminderModal();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
+  const walletModal = useWalletModal();
   const router = useRouter();
   const [cover, setCover] = useState("");
-  const [selected, setSelected] = useState<any>();
+  const [nftMint, setNftMint] = useState<any>();
 
   const { projectPubKey }: any = router.query;
 
   const [ido, setIdo] = useState<any>(null);
 
   const { nfts, setNfts, user, wallet } = React.useContext(NftContext);
+  const [project, setProject] = useState<any>(null);
+  const [amount, setAmount] = useState<any>();
+  const [allocation, setallocation] = useState(0)
+  const [usdcBalance, setUsdcBalance] = useState(0)
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => setSelected(nfts[0]), [nfts]);
+  useEffect(() => {
+    if (nfts && nfts[0]) {
+      setNftMint(nfts[0])
+      setallocation(nftAllocation[nfts[0].attributes[0].value]);
+    }
+  }, [nfts]);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    const getUsdcBalance = async () => {
+      const projectData = await project.data();
+      const usdcMint = new PublicKey(projectData.treasuryMint);
+      const ata = await user.getAssociatedTokenAccountFor(usdcMint)
+      const balance = await helper.getTokenBalance(ata)
+      setUsdcBalance(balance);
+    }
+
+    if (project && user && wallet.connected && helper) getUsdcBalance();
+    else setUsdcBalance(0);
+  }, [project, user, wallet.connected, helper])
+
+  useEffect(() => {
     NProgress.configure({ showSpinner: false, trickle: false });
   }, []);
 
@@ -64,13 +100,15 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       const nftStore = await new NftStore(provider, config).build();
       try {
         const project = await new Project(provider, nftStore, new PublicKey(projectPubKey)).build();
+        setProject(project);
         const data = await project.data();
         setCover(data.cover)
         setBackgroundCover(data.cover)
+        console.log(data)
         if (data) {
-          if (data.splToken) {
-            const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.splToken}`);
-            const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.splToken}`);
+          if (data.tokenMint) {
+            const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.tokenMint}`);
+            const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.tokenMint}`);
             axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
               const responseOne = responses[0]
               const responseTwo = responses[1]
@@ -90,6 +128,59 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     if (projectPubKey) getDataByTokenAddress();
   }, [projectPubKey]);
 
+  const submitParticipation = async () => {
+    setLoading(true);
+    try {
+      if (nftMint) {
+        if (amount > 0) {
+          if (amount <= allocation) {
+            const projectData = await project.data();
+
+            const treasuryMint = new PublicKey(projectData.treasuryMint);
+            const nftMintAccountKey = new PublicKey(nftMint.mint);
+
+            const tx = await project.participate(
+              {
+                treasuryMint,
+                nftMint: nftMintAccountKey,
+                amount,
+              },
+              user
+            )
+
+            const signature = await sendTransaction(tx, connection);
+
+            await connection.confirmTransaction(signature, "confirmed");
+            notification("success", "Successfully", "Transaction Success");
+          }
+          else {
+            notification("danger", "more than allocation.");
+          }
+        }
+        else {
+          notification("danger", "Please enter an amount.");
+        }
+      }
+      else {
+        notification("danger", "No Nft.");
+      }
+    }
+    catch (error) {
+      notification("danger", "Transaction creation failed.", "Transaction Error");
+    }
+
+    setLoading(false);
+  }
+
+  const setNftAndAllocation = (nft: any) => {
+    setallocation(nftAllocation[nft.attributes[0].value])
+    setNftMint(nft);
+  }
+
+  const getMax = (max: number) => {
+    setAmount(usdcBalance * max);
+  }
+
   return (
     <section className={"relative overflow-hidden py-12"}>
       {ido && (
@@ -104,7 +195,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   setProjectKey("lol");
                 }}
                 className="button py-3 text-base whitespace-nowrap">
-                <BellIcon className={"w-5 h-5"}/>
+                <BellIcon className={"w-5 h-5"} />
                 Set a Reminder
               </button>
             </div>
@@ -124,7 +215,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       <span className={"text-purple-2"}>{ido.name}</span>
                       <span>Presale</span>
                       {ido.isFeatured && (
-                        <BadgeCheckIcon className={"w-8 h-8 text-purple-2"}/>
+                        <BadgeCheckIcon className={"w-8 h-8 text-purple-2"} />
                       )}
                     </h1>
                     <p className="mt-6 prose prose-lg prose-invert line-clamp-5">
@@ -134,7 +225,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <div className="flex gap-x-12 lg:flex-row my-3">
                       <div className="flex items-center">
                         <div className="mr-4">
-                          <img alt="FOXY" className="w-10" src="https://raw.githubusercontent.com/sol-farm/token-logos/main/tuTULIP.png"/>
+                          <img alt="FOXY" className="w-10" src="https://raw.githubusercontent.com/sol-farm/token-logos/main/tuTULIP.png" />
                         </div>
                         <div>
                           <p className="text-sm">Token Symbol</p>
@@ -143,7 +234,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       </div>
                       <div className="flex items-center">
                         <div className="mr-4">
-                          <img className={"w-10 h-10"} src={"/assets/logos/usdc-logo.svg"} alt={"USDC"}/>
+                          <img className={"w-10 h-10"} src={"/assets/logos/usdc-logo.svg"} alt={"USDC"} />
                         </div>
                         <div>
                           <p className="text-sm">Token Price</p>
@@ -158,7 +249,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       </div>
                       <div className="flex items-center">
                         <div className="mr-4">
-                          <img className={"w-10 h-10"} src={"/assets/logos/usdc-logo.svg"} alt={"USDC"}/>
+                          <img className={"w-10 h-10"} src={"/assets/logos/usdc-logo.svg"} alt={"USDC"} />
                         </div>
                         <div>
                           <p className="text-sm">Hard Cap</p>
@@ -173,26 +264,26 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       </div>
                     </div>
                     <div className={"flex gap-x-10 mt-12"}>
-                      {ido.twitter && (
-                        <a href={ido.twitter} target={"_blank"} rel={"noreferrer"} className={"flex items-center gap-x-2 text-sm"}>
-                          <GlobeAltIcon className={"w-5 text-gray-300"}/>
+                      {ido.websiteUrl && (
+                        <a href={ido.websiteUrl} target={"_blank"} rel={"noreferrer"} className={"flex items-center gap-x-2 text-sm"}>
+                          <GlobeAltIcon className={"w-5 text-gray-300"} />
                           Website
                         </a>
                       )}
-                      {ido.websiteUrl && (
-                        <a href={ido.websiteUrl} target={"_blank"} rel={"noreferrer"} className={"flex items-center gap-x-2 text-sm"}>
+                      {ido.twitter && (
+                        <a href={ido.twitter} target={"_blank"} rel={"noreferrer"} className={"flex items-center gap-x-2 text-sm"}>
                           <svg className={"w-5 text-gray-300"} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" fill={"currentColor"}/>
+                            <path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z" fill={"currentColor"} />
                           </svg>
                           Twitter
                         </a>
                       )}
                       <div className={"flex items-center gap-x-2 text-sm"}>
-                        <ClockIcon className={"w-5 text-gray-300"}/>
+                        <ClockIcon className={"w-5 text-gray-300"} />
                         Start At: {ido.startTime.toDateString()}
                       </div>
                       <div className={"flex items-center gap-x-2 text-sm"}>
-                        <ClockIcon className={"w-5 text-gray-300"}/>
+                        <ClockIcon className={"w-5 text-gray-300"} />
                         End At: {ido.endTime.toDateString()}
                       </div>
                     </div>
@@ -201,39 +292,59 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <Card padded={true}>
                       <div className="p-2">
                         <h2 className="flex gap-x-2 items-center text-3xl font-bold">
-                         Participate Now!
+                          Participate Now!
                         </h2>
                         <p className="text-lg text-gray-300 line-clamp-2 mt-5 font-medium">
                           To participate in the IDO, please enter your desired amount and choose your NFT.
                         </p>
                         <p className={"mt-3 text-purple-2 font-medium"}>
-                          Your IDO&apos;s allocation is $50.
+                          Your IDO&apos;s allocation is {" "}
+                          <NumberFormat
+                            value={allocation}
+                            displayType={"text"}
+                            thousandSeparator={true}
+                            prefix={"$"}
+                          />.
                         </p>
                         <div className={"mt-6"}>
-                          <label htmlFor="account-number" className="block text-sm font-medium">
-                            Participation Amount
-                          </label>
+                          <div className={"flex justify-between items-end mb-4"}>
+                            <label htmlFor="amount" className="text-sm font-medium">Participation Amount</label>
+                            <div className="flex gap-x-2 items-center text-xs font-medium">
+                              <label>
+                                Balance: {usdcBalance.toLocaleString("en-US")} USDC
+                              </label>
+                              <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"} onClick={() => getMax(0.5)}>
+                                Half
+                              </button>
+                              <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"} onClick={() => getMax(1)}>
+                                Max
+                              </button>
+                            </div>
+                          </div>
                           <div className="mt-2 relative rounded-md shadow-sm">
                             <input
-                              type="text"
-                              name="price"
-                              id="price"
+                              readOnly={walletAddress === undefined || nfts.length === 0 || ido.startTime > Date.now()}
+                              type="number"
+                              name="amount"
+                              id="amount"
+                              onChange={(e) => setAmount(e.target.value)}
+                              value={amount}
                               className="w-full p-3 block placeholder:text-gray-300 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 pr-12"
                               placeholder="0.00"
                               aria-describedby="price-currency"
                             />
                             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                               <span className="flex gap-x-1 items-center text-gray-300 sm:text-sm" id="price-currency">
-                                <img className={"w-4 h-4"} src={"/assets/logos/usdc-logo.svg"} alt={"USDC"}/>
+                                <img className={"w-4 h-4"} src={"/assets/logos/usdc-logo.svg"} alt={"USDC"} />
                                 USDC
                               </span>
                             </div>
                           </div>
                         </div>
-                        <RadioGroup className={"mt-6"} value={selected} onChange={setSelected}>
+                        <RadioGroup className={"mt-6"} value={nftMint} onChange={(nft) => setNftAndAllocation(nft)}>
                           <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
                           <div className="space-y-2">
-                            {nfts.map((nft: any) => (
+                            {nfts.length > 0 ? nfts.map((nft: any) => (
                               <RadioGroup.Option
                                 key={nft.name}
                                 value={nft}
@@ -251,7 +362,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                             className={`font-medium ${checked ? "text-white" : ""}`}>
                                             <div className="flex items-center">
                                               <div className="mr-4">
-                                                <img className={"w-12 h-12 rounded-md"} src={nft.image} alt={nft.name}/>
+                                                <img className={"w-12 h-12 rounded-md"} src={nft.image} alt={nft.name} />
                                               </div>
                                               <div>
                                                 <p className="text-xs">{nft.name}</p>
@@ -265,20 +376,64 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                       </div>
                                       {checked && (
                                         <div className="flex-shrink-0 text-purple-2">
-                                          <CheckIcon className="w-6 h-6"/>
+                                          <CheckIcon className="w-6 h-6" />
                                         </div>
                                       )}
                                     </div>
                                   </>
                                 )}
                               </RadioGroup.Option>
-                            ))}
+                            )) :
+                              (
+                                <Link href={"/tiers"}>
+                                  <a className="border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none">
+                                    <div className="flex items-center justify-between w-full">
+                                      <div className="flex items-center">
+                                        <div className="text-sm">
+                                          <p className="font-medium text-white">
+                                            <div className="flex items-center">
+                                              <div className="mr-4">
+                                                {/*<Image width={32} height={32} src={Logo} className="h-5" alt="logo" />*/}
+                                                <img className="w-12 h-12 rounded-md" src="https://parasol.finance/assets/nft-access-keys/covers/Dreamer.png" alt="PSOL KEY #2" />
+                                              </div>
+                                              <div>
+                                                <p className="text-xs">You don&apos;t have an NFT currently.</p>
+                                                <h2 className="text-lg whitespace-nowrap">Buy your NFT Access Key!</h2>
+                                              </div>
+                                            </div>
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className="flex-shrink-0 text-purple-2 px-3">
+                                        <ArrowRightIcon className={"w-5"} />
+                                      </div>
+                                    </div>
+                                  </a>
+                                </Link>
+                              )
+                            }
                           </div>
                         </RadioGroup>
-                        <button className={"w-full mt-8 button"}>
-                          <PaperAirplaneIcon className={"w-6 h-6"}/>
-                          Participate Now
-                        </button>
+                        {walletAddress ? (
+                          <button disabled={nfts.length == 0 || ido.startTime > Date.now() || loading} className={`w-full ${nfts.length == 0 ? "opacity-90 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
+                            {
+                              !loading ? (
+                                <>
+                                  <HandIcon className={"w-6 h-6"} />
+                                  Participate Now
+                                </>
+                              ) : (
+                                <>Loading ...</>
+                              )
+                            }
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => walletAddress ?? walletModal.setVisible(true)}
+                            className={"w-full mt-8 button"}>
+                            Connect Wallet
+                          </button>
+                        )}
                       </div>
                     </Card>
                   </div>
@@ -311,7 +466,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         onChange={(percentage) => NProgress.set(percentage)}>
                         <div className={"prose prose-lg prose-invert max-w-full"}>
                           <SRLWrapper>
-                            <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"}/>
+                            <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"} />
                           </SRLWrapper>
                         </div>
                       </ScrollPercentage>
