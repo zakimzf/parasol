@@ -276,6 +276,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           </label>
                           <div className="mt-2 relative rounded-md shadow-sm">
                             <input
+                              readOnly={walletAddress === undefined}
                               type="number"
                               name="amount"
                               id="amount"
