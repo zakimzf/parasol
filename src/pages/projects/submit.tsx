@@ -7,7 +7,7 @@ import NumberFormat from "react-number-format";
 import axios from "axios";
 import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
 import { db, storage } from "../../utils/firebase";
-import { errClasses, isTokenAddressExist, validURL } from "../../utils/functions";
+import { errClasses, isTokenAddressExist, notification, validURL } from "../../utils/functions";
 import { collection, doc, setDoc, Timestamp, } from "firebase/firestore";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import TextareaAutosize from "react-textarea-autosize";
@@ -102,7 +102,7 @@ const SubmitProject = () => {
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    if (walletAddress) {
+    if (walletAddress) {      
       setLoading(true)
       await validateAllFieldsAndRedirection();
     }
@@ -184,7 +184,6 @@ const SubmitProject = () => {
 
   const validateAllFieldsAndRedirection = async () => {
     const _errors = await validateAllFields();
-
     if (Object.keys(_errors).length == 0) {
       try {
         const nftStore = await new NftStore(provider, config).build();
@@ -197,7 +196,7 @@ const SubmitProject = () => {
         const index = packages.findIndex(p => p.name === values.package.name);
 
         const treasuryMint: any = process.env.NEXT_PUBLIC_TREASURY_MINT
-        
+        console.log(tokenMint)
         const args: any = {
           projectKind: projectKinds[index].address,
           treasuryMint: new PublicKey(treasuryMint),
@@ -229,6 +228,7 @@ const SubmitProject = () => {
         })
       }
       catch (err) {
+        notification("danger", "Transaction failed.", "Transaction Error");
         setLoading(false);
       }
     }
