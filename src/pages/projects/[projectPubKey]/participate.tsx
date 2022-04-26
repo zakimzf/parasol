@@ -66,25 +66,25 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       setallocation(nftAllocation[nfts[0].attributes[0].value]);
     }
   }, [nfts]);
+  
+  const getUsdcBalance = async () => {
+    try {
+      const projectData = await project.data();
+      const nftMintAccountKey = new PublicKey(nftMint.mint);
+      const participatedAmount_ = await user.getParticipateAmount(nftMintAccountKey, new PublicKey(projectPubKey), projectData.salePrice, projectData.rewardDecimals);
+      setParticipatedAmount(participatedAmount_);
+      
+      const usdcMint = new PublicKey(projectData.treasuryMint);
+      const ata = await user.getAssociatedTokenAccountFor(usdcMint)
+      const balance = await helper.getTokenBalance(ata)
+      setUsdcBalance(balance);
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
-    const getUsdcBalance = async () => {
-      try {
-        const projectData = await project.data();
-        const nftMintAccountKey = new PublicKey(nftMint.mint);
-        const participatedAmount_ = await user.getParticipateAmount(nftMintAccountKey, new PublicKey(projectPubKey), projectData.salePrice, projectData.rewardDecimals);
-        setParticipatedAmount(participatedAmount_);
-        
-        const usdcMint = new PublicKey(projectData.treasuryMint);
-        const ata = await user.getAssociatedTokenAccountFor(usdcMint)
-        const balance = await helper.getTokenBalance(ata)
-        setUsdcBalance(balance);
-      }
-      catch (error) {
-        console.log(error)
-      }
-    }
-
     if (project && user && wallet.connected && helper && nftMint) getUsdcBalance();
     else setUsdcBalance(0);
   }, [project, user, wallet.connected, helper, nftMint])
@@ -147,7 +147,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     try {
       if (nftMint) {
         if (amount > 0) {
-          if (amount <= allocation) {
+          if (amount <= (allocation - participatedAmount)) {
             const projectData = await project.data();
 
             const treasuryMint = new PublicKey(projectData.treasuryMint);
@@ -165,6 +165,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
             const signature = await sendTransaction(tx, connection);
 
             await connection.confirmTransaction(signature, "confirmed");
+            getUsdcBalance();
             notification("success", "Successfully", "Transaction Success");
           }
           else {
