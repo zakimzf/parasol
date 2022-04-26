@@ -14,7 +14,10 @@ const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([])
   const [status, setStatus] = useState<string>("PUBLISHED");
   const filteredProjects = projects
-    .filter((e) => e.status === status)
+    // .filter((e) => e.status === status)
+    .slice(0, 9);
+  const finishedProjects = projects
+    .filter((e) => e.status === "FINISHED")
     .slice(0, 9);
 
   useEffect(() => {
@@ -71,6 +74,39 @@ const Projects = () => {
                   <ProjectCard key={key} loading={true}/>
                 ))}
               </div>
+            )}
+          </Container>
+        </section>
+        <section>
+          <Container>
+            {finishedProjects.length > 0 && (
+              <>
+                <div className={"mb-12"}>
+                  <a className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
+                    Finished IDOs
+                  </a>
+                  <p className="truncate mt-1 max-w-prose text-sm lg:text-base text-gray-200">
+                    Find here all the finished IDOS, you can claim your tokens if you have participated.
+                  </p>
+                </div>
+                {finishedProjects.length > 0 && (
+                  <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+                    {finishedProjects.map((project, index) => (
+                      <ProjectCard
+                        key={index}
+                        id={project.id}
+                        name={project.name}
+                        description={project.description}
+                        logo={project.logo}
+                        cover={project.cover}
+                        status={project.status}
+                        startTime={project.startTime}
+                        endTime={project.endTime}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
             )}
           </Container>
         </section>
