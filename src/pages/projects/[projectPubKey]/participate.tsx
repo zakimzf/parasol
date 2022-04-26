@@ -319,22 +319,24 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         <p className="text-lg text-gray-300 line-clamp-2 mt-5 font-medium">
                           To participate in the IDO, please enter your desired amount and choose your NFT.
                         </p>
-                        <p className={"mt-3 text-purple-2 font-medium"}>
-                          Your IDO&apos;s allocation is {" "}
-                          <NumberFormat
-                            value={allocation}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />.
-                        </p>
-                        <p className={"mt-3 text-purple-2 font-medium"}>Allocation remaining :  {" "}
-                          <NumberFormat
-                            value={allocation - participatedAmount}
-                            displayType={"text"}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                          />.</p>
+                        <div className={"flex justify-between gap-x-2 mt-3"}>
+                          <div className={"text-purple-2 font-medium"}>
+                            Your IDO&apos;s allocation is {" "}
+                            <NumberFormat
+                              value={allocation - participatedAmount}
+                              displayType={"text"}
+                              thousandSeparator={true}
+                              prefix={"$"}
+                            />.
+                          </div>
+                          <div className={"flex gap-x-2 items-center justify-end w-16"}>
+                            <div className="bg-gray-400 h-2 flex-1 rounded-full">
+                              <div style={{ width: `${(participatedAmount / allocation * 100).toFixed(0)}%` }}
+                                className="bg-purple-2 h-2 rounded-full"/>
+                            </div>
+                            <p className={"text-xs"}>{(participatedAmount / allocation * 100).toFixed(1)}%</p>
+                          </div>
+                        </div>
                         <div className={"mt-6"}>
                           <div className={"flex justify-between items-end mb-4"}>
                             <label htmlFor="amount" className="text-sm font-medium">Participation Amount</label>
