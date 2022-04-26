@@ -125,7 +125,7 @@ const EditProject = () => {
         const tx = await project.update({
           treasuryMint: new PublicKey(values.treasuryMint),
           lpFeeBasisPoints: values.lpFeeBasisPoints,
-          tokenDecimals: values.tokenDecimals,
+          rewardDecimals: values.rewardDecimals,
           hardCap: values.hardCap,
           salePrice: values.tokenPrice,
           startTime: new Date(values.startTime),

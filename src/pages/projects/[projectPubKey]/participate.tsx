@@ -106,9 +106,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
         setBackgroundCover(data.cover)
         console.log(data)
         if (data) {
-          if (data.tokenMint) {
-            const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.tokenMint}`);
-            const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.tokenMint}`);
+          if (data.rewardToken) {
+            const requestOne = await axios.get(`https://public-api.solscan.io/token/meta?tokenAddress=${data.rewardToken}`);
+            const requestTwo = await axios.get(`https://public-api.solscan.io/market/token/${data.rewardToken}`);
             axios.all([requestOne, requestTwo]).then(axios.spread((...responses) => {
               const responseOne = responses[0]
               const responseTwo = responses[1]

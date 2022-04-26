@@ -224,7 +224,7 @@ const ProjectDetails = () => {
                               <tbody className="divide-y divide-gray-800">
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Address</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.tokenMint}</td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.rewardToken}</td>
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Name</td>
@@ -236,7 +236,7 @@ const ProjectDetails = () => {
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.tokenDecimals}</td>
+                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.rewardDecimals}</td>
                                 </tr>
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDT)</td>
