@@ -15,13 +15,9 @@ const Projects = () => {
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
-  const [status, setStatus] = useState<string>("PUBLISHED");
+  // const [status, setStatus] = useState<string>("PUBLISHED");
   const filteredProjects = projects
-    // .filter((e) => e.status === status)
     .filter((e) => e.status === "PUBLISHED")
-    // .filter((e) => e.status !== "DRAFT")
-    // .filter((e) => e.status !== "FINISHED")
-    // .filter((e) => e.status !== "CLOSED")
     .slice(0, 9);
   const finishedProjects = projects
     .filter((e) => e.status === "FINISHED")
