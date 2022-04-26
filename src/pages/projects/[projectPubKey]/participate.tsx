@@ -26,8 +26,10 @@ const EditorJs = dynamic(() => import("../../../components/editorjs"), {
 
 const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
 
+const nftAllocation: any = { "Dreamer": 21, "Rider": 210, "Chiller": 2100, "MoonWalker": 21000 };
+
 const ProjectParticipate = ({ setBackgroundCover }: any) => {
-  const { provider, config, helper } = useContext(NftContext);
+  const { provider, config, helper, nftKinds } = useContext(NftContext);
   const { publicKey, sendTransaction } = useWallet();
   const { connection } = useConnection();
   const { setReminder, setProjectKey } = useReminderModal();
@@ -45,7 +47,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const [amount, setAmount] = useState<any>();
   const [allocation, setallocation] = useState(0)
 
-  useEffect(() => setNftMint(nfts[0]), [nfts]);
+  useEffect(() => {
+    setNftMint(nfts[0])
+    setallocation(nftAllocation[nfts[0].attributes[0].value]);
+  }, [nfts]);
 
   React.useEffect(() => {
     NProgress.configure({ showSpinner: false, trickle: false });
@@ -132,7 +137,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   }
 
   const setNftAndAllocation = (nft: any) => {
-    console.log(nft)
+    setallocation(nftAllocation[nft.attributes[0].value])
     setNftMint(nft);
   }
 
