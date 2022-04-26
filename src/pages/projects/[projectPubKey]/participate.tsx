@@ -94,6 +94,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     const nftsmetadata = await user.getNFTList();
     setNfts(nftsmetadata);
   };
+  
+  const isToday = (value: Date) => {
+    const today = new Date()
+    return value.getDate() == today.getDate() && value.getMonth() == today.getMonth() && value.getFullYear() == today.getFullYear()
+  }
 
   useEffect(() => {
     const getDataByTokenAddress = async () => {
@@ -224,12 +229,12 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">Token Sale Details</p>
                     <div className="flex gap-x-12 lg:flex-row my-3">
                       <div className="flex items-center">
-                        <div className="mr-4">
-                          <img alt="FOXY" className="w-10" src="https://raw.githubusercontent.com/sol-farm/token-logos/main/tuTULIP.png" />
-                        </div>
+                        {ido.icon && <div className="mr-4">
+                          <img alt="FOXY" className="w-10" src={ido.icon} />
+                        </div>}
                         <div>
                           <p className="text-sm">Token Symbol</p>
-                          <h4 className="text-xl whitespace-nowrap">SCRM</h4>
+                          <h4 className="text-xl whitespace-nowrap">{ido.symbol}</h4>
                         </div>
                       </div>
                       <div className="flex items-center">
@@ -280,11 +285,19 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       )}
                       <div className={"flex items-center gap-x-2 text-sm"}>
                         <ClockIcon className={"w-5 text-gray-300"} />
-                        Start At: {ido.startTime.toDateString()}
+                        {isToday(ido.startTime) ? (
+                          <span>Starts At: {ido.startTime.toLocaleString()}</span>
+                        ) : (
+                          <span>Starts At: {ido.startTime.toDateString()}</span>
+                        )}
                       </div>
                       <div className={"flex items-center gap-x-2 text-sm"}>
                         <ClockIcon className={"w-5 text-gray-300"} />
-                        End At: {ido.endTime.toDateString()}
+                        {isToday(ido.endTime) ? (
+                          <span>Ends At: {ido.startTime.toLocaleString()}</span>
+                        ) : (
+                          <span>Ends At: {ido.endTime.toDateString()}</span>
+                        )}
                       </div>
                     </div>
                   </div>

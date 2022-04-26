@@ -13,7 +13,10 @@ const Projects = () => {
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
   const [status, setStatus] = useState<string>("PUBLISHED");
-  const filteredProjects = projects.filter((e) => e.status === status).slice(0, 3);
+  const filteredProjects = projects
+    .filter((e) => e.status === status)
+    .filter((e) => e.endTime > new Date())
+    .slice(0, 3);
 
   useEffect(() => {
     const getProjects = async () => {
