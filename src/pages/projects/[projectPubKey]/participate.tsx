@@ -302,7 +302,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             <label htmlFor="amount" className="text-sm font-medium">Participation Amount</label>
                             <div className="flex gap-x-2 items-center text-xs font-medium">
                               <label>
-                                Balance: {usdcBalance} USDC
+                                Balance: {usdcBalance.toLocaleString("en-US")} USDC
                               </label>
                               <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"} onClick={() => getMax(0.5)}>
                                 Half
