@@ -379,7 +379,7 @@ const ProjectDetails = () => {
                         )}
                       </div>
                     </div>
-                    {ido.startTime >= Date.now() ? (
+                    {ido.startTime >= Date.now() && (
                       <div className={"flex flex-col justify-center items-center"}>
                         <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.name} Starts In:</p>
                         <Countdown
@@ -388,19 +388,6 @@ const ProjectDetails = () => {
                           precision={3}
                           date={ido.startTime} />
                       </div>
-                    ) : (
-                      <>
-                        {ido.endTime > Date.now() ? (
-                          <div className={"flex flex-col justify-center items-center"}>
-                            <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.name} Ends In:</p>
-                            <Countdown
-                              renderer={countdownRenderer}
-                              intervalDelay={0}
-                              precision={3}
-                              date={ido.endTime} />
-                          </div>
-                        ) : null}
-                      </>
                     )}
                   </div>
                 </div>
