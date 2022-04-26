@@ -18,6 +18,7 @@ const Projects = () => {
   // const [status, setStatus] = useState<string>("PUBLISHED");
   const filteredProjects = projects
     .filter((e) => e.status === "PUBLISHED")
+    .filter((e) => e.endTime > new Date())
     .slice(0, 9);
   const finishedProjects = projects
     .filter((e) => e.status === "FINISHED")
