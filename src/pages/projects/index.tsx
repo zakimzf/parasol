@@ -54,41 +54,39 @@ const Projects = () => {
         }
       />
       <Layout>
-        <section>
-          <Container>
-            <div className={"border-b border-gray-800 pb-20"}>
-              {draftProjects.length > 0 && (
-                <>
-                  <div className={"mb-12"}>
-                    <a className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
-                      My Projects
-                    </a>
-                    <p className="truncate mt-1 max-w-prose text-sm lg:text-base text-gray-200">
-                      Find here are your draft projects that you created.
-                    </p>
+        {draftProjects.length > 0 && (
+          <section>
+            <Container>
+              <div className={"border-b border-gray-800 pb-20"}>
+                <div className={"mb-12"}>
+                  <a className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
+                    My Projects
+                  </a>
+                  <p className="truncate mt-1 max-w-prose text-sm lg:text-base text-gray-200">
+                    Find here are your draft projects that you created.
+                  </p>
+                </div>
+                {draftProjects.length > 0 && (
+                  <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+                    {draftProjects.map((project, index) => (
+                      <ProjectCard
+                        key={index}
+                        id={project.id}
+                        name={project.name}
+                        description={project.description}
+                        logo={project.logo}
+                        cover={project.cover}
+                        status={project.status}
+                        startTime={project.startTime}
+                        endTime={project.endTime}
+                      />
+                    ))}
                   </div>
-                  {draftProjects.length > 0 && (
-                    <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
-                      {draftProjects.map((project, index) => (
-                        <ProjectCard
-                          key={index}
-                          id={project.id}
-                          name={project.name}
-                          description={project.description}
-                          logo={project.logo}
-                          cover={project.cover}
-                          status={project.status}
-                          startTime={project.startTime}
-                          endTime={project.endTime}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-          </Container>
-        </section>
+                )}
+              </div>
+            </Container>
+          </section>
+        )}
         <section>
           <Container>
             {projects.length > 0 ? (
