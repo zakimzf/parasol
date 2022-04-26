@@ -25,7 +25,8 @@ const Projects = () => {
     .slice(0, 9);
   console.log(projects)
   const draftProjects = projects
-    .filter((e: any) => e.status === "DRAFT" && e.owner == walletAddress);
+    .filter((e: any) => e.status === "DRAFT")
+    .filter((e: any) => e.owner == walletAddress);
 
   useEffect(() => {
     const getProjects = async () => {
