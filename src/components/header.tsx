@@ -180,15 +180,14 @@ const Header = () => (
                             <Link href={"/projects/submit"}>
                               <a
                                 className="flex items-start font-medium text-gray-200"
-                                rel="noreferrer"
-                              >
+                                rel="noreferrer">
                                 <FolderAddIcon className="h-6 w-6 text-purple-2"/>
                                 <div className="ml-3">
                                   <p className="text-base font-medium text-white">
-                                        Submit Your Project
+                                    Submit Your Project
                                   </p>
                                   <p className="mt-1 text-sm text-gray-300">
-                                        You can launch your project in a few clicks
+                                    You can launch your project in a few clicks
                                   </p>
                                 </div>
                               </a>
@@ -470,11 +469,11 @@ const Header = () => (
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="z-20 transform w-screen pt-4">
+                        <Popover.Panel className="z-20 transform w-screen">
                           <div className="overflow-hidden">
-                            <div className="relative grid gap-8">
+                            <div className="relative grid gap-6 py-4">
                               <Link href={"/projects"}>
-                                <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                                <a className="flex items-start rounded-lg">
                                   <CollectionIcon
                                     className="flex-shrink-0 h-6 w-6 text-purple-2"
                                     aria-hidden="true"
@@ -490,7 +489,7 @@ const Header = () => (
                                 </a>
                               </Link>
                               <Link href={"/tiers"}>
-                                <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                                <a className="flex items-start rounded-lg">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     className={"flex-shrink-0 h-6 w-6 text-purple-2"}
@@ -579,25 +578,19 @@ const Header = () => (
                               {/*    </div>*/}
                               {/*  </a>*/}
                               {/*</Link>*/}
-                            </div>
-                            <div className="py-4 sm:px-8 sm:py-6">
-                              <div className="flow-root">
-                                <Link href={"/projects/submit"}>
-                                  <a
-                                    className="flex items-start font-medium text-gray-200"
-                                    rel="noreferrer">
-                                    <FolderAddIcon className="h-6 w-6 text-purple-2"/>
-                                    <div className="ml-3">
-                                      <p className="text-base font-medium text-white">
-                                        Submit Your Project
-                                      </p>
-                                      <p className="mt-1 text-sm text-white">
-                                        You can launch your project in a few clicks
-                                      </p>
-                                    </div>
-                                  </a>
-                                </Link>
-                              </div>
+                              <Link href={"/projects/submit"}>
+                                <a className="flex items-start rounded-lg">
+                                  <FolderAddIcon className="h-6 w-6 text-purple-2"/>
+                                  <div className="ml-4">
+                                    <p className="text-base font-medium text-white">
+                                    Submit Your Project
+                                    </p>
+                                    <p className="mt-1 text-sm text-white">
+                                    You can launch your project in a few clicks
+                                    </p>
+                                  </div>
+                                </a>
+                              </Link>
                             </div>
                           </div>
                         </Popover.Panel>
@@ -631,15 +624,14 @@ const Header = () => (
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="transformw-screen">
+                        <Popover.Panel className="transform-screen">
                           <div className="overflow-hidden">
-                            <div className="relative grid gap-8 py-6 sm:gap-3 sm:p-3">
+                            <div className="relative grid gap-6 py-4">
                               {toolsMenu.map((item) => (
                                 <a
                                   key={item.name}
                                   href={"https://forms.gle/eWqpaPdGMX8joTem9"}
-                                  className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
-                                >
+                                  className="flex items-start rounded-lg">
                                   <item.icon
                                     className="flex-shrink-0 h-6 w-6 text-purple-2"
                                     aria-hidden="true"
@@ -684,9 +676,9 @@ const Header = () => (
                     >
                       <Popover.Panel className="z-100 transform w-screen">
                         <div className="overflow-hidden">
-                          <div className="relative grid gap-8 py-6 sm:gap-3 sm:p-3">
+                          <div className="relative grid gap-6 py-4">
                             <Link href={"/about"}>
-                              <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                              <a className="flex items-start rounded-lg">
                                 <InformationCircleIcon
                                   className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
                                 <div className="ml-4">
@@ -701,7 +693,7 @@ const Header = () => (
                               </a>
                             </Link>
                             <Link href={"/frequently-asked-questions"}>
-                              <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                              <a className="flex items-start rounded-lg">
                                 <AnnotationIcon
                                   className={
                                     "flex-shrink-0 h-6 w-6 text-purple-2"
@@ -719,7 +711,7 @@ const Header = () => (
                             </Link>
                             <a
                               href="https://docs.parasol.finance/"
-                              className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                              className="flex items-start rounded-lg">
                               <BookOpenIcon
                                 className={
                                   "flex-shrink-0 h-6 w-6 text-purple-2"
@@ -736,7 +728,7 @@ const Header = () => (
                             </a>
                             <a
                               href="https://parasol-finance.medium.com/"
-                              className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                              className="flex items-start rounded-lg">
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className={"flex-shrink-0 h-6 w-6 text-purple-2"}
@@ -756,7 +748,7 @@ const Header = () => (
                               </div>
                             </a>
                             <Link href={"/contact"}>
-                              <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                              <a className="flex items-start rounded-lg">
                                 <MailIcon
                                   className={
                                     "flex-shrink-0 h-6 w-6 text-purple-2"
@@ -773,7 +765,7 @@ const Header = () => (
                               </a>
                             </Link>
                           </div>
-                          <div className="px-8">
+                          <div className="mt-3">
                             <div>
                               <h3 className="text-sm tracking-wide font-medium text-white uppercase">
                                 Recent Posts
