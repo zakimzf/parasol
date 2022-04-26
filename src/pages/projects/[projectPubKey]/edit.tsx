@@ -55,7 +55,7 @@ const EditProject = () => {
         errors[name] = "";
       }
     }
-    console.log(name, value)
+    
     setValues({ ...values, [name]: value });
   };
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -148,7 +148,7 @@ const EditProject = () => {
         // Sign the bytes using the wallet
         const signature = await signMessage(message);
         // Verify that the bytes were signed using the private key that matches the known public key
-        console.log(values.status)
+        
         if (!sign.detached.verify(message, signature, publicKey.toBytes()))
           throw new Error("Invalid signature!");
         // await setDoc(doc(idosCollectionRef, values.projectKey), values);
