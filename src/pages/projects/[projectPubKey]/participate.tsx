@@ -66,17 +66,16 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
   useEffect(() => {
     const getUsdcBalance = async () => {
-      if (project && user) {
-        const projectData = await project.data();
-        const usdcMint = new PublicKey(projectData.treasuryMint);
-        const ata = await user.getAssociatedTokenAccountFor(usdcMint)
-        const balance = await helper.getTokenBalance(ata)
-        setUsdcBalance(balance);
-      }
+      const projectData = await project.data();
+      const usdcMint = new PublicKey(projectData.treasuryMint);
+      const ata = await user.getAssociatedTokenAccountFor(usdcMint)
+      const balance = await helper.getTokenBalance(ata)
+      setUsdcBalance(balance);
     }
-    
-    if (project) getUsdcBalance();
-  }, [project, wallet])
+
+    if (project && user && wallet.connected && helper) getUsdcBalance();
+    else setUsdcBalance(0);
+  }, [project, user, wallet.connected, helper])
 
   useEffect(() => {
     NProgress.configure({ showSpinner: false, trickle: false });
@@ -167,6 +166,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const setNftAndAllocation = (nft: any) => {
     setallocation(nftAllocation[nft.attributes[0].value])
     setNftMint(nft);
+  }
+
+  const getMax = (max: number) => {
+    setAmount(usdcBalance * max);
   }
 
   return (
@@ -301,10 +304,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               <label>
                                 Balance: {usdcBalance} USDC
                               </label>
-                              <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"}>
+                              <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"} onClick={() => getMax(0.5)}>
                                 Half
                               </button>
-                              <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"}>
+                              <button className={"bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"} onClick={() => getMax(1)}>
                                 Max
                               </button>
                             </div>
@@ -446,7 +449,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         onChange={(percentage) => NProgress.set(percentage)}>
                         <div className={"prose prose-lg prose-invert max-w-full"}>
                           <SRLWrapper>
-                            <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"}/>
+                            <EditorJs projectPubKey={projectPubKey} content={ido.content || "{}"} />
                           </SRLWrapper>
                         </div>
                       </ScrollPercentage>
