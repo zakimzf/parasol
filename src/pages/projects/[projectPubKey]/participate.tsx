@@ -2,11 +2,11 @@ import Container from "../../../components/container";
 import Card from "../../../components/card";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { NftContext } from "../../../context/NftContext";
-import { useWallet } from "@solana/wallet-adapter-react";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react"
 import { useRouter } from "next/router";
 import { NftStore, Project, RpcHelper } from "parasol-finance-sdk";
-import { PublicKey } from "@solana/web3.js";
+import { Keypair, PublicKey } from "@solana/web3.js";
 import axios from "axios";
 import NumberFormat from "react-number-format";
 import { ArrowLeftIcon, BellIcon, CheckIcon, ChevronRightIcon, GlobeAltIcon } from "@heroicons/react/outline";
@@ -18,7 +18,7 @@ import dynamic from "next/dynamic";
 import { SRLWrapper } from "simple-react-lightbox";
 import { ScrollPercentage } from "react-scroll-percentage";
 import NProgress from "nprogress";
-import { slugify } from "../../../utils/functions";
+import { notification, slugify } from "../../../utils/functions";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
@@ -28,7 +28,8 @@ const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
 
 const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const { provider, config, helper } = useContext(NftContext);
-  const { publicKey } = useWallet();
+  const { publicKey, sendTransaction } = useWallet();
+  const { connection } = useConnection();
   const { setReminder, setProjectKey } = useReminderModal();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const router = useRouter();
@@ -95,23 +96,31 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
   const submitParticipation = async () => {
     try {
-      const projectData = await project.data();
-      const treasuryMint = new PublicKey(projectData.treasuryMint);
-      const nftMintAccountKey = new PublicKey(nftMint.mint);
-      console.log(user.paymentAta)
-      const psolAmount = await helper.getTokenBalance(user.paymentAta);
+      if ( amount > 0 && nftMint ) {
+        const projectData = await project.data();
 
-      await project.participate(
-        {
-          treasuryMint,
-          nftMint: nftMintAccountKey,
-          amount,
-        },
-        user
-      )
+        const treasuryMint = new PublicKey(projectData.treasuryMint);
+        const nftMintAccountKey = new PublicKey(nftMint.mint);
+  
+        const tx = await project.participate(
+          {
+            treasuryMint,
+            nftMint: nftMintAccountKey,
+            amount,
+          },
+          user
+        )
+        
+        const signature = await sendTransaction(tx, connection);
+        
+        await connection.confirmTransaction(signature, "confirmed");
+      }
+      else {
+        console.log("error")
+      }
     }
     catch (error) {
-      console.log(error)
+      notification("danger", "Transaction creation failed.", "Transaction Error");
     }
   }
 
