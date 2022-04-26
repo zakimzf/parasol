@@ -20,7 +20,7 @@ const EditProject = () => {
 
   const { publicKey, signMessage, sendTransaction } = useWallet();
   const { connection } = useConnection();
-  const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]); 
+  const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
 
   const walletModal = useWalletModal();
 
@@ -91,7 +91,7 @@ const EditProject = () => {
         el.classList.add(...errClasses);
       }
     }
-    
+
     if (values.startTime && values.endTime) {
       const stTime: any = new Date(values.startTime);
       const enTime: any = new Date(values.endTime);
@@ -102,7 +102,7 @@ const EditProject = () => {
 
       stRef?.classList.remove(...errClasses);
       enRef?.classList.remove(...errClasses);
-      
+
       if (diffDays > 14) {
         enRef?.classList.add(...errClasses);
         _errors["endTime"] = "You cannot create an IDO longer than 14 days";
@@ -353,34 +353,39 @@ const EditProject = () => {
                     </div>
 
                     <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
-                      { }
-                      <div className="sm:col-span-3 relative">
-                        <label htmlFor="startTime" className="block text-sm font-medium text-blue-gray-900">
-                          IDO Start Date <span className="text-purple-2">*</span>
-                        </label>
-                        <input onChange={handleChange} value={values.startTime}
-                          type="date"
-                          name="startTime"
-                          id="startTime"
-                          className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
-                        />
-                        {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.startTime}</div></>}
-                      </div>
 
-                      <div className="sm:col-span-3 relative">
-                        <label htmlFor="endTime" className="block text-sm font-medium text-blue-gray-900">
-                          IDO End Date (usually 3 days) <span className="text-purple-2">*</span>
-                        </label>
-                        <input onChange={handleChange} value={values.endTime}
-                          type="date"
-                          name="endTime"
-                          id="endTime"
-                          className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
-                        />
-                        {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.endTime}</div></>}
-                      </div>
+                      {values.status == "DRAFT" && (
+                        <>
+                          <div className="sm:col-span-3 relative">
+                            <label htmlFor="startTime" className="block text-sm font-medium text-blue-gray-900">
+                              IDO Start Date <span className="text-purple-2">*</span>
+                            </label>
+                            <input onChange={handleChange} value={values.startTime}
+                              type="date"
+                              name="startTime"
+                              id="startTime"
+                              className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                            />
+                            {errors.startTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.startTime}</div></>}
+                          </div>
+
+                          <div className="sm:col-span-3 relative">
+                            <label htmlFor="endTime" className="block text-sm font-medium text-blue-gray-900">
+                              IDO End Date (usually 3 days) <span className="text-purple-2">*</span>
+                            </label>
+                            <input onChange={handleChange} value={values.endTime}
+                              type="date"
+                              name="endTime"
+                              id="endTime"
+                              className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
+                            />
+                            {errors.endTime && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.endTime}</div></>}
+                          </div>
+                        </>
+                      )
+                      }
 
                       <div className="sm:col-span-6">
                         <h2 className="text-xl font-medium text-blue-gray-900">
