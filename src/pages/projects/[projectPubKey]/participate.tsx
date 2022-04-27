@@ -340,15 +340,17 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               prefix={"$"}
                             />.
                           </div>
-                          <div className={"flex gap-x-2 items-center justify-end w-16"}>
-                            <div className="bg-gray-400 h-2 flex-1 rounded-full">
-                              <div style={{ width: `${(participatedAmount / allocation * 100).toFixed(0)}%` }}
-                                className="bg-purple-2 h-2 rounded-full"/>
+                          {allocation != 0 && (
+                            <div className={"flex gap-x-2 items-center justify-end w-16"}>
+                              <div className="bg-gray-400 h-2 flex-1 rounded-full">
+                                <div style={{ width: `${(participatedAmount / allocation * 100).toFixed(0)}%` }}
+                                  className="bg-purple-2 h-2 rounded-full"/>
+                              </div>
+                              <p className={"text-xs"}>{(participatedAmount / allocation * 100).toFixed(1)}%</p>
                             </div>
-                            <p className={"text-xs"}>{(participatedAmount / allocation * 100).toFixed(1)}%</p>
-                          </div>
+                          )}
                         </div>
-                        {allocationDetails && (
+                        {allocationDetails && allocation != 0 && (
                           <div className={"mt-3 text-sm space-y-2 text-gray-300"}>
                             <p className={"flex items-center gap-x-1"}>
                               <ChevronRightIcon className={"w-3 h-3"} />
@@ -481,7 +483,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           </div>
                         </RadioGroup>
                         {walletAddress ? (
-                          <button disabled={nfts.length == 0 || ido.startTime > Date.now() || loading} className={`w-full ${nfts.length == 0 ? "opacity-90 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
+                          <button disabled={nfts.length == 0 || ido.startTime > Date.now() || loading} className={`w-full ${nfts.length == 0 ? "opacity-70 cursor-not-allowed" : ""} mt-8 button`} onClick={submitParticipation}>
                             {
                               !loading ? (
                                 <>
@@ -509,7 +511,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <div className={"w-48"}>
                       <ul role="list" className="pt-4 divide-y-divide-gray-200-divide-opacity-10">
                         {JSON.parse(ido.content).blocks.map((block: any) => {
-                          if (block.type === "header" && block.data.level == 2) {
+                          if (block.type === "header" && block.data.level <= 3) {
                             return (
                               <li
                                 key={block.id}
