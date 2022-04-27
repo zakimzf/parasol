@@ -550,7 +550,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-6 relative">
                     <label htmlFor="white-paper" className="block text-sm font-medium text-blue-gray-900">
-                      WhitePaper URL
+                      WhitePaper URL (should be a PDF)
                     </label>
                     <input onChange={handleChange} value={values.whitepaperUrl}
                       type="text"
