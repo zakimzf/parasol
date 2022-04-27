@@ -30,19 +30,23 @@ export const TokenModal: FC = () => {
   let featuredTokens = [
     {
       name: "SOL",
-      icon: tokens.find(x => x.symbol === "SOL")?.logoURI
+      icon: tokens.find(x => x.symbol === "SOL")?.logoURI,
+      address: tokens.find(x => x.symbol === "SOL")?.address
     },
     {
       name: "PSOL",
-      icon: tokens.find(x => x.symbol === "PSOL")?.logoURI
+      icon: tokens.find(x => x.symbol === "PSOL")?.logoURI,
+      address: tokens.find(x => x.symbol === "PSOL")?.address
     },
     {
       name: "USDC",
-      icon: tokens.find(x => x.symbol === "USDC")?.logoURI
+      icon: tokens.find(x => x.symbol === "USDC")?.logoURI,
+      address: tokens.find(x => x.symbol === "USDC")?.address
     },
     {
       name: "USDT",
-      icon: tokens.find(x => x.symbol === "USDT")?.logoURI
+      icon: tokens.find(x => x.symbol === "USDT")?.logoURI,
+      address: tokens.find(x => x.symbol === "USDT")?.address
     }
   ]
   return (
@@ -82,14 +86,25 @@ export const TokenModal: FC = () => {
                     className={"w-full bg-transparent p-1 border-0 outline-0"}
                     placeholder={"Search by token or address"} />
                 </div>
-                {/*<div className={"flex gap-x-2 justify-around mb-4"}>*/}
-                {/*    {featuredTokens.map(token => (*/}
-                {/*        <button className={"flex items-center text-xs gap-x-2 p-2 border border-white border-opacity-20 bg-white bg-opacity-5 rounded-lg hover:border-purple-2 hover:bg-purple-2 hover:bg-opacity-5"}>*/}
-                {/*            <img className={"w-4"} src={token?.icon} alt={token.name} />*/}
-                {/*            {token.name}*/}
-                {/*        </button>*/}
-                {/*    ))}*/}
-                {/*</div>*/}
+                <div className={"flex gap-x-2 justify-around mb-4"}>
+                  {featuredTokens.map(token => (
+                    <button
+                      key={token.address}
+                      onClick={() => {
+                        if (mode == TokenChooserMode.Input) {
+                          setInput(new PublicKey(token.address || ""))
+                        }
+                        else {
+                          setOutput(new PublicKey(token.address || ""))
+                        }
+                        close()
+                      }}
+                      className={"flex items-center text-xs gap-x-2 p-2 border-opacity-20 bg-white bg-opacity-5 rounded-lg hover:border-purple-2 hover:bg-purple-2 hover:bg-opacity-5"}>
+                      <img className={"w-4"} src={token?.icon} alt={token.name} />
+                      {token.name}
+                    </button>
+                  ))}
+                </div>
                 <div
                   className={"max-h-[30rem] scrollbar-thin scrollbar-thumb-purple-2 scrollbar-thumb-rounded-full"}>
                   <div className="relative grid gap-y-2">
