@@ -86,7 +86,7 @@ const Footer = () => (
                 </a>
               </li>
               <li>
-                <a href="https://explorer.solana.com/address/Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ"
+                <a href="https://explorer.solana.com/address/PFo38bhqnYn9ntEs6GHN5LAi26QX1tBxMabmqu5LtX9"
                   target="_blank" className="text-base" rel="noreferrer">Token
                                                                           Address
                 </a>

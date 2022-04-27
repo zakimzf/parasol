@@ -59,7 +59,7 @@ const About = () => (
                   With Solana you enjoy low fees and fast transaction and flexibility. Explore our
                   token on
                   explorer <a className="text-purple-400"
-                    href="https://explorer.solana.com/address/Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ"
+                    href="https://explorer.solana.com/address/PFo38bhqnYn9ntEs6GHN5LAi26QX1tBxMabmqu5LtX9"
                     target="_blank" rel="noreferrer">here</a> .
                 </p>
               </div>

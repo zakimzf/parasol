@@ -7,7 +7,7 @@ import { Timestamp } from "firebase/firestore"
 
 const projects = [
   {
-    splToken: "Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ",
+    splToken: "PFo38bhqnYn9ntEs6GHN5LAi26QX1tBxMabmqu5LtX9",
     projectIcon: "https://raw.githubusercontent.com/parasol-finance/white-paper/main/logo.png",
     projectCover: "",
     projectName: "Parasol",

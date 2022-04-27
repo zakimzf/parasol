@@ -2,7 +2,7 @@ const AnnounceBar = () => (
   <nav className="relative bg-purple-2 -bg-gradient-to-r from-purple-1 to-purple-2">
     <div
       className="max-w-7xl mx-auto flex whitespace-nowrap justify-between justify-center gap-x-4 py-3 px-3 sm:px-6 lg:px-5">
-      <a href="https://explorer.solana.com/address/Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ" target="_blank"
+      <a href="https://explorer.solana.com/address/PFo38bhqnYn9ntEs6GHN5LAi26QX1tBxMabmqu5LtX9" target="_blank"
         className="flex justify-center truncate items-center gap-1 font-bold text-sm text-white -bg-gray-900 border border-purple-200 rounded-full px-4 py-1" rel="noreferrer">
         <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
@@ -10,7 +10,7 @@ const AnnounceBar = () => (
             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         Contract Address:
-        <span className="truncate">Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ</span>
+        <span className="truncate">PFo38bhqnYn9ntEs6GHN5LAi26QX1tBxMabmqu5LtX9</span>
       </a>
       <a href="https://parasol.finance/"
         className="flex justify-center items-center gap-1 hidden lg:flex font-bold text-sm text-white border border-purple-200 rounded-full pl-4 pr-1 py-1">

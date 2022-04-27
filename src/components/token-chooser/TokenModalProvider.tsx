@@ -12,7 +12,7 @@ export const TokenModalProvider: FC<TokenChooserProps> = ({ children }: TokenCho
   const [visible, setVisible] = useState(false);
   const [mode, setMode] = useState(TokenChooserMode.Input);
   const [input, setInput] = useState(new PublicKey("EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"));
-  const [output, setOutput] = useState(new PublicKey("Hmatmu1ktLbobSvim94mfpZmjL5iiyoM1zidtXJRAdLZ"));
+  const [output, setOutput] = useState(new PublicKey("PFo38bhqnYn9ntEs6GHN5LAi26QX1tBxMabmqu5LtX9"));
   return <TokenChooserContext.Provider
     value={{
       visible, setVisible,
