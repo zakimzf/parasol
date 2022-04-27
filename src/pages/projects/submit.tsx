@@ -228,6 +228,7 @@ const SubmitProject = () => {
         })
       }
       catch (err) {
+        console.log(err)
         notification("danger", "Unable to create an IDO.", "Transaction Failed");
         setLoading(false);
       }
