@@ -283,12 +283,19 @@ const ProjectDetails = () => {
                   <div className="sticky flex flex-col gap-y-6 top-20">
                     <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
                       <div className={"relative p-6"}>
-                        <h2 className="flex gap-x-2 items-center text-2xl font-bold">
-                          {ido.name}
-                          {ido.isFeatured && (
-                            <BadgeCheckIcon className={"h-7 text-purple-2"} />
+                        <div className={"flex justify-between items-center"}>
+                          <h2 className="flex gap-x-2 items-center text-2xl font-bold">
+                            {ido.name}
+                            {ido.isFeatured && (
+                              <BadgeCheckIcon className={"h-7 text-purple-2"} />
+                            )}
+                          </h2>
+                          {ido.status !== "PUBLISHED" && (
+                            <label className="p-2 bg-white bg-opacity-10 text-xs uppercase font-medium rounded-md">
+                              {ido.status}
+                            </label>
                           )}
-                        </h2>
+                        </div>
                         <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
                           <img
                             className="h-8"
