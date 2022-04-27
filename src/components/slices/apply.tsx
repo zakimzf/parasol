@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 
 const Apply = () => (
-  <section className="pb-12">
+  <section className="py-6 lg:pt-0 lg:pb-12">
     <div className="max-w-7xl mx-auto text-center">
       <h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">
         <span className="block">Want to Launch your Project?</span>
@@ -14,7 +14,8 @@ const Apply = () => (
         <Link href={"/projects/submit"} passHref>
           <a className={"button text-base !bg-none bg-purple-2"}>
             <PaperAirplaneIcon className={"w-5 h-5"} />
-            Submit Your Project
+            <span className={"lg:hidden"}>Submit Project</span>
+            <span className={"hidden lg:block"}>Submit Your Project</span>
           </a>
         </Link>
         <a href={"https://docs.parasol.finance/"} target={"_blank"} className={"button text-base"} rel="noreferrer">
