@@ -16,17 +16,21 @@ const Projects = () => {
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
   // const [status, setStatus] = useState<string>("PUBLISHED");
+
   const filteredProjects = projects
     .filter((e) => e.status === "PUBLISHED")
     .filter((e) => e.endTime > new Date())
+    .sort((x: any, y: any) => x.startTime.getTime() - y.startTime.getTime())
     .slice(0, 9);
+
   const finishedProjects = projects
     .filter((e) => e.status === "FINISHED")
     .slice(0, 9);
     
   const draftProjects = projects
     .filter((e: any) => e.status === "DRAFT")
-    .filter((e: any) => e.owner == walletAddress);
+    .filter((e: any) => e.owner == walletAddress)
+    .sort((x: any, y: any) => x.startTime.getTime() - y.startTime.getTime());
 
   useEffect(() => {
     const getProjects = async () => {

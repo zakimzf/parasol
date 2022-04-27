@@ -14,8 +14,9 @@ const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([])
   const [status, setStatus] = useState<string>("PUBLISHED");
   const filteredProjects = projects
-    .filter((e) => e.status === status)
-    .filter((e) => e.endTime > new Date())
+    .filter((e: any) => e.status === status)
+    .filter((e: any) => e.endTime > new Date())
+    .sort((x: any, y: any) => x.startTime.getTime() - y.startTime.getTime())
     .slice(0, 3);
 
   useEffect(() => {
@@ -28,9 +29,6 @@ const Projects = () => {
   return (
     <section>
       <Container>
-        {/*<div className="float-right sm:flex gap-x-3 pl-6 lg:pl-0 pt-1 lg:pt-3 uppercase text-sm grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 justify-center">*/}
-        {/*  */}
-        {/*</div>*/}
         <div className={"flex items-center gap-x-6 mb-12"}>
           <div className={"truncate flex-1"}>
             <a className="text-3xl mb-1 font-extrabold text-white tracking-tight sm:text-4xl">
