@@ -23,7 +23,7 @@ const Projects = () => {
   const finishedProjects = projects
     .filter((e) => e.status === "FINISHED")
     .slice(0, 9);
-  console.log(projects)
+    
   const draftProjects = projects
     .filter((e: any) => e.status === "DRAFT")
     .filter((e: any) => e.owner == walletAddress);
