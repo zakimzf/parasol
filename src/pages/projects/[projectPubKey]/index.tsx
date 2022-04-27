@@ -257,21 +257,23 @@ const ProjectDetails = () => {
                                         <NumberFormat value={ido.salePrice} displayType={"text"} thousandSeparator={true} prefix={"$"} />
                                       </td>
                                     </tr>
-                                    <tr>
-                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Market Cap (in USDC)</td>
-                                      <td className="whitespace-nowrap px-3 py-4 text-sm">
-                                        <NumberFormat value={ido.marketCapFD} displayType={"text"} thousandSeparator={true} prefix={"$"} />
-                                      </td>
-                                    </tr>
+                                    {ido.marketCapFD && (
+                                      <tr>
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Market Cap (in USDC)</td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm">
+                                          <NumberFormat value={ido.marketCapFD} displayType={"text"} thousandSeparator={true} prefix={"$"} />
+                                        </td>
+                                      </tr>
+                                    )}
+                                    {ido.volumeUsdt && (
+                                      <tr>
+                                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Volume 24h (in USDC)</td>
+                                        <td className="whitespace-nowrap px-3 py-4 text-sm">
+                                          <NumberFormat value={ido.volumeUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} />
+                                        </td>
+                                      </tr>
+                                    )}
                                   </>
-                                )}
-                                {ido.volumeUsdt && (
-                                  <tr>
-                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Volume 24h (in USDC)</td>
-                                    <td className="whitespace-nowrap px-3 py-4 text-sm">
-                                      <NumberFormat value={ido.volumeUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} />
-                                    </td>
-                                  </tr>
                                 )}
                               </tbody>
                             </table>
