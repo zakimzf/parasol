@@ -28,11 +28,22 @@ const Projects = () => {
   return (
     <section>
       <Container>
-        <div className="md:float-right sm:flex gap-x-3 pt-3 uppercase text-sm grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 justify-center xs:pb-10">
+        {/*<div className="float-right sm:flex gap-x-3 pl-6 lg:pl-0 pt-1 lg:pt-3 uppercase text-sm grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 justify-center">*/}
+        {/*  */}
+        {/*</div>*/}
+        <div className={"flex items-center gap-x-6 mb-12"}>
+          <div className={"truncate"}>
+            <a className="text-3xl mb-1 font-extrabold text-white tracking-tight sm:text-4xl">
+              Upcoming IDOs
+            </a>
+            <p className="truncate text-sm lg:text-base text-gray-200">
+              We only display IDOs that are featured or have been balloted.
+            </p>
+          </div>
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="flex gap-x-2 items-center uppercase bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
-                Filter by Status
+                <span className={"hidden lg:block"}>Filter by Status</span>
                 <ChevronDownIcon
                   className="w-5 h-5"
                   aria-hidden="true"
@@ -76,14 +87,6 @@ const Projects = () => {
               </Menu.Items>
             </Transition>
           </Menu>
-        </div>
-        <div className={"mb-12"}>
-          <a className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
-            Upcoming IDOs
-          </a>
-          <p className="truncate mt-1 max-w-prose text-sm lg:text-base text-gray-200">
-            We only display IDOs that are featured or have been balloted.
-          </p>
         </div>
         {projects.length > 0 ? (
           <>
