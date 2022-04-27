@@ -32,7 +32,7 @@ const Projects = () => {
         {/*  */}
         {/*</div>*/}
         <div className={"flex items-center gap-x-6 mb-12"}>
-          <div className={"truncate"}>
+          <div className={"truncate flex-1"}>
             <a className="text-3xl mb-1 font-extrabold text-white tracking-tight sm:text-4xl">
               Upcoming IDOs
             </a>
