@@ -85,9 +85,9 @@ const Projects = () => {
             We only display IDOs that are featured or have been balloted.
           </p>
         </div>
-        {projects.length > 0 || true ? (
+        {projects.length > 0 ? (
           <>
-            {filteredProjects.length > 0 && false ? (
+            {filteredProjects.length > 0 ? (
               <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
                 {filteredProjects.map((project, index) => (
                   <ProjectCard
@@ -105,8 +105,7 @@ const Projects = () => {
               </div>
             ) : (
               <h1 className={"py-12 font-medium text-gray-300 text-center"}>
-                Next IDOs should be available in a few hours, stay tuned.
-                {/*There is no IDO corresponding to these criteria.*/}
+                There is no IDO corresponding to these criteria.
               </h1>
             )}
           </>
