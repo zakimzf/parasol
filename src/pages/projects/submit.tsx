@@ -632,7 +632,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="startTime" className="block text-sm font-medium text-blue-gray-900">
-                      IDO Start Date <span className="text-purple-2">*</span>
+                      IDO Start Date &amp; Time <span className="text-purple-2">*</span>
                     </label>
                     <input onChange={handleChange} value={values.startTime}
                       type="datetime-local"
@@ -646,7 +646,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="endTime" className="block text-sm font-medium text-blue-gray-900">
-                      IDO End Date (usually 3 days) <span className="text-purple-2">*</span>
+                      IDO End DateTime (usually 3 days) <span className="text-purple-2">*</span>
                     </label>
                     <input onChange={handleChange} value={values.endTime}
                       type="datetime-local"
