@@ -125,7 +125,7 @@ const ProjectCard = ({
               </Link>
               {(featured || true) && <BadgeCheckIcon className={"h-6 -ml-1 text-purple-2"} />}
             </h2>
-            <p className="text text-gray-300 mb-3 line-clamp-3">{description}</p>
+            <p className="text text-gray-300 mb-3 line-clamp-2">{description}</p>
             <div className="flex-col space-y-3 mt-3 mb-8">
               <div className="flex font-medium items-center text-gray-300 gap-x-3">
                 <div className="flex items-center gap-x-1">
