@@ -102,7 +102,7 @@ const SubmitProject = () => {
 
   const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    if (walletAddress) {      
+    if (walletAddress) {
       setLoading(true)
       await validateAllFieldsAndRedirection();
     }
@@ -213,22 +213,22 @@ const SubmitProject = () => {
 
         const tx = await project.create(args, user);
 
-        // sign transaction
-        let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
-        // confirm transaction
-        await connection.confirmTransaction(signature, "confirmed");
-
         values.publicKey = walletAddress;
         values.projectKey = projectPubKey?.toBase58()
 
         await uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, values.projectKey), _values);
+
+          // sign transaction
+          let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
+          // confirm transaction
+          await connection.confirmTransaction(signature, "confirmed");
           await router.push(`/projects/${values.projectKey}`);
+
           setLoading(false);
         })
       }
       catch (err) {
-        console.log(err)
         notification("danger", "Unable to create an IDO.", "Transaction Failed");
         setLoading(false);
       }
@@ -316,7 +316,7 @@ const SubmitProject = () => {
     setSelectedIdoOptions(value)
     setValues({ ...values, rewardDecimals: 0, splToken: "" });
   }
-  
+
   return (
     <section>
       <Heading tagline={"Parasol Launchpad"} title={"Submit Your Project (IDO)"}
