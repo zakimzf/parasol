@@ -99,7 +99,7 @@ export const TokenModal: FC = () => {
                         }
                         close()
                       }}
-                      className={"flex items-center text-xs gap-x-2 p-2 border-opacity-20 bg-white bg-opacity-5 rounded-lg hover:border-purple-2 hover:bg-purple-2 hover:bg-opacity-5"}>
+                      className={"flex items-center text-xs gap-x-2 p-2 border-opacity-20 bg-white bg-opacity-5 rounded-md hover:border-purple-2 hover:bg-purple-2 hover:bg-opacity-5"}>
                       <img className={"w-4"} src={token?.icon} alt={token.name} />
                       {token.name}
                     </button>
@@ -124,7 +124,7 @@ export const TokenModal: FC = () => {
                         <img
                           onError={({ currentTarget }) => {
                             currentTarget.onerror = null;
-                            currentTarget.src = "https://raw.githubusercontent.com/parasol-labs-org/white-paper/main/logo.png"
+                            currentTarget.src = "/assets/icons/no-token.png"
                           }}
                           src={token.logoURI}
                           className="w-6 h-6"
