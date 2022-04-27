@@ -83,7 +83,7 @@ export const TokenModal: FC = () => {
                   <input type={"search"}
                     spellCheck={"false"}
                     onChange={e => setValue(e.target.value)}
-                    className={"w-full bg-transparent p-1 border-0 outline-0"}
+                    className={"w-full bg-transparent p-1 border-0 outline-0 focus:outline-none focus:ring-0"}
                     placeholder={"Search by token or address"} />
                 </div>
                 <div className={"flex gap-x-2 justify-around mb-4"}>
