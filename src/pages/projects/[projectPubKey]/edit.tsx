@@ -182,8 +182,8 @@ const EditProject = () => {
       data.projectKey = projectPubKey;
       
       if (wallet.connected && data && data.owner == walletAddress) {
-        data.startTime = data.startTime.toISOString().slice(0, 10);
-        data.endTime = data.endTime.toISOString().slice(0, 10);
+        data.startTime = data.startTime.toISOString().slice(0, -5);
+        data.endTime = data.endTime.toISOString().slice(0, -5);
         setValues(data);
       }
       else router.push("/404");
