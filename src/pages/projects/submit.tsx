@@ -191,7 +191,7 @@ const SubmitProject = () => {
         const projectKeypair = Keypair.generate();
         const projectPubKey = projectKeypair.publicKey;
         const project = await new Project(provider, nftStore, projectPubKey).build();
-        const rewardToken = values.splToken ? new PublicKey(values.splToken) : null;
+        const rewardMint = values.splToken ? new PublicKey(values.splToken) : null;
 
         const index = packages.findIndex(p => p.name === values.package.name);
 
@@ -200,7 +200,7 @@ const SubmitProject = () => {
         const args: any = {
           projectKind: projectKinds[index].address,
           treasuryMint: new PublicKey(treasuryMint),
-          rewardToken: rewardToken,
+          rewardMint: rewardMint,
           rewardDecimals: values.rewardDecimals,
           tier: index,
           hardCap: values.hardCap,

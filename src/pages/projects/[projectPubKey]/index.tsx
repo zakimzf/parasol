@@ -231,10 +231,10 @@ const ProjectDetails = () => {
                           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 -rounded-md">
                             <table className="min-w-full divide-y divide-gray-800 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg">
                               <tbody className="divide-y divide-gray-800">
-                                {ido.rewardToken && (
+                                {ido.rewardMint && (
                                   <tr>
                                     <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Address</td>
-                                    <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.rewardToken}</td>
+                                    <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.rewardMint}</td>
                                   </tr>
                                 )}
                                 <tr>
@@ -249,7 +249,7 @@ const ProjectDetails = () => {
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.rewardDecimals}</td>
                                 </tr>
-                                {ido.rewardToken && (
+                                {ido.rewardMint && (
                                   <>
                                     <tr>
                                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDC)</td>
