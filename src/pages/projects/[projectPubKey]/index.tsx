@@ -117,7 +117,7 @@ const ProjectDetails = () => {
                         alt={ido.name}
                       />
                     )}
-                    <div className={"w-1/2"}>
+                    <div className={walletAddress && walletAddress == ido.owner ? "w-1/2" : "w-2/3"}>
                       <a id="features" className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
                         {ido.name}
                       </a>
