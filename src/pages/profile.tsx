@@ -2,14 +2,22 @@ import Container from "../components/container";
 import Link from "next/link";
 import { ExternalLinkIcon, TrendingUpIcon } from "@heroicons/react/outline";
 import { useWallet } from "@solana/wallet-adapter-react";
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useEffect, useMemo } from "react";
 import Layout from "../components/layout";
 import { NftContext } from "../context/NftContext";
+import { useRouter } from "next/router";
 
 const Profile = function () {
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
-  const { nfts, setNfts, user, wallet, getNFTList } = useContext(NftContext);
+  const { nfts } = useContext(NftContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (walletAddress === undefined) {
+      router.push("/404");
+    }
+  }, [walletAddress]);
   return (
     <Layout short={true}>
       <section className={"mt-6"}>
@@ -65,7 +73,7 @@ const Profile = function () {
                       href={`https://explorer.solana.com/address/${nft.mint}`}
                       target={"_blank"}
                       rel={"noreferrer"}>
-                      <img className="object-cover shadow-lg rounded-lg" src={nft.image} alt={nft.name} />
+                      <img className="object-cover shadow-lg rounded-lg" src={nft.image} alt={nft.name}/>
                     </a>
                   </div>
                   <div className="space-y-2">
