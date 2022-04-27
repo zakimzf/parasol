@@ -207,7 +207,7 @@ const SubmitProject = () => {
           salePrice: values.tokenPrice,
           lpFeeBasisPoints: Number(values.liquidity) / 100,
           startTime: new Date(values.startTime),
-          endTime: new Date(values.endTime),
+          endTime: new Date(`${values.endTime} 23:59:59`),
           uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
         }
 

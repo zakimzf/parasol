@@ -35,7 +35,7 @@ const EditorJs = dynamic(() => import("../../../components/editorjs"), {
 
 const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
 
-const nftAllocation: any = { "Dreamer": 21, "Rider": 210, "Chiller": 2100, "MoonWalker": 21000 };
+const nftAllocation: any = { "Dreamer": 210, "Rider": 2100, "Chiller": 21000, "MoonWalker": 210000 };
 
 const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const { provider, config, helper, nftKinds } = useContext(NftContext);
@@ -60,13 +60,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const [loading, setLoading] = useState(false)
   const [allocationDetails, setAllocationDetails] = useState(false);
   const [participatedAmount, setParticipatedAmount] = useState(0);
-
-  useEffect(() => {
-    if (nfts && nfts[0]) {
-      setNftMint(nfts[0])
-      setallocation(nftAllocation[nfts[0].attributes[0].value]);
-    }
-  }, [nfts]);
+  const [nftsReady, setNftsReady] = useState(false)
+  const [projectData, setProjectData] = useState<any>(null)
   
   const getUsdcBalance = async () => {
     try {
@@ -86,9 +81,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   }
 
   useEffect(() => {
-    if (project && user && wallet.connected && helper && nftMint) getUsdcBalance();
+    if (project && user && wallet.connected && helper && nftMint && projectData) getUsdcBalance();
     else setUsdcBalance(0);
-  }, [project, user, wallet.connected, helper, nftMint])
+  }, [project, user, wallet.connected, helper, nftMint, projectData])
 
   useEffect(() => {
     NProgress.configure({ showSpinner: false, trickle: false });
@@ -189,17 +184,27 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   }
 
   const setNftAndAllocation = (nft: any) => {
-    setallocation(nftAllocation[nft.attributes[0].value])
     setNftMint(nft);
+    setallocation(nftAllocation[nft.attributes[0].value] * projectData.allocationFeeBasisPoints);
   }
 
   const getMax = (max: number) => {
     setAmount(usdcBalance * max);
   }
 
+  useEffect(() => {
+    const initNfts = async () => {
+      const projectData_ = await project.data();
+      setProjectData(projectData_)
+      setNftMint(nfts[0]);
+      setallocation(nftAllocation[nfts[0].attributes[0].value] * projectData_.allocationFeeBasisPoints) ;
+    }
+    if (nfts && nfts[0] && !nftsReady && project) initNfts()
+  },[nfts, project])
+
   return (
     <section className={"relative overflow-hidden py-12"}>
-      {ido && (
+      {nfts && ido && (
         <>
           {ido.startTime >= Date.now() && (
             <div className={"absolute flex flex-col items-center pt-52 pb-12 inset-0 filter backdrop-blur-md z-10"}>
