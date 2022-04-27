@@ -129,7 +129,7 @@ const EditProject = () => {
           hardCap: values.hardCap,
           salePrice: values.tokenPrice,
           startTime: new Date(values.startTime),
-          endTime: new Date(`${values.endTime} 23:59:59`),
+          endTime: new Date(values.endTime),
         }, user)
 
         const signature = await sendTransaction(tx, connection);
@@ -362,7 +362,7 @@ const EditProject = () => {
                               IDO Start Date <span className="text-purple-2">*</span>
                             </label>
                             <input onChange={handleChange} value={values.startTime}
-                              type="date"
+                              type="datetime-local"
                               name="startTime"
                               id="startTime"
                               className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
@@ -376,7 +376,7 @@ const EditProject = () => {
                               IDO End Date (usually 3 days) <span className="text-purple-2">*</span>
                             </label>
                             <input onChange={handleChange} value={values.endTime}
-                              type="date"
+                              type="datetime-local"
                               name="endTime"
                               id="endTime"
                               className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
