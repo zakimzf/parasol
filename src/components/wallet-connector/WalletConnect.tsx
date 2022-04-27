@@ -1,10 +1,11 @@
 import React, { Fragment, MouseEventHandler, useCallback, useEffect, useMemo, useState, } from "react";
 import { useWalletModal } from "./useWalletModal";
 import { Menu, Transition } from "@headlessui/react";
-import { ClipboardCopyIcon, LogoutIcon } from "@heroicons/react/outline";
+import { ClipboardCopyIcon, LogoutIcon, UserIcon } from "@heroicons/react/outline";
 import { PublicKey } from "@solana/web3.js";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { AnchorProvider, NftStore, NftStoreConfig, User } from "parasol-finance-sdk";
+import Link from "next/link";
 
 type WalletConnectDetail = {
   Width: String;
@@ -95,18 +96,6 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
       >
         <Menu.Items className="absolute right-0 w-60 mt-2 origin-top-right bg-[#231f38] rounded-lg shadow-lg divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="relative grid gap-6 gap-8 px-7 py-8">
-            {/*<Menu.Item>*/}
-            {/*  <Link href={"/profile"}>*/}
-            {/*    <a className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">*/}
-            {/*      <span className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true">*/}
-            {/*        <UserIcon/>*/}
-            {/*      </span>*/}
-            {/*      <div className="ml-4">*/}
-            {/*        <p className="text-base font-medium text-white">My Profile</p>*/}
-            {/*      </div>*/}
-            {/*    </a>*/}
-            {/*  </Link>*/}
-            {/*</Menu.Item>*/}
             {nfts.length > 0 && (
               <Menu.Item>
                 <ul className={"space-y-4"}>
@@ -134,6 +123,18 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
                 </ul>
               </Menu.Item>
             )}
+            <Menu.Item>
+              <Link href={"/profile"}>
+                <a className="-m-3 p-3 flex items-center rounded-lg hover:bg-white hover:bg-opacity-5">
+                  <span className="flex-shrink-0 h-6 w-6 text-purple-2" aria-hidden="true">
+                    <UserIcon/>
+                  </span>
+                  <div className="ml-4">
+                    <p className="text-base font-medium text-white">My Profile</p>
+                  </div>
+                </a>
+              </Link>
+            </Menu.Item>
             <Menu.Item>
               <a
                 onClick={() => navigator.clipboard.writeText(base58 as string)}
