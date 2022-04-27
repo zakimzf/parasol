@@ -677,21 +677,21 @@ const Header = () => (
                       <Popover.Panel className="z-100 transform w-screen">
                         <div className="overflow-hidden">
                           <div className="relative grid gap-6 py-4">
-                            <Link href={"/about"}>
-                              <a className="flex items-start rounded-lg">
-                                <InformationCircleIcon
-                                  className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>
-                                <div className="ml-4">
-                                  <p className="text-base font-medium text-white">
-                                    About Parasol Finance
-                                  </p>
-                                  <p className="mt-1 text-sm text-white">
-                                    Learn more about the Parasol Finance
-                                    project.
-                                  </p>
-                                </div>
-                              </a>
-                            </Link>
+                            {/*<Link href={"/about"}>*/}
+                            {/*  <a className="flex items-start rounded-lg">*/}
+                            {/*    <InformationCircleIcon*/}
+                            {/*      className={"flex-shrink-0 h-6 w-6 text-purple-2"}/>*/}
+                            {/*    <div className="ml-4">*/}
+                            {/*      <p className="text-base font-medium text-white">*/}
+                            {/*        About Parasol Finance*/}
+                            {/*      </p>*/}
+                            {/*      <p className="mt-1 text-sm text-white">*/}
+                            {/*        Learn more about the Parasol Finance*/}
+                            {/*        project.*/}
+                            {/*      </p>*/}
+                            {/*    </div>*/}
+                            {/*  </a>*/}
+                            {/*</Link>*/}
                             <Link href={"/frequently-asked-questions"}>
                               <a className="flex items-start rounded-lg">
                                 <AnnotationIcon
