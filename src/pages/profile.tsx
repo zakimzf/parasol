@@ -62,38 +62,44 @@ const Profile = function () {
               Find all the NFTs that you own.
             </p>
           </div>
-          <ul
-            role="list"
-            className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-5 lg:gap-x-8">
-            {nfts.map((nft: any) => (
-              <li key={nft.name}>
-                <div className="space-y-4">
-                  <div className="aspect-w-3 aspect-h-2">
-                    <a
-                      href={`https://explorer.solana.com/address/${nft.mint}`}
-                      target={"_blank"}
-                      rel={"noreferrer"}>
-                      <img className="object-cover shadow-lg rounded-lg" src={nft.image} alt={nft.name}/>
-                    </a>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-lg leading-6 font-medium">
-                      <h3 className={"mb-2"}>{nft.attributes[0].value}</h3>
-                      <p className="text-purple-2 mb-3">{nft.name}</p>
+          {nfts.length > 0 ? (
+            <ul
+              role="list"
+              className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-12 sm:space-y-0 lg:grid-cols-5 lg:gap-x-8">
+              {nfts.map((nft: any) => (
+                <li key={nft.name}>
+                  <div className="space-y-4">
+                    <div className="aspect-w-3 aspect-h-2">
                       <a
                         href={`https://explorer.solana.com/address/${nft.mint}`}
-                        className={"flex gap-x-2 items-center text-sm"}
                         target={"_blank"}
                         rel={"noreferrer"}>
-                        <ExternalLinkIcon className={"w-4 h-4"}/>
-                        Open on Solscan
+                        <img className="object-cover shadow-lg rounded-lg" src={nft.image} alt={nft.name}/>
                       </a>
                     </div>
+                    <div className="space-y-2">
+                      <div className="text-lg leading-6 font-medium">
+                        <h3 className={"mb-2"}>{nft.attributes[0].value}</h3>
+                        <p className="text-purple-2 mb-3">{nft.name}</p>
+                        <a
+                          href={`https://explorer.solana.com/address/${nft.mint}`}
+                          className={"flex gap-x-2 items-center text-sm"}
+                          target={"_blank"}
+                          rel={"noreferrer"}>
+                          <ExternalLinkIcon className={"w-4 h-4"}/>
+                          Open on Solscan
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div>
+              <h2 className={"text-lg mb-1 font-medium"}>You don&apos;t have any NFT, order your first <Link href={"/tiers"}><a className={"text-purple-2"}>here</a></Link>.</h2>
+            </div>
+          )}
         </Container>
       </section>
     </Layout>
