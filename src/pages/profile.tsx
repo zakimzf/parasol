@@ -61,7 +61,10 @@ const Profile = function () {
               <li key={nft.name}>
                 <div className="space-y-4">
                   <div className="aspect-w-3 aspect-h-2">
-                    <a href={`https://explorer.solana.com/address/${nft.mint}`}>
+                    <a
+                      href={`https://explorer.solana.com/address/${nft.mint}`}
+                      target={"_blank"}
+                      rel={"noreferrer"}>
                       <img className="object-cover shadow-lg rounded-lg" src={nft.image} alt={nft.name} />
                     </a>
                   </div>
