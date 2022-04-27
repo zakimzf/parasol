@@ -207,7 +207,7 @@ const SubmitProject = () => {
           salePrice: values.tokenPrice,
           lpFeeBasisPoints: Number(values.liquidity) / 100,
           startTime: new Date(values.startTime),
-          endTime: new Date(`${values.endTime} 23:59:59`),
+          endTime: new Date(values.endTime),
           uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
         }
 
@@ -550,7 +550,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-6 relative">
                     <label htmlFor="white-paper" className="block text-sm font-medium text-blue-gray-900">
-                      WhitePaper URL
+                      WhitePaper URL (should be a PDF)
                     </label>
                     <input onChange={handleChange} value={values.whitepaperUrl}
                       type="text"
@@ -632,10 +632,10 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="startTime" className="block text-sm font-medium text-blue-gray-900">
-                      IDO Start Date <span className="text-purple-2">*</span>
+                      IDO Start Date &amp; Time <span className="text-purple-2">*</span>
                     </label>
                     <input onChange={handleChange} value={values.startTime}
-                      type="date"
+                      type="datetime-local"
                       name="startTime"
                       id="startTime"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
@@ -646,10 +646,10 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="endTime" className="block text-sm font-medium text-blue-gray-900">
-                      IDO End Date (usually 3 days) <span className="text-purple-2">*</span>
+                      IDO End DateTime (usually 3 days) <span className="text-purple-2">*</span>
                     </label>
                     <input onChange={handleChange} value={values.endTime}
-                      type="date"
+                      type="datetime-local"
                       name="endTime"
                       id="endTime"
                       className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 required_"
@@ -756,7 +756,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="twitter" className="block text-sm font-medium text-blue-gray-900">
-                      Twitter
+                      Twitter URL
                     </label>
                     <input onChange={handleChange} value={values.twitter}
                       type="text"
@@ -771,7 +771,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="telegram" className="block text-sm font-medium text-blue-gray-900">
-                      Telegram
+                      Telegram URL
                     </label>
                     <input onChange={handleChange} value={values.telegram}
                       type="text"
