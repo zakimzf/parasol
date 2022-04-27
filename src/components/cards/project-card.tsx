@@ -45,7 +45,6 @@ const ProjectCard = ({
   endTime
 }: ProjectDetails) => {
   const { setReminder, setProjectKey } = useReminderModal();
-
   return (
     <Card>
       {cover ? (
@@ -75,7 +74,7 @@ const ProjectCard = ({
           alt={"placeholder"}
         />
       )}
-      <div className={"flex relative z-10 flex-col p-6"}>
+      <div className={"flex-1 flex relative z-10 flex-col p-6"}>
         {loading ? (
           <div className="animate-pulse flex space-x-4">
             <div className="flex-1 space-y-6 py-1">
@@ -125,7 +124,7 @@ const ProjectCard = ({
               </Link>
               {(featured || true) && <BadgeCheckIcon className={"h-6 -ml-1 text-purple-2"} />}
             </h2>
-            <p className="text text-gray-300 mb-3 line-clamp-3">{description}</p>
+            <p className="text text-gray-300 mb-3 flex-1 line-clamp-2">{description}</p>
             <div className="flex-col space-y-3 mt-3 mb-8">
               <div className="flex font-medium items-center text-gray-300 gap-x-3">
                 <div className="flex items-center gap-x-1">
@@ -149,13 +148,13 @@ const ProjectCard = ({
                   }}
                   className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap">
                   <BellIcon className={"w-5 h-5"} />
-              Set a Reminder
+                  Set a Reminder
                 </button>
               ) : (
                 <Link href={`/projects/${id}/participate`} passHref>
                   <button className="button bg-[#5d5774] py-3 flex-1 text-base whitespace-nowrap">
                     <CollectionIcon className={"w-5 h-5"} />
-                Participate in IDO
+                    Participate in IDO
                   </button>
                 </Link>
               )}
