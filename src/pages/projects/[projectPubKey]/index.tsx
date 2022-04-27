@@ -73,6 +73,15 @@ const ProjectDetails = () => {
 
   const countdownRenderer = ({ days, hours, minutes, seconds, completed }: any) => {
     if (!completed) {
+      if (days === 0) {
+        return (
+          <div className={"flex justify-center items-end text-4xl gap-x-2 font-bold"}>
+            <span>{hours}h</span>
+            <span>{minutes}m</span>
+            <span>{seconds}s</span>
+          </div>
+        );
+      }
       return (
         <div className={"flex justify-center items-end text-4xl gap-x-1 font-bold"}>
           <span>{days}</span>
@@ -222,10 +231,12 @@ const ProjectDetails = () => {
                           <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 -rounded-md">
                             <table className="min-w-full divide-y divide-gray-800 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg">
                               <tbody className="divide-y divide-gray-800">
-                                <tr>
-                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Address</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.rewardToken}</td>
-                                </tr>
+                                {ido.rewardToken && (
+                                  <tr>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Address</td>
+                                    <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.rewardToken}</td>
+                                  </tr>
+                                )}
                                 <tr>
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Token Name</td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.name}</td>
@@ -238,24 +249,30 @@ const ProjectDetails = () => {
                                   <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Decimals</td>
                                   <td className="whitespace-nowrap px-3 py-4 text-sm">{ido.rewardDecimals}</td>
                                 </tr>
-                                <tr>
-                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDT)</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">
-                                    <NumberFormat value={ido.salePrice} displayType={"text"} thousandSeparator={true} prefix={"$"} />
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Market Cap (in USDT)</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">
-                                    <NumberFormat value={ido.marketCapFD} displayType={"text"} thousandSeparator={true} prefix={"$"} />
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Volume 24h (in USDT)</td>
-                                  <td className="whitespace-nowrap px-3 py-4 text-sm">
-                                    <NumberFormat value={ido.volumeUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} />
-                                  </td>
-                                </tr>
+                                {ido.rewardToken && (
+                                  <>
+                                    <tr>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Price (in USDC)</td>
+                                      <td className="whitespace-nowrap px-3 py-4 text-sm">
+                                        <NumberFormat value={ido.salePrice} displayType={"text"} thousandSeparator={true} prefix={"$"} />
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Market Cap (in USDC)</td>
+                                      <td className="whitespace-nowrap px-3 py-4 text-sm">
+                                        <NumberFormat value={ido.marketCapFD} displayType={"text"} thousandSeparator={true} prefix={"$"} />
+                                      </td>
+                                    </tr>
+                                  </>
+                                )}
+                                {ido.volumeUsdt && (
+                                  <tr>
+                                    <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium sm:pl-6">Volume 24h (in USDC)</td>
+                                    <td className="whitespace-nowrap px-3 py-4 text-sm">
+                                      <NumberFormat value={ido.volumeUsdt} displayType={"text"} thousandSeparator={true} prefix={"$"} />
+                                    </td>
+                                  </tr>
+                                )}
                               </tbody>
                             </table>
                           </div>
