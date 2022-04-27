@@ -756,7 +756,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="twitter" className="block text-sm font-medium text-blue-gray-900">
-                      Twitter
+                      Twitter URL
                     </label>
                     <input onChange={handleChange} value={values.twitter}
                       type="text"
@@ -771,7 +771,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="telegram" className="block text-sm font-medium text-blue-gray-900">
-                      Telegram
+                      Telegram URL
                     </label>
                     <input onChange={handleChange} value={values.telegram}
                       type="text"
