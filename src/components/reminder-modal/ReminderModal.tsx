@@ -14,9 +14,11 @@ export const ReminderModal: FC = () => {
 
   const activatedReminder = async (e: any) => {
     e.preventDefault();
-    await addDoc(remindersCollectionRef, { email, projectKey });
-    setSaved(true);
-    setEmail("")
+    if (email && projectKey) {
+      await addDoc(remindersCollectionRef, { email, projectKey });
+      setSaved(true);
+      setEmail("")
+    }
   }
 
   const close = () => {
