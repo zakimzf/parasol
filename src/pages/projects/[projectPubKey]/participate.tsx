@@ -217,10 +217,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
             </div>
           )}
           <Container>
-            <div className={"px-0"}>
+            <div className={"px-10"}>
               <Layout short={true}>
-                <div className="grid md:grid-cols-8">
-                  <div className="md:col-span-5 pt-10 md:pr-16">
+                <div className="grid md:grid-cols-1 lg:grid-cols-8">
+                  <div className="md:col-span-1 lg:col-span-5 pt-10 md:pr-16">
                     <Link href={`/projects/${projectPubKey}`}>
                       <a className="inline-flex gap-x-2 items-center rounded-lg text-gray-300">
                         <ArrowLeftIcon className={"w-4"} />
@@ -314,7 +314,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       </div>
                     </div>
                   </div>
-                  <div className="md:col-span-3">
+                  <div className="md:col-span-1 lg:col-span-3 pt-10 md:pt-10">
                     <Card padded={true}>
                       <div className="p-2">
                         <h2 className="flex gap-x-2 items-center text-3xl font-bold">
@@ -500,7 +500,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   </div>
                 </div>
                 {ido.content && (
-                  <div className={"flex gap-x-12"}>
+                  <div className={"flex flex-col lg:flex-row gap-x-12"}>
                     <div className={"w-48"}>
                       <ul role="list" className="pt-4 divide-y-divide-gray-200-divide-opacity-10">
                         {JSON.parse(ido.content).blocks.map((block: any) => {
