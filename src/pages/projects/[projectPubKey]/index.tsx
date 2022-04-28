@@ -403,7 +403,7 @@ const ProjectDetails = () => {
                                         Participate In The sale
                                       </button>
                                     </Link>
-                                    <p className={"text-sm text-center mt-6 text-gray-300"}>
+                                    <p className={"text-sm text-center text-gray-300"}>
                                       Sale close in <Countdown date={ido.endTime} />
                                     </p>
                                   </>
