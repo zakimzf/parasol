@@ -5,8 +5,11 @@ import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { BellIcon, CollectionIcon } from "@heroicons/react/outline";
 import Countdown from "react-countdown";
 import { useReminderModal } from "../reminder-modal/useReminderModal";
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { isToday } from "../../utils/functions";
+import { NftStore, Project } from "parasol-finance-sdk";
+import { NftContext } from "../../context/NftContext";
+import { PublicKey } from "@solana/web3.js";
 
 type ProjectDetails = {
   id?: String;
@@ -46,6 +49,23 @@ const ProjectCard = ({
   endTime
 }: ProjectDetails) => {
   const { setReminder, setProjectKey } = useReminderModal();
+  const { provider, config } = useContext(NftContext);
+  const [details, setDetails] = useState<any>();
+
+  useEffect(() => {
+    const getProjectDetails = async () => {
+      try {
+        const nftStore = await new NftStore(provider, config).build();
+        const projectId: any = id;
+        const project = await new Project(provider, nftStore, new PublicKey(projectId)).build();
+        const projectDetails = await project.data();
+        setDetails(projectDetails);
+      }
+      catch (err) { }
+    }
+    getProjectDetails();
+  }, [])
+
   return (
     <Card>
       {cover ? (
@@ -139,13 +159,13 @@ const ProjectCard = ({
                 <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
                 <span>{endTime.toLocaleDateString()} {isToday(endTime) && endTime.toLocaleTimeString()}</span>
               </div>
-              {
-                price &&
+              {details &&
                 (
+
                   <div className="flex font-medium items-center text-gray-300 gap-x-3">
                     <span>Price</span>
                     <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
-                    <span>${price}</span>
+                    <span>${details.salePrice}</span>
                   </div>
                 )
               }
