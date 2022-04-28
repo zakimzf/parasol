@@ -56,7 +56,7 @@ const Hero = () => (
             </p>
           </div>
           <div className="mt-8 grid lg:flex gap-3 grid-cols-1 lg:grid-cols-2 justify-start">
-            <Link href={"/tiers"}>
+            <Link href={"/projects"}>
               <a className="button px-8 bg-none bg-purple-2 py-3 text-base">
                 <CollectionIcon className={"w-5 h-5"} />
                 Browse Upcoming IDOs
