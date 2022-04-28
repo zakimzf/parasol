@@ -26,7 +26,7 @@ import dynamic from "next/dynamic";
 import { SRLWrapper } from "simple-react-lightbox";
 import { ScrollPercentage } from "react-scroll-percentage";
 import NProgress from "nprogress";
-import { notification, slugify } from "../../../utils/functions";
+import { isToday, notification, slugify } from "../../../utils/functions";
 import { useWalletModal } from "../../../components/wallet-connector";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
@@ -100,11 +100,6 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     const nftsmetadata = await user.getNFTList();
     setNfts(nftsmetadata);
   };
-
-  const isToday = (value: Date) => {
-    const today = new Date()
-    return value.getDate() == today.getDate() && value.getMonth() == today.getMonth() && value.getFullYear() == today.getFullYear()
-  }
 
   useEffect(() => {
     const getDataByTokenAddress = async () => {
@@ -303,19 +298,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       )}
                       <div className={"flex items-center gap-x-2 text-sm"}>
                         <ClockIcon className={"w-5 text-gray-300"} />
-                        {isToday(ido.startTime) ? (
-                          <span>Starts At: {ido.startTime.toLocaleString()}</span>
-                        ) : (
-                          <span>Starts At: {ido.startTime.toDateString()}</span>
-                        )}
+                        Starts At: {ido.startTime.toLocaleDateString()} {isToday(ido.startTime) && ido.startTime.toLocaleTimeString()}
                       </div>
                       <div className={"flex items-center gap-x-2 text-sm"}>
                         <ClockIcon className={"w-5 text-gray-300"} />
-                        {isToday(ido.endTime) ? (
-                          <span>Ends At: {ido.startTime.toLocaleString()}</span>
-                        ) : (
-                          <span>Ends At: {ido.endTime.toDateString()}</span>
-                        )}
+                        Ends At: {ido.endTime.toLocaleDateString()} {isToday(ido.endTime) && ido.endTime.toLocaleTimeString()}
                       </div>
                     </div>
                   </div>

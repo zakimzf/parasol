@@ -6,6 +6,7 @@ import { BellIcon, CollectionIcon } from "@heroicons/react/outline";
 import Countdown from "react-countdown";
 import { useReminderModal } from "../reminder-modal/useReminderModal";
 import React from "react";
+import { isToday } from "../../utils/functions";
 
 type ProjectDetails = {
   id?: String;
@@ -131,12 +132,12 @@ const ProjectCard = ({
                 IDO Start Date
                 </div>
                 <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
-                <span>{startTime.toDateString()}</span>
+                <span>{startTime.toLocaleDateString()} {isToday(startTime) && startTime.toLocaleTimeString()}</span>
               </div>
               <div className="flex font-medium items-center text-gray-300 gap-x-3">
                 <span>IDO End Date</span>
                 <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
-                <span>{endTime.toDateString()}</span>
+                <span>{endTime.toLocaleDateString()} {isToday(endTime) && endTime.toLocaleTimeString()}</span>
               </div>
             </div>
             <div className="flex gap-x-3">

@@ -12,6 +12,11 @@ export const getBase64 = file => new Promise((resolve, reject) => {
   reader.onerror = error => reject(error);
 });
 
+export const isToday = (value) => {
+  const today = new Date()
+  return value.getDate() === today.getDate() && value.getMonth() === today.getMonth() && value.getFullYear() === today.getFullYear()
+}
+
 export const validURL = (str) => {
   const pattern = new RegExp("^(https?:\\/\\/)" +
     "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
