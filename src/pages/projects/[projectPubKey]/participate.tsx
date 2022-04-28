@@ -337,6 +337,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               value={allocation - participatedAmount}
                               displayType={"text"}
                               thousandSeparator={true}
+                              decimalScale={2}
                               prefix={"$"}
                             />.
                           </div>
@@ -359,6 +360,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                 value={allocation}
                                 displayType={"text"}
                                 thousandSeparator={true}
+                                decimalScale={2}
                                 prefix={"$"}
                               />
                             </p>
@@ -369,6 +371,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                 value={participatedAmount}
                                 displayType={"text"}
                                 thousandSeparator={true}
+                                decimalScale={2}
                                 prefix={"$"}
                               />
                             </p>
