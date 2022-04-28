@@ -359,24 +359,26 @@ const ProjectDetails = () => {
                             </span>
                           </div>
                         </div>
-                        <div className={"space-y-2"}>
-                          <div className={"flex justify-between"}>
-                            <label className="text-sm font-medium">Sale Progress</label>
-                            <label className="text-sm font-medium">
-                              Raised Amount:
-                              <NumberFormat
-                                value={ido.saleTotalAmount}
-                                displayType={"text"}
-                                thousandSeparator={true}
-                                decimalScale={2}
-                                prefix={"$"}
-                              />
-                            </label>
+                        {ido.saleTotalAmount > 0 && (
+                          <div className={"space-y-2"}>
+                            <div className={"flex justify-between"}>
+                              <label className="text-sm font-medium">Sale Progress</label>
+                              <label className="text-sm font-medium">
+                                Raised Amount:
+                                <NumberFormat
+                                  value={ido.saleTotalAmount}
+                                  displayType={"text"}
+                                  thousandSeparator={true}
+                                  decimalScale={2}
+                                  prefix={"$"}
+                                />
+                              </label>
+                            </div>
+                            <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-2 bg-opacity-30">
+                              <div style={{ width: `${ido.saleTotalAmount / ido.hardCap > 0.1 ? ido.saleTotalAmount / ido.hardCap * 100 : 5}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-2"></div>
+                            </div>
                           </div>
-                          <div className="overflow-hidden h-2 text-xs flex rounded bg-purple-2 bg-opacity-30">
-                            <div style={{ width: `${ido.saleTotalAmount / ido.hardCap > 0.1 ? ido.saleTotalAmount / ido.hardCap * 100 : 5}%` }} className="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-purple-2"></div>
-                          </div>
-                        </div>
+                        )}
                         {walletAddress ? walletAddress == ido.owner ? (
                           <button className={"w-full button mt-2"} id="saveEditor" disabled={loading}>
                             <SaveAsIcon className={"w-5 h-5"} />
