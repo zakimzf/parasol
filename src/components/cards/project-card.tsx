@@ -51,7 +51,6 @@ const ProjectCard = ({
   const { setReminder, setProjectKey } = useReminderModal();
   const { provider, config } = useContext(NftContext);
   const [details, setDetails] = useState<any>();
-
   useEffect(() => {
     const getProjectDetails = async () => {
       try {
@@ -63,8 +62,8 @@ const ProjectCard = ({
       }
       catch (err) { }
     }
-    getProjectDetails();
-  }, [])
+    if (id) getProjectDetails();
+  }, [id])
 
   return (
     <Card>
