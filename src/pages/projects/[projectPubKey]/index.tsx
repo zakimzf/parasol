@@ -379,7 +379,7 @@ const ProjectDetails = () => {
                                     <Link href={`/projects/${projectPubKey}/participate`} passHref>
                                       <button className="w-full button">
                                         <FireIcon className={"w-6"} />
-                                        Participate to Sale
+                                        Participate In The sale
                                       </button>
                                     </Link>
                                     <p className={"text-sm text-center mt-6 text-gray-300"}>
