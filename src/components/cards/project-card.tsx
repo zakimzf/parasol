@@ -55,7 +55,7 @@ const ProjectCard = ({
           </label>
           {startTime >= Date.now() ? (
             <div className={"w-full flex justify-center py-1 font-bold items-center absolute bg-white bg-opacity-10 z-10 bottom-0"}>
-              <Countdown date={startTime} renderer={countdownRenderer}/>
+              <Countdown date={startTime} renderer={countdownRenderer} />
             </div>
           ) : ""}
           <Link href={`/projects/${id}`}>
@@ -118,7 +118,7 @@ const ProjectCard = ({
                 <img
                   className="w-6 h-6 rounded-md"
                   src={logo}
-                  alt={`${id}-logo`}/>
+                  alt={`${id}-logo`} />
               )}
               <Link href={`/projects/${id}`}>
                 <a>{name}</a>
@@ -129,7 +129,7 @@ const ProjectCard = ({
             <div className="flex-col space-y-3 mt-3 mb-8">
               <div className="flex font-medium items-center text-gray-300 gap-x-3">
                 <div className="flex items-center gap-x-1">
-                IDO Start Date
+                  IDO Start Date
                 </div>
                 <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
                 <span>{startTime.toLocaleDateString()} {isToday(startTime) && startTime.toLocaleTimeString()}</span>
@@ -139,6 +139,16 @@ const ProjectCard = ({
                 <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
                 <span>{endTime.toLocaleDateString()} {isToday(endTime) && endTime.toLocaleTimeString()}</span>
               </div>
+              {
+                price &&
+                (
+                  <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                    <span>Price</span>
+                    <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                    <span>${price}</span>
+                  </div>
+                )
+              }
             </div>
             <div className="flex gap-x-3">
               {startTime >= Date.now() ? (
