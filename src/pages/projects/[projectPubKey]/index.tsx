@@ -7,7 +7,7 @@ import { useWalletModal } from "../../../components/wallet-connector";
 import Head from "next/head";
 import Container from "../../../components/container";
 import Link from "next/link";
-import { BadgeCheckIcon, BellIcon, CloudUploadIcon, PencilAltIcon } from "@heroicons/react/outline";
+import { BadgeCheckIcon, BellIcon, CloudUploadIcon, PencilAltIcon, SaveAsIcon } from "@heroicons/react/outline";
 import { SRLWrapper } from "simple-react-lightbox";
 import { Tab } from "@headlessui/react";
 import { ExternalLinkIcon, FireIcon, XCircleIcon } from "@heroicons/react/solid";
@@ -301,7 +301,7 @@ const ProjectDetails = () => {
                 <div className="md:col-span-3">
                   <div className="sticky flex flex-col gap-y-6 top-20">
                     <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
-                      <div className={"relative p-6"}>
+                      <div className={"flex flex-col gap-y-6 p-6"}>
                         <div className={"flex justify-between items-center"}>
                           <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                             {ido.name}
@@ -315,7 +315,7 @@ const ProjectDetails = () => {
                             </label>
                           )}
                         </div>
-                        <div className="flex text-white gap-x-3 mt-3 mb-6 items-center">
+                        <div className="flex text-white gap-x-3 items-center">
                           <img
                             className="h-8"
                             src="https://raw.githubusercontent.com/solana-labs/token-list/main/assets/mainnet/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v/logo.png"
@@ -333,7 +333,7 @@ const ProjectDetails = () => {
                         <div className="prose prose-lg prose-invert">
                           <p>{ido.description}</p>
                         </div>
-                        <div className="flex-col space-y-3 mt-6 mb-8">
+                        <div className="flex-col space-y-3">
                           <div className="flex font-medium items-center text-gray-300 gap-x-3">
                             <span>Hard Cap</span>
                             <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
@@ -378,7 +378,8 @@ const ProjectDetails = () => {
                           </div>
                         </div>
                         {walletAddress ? walletAddress == ido.owner ? (
-                          <button className={"w-full button mt-8"} id="saveEditor" disabled={loading}>
+                          <button className={"w-full button mt-2"} id="saveEditor" disabled={loading}>
+                            <SaveAsIcon className={"w-5 h-5"} />
                             {loading ? "Saving..." : "Save Changes"}
                           </button>
                         ) : (
@@ -386,7 +387,7 @@ const ProjectDetails = () => {
                             {ido.startTime >= Date.now() ? (
                               <button
                                 onClick={() => setReminder(true)}
-                                className="w-full button">
+                                className="w-full mt-2 button">
                                 <BellIcon className={"w-5 h-5"} />
                                 Set a Reminder
                               </button>
@@ -395,7 +396,7 @@ const ProjectDetails = () => {
                                 {ido.endTime >= Date.now() ? (
                                   <>
                                     <Link href={`/projects/${projectPubKey}/participate`} passHref>
-                                      <button className="w-full button">
+                                      <button className="w-full button mt-2">
                                         <FireIcon className={"w-6"} />
                                         Participate In The sale
                                       </button>
@@ -405,7 +406,7 @@ const ProjectDetails = () => {
                                     </p>
                                   </>
                                 ) : (
-                                  <button disabled={true} className="w-full opacity-90 cursor-not-allowed button">
+                                  <button disabled={true} className="w-full mt- opacity-90 cursor-not-allowed button">
                                     <XCircleIcon className={"w-6"} />
                                     Sale is Over
                                   </button>
@@ -415,7 +416,7 @@ const ProjectDetails = () => {
                           </>
                         ) : (
                           <button
-                            className={"w-full flex items-center justify-center gap-x-2 mt-8 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
+                            className={"w-full flex items-center justify-center gap-x-2 mt-2 opacity-80-cursor-default bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium rounded-lg"}
                             type="button"
                             onClick={() => walletAddress ?? walletModal.setVisible(true)}>
                             Connect Wallet
