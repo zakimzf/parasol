@@ -48,7 +48,7 @@
     "next-transpile-modules": "^9.0.0",
     "node-snackbar": "^0.1.16",
     "nprogress": "^0.2.0",
-    "parasol-finance-sdk": "0.8.5",
+    "parasol-finance-sdk": "^0.8.8",
     "postcss": "^8.4.6",
     "react": "^17.0.2",
     "react-countdown": "^2.3.2",
