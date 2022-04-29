@@ -13,6 +13,7 @@ import {
 import { clusterApiUrl } from "@solana/web3.js";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import Script from "next/script";
 import SimpleReactLightbox from "simple-react-lightbox";
 import { Toaster } from "react-hot-toast";
 
@@ -149,6 +150,16 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
             </WalletModalProvider>
           </WalletProvider>
         </ConnectionProvider>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" strategy="afterInteractive"/>
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-6VTVXVGNCD');
+        `}
+        </Script>
       </body>
     </>
   );
