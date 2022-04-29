@@ -47,9 +47,8 @@ const Migrate = () => {
         'Successfully redeemed NFT.',
         'Transaction Success'
       );
-    } catch (err: any) {
-      notification('danger', 'Unable to redeem the NFT.', 'Transaction Error');
-      // globalErrorHandle(err);
+    } catch (error: any) {
+      globalErrorHandle(error);
     }
 
     setNfts([]);

@@ -27,10 +27,10 @@ import { SRLWrapper } from 'simple-react-lightbox';
 import { ScrollPercentage } from 'react-scroll-percentage';
 import NProgress from 'nprogress';
 import {
-  globalErrorHandle,
   isToday,
   notification,
   slugify,
+  globalErrorHandle,
 } from '../../../utils/functions';
 import { useWalletModal } from '../../../components/wallet-connector';
 
@@ -90,7 +90,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       const balance = await helper.getTokenBalance(ata);
       setUsdcBalance(balance);
     } catch (error: any) {
-      console.log(error);
+      globalErrorHandle(error);
     }
   };
 
@@ -146,8 +146,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   setIdo({ ...data, ...responseOne.data, ...responseTwo.data });
                 })
               )
-              .catch((errors: any) => {
-                // react on errors.
+              .catch((error: any) => {
+                globalErrorHandle(error);
               });
           } else setIdo(data);
         } else await router.push('/404');
@@ -193,11 +193,6 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
         notification('danger', 'No Nft.');
       }
     } catch (error: any) {
-      // notification(
-      //   'danger',
-      //   'Transaction creation failed.',
-      //   'Transaction Error'
-      // );
       globalErrorHandle(error);
     }
 

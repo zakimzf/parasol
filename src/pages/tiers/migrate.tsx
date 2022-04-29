@@ -59,8 +59,7 @@ const Migrate = () => {
         'Transaction Success'
       );
     } catch (err: any) {
-      notification('danger', 'Unable to Migrate the NFT.', 'Transaction Error');
-      // globalErrorHandle(err);
+      globalErrorHandle(err);
     }
 
     setNfts([]);

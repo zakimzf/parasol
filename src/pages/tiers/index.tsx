@@ -67,8 +67,7 @@ const Tiers = function () {
       await connection.confirmTransaction(signature, 'confirmed');
       notification('success', 'Successfully minted NFT', 'Transaction Success');
     } catch (error: any) {
-      notification('danger', 'Unable to mint the NFT.', 'Transaction Error');
-      // globalErrorHandle(err);
+      globalErrorHandle(error);
     }
   };
 

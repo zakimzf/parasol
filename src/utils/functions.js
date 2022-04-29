@@ -1,3 +1,5 @@
+import { programErrors } from 'parasol-finance-sdk';
+
 import { db, storage } from './firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import {
@@ -152,127 +154,18 @@ export const slugify = (text) => {
 };
 
 export const globalErrorHandle = (err) => {
-  const errors = [
-    {
-      code: 6000,
-      msg: 'Access denied',
-    },
-    {
-      code: 6001,
-      msg: 'Service not available',
-    },
-    {
-      code: 6002,
-      msg: 'Calculation failure',
-    },
-    {
-      code: 6003,
-      msg: 'Invalid token mint',
-    },
-    {
-      code: 6004,
-      msg: 'Invalid token account owner',
-    },
-    {
-      code: 6005,
-      msg: 'Insufficient token balance',
-    },
-    {
-      code: 6006,
-      msg: 'NFT mint invalid',
-    },
-    {
-      code: 6007,
-      msg: 'NFT collection invalid',
-    },
-    {
-      code: 6008,
-      msg: 'NFT metadata invalid',
-    },
-    {
-      code: 6009,
-      msg: 'NFT owner invalid',
-    },
-    {
-      code: 6010,
-      msg: 'NFT vault invalid',
-    },
-    {
-      code: 6011,
-      msg: 'NFT max supply exceeded',
-    },
-    {
-      code: 6012,
-      msg: 'NFT not upgradable',
-    },
-    {
-      code: 6013,
-      msg: 'NFT escrow invalid',
-    },
-    {
-      code: 6014,
-      msg: 'Invalid project treasury mint',
-    },
-    {
-      code: 6015,
-      msg: 'Invalid project reward mint',
-    },
-    {
-      code: 6016,
-      msg: 'Invalid project reward decimals',
-    },
-    {
-      code: 6017,
-      msg: 'Project owner invalid',
-    },
-    {
-      code: 6018,
-      msg: 'Project owner not changed',
-    },
-    {
-      code: 6019,
-      msg: 'IDO status not changed',
-    },
-    {
-      code: 6020,
-      msg: 'IDO already published',
-    },
-    {
-      code: 6021,
-      msg: 'IDO not published',
-    },
-    {
-      code: 6022,
-      msg: 'IDO sale not opened',
-    },
-    {
-      code: 6023,
-      msg: 'IDO sale in progress',
-    },
-    {
-      code: 6024,
-      msg: 'IDO sale finished',
-    },
-    {
-      code: 6025,
-      msg: 'Allocated IDO participation amount exceeded',
-    },
-    {
-      code: 6026,
-      msg: 'IDO hard cap reached',
-    },
-    {
-      code: 'credit.',
-      msg: 'You have not enough $SOL or $PSOL in your wallet.',
-    },
-  ];
-
-  const error = errors.find((item) =>
+  const error = programErrors.find((item) =>
     err.message.endsWith(item.code.toString(16))
   );
 
   if (error !== undefined) {
     notification('danger', error.msg, 'Transaction Error');
+  } else if (err.message.endsWith('credit.')) {
+    notification(
+      'danger',
+      'You have not enough $SOL or $PSOL in your wallet.',
+      'Transaction Error'
+    );
   } else {
     notification('danger', 'You rejected the transaction', 'Transaction Error');
   }
