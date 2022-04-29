@@ -59,7 +59,7 @@ export const errClasses = [
 ];
 
 export const notification = (type, message, title = "") => {
-  function iconByType() {
+  const iconByType = () => {
     switch (type) {
       default:
         return <InformationCircleIcon className='h-6 w-6 text-blue-400' />;
@@ -70,7 +70,7 @@ export const notification = (type, message, title = "") => {
       case "danger":
         return <ExclamationCircleIcon className='h-6 w-6 text-red-400' />;
     }
-  }
+  };
 
   toast.custom((t) => (
     <div
@@ -133,7 +133,8 @@ export const uploadFile = (
           });
           notify(true);
         });
-      } else {
+      }
+      else {
         notify(true);
       }
     }
@@ -160,13 +161,15 @@ export const globalErrorHandle = (err) => {
 
   if (error !== undefined) {
     notification("danger", error.msg, "Transaction Error");
-  } else if (err.message.endsWith("credit.")) {
+  }
+  else if (err.message.endsWith("credit.")) {
     notification(
       "danger",
       "You have not enough $SOL or $PSOL in your wallet.",
       "Transaction Error"
     );
-  } else {
+  } 
+  else {
     notification("danger", "You rejected the transaction", "Transaction Error");
   }
 };
