@@ -11,7 +11,7 @@ import { NftContext } from '../../context/NftContext';
 import Card from '../../components/card';
 import { useWalletModal } from '../../components/wallet-connector';
 import { PublicKey } from '@solana/web3.js';
-import { isError, notification } from '../../utils/functions';
+import { globalErrorHandle, notification } from '../../utils/functions';
 import Head from 'next/head';
 import { RadioGroup } from '@headlessui/react';
 
@@ -49,7 +49,7 @@ const Migrate = () => {
       );
     } catch (err: any) {
       notification('danger', 'Unable to redeem the NFT.', 'Transaction Error');
-      // isError(err);
+      // globalErrorHandle(err);
     }
 
     setNfts([]);

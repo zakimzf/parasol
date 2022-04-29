@@ -151,7 +151,7 @@ export const slugify = (text) => {
     .replace(/\-\-+/g, '-');
 };
 
-export const isError = (err) => {
+export const globalErrorHandle = (err) => {
   const errors = [
     {
       code: 6000,

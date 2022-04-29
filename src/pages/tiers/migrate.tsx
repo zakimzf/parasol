@@ -8,7 +8,7 @@ import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { NftContext } from '../../context/NftContext';
 import { useWalletModal } from '../../components/wallet-connector';
 import { Keypair, PublicKey } from '@solana/web3.js';
-import { isError, notification } from '../../utils/functions';
+import { globalErrorHandle, notification } from '../../utils/functions';
 import Head from 'next/head';
 
 const Migrate = () => {
@@ -60,7 +60,7 @@ const Migrate = () => {
       );
     } catch (err: any) {
       notification('danger', 'Unable to Migrate the NFT.', 'Transaction Error');
-      // isError(err);
+      // globalErrorHandle(err);
     }
 
     setNfts([]);

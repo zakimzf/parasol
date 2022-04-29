@@ -9,7 +9,7 @@ import { NftContext } from '../../context/NftContext';
 import { Keypair } from '@solana/web3.js';
 import { NftKind } from 'parasol-finance-sdk';
 import Head from 'next/head';
-import { isError, notification } from '../../utils/functions';
+import { globalErrorHandle, notification } from '../../utils/functions';
 
 const Tiers = function () {
   const { connection } = useConnection();
@@ -66,9 +66,9 @@ const Tiers = function () {
       );
       await connection.confirmTransaction(signature, 'confirmed');
       notification('success', 'Successfully minted NFT', 'Transaction Success');
-    } catch (err: any) {
+    } catch (error: any) {
       notification('danger', 'Unable to mint the NFT.', 'Transaction Error');
-      // isError(err);
+      // globalErrorHandle(err);
     }
   };
 

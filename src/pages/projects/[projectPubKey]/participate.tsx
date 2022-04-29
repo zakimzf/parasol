@@ -27,7 +27,7 @@ import { SRLWrapper } from 'simple-react-lightbox';
 import { ScrollPercentage } from 'react-scroll-percentage';
 import NProgress from 'nprogress';
 import {
-  isError,
+  globalErrorHandle,
   isToday,
   notification,
   slugify,
@@ -198,7 +198,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       //   'Transaction creation failed.',
       //   'Transaction Error'
       // );
-      isError(error);
+      globalErrorHandle(error);
     }
 
     setLoading(false);
