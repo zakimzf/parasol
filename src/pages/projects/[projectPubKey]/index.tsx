@@ -20,6 +20,7 @@ import { NftStore, Project } from "parasol-finance-sdk";
 import { NftContext } from "../../../context/NftContext";
 import { PublicKey } from "@solana/web3.js";
 import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
+import Card from "../../../components/card";
 
 const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
@@ -300,8 +301,19 @@ const ProjectDetails = () => {
                 </div>
                 <div className="md:col-span-3">
                   <div className="sticky flex flex-col gap-y-6 top-20">
-                    <div className="relative bg-[#231f38] bg-opacity-50 shadow-half-strong border border-gray-800 rounded-lg">
+                    <Card>
                       <div className={"flex flex-col gap-y-6 p-6"}>
+                        {ido.saleTotalAmount >= ido.hardCap && (
+                          <div className={"flex z-10 flex-col absolute justify-center items-center inset-0 backdrop-blur-sm"}>
+                            <div className="absolute inset-0 pointer-events-none pyro">
+                              <div className="before"></div>
+                              <div className="after"></div>
+                            </div>
+                            {/*<CheckIcon className={"w-20 h-20 mb-3 rounded-full bg-green-400 bg-opacity-20 p-3 text-green-600"} />*/}
+                            <h2 className={"text-3xl font-bold"}>Sale is Over</h2>
+                            <p className={"text-lg font-medium"}>The sale of {ido.name} is completed.</p>
+                          </div>
+                        )}
                         <div className={"flex justify-between items-center"}>
                           <h2 className="flex gap-x-2 items-center text-2xl font-bold">
                             {ido.name}
@@ -425,7 +437,7 @@ const ProjectDetails = () => {
                           </button>
                         )}
                       </div>
-                    </div>
+                    </Card>
                     {ido.startTime >= Date.now() && (
                       <div className={"flex flex-col justify-center items-center"}>
                         <p className={"text-sm mb-1 text-gray-300"}>The Sale of {ido.name} Starts In:</p>
