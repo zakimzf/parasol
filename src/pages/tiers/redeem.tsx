@@ -1,19 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   ArrowLeftIcon,
   CheckIcon,
   SwitchVerticalIcon,
-} from '@heroicons/react/outline';
-import Link from 'next/link';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { NftContext } from '../../context/NftContext';
+} from "@heroicons/react/outline";
+import Link from "next/link";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { NftContext } from "../../context/NftContext";
 
-import Card from '../../components/card';
-import { useWalletModal } from '../../components/wallet-connector';
-import { PublicKey } from '@solana/web3.js';
-import { globalErrorHandle, notification } from '../../utils/functions';
-import Head from 'next/head';
-import { RadioGroup } from '@headlessui/react';
+import Card from "../../components/card";
+import { useWalletModal } from "../../components/wallet-connector";
+import { PublicKey } from "@solana/web3.js";
+import { globalErrorHandle, notification } from "../../utils/functions";
+import Head from "next/head";
+import { RadioGroup } from "@headlessui/react";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
@@ -37,17 +37,18 @@ const Migrate = () => {
       const tx = await user.redeem(mintAddress);
       const signature = await sendTransaction(tx, connection);
       notification(
-        'information',
-        'Redeeming the NFT right now...',
-        'Pending Transaction'
+        "information",
+        "Redeeming the NFT right now...",
+        "Pending Transaction"
       );
-      await connection.confirmTransaction(signature, 'confirmed');
+      await connection.confirmTransaction(signature, "confirmed");
       notification(
-        'success',
-        'Successfully redeemed NFT.',
-        'Transaction Success'
+        "success",
+        "Successfully redeemed NFT.",
+        "Transaction Success"
       );
-    } catch (error: any) {
+    }
+    catch (error: any) {
       globalErrorHandle(error);
     }
 
@@ -66,17 +67,17 @@ const Migrate = () => {
         <meta property='og:image' content='/assets/preview/tiers.png' />
         <meta property='twitter:image' content='/assets/preview/tiers.png' />
       </Head>
-      <section className={'py-6'}>
-        <div className={'mx-auto max-w-md px-6 lg:px-0 space-y-6'}>
-          <Link href={'/tiers'}>
+      <section className={"py-6"}>
+        <div className={"mx-auto max-w-md px-6 lg:px-0 space-y-6"}>
+          <Link href={"/tiers"}>
             <a className='inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300'>
-              <ArrowLeftIcon className={'w-4'} />
+              <ArrowLeftIcon className={"w-4"} />
               Back
             </a>
           </Link>
           <Card padded={true}>
-            <div className={'space-y-6'}>
-              <div className={'prose prose-lg prose-invert'}>
+            <div className={"space-y-6"}>
+              <div className={"prose prose-lg prose-invert"}>
                 <h2>Redeem NFT</h2>
                 <p>
                   You can burn your NFT and get back the amount of PSOL you
@@ -85,8 +86,8 @@ const Migrate = () => {
                 <p>
                   Be careful about vesting, if you redeem quickly after the
                   purchase you will incur penalties, please refer to the NFT
-                  page{' '}
-                  <Link href={'/tiers'}>
+                  page{" "}
+                  <Link href={"/tiers"}>
                     <a>here</a>
                   </Link>
                   .
@@ -109,12 +110,12 @@ const Migrate = () => {
                           className={({ active, checked }) =>
                             `${
                               active
-                                ? 'ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60'
-                                : ''
+                                ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
+                                : ""
                             } ${
                               checked
-                                ? 'border-2 border-purple-2 bg-purple-2 bg-opacity-5'
-                                : 'border-2 border-transparent bg-white bg-opacity-5'
+                                ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                                : "border-2 border-transparent bg-white bg-opacity-5"
                             } relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none`
                           }
                         >
@@ -126,13 +127,13 @@ const Migrate = () => {
                                     <RadioGroup.Label
                                       as='p'
                                       className={`font-medium ${
-                                        checked ? 'text-white' : ''
+                                        checked ? "text-white" : ""
                                       }`}
                                     >
                                       <div className='flex items-center'>
                                         <div className='mr-4'>
                                           <img
-                                            className={'w-12 h-12 rounded-md'}
+                                            className={"w-12 h-12 rounded-md"}
                                             src={nft.image}
                                             alt={nft.name}
                                           />
@@ -161,8 +162,8 @@ const Migrate = () => {
                   </RadioGroup>
                 </div>
               ) : (
-                <div className={'prose prose-lg prose-invert'}>
-                  <Link href={'/tiers'}>
+                <div className={"prose prose-lg prose-invert"}>
+                  <Link href={"/tiers"}>
                     <a className='inline-flex gap-x-2 items-centertext-gray-200'>
                       No NFT Access Key. Please buy your NFT here.
                     </a>
@@ -172,12 +173,12 @@ const Migrate = () => {
               {wallet.connected ? (
                 [
                   nfts.length > 0 ? (
-                    <button className={'w-full button'} onClick={redeemNFT}>
-                      <SwitchVerticalIcon className={'w-5 h-5'} />
+                    <button className={"w-full button"} onClick={redeemNFT}>
+                      <SwitchVerticalIcon className={"w-5 h-5"} />
                       Redeem My NFT
                     </button>
                   ) : (
-                    ''
+                    ""
                   ),
                 ]
               ) : (
@@ -220,7 +221,7 @@ const Migrate = () => {
                       />
                     </svg>
                   )}
-                  {isPending ? '' : 'Connect Wallet'}
+                  {isPending ? "" : "Connect Wallet"}
                 </button>
               )}
             </div>

@@ -1,16 +1,16 @@
-import { programErrors } from 'parasol-finance-sdk';
+import { programErrors } from "parasol-finance-sdk";
 
-import { db, storage } from './firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { db, storage } from "./firebase";
+import { doc, getDoc } from "firebase/firestore";
 import {
   CheckCircleIcon,
   ExclamationCircleIcon,
   ExclamationIcon,
   InformationCircleIcon,
-} from '@heroicons/react/solid';
-import toast from 'react-hot-toast';
-import React from 'react';
-import { ref, uploadBytesResumable } from 'firebase/storage';
+} from "@heroicons/react/solid";
+import toast from "react-hot-toast";
+import React from "react";
+import { ref, uploadBytesResumable } from "firebase/storage";
 
 export const getBase64 = (file) =>
   new Promise((resolve, reject) => {
@@ -31,52 +31,52 @@ export const isToday = (value) => {
 
 export const validURL = (str) => {
   const pattern = new RegExp(
-    '^(https?:\\/\\/)' +
-      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' +
-      '((\\d{1,3}\\.){3}\\d{1,3}))' +
-      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
-      '(\\?[;&a-z\\d%_.~+=-]*)?' +
-      '(\\#[-a-z\\d_]*)?$',
-    'i'
+    "^(https?:\\/\\/)" +
+      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
+      "((\\d{1,3}\\.){3}\\d{1,3}))" +
+      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
+      "(\\?[;&a-z\\d%_.~+=-]*)?" +
+      "(\\#[-a-z\\d_]*)?$",
+    "i"
   );
   return !!pattern.test(str);
 };
 
 export const isTokenAddressExist = async (id) => {
-  const docRef = doc(db, 'ido-metadata', id);
+  const docRef = doc(db, "ido-metadata", id);
   const docSnap = await getDoc(docRef);
   return docSnap.exists();
 };
 
 export const errClasses = [
-  'border-red-600',
-  'text-red-600',
-  'placeholder-red-600',
-  'focus:outline-none',
-  'focus:ring-red-600',
-  'border-2',
-  'focus:border-red-600',
+  "border-red-600",
+  "text-red-600",
+  "placeholder-red-600",
+  "focus:outline-none",
+  "focus:ring-red-600",
+  "border-2",
+  "focus:border-red-600",
 ];
 
-export const notification = (type, message, title = '') => {
+export const notification = (type, message, title = "") => {
   function iconByType() {
     switch (type) {
       default:
         return <InformationCircleIcon className='h-6 w-6 text-blue-400' />;
-      case 'success':
+      case "success":
         return <CheckCircleIcon className='h-6 w-6 text-green-400' />;
-      case 'warning':
+      case "warning":
         return <ExclamationIcon className='h-6 w-6 text-orange-400' />;
-      case 'danger':
+      case "danger":
         return <ExclamationCircleIcon className='h-6 w-6 text-red-400' />;
     }
   }
 
   toast.custom((t) => (
     <div
-      style={{ marginRight: '1rem' }}
+      style={{ marginRight: "1rem" }}
       className={`${
-        t.visible ? 'animate-enter' : 'animate-leave'
+        t.visible ? "animate-enter" : "animate-leave"
       } max-w-md w-full mt-6 bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
     >
       <div className='flex-1 w-0 p-4'>
@@ -114,15 +114,15 @@ export const uploadFile = (
     storage,
     `projects/${
       (tokenAddress &&
-        (updateIdoCover ? tokenAddress : tokenAddress + '/images')) ||
-      'files'
+        (updateIdoCover ? tokenAddress : tokenAddress + "/images")) ||
+      "files"
     }/${file.name}`
   );
 
   const task = uploadBytesResumable(storageRef, file);
 
   task.on(
-    'state_changed',
+    "state_changed",
     (snapshot) => {},
     (error) => notify(false),
     () => {
@@ -146,11 +146,11 @@ export const slugify = (text) => {
   return text
     .toString()
     .toLowerCase()
-    .normalize('NFD')
+    .normalize("NFD")
     .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w\-]+/g, '')
-    .replace(/\-\-+/g, '-');
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-");
 };
 
 export const globalErrorHandle = (err) => {
@@ -159,14 +159,14 @@ export const globalErrorHandle = (err) => {
   );
 
   if (error !== undefined) {
-    notification('danger', error.msg, 'Transaction Error');
-  } else if (err.message.endsWith('credit.')) {
+    notification("danger", error.msg, "Transaction Error");
+  } else if (err.message.endsWith("credit.")) {
     notification(
-      'danger',
-      'You have not enough $SOL or $PSOL in your wallet.',
-      'Transaction Error'
+      "danger",
+      "You have not enough $SOL or $PSOL in your wallet.",
+      "Transaction Error"
     );
   } else {
-    notification('danger', 'You rejected the transaction', 'Transaction Error');
+    notification("danger", "You rejected the transaction", "Transaction Error");
   }
 };

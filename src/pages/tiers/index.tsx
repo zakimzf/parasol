@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
-import Link from 'next/link';
-import { SwitchVerticalIcon, UploadIcon } from '@heroicons/react/outline';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
+import React, { useContext, useEffect, useState } from "react";
+import Link from "next/link";
+import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
-import Container from '../../components/container';
-import NftCard from '../../components/cards/nft-card';
-import { NftContext } from '../../context/NftContext';
-import { Keypair } from '@solana/web3.js';
-import { NftKind } from 'parasol-finance-sdk';
-import Head from 'next/head';
-import { globalErrorHandle, notification } from '../../utils/functions';
+import Container from "../../components/container";
+import NftCard from "../../components/cards/nft-card";
+import { NftContext } from "../../context/NftContext";
+import { Keypair } from "@solana/web3.js";
+import { NftKind } from "parasol-finance-sdk";
+import Head from "next/head";
+import { globalErrorHandle, notification } from "../../utils/functions";
 
 const Tiers = function () {
   const { connection } = useConnection();
@@ -18,34 +18,34 @@ const Tiers = function () {
   const [tiers, setTiers] = useState<any>([
     {
       id: 0,
-      name: 'Dreamer',
+      name: "Dreamer",
       amount: 210,
-      logo: '/assets/nft-access-keys/covers/Dreamer.png',
-      video: '/assets/nft-access-keys/videos/Dreamer.mp4',
+      logo: "/assets/nft-access-keys/covers/Dreamer.png",
+      video: "/assets/nft-access-keys/videos/Dreamer.mp4",
       vestingPeriod: 12,
     },
     {
       id: 1,
-      name: 'Rider',
+      name: "Rider",
       amount: 2100,
-      logo: '/assets/nft-access-keys/covers/Rider.png',
-      video: '/assets/nft-access-keys/videos/Rider.mp4',
+      logo: "/assets/nft-access-keys/covers/Rider.png",
+      video: "/assets/nft-access-keys/videos/Rider.mp4",
       vestingPeriod: 8,
     },
     {
       id: 2,
-      name: 'Chiller',
+      name: "Chiller",
       amount: 21000,
-      logo: '/assets/nft-access-keys/covers/Chiller.png',
-      video: '/assets/nft-access-keys/videos/Chiller.mp4',
+      logo: "/assets/nft-access-keys/covers/Chiller.png",
+      video: "/assets/nft-access-keys/videos/Chiller.mp4",
       vestingPeriod: 6,
     },
     {
       id: 3,
-      name: 'MoonWalker',
+      name: "MoonWalker",
       amount: 210000,
-      logo: '/assets/nft-access-keys/covers/MoonWalker.png',
-      video: '/assets/nft-access-keys/videos/MoonWalker.mp4',
+      logo: "/assets/nft-access-keys/covers/MoonWalker.png",
+      video: "/assets/nft-access-keys/videos/MoonWalker.mp4",
       vestingPeriod: 4,
     },
   ]);
@@ -60,13 +60,14 @@ const Tiers = function () {
         signers: [mintKeypair],
       });
       notification(
-        'information',
-        'Mining NFT right now...',
-        'Pending Transaction'
+        "information",
+        "Mining NFT right now...",
+        "Pending Transaction"
       );
-      await connection.confirmTransaction(signature, 'confirmed');
-      notification('success', 'Successfully minted NFT', 'Transaction Success');
-    } catch (error: any) {
+      await connection.confirmTransaction(signature, "confirmed");
+      notification("success", "Successfully minted NFT", "Transaction Success");
+    }
+    catch (error: any) {
       globalErrorHandle(error);
     }
   };
@@ -89,7 +90,7 @@ const Tiers = function () {
   }, []);
 
   const activeNft = (items: [any], tiers: any) => {
-    return items.some((x) => x.attributes[0]['value'] == tiers.name);
+    return items.some((x) => x.attributes[0]["value"] == tiers.name);
   };
 
   return (
@@ -105,8 +106,8 @@ const Tiers = function () {
       </Head>
       <section>
         <Container>
-          <div className={'grid md:grid-cols-3 pt-10 pb-16'}>
-            <div className={'flex gap-x-2 items-center'} />
+          <div className={"grid md:grid-cols-3 pt-10 pb-16"}>
+            <div className={"flex gap-x-2 items-center"} />
             <div>
               <div className='text-center'>
                 <h2 className='text-base font-semibold tracking-wider mb-3 text-purple-400 uppercase'>
@@ -125,18 +126,18 @@ const Tiers = function () {
             </div>
             <div
               className={
-                'flex gap-x-2 md:justify-end items-center justify-center mt-5'
+                "flex gap-x-2 md:justify-end items-center justify-center mt-5"
               }
             >
-              <Link href={'/tiers/migrate'}>
+              <Link href={"/tiers/migrate"}>
                 <a className='flex gap-x-2 items-center bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200'>
-                  <UploadIcon className={'w-4'} />
+                  <UploadIcon className={"w-4"} />
                   Migrate
                 </a>
               </Link>
-              <Link href={'/tiers/redeem'}>
+              <Link href={"/tiers/redeem"}>
                 <a className='flex gap-x-2 items-center bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200'>
-                  <SwitchVerticalIcon className={'w-4'} />
+                  <SwitchVerticalIcon className={"w-4"} />
                   Redeem
                 </a>
               </Link>
@@ -149,26 +150,26 @@ const Tiers = function () {
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-7'>
             {fetchTiers
               ? tiers.map((t: any, index: any) => (
-                  <NftCard
-                    owned={activeNft(nfts, t)}
-                    key={t.id}
-                    id={t.id}
-                    name={t.name}
-                    amount={t.amount}
-                    index={index}
-                    poster={t.logo}
-                    video={t.video}
-                    vestingPeriod={t.vestingPeriod}
-                    buyNFT={buyNFT}
-                    connected={wallet.connected}
-                    data={t.data && t.data}
-                  />
-                ))
-              : ''}
+                <NftCard
+                  owned={activeNft(nfts, t)}
+                  key={t.id}
+                  id={t.id}
+                  name={t.name}
+                  amount={t.amount}
+                  index={index}
+                  poster={t.logo}
+                  video={t.video}
+                  vestingPeriod={t.vestingPeriod}
+                  buyNFT={buyNFT}
+                  connected={wallet.connected}
+                  data={t.data && t.data}
+                />
+              ))
+              : ""}
           </div>
         </Container>
       </section>
-      <section className={'mt-12'}>
+      <section className={"mt-12"}>
         <Container>
           <div className='relative z-10 text-center py-10 mb-8 md:mb-2 md:px-6'>
             <div className='text-base'>

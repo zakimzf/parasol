@@ -1,14 +1,14 @@
-import Container from '../../../components/container';
-import Card from '../../../components/card';
-import React, { useContext, useEffect, useMemo, useState } from 'react';
-import { NftContext } from '../../../context/NftContext';
-import { useConnection, useWallet } from '@solana/wallet-adapter-react';
-import { RadioGroup } from '@headlessui/react';
-import { useRouter } from 'next/router';
-import { NftStore, Project } from 'parasol-finance-sdk';
-import { PublicKey } from '@solana/web3.js';
-import axios from 'axios';
-import NumberFormat from 'react-number-format';
+import Container from "../../../components/container";
+import Card from "../../../components/card";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+import { NftContext } from "../../../context/NftContext";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { RadioGroup } from "@headlessui/react";
+import { useRouter } from "next/router";
+import { NftStore, Project } from "parasol-finance-sdk";
+import { PublicKey } from "@solana/web3.js";
+import axios from "axios";
+import NumberFormat from "react-number-format";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -17,28 +17,28 @@ import {
   ChevronRightIcon,
   GlobeAltIcon,
   HandIcon,
-} from '@heroicons/react/outline';
-import Layout from '../../../components/layout';
-import { BadgeCheckIcon, ClockIcon } from '@heroicons/react/solid';
-import { useReminderModal } from '../../../components/reminder-modal/useReminderModal';
-import Link from 'next/link';
-import dynamic from 'next/dynamic';
-import { SRLWrapper } from 'simple-react-lightbox';
-import { ScrollPercentage } from 'react-scroll-percentage';
-import NProgress from 'nprogress';
+} from "@heroicons/react/outline";
+import Layout from "../../../components/layout";
+import { BadgeCheckIcon, ClockIcon } from "@heroicons/react/solid";
+import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import { SRLWrapper } from "simple-react-lightbox";
+import { ScrollPercentage } from "react-scroll-percentage";
+import NProgress from "nprogress";
 import {
   isToday,
   notification,
   slugify,
   globalErrorHandle,
-} from '../../../utils/functions';
-import { useWalletModal } from '../../../components/wallet-connector';
+} from "../../../utils/functions";
+import { useWalletModal } from "../../../components/wallet-connector";
 
-const EditorJs = dynamic(() => import('../../../components/editorjs'), {
+const EditorJs = dynamic(() => import("../../../components/editorjs"), {
   ssr: false,
 });
 
-const USDC_logo = require('../../../../public/assets/logos/usdc-logo.svg');
+const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
 
 const nftAllocation: any = {
   Dreamer: 210,
@@ -55,7 +55,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const walletModal = useWalletModal();
   const router = useRouter();
-  const [cover, setCover] = useState('');
+  const [cover, setCover] = useState("");
   const [nftMint, setNftMint] = useState<any>();
 
   const { projectPubKey }: any = router.query;
@@ -89,7 +89,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       const ata = await user.getAssociatedTokenAccountFor(usdcMint);
       const balance = await helper.getTokenBalance(ata);
       setUsdcBalance(balance);
-    } catch (error: any) {
+    }
+    catch (error: any) {
       globalErrorHandle(error);
     }
   };
@@ -149,10 +150,13 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
               .catch((error: any) => {
                 globalErrorHandle(error);
               });
-          } else setIdo(data);
-        } else await router.push('/404');
-      } catch {
-        await router.push('/404');
+          }
+          else setIdo(data);
+        }
+        else await router.push("/404");
+      }
+      catch {
+        await router.push("/404");
       }
     };
     if (projectPubKey) getDataByTokenAddress();
@@ -180,19 +184,22 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
           const signature = await sendTransaction(tx, connection);
 
-          await connection.confirmTransaction(signature, 'confirmed');
+          await connection.confirmTransaction(signature, "confirmed");
           getUsdcBalance();
-          notification('success', 'Successfully', 'Transaction Success');
+          notification("success", "Successfully", "Transaction Success");
           // } else {
           //   notification('danger', 'more than allocation.');
           // }
-        } else {
-          notification('danger', 'Please enter an amount.');
         }
-      } else {
-        notification('danger', 'No Nft.');
+        else {
+          notification("danger", "Please enter an amount.");
+        }
       }
-    } catch (error: any) {
+      else {
+        notification("danger", "No Nft.");
+      }
+    }
+    catch (error: any) {
       globalErrorHandle(error);
     }
 
@@ -225,47 +232,47 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   }, [nfts, project]);
 
   return (
-    <section className={'relative overflow-hidden py-12'}>
+    <section className={"relative overflow-hidden py-12"}>
       {nfts && ido && (
         <>
           {ido.startTime >= Date.now() && (
             <div
               className={
-                'absolute flex flex-col items-center pt-52 pb-12 inset-0 filter backdrop-blur-md z-10'
+                "absolute flex flex-col items-center pt-52 pb-12 inset-0 filter backdrop-blur-md z-10"
               }
             >
-              <h1 className={'text-4xl mb-3 font-bold'}>Scheduled IDO</h1>
-              <p className={'text-lg mb-6 font-medium'}>
+              <h1 className={"text-4xl mb-3 font-bold"}>Scheduled IDO</h1>
+              <p className={"text-lg mb-6 font-medium"}>
                 This IDO is not yet launched, come back later.
               </p>
               <button
                 onClick={() => {
                   setReminder(true);
-                  setProjectKey('lol');
+                  setProjectKey("lol");
                 }}
                 className='button py-3 text-base whitespace-nowrap'
               >
-                <BellIcon className={'w-5 h-5'} />
+                <BellIcon className={"w-5 h-5"} />
                 Set a Reminder
               </button>
             </div>
           )}
           <Container>
-            <div className={'px-0'}>
+            <div className={"px-0"}>
               <Layout short={true}>
                 <div className='grid md:grid-cols-8'>
                   <div className='md:col-span-5 pt-10 md:pr-16'>
                     <Link href={`/projects/${projectPubKey}`}>
                       <a className='inline-flex gap-x-2 items-center rounded-lg text-gray-300'>
-                        <ArrowLeftIcon className={'w-4'} />
+                        <ArrowLeftIcon className={"w-4"} />
                         Back to Project
                       </a>
                     </Link>
                     <h1 className='flex gap-x-3 text-4xl tracking-tight font-extrabold text-white mt-5 sm:leading-none lg:text-5xl xl:text-6xl'>
-                      <span className={'text-purple-2'}>{ido.name}</span>
+                      <span className={"text-purple-2"}>{ido.name}</span>
                       <span>Presale</span>
                       {ido.isFeatured && (
-                        <BadgeCheckIcon className={'w-8 h-8 text-purple-2'} />
+                        <BadgeCheckIcon className={"w-8 h-8 text-purple-2"} />
                       )}
                     </h1>
                     <p className='mt-6 prose prose-lg prose-invert line-clamp-5'>
@@ -293,9 +300,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       <div className='flex items-center'>
                         <div className='mr-4'>
                           <img
-                            className={'w-10 h-10'}
-                            src={'/assets/logos/usdc-logo.svg'}
-                            alt={'USDC'}
+                            className={"w-10 h-10"}
+                            src={"/assets/logos/usdc-logo.svg"}
+                            alt={"USDC"}
                           />
                         </div>
                         <div>
@@ -303,9 +310,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           <h4 className='text-xl whitespace-nowrap'>
                             <NumberFormat
                               value={ido.salePrice}
-                              displayType={'text'}
+                              displayType={"text"}
                               thousandSeparator={true}
-                            />{' '}
+                            />{" "}
                             USDC
                           </h4>
                         </div>
@@ -313,9 +320,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       <div className='flex items-center'>
                         <div className='mr-4'>
                           <img
-                            className={'w-10 h-10'}
-                            src={'/assets/logos/usdc-logo.svg'}
-                            alt={'USDC'}
+                            className={"w-10 h-10"}
+                            src={"/assets/logos/usdc-logo.svg"}
+                            alt={"USDC"}
                           />
                         </div>
                         <div>
@@ -323,55 +330,55 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           <h4 className='text-xl whitespace-nowrap'>
                             <NumberFormat
                               value={ido.hardCap}
-                              displayType={'text'}
+                              displayType={"text"}
                               thousandSeparator={true}
-                            />{' '}
+                            />{" "}
                             USDC
                           </h4>
                         </div>
                       </div>
                     </div>
-                    <div className={'flex gap-x-10 mt-12'}>
+                    <div className={"flex gap-x-10 mt-12"}>
                       {ido.websiteUrl && (
                         <a
                           href={ido.websiteUrl}
-                          target={'_blank'}
-                          rel={'noreferrer'}
-                          className={'flex items-center gap-x-2 text-sm'}
+                          target={"_blank"}
+                          rel={"noreferrer"}
+                          className={"flex items-center gap-x-2 text-sm"}
                         >
-                          <GlobeAltIcon className={'w-5 text-gray-300'} />
+                          <GlobeAltIcon className={"w-5 text-gray-300"} />
                           Website
                         </a>
                       )}
                       {ido.twitter && (
                         <a
                           href={ido.twitter}
-                          target={'_blank'}
-                          rel={'noreferrer'}
-                          className={'flex items-center gap-x-2 text-sm'}
+                          target={"_blank"}
+                          rel={"noreferrer"}
+                          className={"flex items-center gap-x-2 text-sm"}
                         >
                           <svg
-                            className={'w-5 text-gray-300'}
+                            className={"w-5 text-gray-300"}
                             xmlns='http://www.w3.org/2000/svg'
                             viewBox='0 0 512 512'
                           >
                             <path
                               d='M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z'
-                              fill={'currentColor'}
+                              fill={"currentColor"}
                             />
                           </svg>
                           Twitter
                         </a>
                       )}
-                      <div className={'flex items-center gap-x-2 text-sm'}>
-                        <ClockIcon className={'w-5 text-gray-300'} />
-                        Starts At: {ido.startTime.toLocaleDateString()}{' '}
+                      <div className={"flex items-center gap-x-2 text-sm"}>
+                        <ClockIcon className={"w-5 text-gray-300"} />
+                        Starts At: {ido.startTime.toLocaleDateString()}{" "}
                         {isToday(ido.startTime) &&
                           ido.startTime.toLocaleTimeString()}
                       </div>
-                      <div className={'flex items-center gap-x-2 text-sm'}>
-                        <ClockIcon className={'w-5 text-gray-300'} />
-                        Ends At: {ido.endTime.toLocaleDateString()}{' '}
+                      <div className={"flex items-center gap-x-2 text-sm"}>
+                        <ClockIcon className={"w-5 text-gray-300"} />
+                        Ends At: {ido.endTime.toLocaleDateString()}{" "}
                         {isToday(ido.endTime) &&
                           ido.endTime.toLocaleTimeString()}
                       </div>
@@ -392,24 +399,24 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             setAllocationDetails(!allocationDetails)
                           }
                           className={
-                            'flex cursor-pointer justify-between gap-x-2 mt-3'
+                            "flex cursor-pointer justify-between gap-x-2 mt-3"
                           }
                         >
-                          <div className={'text-purple-2 font-medium'}>
-                            Your IDO&apos;s allocation is{' '}
+                          <div className={"text-purple-2 font-medium"}>
+                            Your IDO&apos;s allocation is{" "}
                             <NumberFormat
                               value={allocation - participatedAmount}
-                              displayType={'text'}
+                              displayType={"text"}
                               thousandSeparator={true}
                               decimalScale={2}
-                              prefix={'$'}
+                              prefix={"$"}
                             />
                             .
                           </div>
                           {allocation != 0 && (
                             <div
                               className={
-                                'flex gap-x-2 items-center justify-end w-16'
+                                "flex gap-x-2 items-center justify-end w-16"
                               }
                             >
                               <div className='bg-gray-400 h-2 flex-1 rounded-full'>
@@ -423,7 +430,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                   className='bg-purple-2 h-2 rounded-full'
                                 />
                               </div>
-                              <p className={'text-xs'}>
+                              <p className={"text-xs"}>
                                 {(
                                   (participatedAmount / allocation) *
                                   100
@@ -435,35 +442,35 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         </div>
                         {allocationDetails && allocation != 0 && (
                           <div
-                            className={'mt-3 text-sm space-y-2 text-gray-300'}
+                            className={"mt-3 text-sm space-y-2 text-gray-300"}
                           >
-                            <p className={'flex items-center gap-x-1'}>
-                              <ChevronRightIcon className={'w-3 h-3'} />
-                              You initially received an allocation of{' '}
+                            <p className={"flex items-center gap-x-1"}>
+                              <ChevronRightIcon className={"w-3 h-3"} />
+                              You initially received an allocation of{" "}
                               <NumberFormat
                                 value={allocation}
-                                displayType={'text'}
+                                displayType={"text"}
                                 thousandSeparator={true}
                                 decimalScale={2}
-                                prefix={'$'}
+                                prefix={"$"}
                               />
                             </p>
-                            <p className={'flex items-center gap-x-1'}>
-                              <ChevronRightIcon className={'w-3 h-3'} />
-                              You have participated in the amount of{' '}
+                            <p className={"flex items-center gap-x-1"}>
+                              <ChevronRightIcon className={"w-3 h-3"} />
+                              You have participated in the amount of{" "}
                               <NumberFormat
                                 value={participatedAmount}
-                                displayType={'text'}
+                                displayType={"text"}
                                 thousandSeparator={true}
                                 decimalScale={2}
-                                prefix={'$'}
+                                prefix={"$"}
                               />
                             </p>
                           </div>
                         )}
-                        <div className={'mt-6'}>
+                        <div className={"mt-6"}>
                           <div
-                            className={'flex justify-between items-end mb-4'}
+                            className={"flex justify-between items-end mb-4"}
                           >
                             <label
                               htmlFor='amount'
@@ -473,12 +480,12 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             </label>
                             <div className='flex gap-x-2 items-center text-xs font-medium'>
                               <label>
-                                Balance: {usdcBalance.toLocaleString('en-US')}{' '}
+                                Balance: {usdcBalance.toLocaleString("en-US")}{" "}
                                 USDC
                               </label>
                               <button
                                 className={
-                                  'bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30'
+                                  "bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"
                                 }
                                 onClick={() => getMax(0.5)}
                               >
@@ -486,7 +493,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               </button>
                               <button
                                 className={
-                                  'bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30'
+                                  "bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"
                                 }
                                 onClick={() => getMax(1)}
                               >
@@ -516,9 +523,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                 id='price-currency'
                               >
                                 <img
-                                  className={'w-4 h-4'}
-                                  src={'/assets/logos/usdc-logo.svg'}
-                                  alt={'USDC'}
+                                  className={"w-4 h-4"}
+                                  src={"/assets/logos/usdc-logo.svg"}
+                                  alt={"USDC"}
                                 />
                                 USDC
                               </span>
@@ -526,7 +533,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           </div>
                         </div>
                         <RadioGroup
-                          className={'mt-6'}
+                          className={"mt-6"}
                           value={nftMint}
                           onChange={(nft) => setNftAndAllocation(nft)}
                         >
@@ -542,12 +549,12 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                   className={({ active, checked }) =>
                                     `${
                                       active
-                                        ? 'ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60'
-                                        : ''
+                                        ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
+                                        : ""
                                     } ${
                                       checked
-                                        ? 'border-2 border-purple-2 bg-purple-2 bg-opacity-5'
-                                        : 'border-2 border-transparent bg-white bg-opacity-5'
+                                        ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                                        : "border-2 border-transparent bg-white bg-opacity-5"
                                     } relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none`
                                   }
                                 >
@@ -559,14 +566,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                             <RadioGroup.Label
                                               as='p'
                                               className={`font-medium ${
-                                                checked ? 'text-white' : ''
+                                                checked ? "text-white" : ""
                                               }`}
                                             >
                                               <div className='flex items-center'>
                                                 <div className='mr-4'>
                                                   <img
                                                     className={
-                                                      'w-12 h-12 rounded-md'
+                                                      "w-12 h-12 rounded-md"
                                                     }
                                                     src={nft.image}
                                                     alt={nft.name}
@@ -595,7 +602,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                 </RadioGroup.Option>
                               ))
                             ) : (
-                              <Link href={'/tiers'}>
+                              <Link href={"/tiers"}>
                                 <a className='border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none'>
                                   <div className='flex items-center justify-between w-full'>
                                     <div className='flex items-center'>
@@ -624,7 +631,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                       </div>
                                     </div>
                                     <div className='flex-shrink-0 text-purple-2 px-3'>
-                                      <ArrowRightIcon className={'w-5'} />
+                                      <ArrowRightIcon className={"w-5"} />
                                     </div>
                                   </div>
                                 </a>
@@ -641,14 +648,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             }
                             className={`w-full ${
                               nfts.length == 0
-                                ? 'opacity-70 cursor-not-allowed'
-                                : ''
+                                ? "opacity-70 cursor-not-allowed"
+                                : ""
                             } mt-8 button`}
                             onClick={submitParticipation}
                           >
                             {!loading ? (
                               <>
-                                <HandIcon className={'w-6 h-6'} />
+                                <HandIcon className={"w-6 h-6"} />
                                 Participate Now
                               </>
                             ) : (
@@ -660,7 +667,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             onClick={() =>
                               walletAddress ?? walletModal.setVisible(true)
                             }
-                            className={'w-full mt-8 button'}
+                            className={"w-full mt-8 button"}
                           >
                             Connect Wallet
                           </button>
@@ -670,15 +677,15 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   </div>
                 </div>
                 {ido.content && (
-                  <div className={'flex gap-x-12'}>
-                    <div className={'w-48'}>
+                  <div className={"flex gap-x-12"}>
+                    <div className={"w-48"}>
                       <ul
                         role='list'
                         className='pt-4 divide-y-divide-gray-200-divide-opacity-10'
                       >
                         {JSON.parse(ido.content).blocks.map((block: any) => {
                           if (
-                            block.type === 'header' &&
+                            block.type === "header" &&
                             block.data.level <= 3
                           ) {
                             return (
@@ -689,11 +696,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                 >
                                   <p
                                     className={`${
-                                      block.data.level > 2 ? 'pl-3-' : ''
+                                      block.data.level > 2 ? "pl-3-" : ""
                                     } flex items-center gap-x-1 text-sm font-medium text-gray-300 hover:text-gray-200  hover:translate-x-3 duration-300`}
                                   >
-                                    <ChevronRightIcon className={'w-3 h-3'} />
-                                    <span className={'flex-1 truncate'}>
+                                    <ChevronRightIcon className={"w-3 h-3"} />
+                                    <span className={"flex-1 truncate"}>
                                       {block.data.text}
                                     </span>
                                   </p>
@@ -704,18 +711,18 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         })}
                       </ul>
                     </div>
-                    <div className={'flex-1'}>
+                    <div className={"flex-1"}>
                       <ScrollPercentage
                         as='div'
                         onChange={(percentage) => NProgress.set(percentage)}
                       >
                         <div
-                          className={'prose prose-lg prose-invert max-w-full'}
+                          className={"prose prose-lg prose-invert max-w-full"}
                         >
                           <SRLWrapper>
                             <EditorJs
                               projectPubKey={projectPubKey}
-                              content={ido.content || '{}'}
+                              content={ido.content || "{}"}
                             />
                           </SRLWrapper>
                         </div>
