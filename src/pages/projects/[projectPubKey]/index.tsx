@@ -364,9 +364,9 @@ const ProjectDetails = () => {
                             <div className={"flex justify-between"}>
                               <label className="text-sm font-medium">Sale Progress</label>
                               <label className="text-sm font-medium">
-                                Raised Amount:
+                                Raised Amount: {" "}
                                 <NumberFormat
-                                  value={ido.saleTotalAmount}
+                                  value={ido.saleTotalAmount <= ido.hardCap ? ido.saleTotalAmount : ido.hardCap }
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   decimalScale={2}
