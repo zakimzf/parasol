@@ -238,7 +238,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       {ido.description}
                     </p>
                     <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">Token Sale Details</p>
-                    <div className="flex gap-x-12 lg:flex-row my-3">
+                    <div className="flex gap-x-12 flex-col my-3 gap-y-4 mxm:flex-row">
                       {ido.symbol && (
                         <div className="flex items-center">
                           {ido.icon && <div className="mr-4">
@@ -281,7 +281,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         </div>
                       </div>
                     </div>
-                    <div className={"flex gap-x-10 mt-12"}>
+                    <div className={"flex gap-x-10 mt-12 flex-col gap-y-4 mxm:flex-row"}>
                       {ido.websiteUrl && (
                         <a href={ido.websiteUrl} target={"_blank"} rel={"noreferrer"} className={"flex items-center gap-x-2 text-sm"}>
                           <GlobeAltIcon className={"w-5 text-gray-300"} />
@@ -456,7 +456,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                               </div>
                                               <div>
                                                 <p className="text-xs">You don&apos;t have an NFT currently.</p>
-                                                <h2 className="text-lg whitespace-nowrap">Buy your NFT Access Key!</h2>
+                                                <h2 className="text-xs whitespace-nowrap mxm:text-lg">Buy your NFT Access Key!</h2>
                                               </div>
                                             </div>
                                           </p>
@@ -497,7 +497,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   </div>
                 </div>
                 {ido.content && (
-                  <div className={"flex gap-x-12"}>
+                  <div className={"flex gap-x-12 flex-col mxm:flex-row"}>
                     <div className={"w-48"}>
                       <ul role="list" className="pt-4 divide-y-divide-gray-200-divide-opacity-10">
                         {JSON.parse(ido.content).blocks.map((block: any) => {

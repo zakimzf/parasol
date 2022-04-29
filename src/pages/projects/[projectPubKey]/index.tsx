@@ -130,7 +130,7 @@ const ProjectDetails = () => {
                       <a id="features" className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
                         {ido.name}
                       </a>
-                      <p className="truncate mt-1 max-w-prose text-sm lg:text-base text-gray-200">
+                      <p className="overflow-hidden text-ellipsis sm:whitespace-nowrap	mt-1 max-w-prose text-sm lg:text-base text-gray-200">
                         {ido.description}
                       </p>
                     </div>
