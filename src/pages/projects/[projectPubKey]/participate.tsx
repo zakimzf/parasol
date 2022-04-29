@@ -198,7 +198,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   },[nfts, project])
 
   return (
-    <section className={"relative overflow-hidden py-12"}>
+    <section className={"relative overflow-hidden lg:py-12"}>
       {nfts && ido && (
         <>
           {ido.startTime >= Date.now() && (
@@ -219,7 +219,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
           <Container>
             <div className={"px-0"}>
               <Layout short={true}>
-                <div className="grid md:grid-cols-8">
+                <div className="grid md:grid-cols-8 gap-y-6 lg:gap-y-0">
                   <div className="md:col-span-5 pt-10 md:pr-16">
                     <Link href={`/projects/${projectPubKey}`}>
                       <a className="inline-flex gap-x-2 items-center rounded-lg text-gray-300">
