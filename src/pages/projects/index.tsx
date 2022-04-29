@@ -50,12 +50,10 @@ const Projects = () => {
       </Head>
       <Heading
         tagline={"Parasol Launchpad"}
-        title={"Upcoming Projects"}
-        description={
-          "There is the list of the next IDOs and projects on Parasol."
-        }
+        title={"Upcoming & Live Projects"}
+        description={"Here are all the projects of Parasol Finance."}
       />
-      <Layout>
+      <Layout short={true}>
         {draftProjects.length > 0 && (
           <section>
             <Container>

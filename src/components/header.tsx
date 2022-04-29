@@ -8,7 +8,6 @@ import {
   BookOpenIcon,
   CollectionIcon,
   FolderAddIcon,
-  InformationCircleIcon,
   MailIcon,
   MenuIcon,
   XIcon,
@@ -75,7 +74,7 @@ const Header = () => (
                               />
                               <div className="ml-4">
                                 <p className="text-base font-medium text-white">
-                                  Upcoming Projects
+                                  Upcoming &amp; Live Projects
                                 </p>
                                 <p className="mt-1 text-sm text-gray-300">
                                   All the new projects of Parasol Finance
@@ -480,7 +479,7 @@ const Header = () => (
                                   />
                                   <div className="ml-4">
                                     <p className="text-base font-medium text-white">
-                                      Upcoming Projects
+                                      Upcoming &amp; Live Projects
                                     </p>
                                     <p className="mt-1 text-sm text-white">
                                       All the new projects of Parasol Finance
