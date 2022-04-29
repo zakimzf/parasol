@@ -131,7 +131,7 @@ const ProjectDetails = () => {
                       <a id="features" className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
                         {ido.name}
                       </a>
-                      <p className="truncate mt-1 max-w-prose text-sm lg:text-base text-gray-200">
+                      <p className="overflow-hidden text-ellipsis sm:whitespace-nowrap	mt-1 max-w-prose text-sm lg:text-base text-gray-200">
                         {ido.description}
                       </p>
                     </div>
@@ -204,7 +204,7 @@ const ProjectDetails = () => {
                               target={"_blank"}
                               className={"flex items-center gap-x-1 !ml-auto text-white px-3 pt-2 pb-3 font-medium text-sm"} rel="noreferrer">
                               <ExternalLinkIcon className={"w-5"} />
-                              Visit Website
+                              <span className={"hidden lg:block"}>Visit Website</span>
                             </a>}
                           </nav>
                         </div>
