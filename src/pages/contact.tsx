@@ -100,9 +100,9 @@ const Contact = () => {
           ) : (
             <form
               onSubmit={handleSubmit}
-              className="grid grid-cols-1 xs:grid-cols-2 xs:gap-x-8 xs:px-5"
+              className="grid grid-cols-1 px-6 sm:grid-cols-2 sm:gap-x-6 sm:px-5"
             >
-              <div className="relative">
+              <div className="col-span-1 relative">
                 <label
                   htmlFor="complete-name"
                   className="block text-sm font-medium"
@@ -135,7 +135,7 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="relative">
+              <div className="col-span-1 relative">
                 <label
                   htmlFor="email-address"
                   className="block text-sm font-medium"
@@ -168,7 +168,7 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="xs:col-span-2 relative">
+              <div className="col-span-1 sm:col-span-2 relative">
                 <label htmlFor="subject" className="block text-sm font-medium">
                   Subject <span className="text-purple-2">*</span>
                 </label>
@@ -198,7 +198,7 @@ const Contact = () => {
                   )}
                 </div>
               </div>
-              <div className="xs:col-span-2 relative">
+              <div className="col-span-1 sm:col-span-2 relative">
                 <label htmlFor="message" className="block text-sm font-medium">
                   Message <span className="text-purple-2">*</span>
                 </label>
@@ -228,7 +228,7 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className={"col-span-2 flex justify-center gap-x-3 mt-5"}>
+              <div className={"col-span-1 sm:col-span-2 flex justify-center gap-x-3 mt-5"}>
                 <HCaptcha
                   sitekey={sitekey}
                   onVerify={setToken}
@@ -237,7 +237,7 @@ const Contact = () => {
                 />
               </div>
 
-              <div className={"col-span-2 flex justify-center gap-x-3 mt-3"}>
+              <div className={"col-span-1 sm:col-span-2 flex justify-center gap-x-3 mt-3"}>
                 <button
                   type={"submit"}
                   className={"button"}
