@@ -455,7 +455,7 @@ const ProjectDetails = () => {
           </section>
           {ido.endTime >= Date.now() && ido.status === "PUBLISHED" && (
             <Link href={`/projects/${projectPubKey}/participate`} passHref>
-              <button className={"z-50 button !bg-none bg-white uppercase fixed bottom-6 inset-x-6 shadow-lg !text-black font-medium text-sm"}>
+              <button className={"z-50 button !bg-none bg-white uppercase fixed bottom-6 inset-x-6 shadow-lg !text-black font-medium text-sm lg:hidden"}>
               Participate In The sale
               </button>
             </Link>
