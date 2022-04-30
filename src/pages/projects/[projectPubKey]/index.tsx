@@ -38,7 +38,7 @@ const ProjectDetails = () => {
   const [tempCover, setTempCover] = useState("")
   const [coverFile, setCoverFile] = useState("")
 
-  const { projectPubKey }:any = router.query;
+  const { projectPubKey }: any = router.query;
 
   const [ido, setIdo] = useState<any>(null);
 
@@ -99,7 +99,7 @@ const ProjectDetails = () => {
 
   const onDrop = useCallback(async (file: any) => {
     setCoverFile(file[0]);
-    setTempCover(await getBase64(file[0]))
+    setTempCover(await getBase64(file[0]) as any)
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
@@ -378,7 +378,7 @@ const ProjectDetails = () => {
                               <label className="text-sm font-medium">
                                 Raised Amount: {" "}
                                 <NumberFormat
-                                  value={ido.saleTotalAmount <= ido.hardCap ? ido.saleTotalAmount : ido.hardCap }
+                                  value={ido.saleTotalAmount <= ido.hardCap ? ido.saleTotalAmount : ido.hardCap}
                                   displayType={"text"}
                                   thousandSeparator={true}
                                   decimalScale={2}
@@ -456,7 +456,7 @@ const ProjectDetails = () => {
           {ido.endTime >= Date.now() && ido.status === "PUBLISHED" && (
             <Link href={`/projects/${projectPubKey}/participate`} passHref>
               <button className={"z-50 button !bg-none bg-white uppercase fixed bottom-6 inset-x-6 shadow-lg !text-black font-medium text-sm lg:hidden"}>
-              Participate In The sale
+                Participate In The sale
               </button>
             </Link>
           )}

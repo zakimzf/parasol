@@ -8,7 +8,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { NftContext } from "../../context/NftContext";
 import { useWalletModal } from "../../components/wallet-connector";
 import { Keypair, PublicKey } from "@solana/web3.js";
-import { notification } from "../../utils/functions";
+import { globalErrorHandle, notification } from "../../utils/functions";
 import Head from "next/head";
 
 const Migrate = () => {
@@ -53,16 +53,15 @@ const Migrate = () => {
         "Pending Transaction"
       );
       await connection.confirmTransaction(signature, "confirmed");
+      notification(
+        "success",
+        "Successfully migrated the NFT.",
+        "Transaction Success"
+      );
     }
-    catch (err) {
-      notification("danger", "Unable to Migrate the NFT.", "Transaction Error");
-      return false;
+    catch (err: any) {
+      globalErrorHandle(err);
     }
-    notification(
-      "success",
-      "Successfully migrated the NFT.",
-      "Transaction Success"
-    );
 
     setNfts([]);
     getNFTList();
@@ -72,7 +71,10 @@ const Migrate = () => {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | NFT Access Keys</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | NFT Access Keys"/>
+        <meta
+          name="title"
+          content="Parasol Finance ($PSOL) | NFT Access Keys"
+        />
         <meta property="og:image" content="/assets/preview/tiers.png" />
         <meta property="twitter:image" content="/assets/preview/tiers.png" />
       </Head>
@@ -81,7 +83,7 @@ const Migrate = () => {
           <Link href={"/tiers"}>
             <a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
               <ArrowLeftIcon className={"w-4"} />
-            Back
+              Back
             </a>
           </Link>
           <Card padded={true}>
@@ -89,28 +91,39 @@ const Migrate = () => {
               <div className={"prose prose-lg prose-invert"}>
                 <h2>Migrate NFT</h2>
                 <p>
-                By migrating your NFT, you will return your NFT purchased before <span className={"font-bold"}>April 21, 2022</span> and get a new NFT that will work with the launchpad.
+                  By migrating your NFT, you will return your NFT purchased
+                  before <span className={"font-bold"}>April 21, 2022</span> and
+                  get a new NFT that will work with the launchpad.
                 </p>
                 <p>
-                This migration is necessary to be able to participate in IDOs and votes in the seeding process.
+                  This migration is necessary to be able to participate in IDOs
+                  and votes in the seeding process.
                 </p>
               </div>
               {nfts.length > 0 ? (
                 <div>
                   <label className="block text-sm mb-3 font-medium text-blue-gray-900">
-                  Eligible NFTs for Migration
+                    Eligible NFTs for Migration
                   </label>
                   <RadioGroup value={selected} onChange={setSelected}>
-                    <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+                    <RadioGroup.Label className="sr-only">
+                      Server size
+                    </RadioGroup.Label>
                     <div className="space-y-2">
                       {nfts.map((nft: any) => (
                         <RadioGroup.Option
                           key={nft.name}
                           value={nft}
-                          className={({
-                            active,
-                            checked
-                          }) => `${active ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60" : ""} ${checked ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5" : "border-2 border-transparent bg-white bg-opacity-5"} relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none`}>
+                          className={({ active, checked }) =>
+                            `${active
+                              ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
+                              : ""
+                            } ${checked
+                              ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                              : "border-2 border-transparent bg-white bg-opacity-5"
+                            } relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none`
+                          }
+                        >
                           {({ active, checked }) => (
                             <>
                               <div className="flex items-center justify-between w-full">
@@ -118,10 +131,16 @@ const Migrate = () => {
                                   <div className="text-sm">
                                     <RadioGroup.Label
                                       as="p"
-                                      className={`font-medium ${checked ? "text-white" : ""}`}>
+                                      className={`font-medium ${checked ? "text-white" : ""
+                                      }`}
+                                    >
                                       <div className="flex items-center">
                                         <div className="mr-4">
-                                          <img className={"w-12 h-12 rounded-md"} src={nft.image} alt={nft.name}/>
+                                          <img
+                                            className={"w-12 h-12 rounded-md"}
+                                            src={nft.image}
+                                            alt={nft.name}
+                                          />
                                         </div>
                                         <div>
                                           <p className="text-xs">{nft.name}</p>
@@ -135,7 +154,7 @@ const Migrate = () => {
                                 </div>
                                 {checked && (
                                   <div className="flex-shrink-0 text-purple-2">
-                                    <CheckIcon className="w-6 h-6"/>
+                                    <CheckIcon className="w-6 h-6" />
                                   </div>
                                 )}
                               </div>
@@ -150,7 +169,7 @@ const Migrate = () => {
                 <div className={"prose prose-lg prose-invert"}>
                   <Link href={"/tiers"}>
                     <a className="inline-flex gap-x-2 items-centertext-gray-200">
-                    No NFT Access Key. Please buy your NFT here.
+                      No NFT Access Key. Please buy your NFT here.
                     </a>
                   </Link>
                 </div>
@@ -158,12 +177,9 @@ const Migrate = () => {
               {wallet.connected ? (
                 [
                   nfts.length > 0 ? (
-                    <button
-                      className={"w-full button"}
-                      onClick={upgradeNFT}
-                    >
+                    <button className={"w-full button"} onClick={upgradeNFT}>
                       <UploadIcon className={"w-5 h-5"} />
-                    Migrate My NFT
+                      Migrate My NFT
                     </button>
                   ) : (
                     ""

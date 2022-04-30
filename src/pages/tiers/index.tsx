@@ -9,7 +9,7 @@ import { NftContext } from "../../context/NftContext";
 import { Keypair } from "@solana/web3.js";
 import { NftKind } from "parasol-finance-sdk";
 import Head from "next/head";
-import { notification } from "../../utils/functions";
+import { globalErrorHandle, notification } from "../../utils/functions";
 
 const Tiers = function () {
   const { connection } = useConnection();
@@ -22,7 +22,7 @@ const Tiers = function () {
       amount: 210,
       logo: "/assets/nft-access-keys/covers/Dreamer.png",
       video: "/assets/nft-access-keys/videos/Dreamer.mp4",
-      vestingPeriod: 12
+      vestingPeriod: 12,
     },
     {
       id: 1,
@@ -30,7 +30,7 @@ const Tiers = function () {
       amount: 2100,
       logo: "/assets/nft-access-keys/covers/Rider.png",
       video: "/assets/nft-access-keys/videos/Rider.mp4",
-      vestingPeriod: 8
+      vestingPeriod: 8,
     },
     {
       id: 2,
@@ -38,7 +38,7 @@ const Tiers = function () {
       amount: 21000,
       logo: "/assets/nft-access-keys/covers/Chiller.png",
       video: "/assets/nft-access-keys/videos/Chiller.mp4",
-      vestingPeriod: 6
+      vestingPeriod: 6,
     },
     {
       id: 3,
@@ -46,7 +46,7 @@ const Tiers = function () {
       amount: 210000,
       logo: "/assets/nft-access-keys/covers/MoonWalker.png",
       video: "/assets/nft-access-keys/videos/MoonWalker.mp4",
-      vestingPeriod: 4
+      vestingPeriod: 4,
     },
   ]);
 
@@ -59,14 +59,17 @@ const Tiers = function () {
       const signature = await sendTransaction(tx, connection, {
         signers: [mintKeypair],
       });
-      notification("information", "Mining NFT right now...", "Pending Transaction");
+      notification(
+        "information",
+        "Mining NFT right now...",
+        "Pending Transaction"
+      );
       await connection.confirmTransaction(signature, "confirmed");
+      notification("success", "Successfully minted NFT", "Transaction Success");
     }
-    catch (err) {
-      notification("danger", "Unable to mint the NFT.", "Transaction Error");
-      return false;
+    catch (error: any) {
+      globalErrorHandle(error);
     }
-    notification("success", "Successfully minted NFT", "Transaction Success");
   };
 
   useEffect(() => {
@@ -87,14 +90,17 @@ const Tiers = function () {
   }, []);
 
   const activeNft = (items: [any], tiers: any) => {
-    return items.some(x => x.attributes[0]["value"] == tiers.name);
+    return items.some((x) => x.attributes[0]["value"] == tiers.name);
   };
 
   return (
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | NFT Access Keys</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | NFT Access Keys" />
+        <meta
+          name="title"
+          content="Parasol Finance ($PSOL) | NFT Access Keys"
+        />
         <meta property="og:image" content="/assets/preview/tiers.png" />
         <meta property="twitter:image" content="/assets/preview/tiers.png" />
       </Head>
@@ -118,7 +124,11 @@ const Tiers = function () {
                 </p>
               </div>
             </div>
-            <div className={"flex gap-x-2 md:justify-end items-center justify-center mt-5"}>
+            <div
+              className={
+                "flex gap-x-2 md:justify-end items-center justify-center mt-5"
+              }
+            >
               <Link href={"/tiers/migrate"}>
                 <a className="flex gap-x-2 items-center bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
                   <UploadIcon className={"w-4"} />
