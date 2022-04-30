@@ -598,7 +598,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                     </>
                                   )}
                                 </RadioGroup.Option>
-                              )) :
+                              ))) :
                               (
                                 <Link href={"/tiers"}>
                                   <a className="border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none">
@@ -625,17 +625,16 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                                 Buy your NFT Access Key!
                                               </h2>
                                             </div>
-                                          </div>
-                                        </p>
+                                          </p>
+                                        </div>
+                                      </div>
+                                      <div className='flex-shrink-0 text-purple-2 px-3'>
+                                        <ArrowRightIcon className={"w-5"} />
                                       </div>
                                     </div>
-                                    <div className='flex-shrink-0 text-purple-2 px-3'>
-                                      <ArrowRightIcon className={"w-5"} />
-                                    </div>
-                                  </div>
-                                </a>
-                              </Link>
-                            )}
+                                  </a>
+                                </Link>
+                              )}
                           </div>
                         </RadioGroup>
                         {walletAddress ? (
