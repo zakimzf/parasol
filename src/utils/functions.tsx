@@ -2,28 +2,25 @@ import { programErrors } from "parasol-finance-sdk";
 
 import { db, storage } from "./firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import
-{
-  CheckCircleIcon,
-  ExclamationCircleIcon,
-  ExclamationIcon,
-  InformationCircleIcon,
+import {
+CheckCircleIcon,
+ExclamationCircleIcon,
+ExclamationIcon,
+InformationCircleIcon,
 } from "@heroicons/react/solid";
 import toast from "react-hot-toast";
 import React from "react";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 
 export const getBase64 = (file: any) =>
-  new Promise((resolve, reject) =>
-  {
+  new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
 
-export const isToday = (value: any) =>
-{
+export const isToday = (value: any) => {
   const today = new Date();
   return (
     value.getDate() === today.getDate() &&
@@ -32,8 +29,7 @@ export const isToday = (value: any) =>
   );
 };
 
-export const validURL = (str: any) =>
-{
+export const validURL = (str: any) => {
   const pattern = new RegExp(
     "^(https?:\\/\\/)" +
     "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
@@ -46,8 +42,7 @@ export const validURL = (str: any) =>
   return !!pattern.test(str);
 };
 
-export const isTokenAddressExist = async (id: any) =>
-{
+export const isTokenAddressExist = async (id: any) => {
   const docRef = doc(db, "ido-metadata", id);
   const docSnap = await getDoc(docRef);
   return docSnap.exists();
@@ -63,10 +58,8 @@ export const errClasses = [
   "focus:border-red-600",
 ];
 
-export const notification = (type: any, message: any, title = "") =>
-{
-  const iconByType = () =>
-  {
+export const notification = (type: any, message: any, title = "") => {
+  const iconByType = () => {
     switch (type) {
       default:
         return <InformationCircleIcon className="h-6 w-6 text-blue-400" />;
@@ -112,8 +105,7 @@ export const uploadFile = (
   notify: any,
   updateIdoCover: any = false,
   idosCollectionRef: any = null
-) =>
-{
+) => {
   if (!file) return;
   let res = {};
 
@@ -131,11 +123,9 @@ export const uploadFile = (
     "state_changed",
     (snapshot) => { },
     (error) => notify(false),
-    () =>
-    {
+    () => {
       if (updateIdoCover) {
-        getDownloadURL(task.snapshot.ref).then(async (coverUrl: any) =>
-        {
+        getDownloadURL(task.snapshot.ref).then(async (coverUrl: any) => {
           await updateDoc(idosCollectionRef, {
             projectCover: coverUrl,
           });
@@ -151,8 +141,7 @@ export const uploadFile = (
   return res;
 };
 
-export const slugify = (text: any) =>
-{
+export const slugify = (text: any) => {
   return text
     .toString()
     .toLowerCase()
@@ -163,8 +152,7 @@ export const slugify = (text: any) =>
     .replace(/\-\-+/g, "-");
 };
 
-export const globalErrorHandle = (err: any) =>
-{
+export const globalErrorHandle = (err: any) => {
   const error = programErrors.find((item) =>
     err.message.endsWith(item.code.toString(16))
   );
