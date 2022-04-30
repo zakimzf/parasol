@@ -667,7 +667,7 @@ const SubmitProject = () => {
                     </p>
                   </div>
 
-                  <div className="md:col-span-6 relative">
+                  <div className="sm:col-span-6 relative">
                     <Listbox value={values.dex} onChange={handleChange}>
                       {({ open }) => (
                         <>
