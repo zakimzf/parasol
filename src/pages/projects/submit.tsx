@@ -215,22 +215,27 @@ const SubmitProject = () => {
 
         values.publicKey = walletAddress;
         values.projectKey = projectPubKey?.toBase58()
-
         await uploadFiles(coverFile, async (_values: any) => {
           await setDoc(doc(idosCollectionRef, values.projectKey), _values);
 
-          // sign transaction
-          let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
-          // confirm transaction
-          await connection.confirmTransaction(signature, "confirmed");
-          await router.push(`/projects/${values.projectKey}`);
+          try {
+            // sign transaction
+            let signature = await sendTransaction(tx, connection, { signers: [projectKeypair] });
+            // confirm transaction
+            await connection.confirmTransaction(signature, "confirmed");
 
-          setLoading(false);
+            await router.push(`/projects/${values.projectKey}`);
+          }
+          catch (error: any) {
+            if (error.message == "User rejected the request.") { }
+            else notification("danger", "Unable to create an IDO.", "Transaction Failed");
+            setLoading(false);
+          }
         })
       }
-      catch (err) {
-        notification("danger", "Unable to create an IDO.", "Transaction Failed");
+      catch (error) {
         setLoading(false);
+        notification("danger", "Unable to create an IDO.", "Transaction Failed");
       }
     }
     else setLoading(false);
@@ -274,7 +279,6 @@ const SubmitProject = () => {
     if (!file) return;
     const storageRef = ref(storage, `projects/${values.projectKey}/${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
-
     uploadTask.on(
       "state_changed",
       (snapshot) => { },
@@ -292,6 +296,7 @@ const SubmitProject = () => {
             dex: values.dex,
             twitter: values.twitter,
             telegram: values.telegram,
+            content: "",
             created: Timestamp.now()
           }
           callback(_values);
