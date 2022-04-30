@@ -62,13 +62,13 @@ export const notification = (type, message, title = "") => {
   const iconByType = () => {
     switch (type) {
       default:
-        return <InformationCircleIcon className='h-6 w-6 text-blue-400' />;
+        return <InformationCircleIcon className="h-6 w-6 text-blue-400" />;
       case "success":
-        return <CheckCircleIcon className='h-6 w-6 text-green-400' />;
+        return <CheckCircleIcon className="h-6 w-6 text-green-400" />;
       case "warning":
-        return <ExclamationIcon className='h-6 w-6 text-orange-400' />;
+        return <ExclamationIcon className="h-6 w-6 text-orange-400" />;
       case "danger":
-        return <ExclamationCircleIcon className='h-6 w-6 text-red-400' />;
+        return <ExclamationCircleIcon className="h-6 w-6 text-red-400" />;
     }
   };
 
@@ -79,19 +79,19 @@ export const notification = (type, message, title = "") => {
         t.visible ? "animate-enter" : "animate-leave"
       } max-w-md w-full mt-6 bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
     >
-      <div className='flex-1 w-0 p-4'>
-        <div className='flex items-start'>
-          <div className='flex-shrink-0 pt-1'>{iconByType()}</div>
-          <div className='ml-3 flex-1'>
-            <p className='text-sm font-medium text-gray-900'>{title}</p>
-            <p className='mt-1 text-sm text-gray-500'>{message}</p>
+      <div className="flex-1 w-0 p-4">
+        <div className="flex items-start">
+          <div className="flex-shrink-0 pt-1"> {iconByType()} </div>
+          <div className="ml-3 flex-1">
+            <p className="text-sm font-medium text-gray-900"> {title} </p>
+            <p className="mt-1 text-sm text-gray-500"> {message} </p>
           </div>
         </div>
       </div>
-      <div className='flex border-l border-gray-200'>
+      <div className="flex border-l border-gray-200">
         <button
           onClick={() => toast.dismiss(t.id)}
-          className='w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-purple-2 hover:text-purple-1 focus:outline-none focus:ring-2 focus:ring-purple-2'
+          className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-purple-2 hover:text-purple-1 focus:outline-none focus:ring-2 focus:ring-purple-2"
         >
           Close
         </button>
@@ -133,8 +133,7 @@ export const uploadFile = (
           });
           notify(true);
         });
-      }
-      else {
+      } else {
         notify(true);
       }
     }
@@ -161,15 +160,13 @@ export const globalErrorHandle = (err) => {
 
   if (error !== undefined) {
     notification("danger", error.msg, "Transaction Error");
-  }
-  else if (err.message.endsWith("credit.")) {
+  } else if (err.message.endsWith("credit.")) {
     notification(
       "danger",
       "You have not enough $SOL or $PSOL in your wallet.",
       "Transaction Error"
     );
-  } 
-  else {
+  } else {
     notification("danger", "You rejected the transaction", "Transaction Error");
   }
 };
