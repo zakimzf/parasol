@@ -28,7 +28,7 @@ const Projects = () => {
   return (
     <section>
       <Container>
-        <div className="md:float-right sm:flex gap-x-3 pt-3 uppercase text-sm grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 justify-center xs:pb-10">
+        <div className="md:float-right sm:flex gap-x-3 pt-6 md:pt-3 uppercase text-sm grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3 justify-center pb-6 md:pb-0">
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button className="flex gap-x-2 items-center uppercase bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
@@ -77,7 +77,7 @@ const Projects = () => {
             </Transition>
           </Menu>
         </div>
-        <div className={"mb-12"}>
+        <div className={"mb-12 md:mt-12 lg:mt-0"}>
           <a className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl">
             Upcoming IDOs
           </a>
@@ -88,7 +88,7 @@ const Projects = () => {
         {projects.length > 0 ? (
           <>
             {filteredProjects.length > 0 ? (
-              <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                 {filteredProjects.map((project, index) => (
                   <ProjectCard
                     key={index}

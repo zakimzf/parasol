@@ -140,20 +140,20 @@ const ProjectCard = ({
                 <span>{endTime.toISOString().slice(0, 10)}</span>
               </div>
             </div>
-            <div className="flex gap-x-3">
+            <div className="flex flex-row lg:flex-col xl:flex-row gap-x-3">
               {startTime >= Date.now() ? (
                 <button
                   onClick={() => {
                     setReminder(true);
                     setProjectKey(id);
                   }}
-                  className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap">
+                  className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap lg:mb-3 xl:mb-0">
                   <BellIcon className={"w-5 h-5"} />
               Set a Reminder
                 </button>
               ) : (
                 <Link href={`/projects/${id}/participate`} passHref>
-                  <button className="button bg-[#5d5774] py-3 flex-1 text-base whitespace-nowrap">
+                  <button className="button bg-[#5d5774] py-3 flex-1 text-base whitespace-nowrap lg:mb-3 xl:mb-0">
                     <CollectionIcon className={"w-5 h-5"} />
                 Participate in IDO
                   </button>

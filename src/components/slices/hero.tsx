@@ -55,9 +55,9 @@ const Hero = () => (
               Buy your NFT access key now! (limited quantity) 🎉
             </p>
           </div>
-          <div className="mt-8 grid lg:flex gap-3 grid-cols-1 lg:grid-cols-2 justify-start">
+          <div className="mt-8 grid lg:flex gap-3 grid-cols-2 justify-start">
             <Link href={"/tiers"}>
-              <a className="button px-10 bg-none bg-purple-2 py-3 text-base">
+              <a className="button px-10 lg:px-5 bg-none bg-purple-2 py-3 text-base">
                 <ShoppingBagIcon className={"w-5 h-5"} />
                 Buy NFT Access Key
               </a>
