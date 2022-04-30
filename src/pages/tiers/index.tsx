@@ -100,8 +100,8 @@ const Tiers = function () {
       </Head>
       <section>
         <Container>
-          <div className={"grid md:grid-cols-3 pt-10 pb-16"}>
-            <div className={"flex gap-x-2 items-center"} />
+          <div className={"grid md:grid-cols-1 pt-10 pb-16"}>
+            <div className={"flex gap-x-2 items-center md:hidden"} />
             <div>
               <div className="text-center">
                 <h2 className="text-base font-semibold tracking-wider mb-3 text-purple-400 uppercase">
@@ -118,7 +118,7 @@ const Tiers = function () {
                 </p>
               </div>
             </div>
-            <div className={"flex gap-x-2 md:justify-end items-center justify-center mt-5"}>
+            <div className={"flex gap-x-2 md:justify-center items-center justify-center mt-5"}>
               <Link href={"/tiers/migrate"}>
                 <a className="flex gap-x-2 items-center bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
                   <UploadIcon className={"w-4"} />
