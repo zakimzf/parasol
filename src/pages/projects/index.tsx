@@ -24,7 +24,7 @@ const Projects = () => {
     .slice(0, 9);
 
   const finishedProjects = projects
-    .filter((e) => e.status === "FINISHED")
+    .filter((e) => e.status === "FINISHED" || new Date() > e.endTime)
     .slice(0, 9);
     
   const draftProjects = projects
@@ -53,7 +53,7 @@ const Projects = () => {
         title={"Upcoming & Live Projects"}
         description={"Here are all the projects of Parasol Finance."}
       />
-      <Layout short={true}>
+      <Layout>
         {draftProjects.length > 0 && (
           <section>
             <Container>
