@@ -1,5 +1,6 @@
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
+  important: true,
   variants: {
     scrollbar: ["rounded"],
   },
