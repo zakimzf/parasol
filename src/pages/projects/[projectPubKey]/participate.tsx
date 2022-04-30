@@ -232,7 +232,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
   }, [nfts, project]);
 
   return (
-    <section className={"relative overflow-hidden py-12"}>
+    <section className={"relative overflow-hidden lg:py-12"}>
       {nfts && ido && (
         <>
           {ido.startTime >= Date.now() && (
@@ -260,8 +260,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
           <Container>
             <div className={"px-0"}>
               <Layout short={true}>
-                <div className='grid md:grid-cols-8'>
-                  <div className='md:col-span-5 pt-10 md:pr-16'>
+                <div className="grid md:grid-cols-8 gap-y-6 lg:gap-y-0">
+                  <div className="md:col-span-5 pt-10 md:pr-16">
                     <Link href={`/projects/${projectPubKey}`}>
                       <a className='inline-flex gap-x-2 items-center rounded-lg text-gray-300'>
                         <ArrowLeftIcon className={"w-4"} />
@@ -278,10 +278,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     <p className='mt-6 prose prose-lg prose-invert line-clamp-5'>
                       {ido.description}
                     </p>
-                    <p className='mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10'>
-                      Token Sale Details
-                    </p>
-                    <div className='flex gap-x-12 lg:flex-row my-3'>
+                    <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">Token Sale Details</p>
+                    <div className="flex gap-x-12 flex-col my-3 gap-y-4 mxm:flex-row">
                       {ido.symbol && (
                         <div className='flex items-center'>
                           {ido.icon && (
@@ -338,7 +336,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         </div>
                       </div>
                     </div>
-                    <div className={"flex gap-x-10 mt-12"}>
+                    <div className={"flex gap-x-10 mt-12 flex-col gap-y-4 mxm:flex-row"}>
                       {ido.websiteUrl && (
                         <a
                           href={ido.websiteUrl}
@@ -537,10 +535,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           value={nftMint}
                           onChange={(nft) => setNftAndAllocation(nft)}
                         >
-                          <RadioGroup.Label className='sr-only'>
+                          <RadioGroup.Label className="sr-only">
                             Server size
                           </RadioGroup.Label>
-                          <div className='space-y-2'>
+                          <div className="space-y-2">
                             {nfts.length > 0 ? (
                               nfts.map((nft: any) => (
                                 <RadioGroup.Option
@@ -560,17 +558,17 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                 >
                                   {({ active, checked }) => (
                                     <>
-                                      <div className='flex items-center justify-between w-full'>
-                                        <div className='flex items-center'>
-                                          <div className='text-sm'>
+                                      <div className="flex items-center justify-between w-full">
+                                        <div className="flex items-center">
+                                          <div className="text-sm">
                                             <RadioGroup.Label
-                                              as='p'
+                                              as="p"
                                               className={`font-medium ${
                                                 checked ? "text-white" : ""
                                               }`}
                                             >
-                                              <div className='flex items-center'>
-                                                <div className='mr-4'>
+                                              <div className="flex items-center">
+                                                <div className="mr-4">
                                                   <img
                                                     className={
                                                       "w-12 h-12 rounded-md"
@@ -580,10 +578,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                                   />
                                                 </div>
                                                 <div>
-                                                  <p className='text-xs'>
+                                                  <p className="text-xs">
                                                     {nft.name}
                                                   </p>
-                                                  <h2 className='text-lg whitespace-nowrap'>
+                                                  <h2 className="text-lg whitespace-nowrap">
                                                     {nft.attributes[0].value}
                                                   </h2>
                                                 </div>
@@ -592,30 +590,31 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                           </div>
                                         </div>
                                         {checked && (
-                                          <div className='flex-shrink-0 text-purple-2'>
-                                            <CheckIcon className='w-6 h-6' />
+                                          <div className="flex-shrink-0 text-purple-2">
+                                            <CheckIcon className="w-6 h-6" />
                                           </div>
                                         )}
                                       </div>
                                     </>
                                   )}
                                 </RadioGroup.Option>
-                              ))
-                            ) : (
-                              <Link href={"/tiers"}>
-                                <a className='border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none'>
-                                  <div className='flex items-center justify-between w-full'>
-                                    <div className='flex items-center'>
-                                      <div className='text-sm'>
-                                        <p className='font-medium text-white'>
-                                          <div className='flex items-center'>
-                                            <div className='mr-4'>
-                                              {/*<Image width={32} height={32} src={Logo} className="h-5" alt="logo" />*/}
-                                              <img
-                                                className='w-12 h-12 rounded-md'
-                                                src='https://parasol.finance/assets/nft-access-keys/covers/Dreamer.png'
-                                                alt='PSOL KEY #2'
-                                              />
+                              )) :
+                              (
+                                <Link href={"/tiers"}>
+                                  <a className="border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none">
+                                    <div className="flex items-center justify-between w-full">
+                                      <div className="flex items-center">
+                                        <div className="text-sm">
+                                          <p className="font-medium text-white">
+                                            <div className="flex items-center">
+                                              <div className="mr-4">
+                                                {/*<Image width={32} height={32} src={Logo} className="h-5" alt="logo" />*/}
+                                                <img className="w-12 h-12 rounded-md" src="https://parasol.finance/assets/nft-access-keys/covers/Dreamer.png" alt="PSOL KEY #2" />
+                                              </div>
+                                              <div>
+                                                <p className="text-xs">You don&apos;t have an NFT currently.</p>
+                                                <h2 className="text-xs whitespace-nowrap mxm:text-lg">Buy your NFT Access Key!</h2>
+                                              </div>
                                             </div>
                                             <div>
                                               <p className='text-xs'>
@@ -677,7 +676,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   </div>
                 </div>
                 {ido.content && (
-                  <div className={"flex gap-x-12"}>
+                  <div className={"flex gap-x-12 flex-col mxm:flex-row"}>
                     <div className={"w-48"}>
                       <ul
                         role='list'
