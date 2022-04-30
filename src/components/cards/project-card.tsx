@@ -113,7 +113,7 @@ const ProjectCard = ({
           </div>
         ) : (
           <>
-            <h2 className="flex gap-x-3 items-center text-2xl mb-2 font-bold">
+            <h2 className="flex gap-x-2 sm:gap-x-3 items-center text-2xl mb-2 font-bold">
               {logo && (
                 <img
                   className="w-6 h-6 border-4 border-gray-700 bg-gray-700 rounded-md"
@@ -140,20 +140,20 @@ const ProjectCard = ({
                 <span>{endTime.toISOString().slice(0, 10)}</span>
               </div>
             </div>
-            <div className="flex flex-row lg:flex-col xl:flex-row gap-x-3">
+            <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-x-3">
               {startTime >= Date.now() ? (
                 <button
                   onClick={() => {
                     setReminder(true);
                     setProjectKey(id);
                   }}
-                  className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap lg:mb-3 xl:mb-0">
+                  className="button py-3 flex-1 gap-x-1 text-base whitespace-nowrap mb-3 sm:mb-0 lg:mb-3 xl:mb-0">
                   <BellIcon className={"w-5 h-5"} />
               Set a Reminder
                 </button>
               ) : (
                 <Link href={`/projects/${id}/participate`} passHref>
-                  <button className="button bg-[#5d5774] py-3 flex-1 text-base whitespace-nowrap lg:mb-3 xl:mb-0">
+                  <button className="button bg-[#5d5774] py-3 flex-1 text-base whitespace-nowrap mb-3 sm:mb-0 lg:mb-3 xl:mb-0">
                     <CollectionIcon className={"w-5 h-5"} />
                 Participate in IDO
                   </button>
