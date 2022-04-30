@@ -1,14 +1,19 @@
-import Container from "../../../components/container";
-import Card from "../../../components/card";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { NftContext } from "../../../context/NftContext";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { RadioGroup } from "@headlessui/react";
+import Link from "next/link";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { NftStore, Project } from "parasol-finance-sdk";
-import { PublicKey } from "@solana/web3.js";
+
 import axios from "axios";
+import { PublicKey } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { NftStore, Project } from "parasol-finance-sdk";
 import NumberFormat from "react-number-format";
+import { SRLWrapper } from "simple-react-lightbox";
+import { ScrollPercentage } from "react-scroll-percentage";
+import NProgress from "nprogress";
+
+import { RadioGroup } from "@headlessui/react";
+import { BadgeCheckIcon, ClockIcon } from "@heroicons/react/solid";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -18,27 +23,27 @@ import {
   GlobeAltIcon,
   HandIcon,
 } from "@heroicons/react/outline";
-import Layout from "../../../components/layout";
-import { BadgeCheckIcon, ClockIcon } from "@heroicons/react/solid";
-import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
-import Link from "next/link";
-import dynamic from "next/dynamic";
-import { SRLWrapper } from "simple-react-lightbox";
-import { ScrollPercentage } from "react-scroll-percentage";
-import NProgress from "nprogress";
+
+import { Loading } from "components"
+
+import Card from "components/card";
+import Container from "components/container";
+import Layout from "components/layout";
+import { useReminderModal } from "components/reminder-modal/useReminderModal";
 import {
   isToday,
   notification,
   slugify,
   globalErrorHandle,
-} from "../../../utils/functions";
-import { useWalletModal } from "../../../components/wallet-connector";
+} from "utils/functions";
+import { useWalletModal } from "components/wallet-connector";
+import { NftContext } from "context/NftContext";
 
-const EditorJs = dynamic(() => import("../../../components/editorjs"), {
+const EditorJs = dynamic(() => import("components/editorjs"), {
   ssr: false,
 });
 
-const USDC_logo = require("../../../../public/assets/logos/usdc-logo.svg");
+import USDC_logo from "assets/logos/usdc-logo.svg"
 
 const nftAllocation: any = {
   Dreamer: 210,
@@ -210,7 +215,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     setNftMint(nft);
     setallocation(
       nftAllocation[nft.attributes[0].value] *
-        projectData.allocationFeeBasisPoints
+      projectData.allocationFeeBasisPoints
     );
   };
 
@@ -225,7 +230,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       setNftMint(nfts[0]);
       setallocation(
         nftAllocation[nfts[0].attributes[0].value] *
-          projectData_.allocationFeeBasisPoints
+        projectData_.allocationFeeBasisPoints
       );
     };
     if (nfts && nfts[0] && !nftsReady && project) initNfts();
@@ -233,7 +238,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
 
   return (
     <section className={"relative overflow-hidden lg:py-12"}>
-      {nfts && ido && (
+      {nfts && ido ? (
         <>
           {ido.startTime >= Date.now() && (
             <div
@@ -551,14 +556,12 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                   key={nft.name}
                                   value={nft}
                                   className={({ active, checked }) =>
-                                    `${
-                                      active
-                                        ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
-                                        : ""
-                                    } ${
-                                      checked
-                                        ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                                        : "border-2 border-transparent bg-white bg-opacity-5"
+                                    `${active
+                                      ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
+                                      : ""
+                                    } ${checked
+                                      ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                                      : "border-2 border-transparent bg-white bg-opacity-5"
                                     } relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none`
                                   }
                                 >
@@ -569,8 +572,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                           <div className="text-sm">
                                             <RadioGroup.Label
                                               as="p"
-                                              className={`font-medium ${
-                                                checked ? "text-white" : ""
+                                              className={`font-medium ${checked ? "text-white" : ""
                                               }`}
                                             >
                                               <div className="flex items-center">
@@ -659,10 +661,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               ido.startTime > Date.now() ||
                               loading
                             }
-                            className={`w-full ${
-                              nfts.length == 0
-                                ? "opacity-70 cursor-not-allowed"
-                                : ""
+                            className={`w-full ${nfts.length == 0
+                              ? "opacity-70 cursor-not-allowed"
+                              : ""
                             } mt-8 button`}
                             onClick={submitParticipation}
                           >
@@ -708,8 +709,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                   className="block focus:outline-none"
                                 >
                                   <p
-                                    className={`${
-                                      block.data.level > 2 ? "pl-3-" : ""
+                                    className={`${block.data.level > 2 ? "pl-3-" : ""
                                     } flex items-center gap-x-1 text-sm font-medium text-gray-300 hover:text-gray-200  hover:translate-x-3 duration-300`}
                                   >
                                     <ChevronRightIcon className={"w-3 h-3"} />
@@ -747,7 +747,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
             </div>
           </Container>
         </>
-      )}
+      ) :
+        <Loading />
+      }
     </section>
   );
 };
