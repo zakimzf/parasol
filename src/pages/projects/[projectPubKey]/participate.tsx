@@ -250,7 +250,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   setReminder(true);
                   setProjectKey("lol");
                 }}
-                className='button py-3 text-base whitespace-nowrap'
+                className="button py-3 text-base whitespace-nowrap"
               >
                 <BellIcon className={"w-5 h-5"} />
                 Set a Reminder
@@ -263,40 +263,42 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                 <div className="grid md:grid-cols-8 gap-y-6 lg:gap-y-0">
                   <div className="md:col-span-5 pt-10 md:pr-16">
                     <Link href={`/projects/${projectPubKey}`}>
-                      <a className='inline-flex gap-x-2 items-center rounded-lg text-gray-300'>
+                      <a className="inline-flex gap-x-2 items-center rounded-lg text-gray-300">
                         <ArrowLeftIcon className={"w-4"} />
                         Back to Project
                       </a>
                     </Link>
-                    <h1 className='flex gap-x-3 text-4xl tracking-tight font-extrabold text-white mt-5 sm:leading-none lg:text-5xl xl:text-6xl'>
+                    <h1 className="flex gap-x-3 text-4xl tracking-tight font-extrabold text-white mt-5 sm:leading-none lg:text-5xl xl:text-6xl">
                       <span className={"text-purple-2"}>{ido.name}</span>
                       <span>Presale</span>
                       {ido.isFeatured && (
                         <BadgeCheckIcon className={"w-8 h-8 text-purple-2"} />
                       )}
                     </h1>
-                    <p className='mt-6 prose prose-lg prose-invert line-clamp-5'>
+                    <p className="mt-6 prose prose-lg prose-invert line-clamp-5">
                       {ido.description}
                     </p>
-                    <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">Token Sale Details</p>
+                    <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">
+                      Token Sale Details
+                    </p>
                     <div className="flex gap-x-12 flex-col my-3 gap-y-4 mxm:flex-row">
                       {ido.symbol && (
-                        <div className='flex items-center'>
+                        <div className="flex items-center">
                           {ido.icon && (
-                            <div className='mr-4'>
-                              <img alt='FOXY' className='w-10' src={ido.icon} />
+                            <div className="mr-4">
+                              <img alt="FOXY" className="w-10" src={ido.icon} />
                             </div>
                           )}
                           <div>
-                            <p className='text-sm'>Token Symbol</p>
-                            <h4 className='text-xl whitespace-nowrap'>
+                            <p className="text-sm">Token Symbol</p>
+                            <h4 className="text-xl whitespace-nowrap">
                               ${ido.symbol}
                             </h4>
                           </div>
                         </div>
                       )}
-                      <div className='flex items-center'>
-                        <div className='mr-4'>
+                      <div className="flex items-center">
+                        <div className="mr-4">
                           <img
                             className={"w-10 h-10"}
                             src={"/assets/logos/usdc-logo.svg"}
@@ -304,8 +306,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           />
                         </div>
                         <div>
-                          <p className='text-sm'>Token Price</p>
-                          <h4 className='text-xl whitespace-nowrap'>
+                          <p className="text-sm">Token Price</p>
+                          <h4 className="text-xl whitespace-nowrap">
                             <NumberFormat
                               value={ido.salePrice}
                               displayType={"text"}
@@ -315,8 +317,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           </h4>
                         </div>
                       </div>
-                      <div className='flex items-center'>
-                        <div className='mr-4'>
+                      <div className="flex items-center">
+                        <div className="mr-4">
                           <img
                             className={"w-10 h-10"}
                             src={"/assets/logos/usdc-logo.svg"}
@@ -324,8 +326,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           />
                         </div>
                         <div>
-                          <p className='text-sm'>Hard Cap</p>
-                          <h4 className='text-xl whitespace-nowrap'>
+                          <p className="text-sm">Hard Cap</p>
+                          <h4 className="text-xl whitespace-nowrap">
                             <NumberFormat
                               value={ido.hardCap}
                               displayType={"text"}
@@ -336,7 +338,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         </div>
                       </div>
                     </div>
-                    <div className={"flex gap-x-10 mt-12 flex-col gap-y-4 mxm:flex-row"}>
+                    <div
+                      className={
+                        "flex gap-x-10 mt-12 flex-col gap-y-4 mxm:flex-row"
+                      }
+                    >
                       {ido.websiteUrl && (
                         <a
                           href={ido.websiteUrl}
@@ -357,11 +363,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         >
                           <svg
                             className={"w-5 text-gray-300"}
-                            xmlns='http://www.w3.org/2000/svg'
-                            viewBox='0 0 512 512'
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
                           >
                             <path
-                              d='M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z'
+                              d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"
                               fill={"currentColor"}
                             />
                           </svg>
@@ -382,13 +388,13 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       </div>
                     </div>
                   </div>
-                  <div className='md:col-span-3'>
+                  <div className="md:col-span-3">
                     <Card padded={true}>
-                      <div className='p-2'>
-                        <h2 className='flex gap-x-2 items-center text-3xl font-bold'>
+                      <div className="p-2">
+                        <h2 className="flex gap-x-2 items-center text-3xl font-bold">
                           Participate Now!
                         </h2>
-                        <p className='text-lg text-gray-300 line-clamp-2 mt-5 font-medium'>
+                        <p className="text-lg text-gray-300 line-clamp-2 mt-5 font-medium">
                           To participate in the IDO, please enter your desired
                           amount and choose your NFT.
                         </p>
@@ -417,7 +423,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                 "flex gap-x-2 items-center justify-end w-16"
                               }
                             >
-                              <div className='bg-gray-400 h-2 flex-1 rounded-full'>
+                              <div className="bg-gray-400 h-2 flex-1 rounded-full">
                                 <div
                                   style={{
                                     width: `${(
@@ -425,7 +431,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                       100
                                     ).toFixed(0)}%`,
                                   }}
-                                  className='bg-purple-2 h-2 rounded-full'
+                                  className="bg-purple-2 h-2 rounded-full"
                                 />
                               </div>
                               <p className={"text-xs"}>
@@ -471,12 +477,12 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             className={"flex justify-between items-end mb-4"}
                           >
                             <label
-                              htmlFor='amount'
-                              className='text-sm font-medium'
+                              htmlFor="amount"
+                              className="text-sm font-medium"
                             >
                               Participation Amount
                             </label>
-                            <div className='flex gap-x-2 items-center text-xs font-medium'>
+                            <div className="flex gap-x-2 items-center text-xs font-medium">
                               <label>
                                 Balance: {usdcBalance.toLocaleString("en-US")}{" "}
                                 USDC
@@ -499,26 +505,26 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               </button>
                             </div>
                           </div>
-                          <div className='mt-2 relative rounded-md shadow-sm'>
+                          <div className="mt-2 relative rounded-md shadow-sm">
                             <input
                               readOnly={
                                 walletAddress === undefined ||
                                 nfts.length === 0 ||
                                 ido.startTime > Date.now()
                               }
-                              type='number'
-                              name='amount'
-                              id='amount'
+                              type="number"
+                              name="amount"
+                              id="amount"
                               onChange={(e) => setAmount(e.target.value)}
                               value={amount}
-                              className='w-full p-3 block placeholder:text-gray-300 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 pr-12'
-                              placeholder='0.00'
-                              aria-describedby='price-currency'
+                              className="w-full p-3 block placeholder:text-gray-300 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 pr-12"
+                              placeholder="0.00"
+                              aria-describedby="price-currency"
                             />
-                            <div className='absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none'>
+                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
                               <span
-                                className='flex gap-x-1 items-center text-gray-300 sm:text-sm'
-                                id='price-currency'
+                                className="flex gap-x-1 items-center text-gray-300 sm:text-sm"
+                                id="price-currency"
                               >
                                 <img
                                   className={"w-4 h-4"}
@@ -598,43 +604,52 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                     </>
                                   )}
                                 </RadioGroup.Option>
-                              ))) :
-                              (
-                                <Link href={"/tiers"}>
-                                  <a className="border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none">
-                                    <div className="flex items-center justify-between w-full">
-                                      <div className="flex items-center">
-                                        <div className="text-sm">
-                                          <p className="font-medium text-white">
-                                            <div className="flex items-center">
-                                              <div className="mr-4">
-                                                {/*<Image width={32} height={32} src={Logo} className="h-5" alt="logo" />*/}
-                                                <img className="w-12 h-12 rounded-md" src="https://parasol.finance/assets/nft-access-keys/covers/Dreamer.png" alt="PSOL KEY #2" />
-                                              </div>
-                                              <div>
-                                                <p className="text-xs">You don&apos;t have an NFT currently.</p>
-                                                <h2 className="text-xs whitespace-nowrap mxm:text-lg">Buy your NFT Access Key!</h2>
-                                              </div>
+                              ))
+                            ) : (
+                              <Link href={"/tiers"}>
+                                <a className="border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none">
+                                  <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center">
+                                      <div className="text-sm">
+                                        <p className="font-medium text-white">
+                                          <div className="flex items-center">
+                                            <div className="mr-4">
+                                              {/*<Image width={32} height={32} src={Logo} className="h-5" alt="logo" />*/}
+                                              <img
+                                                className="w-12 h-12 rounded-md"
+                                                src="https://parasol.finance/assets/nft-access-keys/covers/Dreamer.png"
+                                                alt="PSOL KEY #2"
+                                              />
                                             </div>
                                             <div>
-                                              <p className='text-xs'>
+                                              <p className="text-xs">
                                                 You don&apos;t have an NFT
                                                 currently.
                                               </p>
-                                              <h2 className='text-lg whitespace-nowrap'>
+                                              <h2 className="text-xs whitespace-nowrap mxm:text-lg">
                                                 Buy your NFT Access Key!
                                               </h2>
                                             </div>
-                                          </p>
-                                        </div>
-                                      </div>
-                                      <div className='flex-shrink-0 text-purple-2 px-3'>
-                                        <ArrowRightIcon className={"w-5"} />
+                                          </div>
+                                          <div>
+                                            <p className="text-xs">
+                                              You don&apos;t have an NFT
+                                              currently.
+                                            </p>
+                                            <h2 className="text-lg whitespace-nowrap">
+                                              Buy your NFT Access Key!
+                                            </h2>
+                                          </div>
+                                        </p>
                                       </div>
                                     </div>
-                                  </a>
-                                </Link>
-                              )}
+                                    <div className="flex-shrink-0 text-purple-2 px-3">
+                                      <ArrowRightIcon className={"w-5"} />
+                                    </div>
+                                  </div>
+                                </a>
+                              </Link>
+                            )}
                           </div>
                         </RadioGroup>
                         {walletAddress ? (
@@ -678,8 +693,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   <div className={"flex gap-x-12 flex-col mxm:flex-row"}>
                     <div className={"w-48"}>
                       <ul
-                        role='list'
-                        className='pt-4 divide-y-divide-gray-200-divide-opacity-10'
+                        role="list"
+                        className="pt-4 divide-y-divide-gray-200-divide-opacity-10"
                       >
                         {JSON.parse(ido.content).blocks.map((block: any) => {
                           if (
@@ -687,10 +702,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             block.data.level <= 3
                           ) {
                             return (
-                              <li key={block.id} className='relative py-2'>
+                              <li key={block.id} className="relative py-2">
                                 <a
                                   href={`#${slugify(block.data.text)}`}
-                                  className='block focus:outline-none'
+                                  className="block focus:outline-none"
                                 >
                                   <p
                                     className={`${
@@ -711,7 +726,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     </div>
                     <div className={"flex-1"}>
                       <ScrollPercentage
-                        as='div'
+                        as="div"
                         onChange={(percentage) => NProgress.set(percentage)}
                       >
                         <div
