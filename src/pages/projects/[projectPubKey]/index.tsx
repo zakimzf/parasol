@@ -165,12 +165,12 @@ const ProjectDetails = () => {
                     <Tab.Group>
                       <Tab.List className={"mb-3"}>
                         <div className="border-b border-gray-500">
-                          <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+                          <nav className="-mb-px flex sxm:space-x-8" aria-label="Tabs">
                             <Tab as={Fragment}>
                               {({ selected }) => (
                                 <a
                                   href={"#details"}
-                                  className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                                  className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                                   aria-current={selected ? "page" : undefined}>
                                   Project Details
                                 </a>
@@ -180,7 +180,7 @@ const ProjectDetails = () => {
                               {({ selected }) => (
                                 <a
                                   href={"#token"}
-                                  className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                                  className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                                   aria-current={selected ? "page" : undefined}>
                                   Token Details
                                 </a>
@@ -191,7 +191,7 @@ const ProjectDetails = () => {
                                 {({ selected }) => (
                                   <a
                                     href={"#wp"}
-                                    className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 whitespace-nowrap pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
+                                    className={`${selected ? "border-purple-2 text-purple-2" : "border-transparent hover:text-purple-2 hover:border-purple-2"} flex items-center gap-x-1 pt-2 pb-3 px-1 border-b-2 font-medium text-sm"`}
                                     aria-current={selected ? "page" : undefined}>
                                     White Paper
                                   </a>
