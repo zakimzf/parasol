@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/outline";
+import Head from "next/head";
+
+import { PublicKey } from "@solana/web3.js";
+import { TOKEN_PROGRAM_ID } from "@solana/spl-token"
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react";
-import { PublicKey } from "@solana/web3.js";
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-
-import { TokenChooserMode, useTokenModal } from "../components/token-chooser/useTokenModal";
+import { ChevronDownIcon } from "@heroicons/react/outline";
 import { getPlatformFeeAccounts, Jupiter, RouteInfo, TOKEN_LIST_URL } from "@jup-ag/core";
 
-import { Token } from "../components/token-chooser/constants";
-import { useWalletModal } from "../components/wallet-connector";
-import { getWalletAdapterNetwork } from "../core/solana-network";
-import Head from "next/head";
-import { notification } from "../utils/functions";
+import { Token } from "components/token-chooser/constants";
+import { TokenChooserMode, useTokenModal } from "components/token-chooser/useTokenModal";
+import { useWalletModal } from "components/wallet-connector";
+import { getWalletAdapterNetwork } from "core/solana-network";
+import { notification } from "utils/functions";
 
 const Swap = () => {
   const { connection } = useConnection();
   const wallet = useWallet();
-  const [selected, setSelected] = useState<RouteInfo>();
-  const { setVisible, setMode, input, output, setInput, setOutput } =
-    useTokenModal();
   const walletModal = useWalletModal();
+  const { setVisible, setMode, input, output, setInput, setOutput } = useTokenModal();
+
+  const [selected, setSelected] = useState<RouteInfo>();
   const [tokens, setTokens] = useState<Token[]>([]);
   const [inputAmount, setInputAmount] = useState(0);
   const [platformFeeAndAccounts, setPlatformFeeAndAccounts] = useState<{
@@ -114,6 +115,7 @@ const Swap = () => {
       setOBalance(0);
     }
   };
+
   const getRoutes = async () => {
     if (inputAmount === 0) {
       setRate("0");
@@ -285,8 +287,7 @@ const Swap = () => {
         <button
           id="swap-btn"
           onClick={startSwap}
-          className={`flex items-center justify-center w-full gap-x-2 bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 text-lg font-medium rounded-lg ${
-            isPending || !swapStatus ? "opacity-50" : ""
+          className={`flex items-center justify-center w-full gap-x-2 bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 text-lg font-medium rounded-lg ${isPending || !swapStatus ? "opacity-50" : ""
           }`}
           disabled={isPending || !swapStatus}
         >
@@ -424,9 +425,9 @@ const Swap = () => {
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | Swap</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | Swap"/>
-        <meta property="og:image" content="/assets/preview/swap.png"/>
-        <meta property="twitter:image" content="/assets/preview/swap.png"/>
+        <meta name="title" content="Parasol Finance ($PSOL) | Swap" />
+        <meta property="og:image" content="/assets/preview/swap.png" />
+        <meta property="twitter:image" content="/assets/preview/swap.png" />
       </Head>
       <section className="pt-6 pb-20">
         <div className="flex flex-col gap-y-6 max-w-md mx-auto mt-6 xxs:px-5 xs:px-0">
@@ -459,8 +460,7 @@ const Swap = () => {
               </div>
             </div>
             <div
-              className={`flex justify-between items-stretch bg-white bg-opacity-5 rounded-xl px-4 py-3 ${
-                balanceAvailable ? "outline-hidden" : "outline outline-red-700"
+              className={`flex justify-between items-stretch bg-white bg-opacity-5 rounded-xl px-2 py-3 ${balanceAvailable ? "outline-hidden" : "outline outline-red-700"
               }`}
             >
               {chosenInput && (
@@ -470,17 +470,17 @@ const Swap = () => {
                     setVisible(true);
                   }}
                   type="button"
-                  className="gap-x-2 py-2 px-2 rounded-lg flex items-center hover:bg-gray-500 hover:bg-opacity-10"
+                  className="flex gap-x-2 px-4 py-3 rounded-lg items-center bg-gray-500 bg-opacity-10 hover:bg-opacity-20"
                 >
                   <img
                     src={chosenInput.logoURI}
                     className="w-5 h-5 rounded-full"
                     alt={chosenInput.symbol}
                   />
-                  <div className="font-semibold" translate={"no"}>
+                  <div className="font-semibold flex items-center" translate={"no"}>
                     {chosenInput.symbol}
                   </div>
-                  <ChevronDownIcon className={"h-5"}/>
+                  <ChevronDownIcon className={"h-5"} />
                 </button>
               )}
               <input
@@ -524,7 +524,11 @@ const Swap = () => {
                 </label>
               </div>
             </div>
-            <div className="relative flex justify-between items-center py-3">
+            <div
+              className={`flex justify-between items-center bg-white bg-opacity-5 rounded-xl px-2 py-3 ${balanceAvailable ? "outline-hidden" : "outline outline-red-700"
+              }`}
+            >
+              {/* <div className="relative flex justify-between items-center py-3"> */}
               {chosenOutput && (
                 <button
                   type="button"
@@ -542,7 +546,7 @@ const Swap = () => {
                   <div className="font-semibold" translate={"no"}>
                     {chosenOutput.symbol}
                   </div>
-                  <ChevronDownIcon className={"h-5"}/>
+                  <ChevronDownIcon className={"h-5"} />
                 </button>
               )}
               <div className="font-semibold mr-3 text-gray-300 text-lg">
@@ -569,14 +573,12 @@ const Swap = () => {
                       key={route.marketInfos[0].amm.label}
                       value={route}
                       className={({ active, checked }) =>
-                        `${
-                          active
-                            ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
-                            : ""
-                        } ${
-                          checked
-                            ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                            : "border-2 border-transparent bg-white bg-opacity-5"
+                        `${active
+                          ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
+                          : ""
+                        } ${checked
+                          ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                          : "border-2 border-transparent bg-white bg-opacity-5"
                         } relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
                       }
                     >
@@ -586,8 +588,7 @@ const Swap = () => {
                             <div className="text-sm">
                               <RadioGroup.Label
                                 as="p"
-                                className={`font-medium ${
-                                  checked ? "text-white" : ""
+                                className={`font-medium ${checked ? "text-white" : ""
                                 }`}
                               >
                                 {route.marketInfos[0].amm.label}
@@ -677,7 +678,7 @@ const Swap = () => {
               <div className="flex items-center justify-between text-xs">
                 <div className="text-black-50 dark:text-white-50">
                   <span>
-                  Fees paid to <span translate="no">Raydium</span> LP
+                    Fees paid to <span translate="no">Raydium</span> LP
                   </span>
                 </div>
                 <div className="text-black-50 dark:text-white-50">
