@@ -2,15 +2,22 @@ import React, { useEffect, useState } from "react";
 import Head from "next/head";
 
 import { PublicKey } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID } from "@solana/spl-token"
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/outline";
-import { getPlatformFeeAccounts, Jupiter, RouteInfo, TOKEN_LIST_URL } from "@jup-ag/core";
+import {
+  getPlatformFeeAccounts,
+  Jupiter,
+  RouteInfo,
+  TOKEN_LIST_URL,
+} from "@jup-ag/core";
 
 import { Token } from "components/token-chooser/constants";
-import { TokenChooserMode, useTokenModal } from "components/token-chooser/useTokenModal";
+import {
+  TokenChooserMode,
+  useTokenModal,
+} from "components/token-chooser/useTokenModal";
 import { useWalletModal } from "components/wallet-connector";
 import { getWalletAdapterNetwork } from "core/solana-network";
 import { notification } from "utils/functions";
@@ -19,7 +26,8 @@ const Swap = () => {
   const { connection } = useConnection();
   const wallet = useWallet();
   const walletModal = useWalletModal();
-  const { setVisible, setMode, input, output, setInput, setOutput } = useTokenModal();
+  const { setVisible, setMode, input, output, setInput, setOutput } =
+    useTokenModal();
 
   const [selected, setSelected] = useState<RouteInfo>();
   const [tokens, setTokens] = useState<Token[]>([]);
@@ -91,10 +99,10 @@ const Swap = () => {
   const getIOBalance = async () => {
     const [iResult, oResult] = await Promise.all([
       connection.getParsedTokenAccountsByOwner(wallet.publicKey as any, {
-        mint: input
+        mint: input,
       }),
       connection.getParsedTokenAccountsByOwner(wallet.publicKey as any, {
-        mint: output
+        mint: output,
       }),
     ]);
 
@@ -209,11 +217,19 @@ const Swap = () => {
       console.log(swapResult);
       if ("error" in swapResult) {
         setSwapResult(false);
-        notification("danger", `Unable to swap: ${swapResult.error}`, "Transaction Error");
+        notification(
+          "danger",
+          `Unable to swap: ${swapResult.error}`,
+          "Transaction Error"
+        );
       }
       else if ("txid" in swapResult) {
         setSwapResult(true);
-        notification("success", `TXID: ${swapResult.txid}`, "Transaction Success");
+        notification(
+          "success",
+          `TXID: ${swapResult.txid}`,
+          "Transaction Success"
+        );
         // console.log("Success:", swapResult.txid);
         // console.log("Input:", swapResult.inputAmount);
         // console.log("Output:", swapResult.outputAmount);
@@ -232,7 +248,11 @@ const Swap = () => {
       }
     }
     else {
-      notification("information", "Please connect your wallet before.", "Connection Required");
+      notification(
+        "information",
+        "Please connect your wallet before.",
+        "Connection Required"
+      );
     }
   };
   const getHalfAmount = () => {
@@ -245,7 +265,11 @@ const Swap = () => {
       }
     }
     else {
-      notification("information", "Please connect your wallet before.", "Connection Required");
+      notification(
+        "information",
+        "Please connect your wallet before.",
+        "Connection Required"
+      );
     }
   };
   const onBlurIAmountEvent = () => {
@@ -287,14 +311,14 @@ const Swap = () => {
         <button
           id="swap-btn"
           onClick={startSwap}
-          className={`flex items-center justify-center w-full gap-x-2 bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 text-lg font-medium rounded-lg ${isPending || !swapStatus ? "opacity-50" : ""
+          className={`mt-6 flex w-full items-center justify-center gap-x-2 rounded-lg bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium ${isPending || !swapStatus ? "opacity-50" : ""
           }`}
           disabled={isPending || !swapStatus}
         >
           {/*<RefreshIcon className={"w-5 h-5"} />*/}
           {isPending ? (
             <svg
-              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white w-[28px] h-[28px] ml-[6px] mt-[0px]"
+              className="-ml-1 mr-3 ml-[6px] mt-[0px] h-5 h-[28px] w-5 w-[28px] animate-spin text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -326,12 +350,12 @@ const Swap = () => {
       return (
         <button
           onClick={() => walletModal.setVisible(true)}
-          className="flex items-center justify-center w-full bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 gap-x-2 text-lg font-medium rounded-lg"
+          className="mt-6 flex w-full items-center justify-center gap-x-2 rounded-lg bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium"
           disabled={isPending}
         >
           {isPending ? (
             <svg
-              className="animate-spin -ml-1 mr-3 h-5 w-5 text-white w-[28px] h-[28px] ml-[6px] mt-[0px]"
+              className="-ml-1 mr-3 ml-[6px] mt-[0px] h-5 h-[28px] w-5 w-[28px] animate-spin text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -352,7 +376,7 @@ const Swap = () => {
             </svg>
           ) : (
             <svg
-              className="w-4 h-4"
+              className="h-4 w-4"
               viewBox="0 0 96 86"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -430,11 +454,11 @@ const Swap = () => {
         <meta property="twitter:image" content="/assets/preview/swap.png" />
       </Head>
       <section className="pt-6 pb-20">
-        <div className="flex flex-col gap-y-6 max-w-md mx-auto mt-6 xxs:px-5 xs:px-0">
-          <div className="bg-[#231f38] bg-opacity-80 shadow-xl rounded-xl shadow-half-strong border border-gray-800 p-8">
-            <div className={"flex justify-between items-end mb-4"}>
+        <div className="xxs:px-5 xs:px-0 mx-auto mt-6 flex max-w-md flex-col gap-y-6">
+          <div className="rounded-xl border border-gray-800 bg-[#231f38] bg-opacity-80 p-8 shadow-xl shadow-half-strong">
+            <div className={"mb-4 flex items-end justify-between"}>
               <label className="text-sm font-medium">Exchange From:</label>
-              <div className="flex gap-x-2 items-center text-xs font-medium">
+              <div className="flex items-center gap-x-2 text-xs font-medium">
                 <label>
                   Balance:{" "}
                   {(iBalance ? iBalance.toString() : "0") +
@@ -443,7 +467,7 @@ const Swap = () => {
                 </label>
                 <button
                   className={
-                    "bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"
+                    "rounded-full bg-gray-500 bg-opacity-50 px-2 py-[2px] text-[9px] font-bold uppercase text-gray-400 hover:bg-opacity-30"
                   }
                   onClick={getHalfAmount}
                 >
@@ -451,7 +475,7 @@ const Swap = () => {
                 </button>
                 <button
                   className={
-                    "bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"
+                    "rounded-full bg-gray-500 bg-opacity-50 px-2 py-[2px] text-[9px] font-bold uppercase text-gray-400 hover:bg-opacity-30"
                   }
                   onClick={getMaxAmount}
                 >
@@ -460,7 +484,7 @@ const Swap = () => {
               </div>
             </div>
             <div
-              className={`flex justify-between items-stretch bg-white bg-opacity-5 rounded-xl px-2 py-3 ${balanceAvailable ? "outline-hidden" : "outline outline-red-700"
+              className={`flex items-stretch justify-between rounded-xl bg-white bg-opacity-5 px-2 py-3 ${balanceAvailable ? "outline-hidden" : "outline outline-red-700"
               }`}
             >
               {chosenInput && (
@@ -470,14 +494,17 @@ const Swap = () => {
                     setVisible(true);
                   }}
                   type="button"
-                  className="flex gap-x-2 px-4 py-3 rounded-lg items-center bg-gray-500 bg-opacity-10 hover:bg-opacity-20"
+                  className="flex items-center gap-x-2 rounded-lg bg-gray-500 bg-opacity-10 px-4 py-3 hover:bg-opacity-20"
                 >
                   <img
                     src={chosenInput.logoURI}
-                    className="w-5 h-5 rounded-full"
+                    className="h-5 w-5 rounded-full"
                     alt={chosenInput.symbol}
                   />
-                  <div className="font-semibold flex items-center" translate={"no"}>
+                  <div
+                    className="flex items-center font-semibold"
+                    translate={"no"}
+                  >
                     {chosenInput.symbol}
                   </div>
                   <ChevronDownIcon className={"h-5"} />
@@ -487,23 +514,25 @@ const Swap = () => {
                 type={"number"}
                 inputMode="decimal"
                 value={inputAmount}
-                onChange={(e) => setInputAmount(restrictDecimal(+e.target.value))}
+                onChange={(e) =>
+                  setInputAmount(restrictDecimal(+e.target.value))
+                }
                 onBlur={onBlurIAmountEvent}
                 className={
-                  "bg-transparent outline-0 ring-0 border-transparent font-semibold text-right text-gray-300 text-lg w-full"
+                  "w-full border-transparent bg-transparent text-right text-lg font-semibold text-gray-300 outline-0 ring-0"
                 }
               />
             </div>
             {!balanceAvailable ? (
-              <div className="text-center text-red-500 text-xs my-4">
+              <div className="my-4 text-center text-xs text-red-500">
                 Your balance is not enough to swap this amount
               </div>
             ) : (
               ""
             )}
-            <button className="flex mx-auto" onClick={onTokenChangeEvent}>
+            <button className="mx-auto flex" onClick={onTokenChangeEvent}>
               <svg
-                className={"h-4 mt-5 mb-2 text-gray-300"}
+                className={"mt-5 mb-2 h-4 text-gray-300"}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 20 20"
               >
@@ -513,9 +542,9 @@ const Swap = () => {
                 />
               </svg>
             </button>
-            <div className={"flex justify-between items-end mb-4"}>
+            <div className={"mb-4 flex items-end justify-between"}>
               <label className="text-sm font-medium">And Receive:</label>
-              <div className="flex gap-x-2 items-center text-xs font-medium">
+              <div className="flex items-center gap-x-2 text-xs font-medium">
                 <label>
                   Balance:{" "}
                   {(oBalance ? oBalance.toString() : "0") +
@@ -525,7 +554,7 @@ const Swap = () => {
               </div>
             </div>
             <div
-              className={`flex justify-between items-center bg-white bg-opacity-5 rounded-xl px-2 py-3 ${balanceAvailable ? "outline-hidden" : "outline outline-red-700"
+              className={`flex items-center justify-between rounded-xl bg-white bg-opacity-5 px-2 py-3 ${balanceAvailable ? "outline-hidden" : "outline outline-red-700"
               }`}
             >
               {/* <div className="relative flex justify-between items-center py-3"> */}
@@ -536,11 +565,11 @@ const Swap = () => {
                     setMode(TokenChooserMode.Output);
                     setVisible(true);
                   }}
-                  className="flex gap-x-2 px-4 py-3 rounded-lg items-center bg-gray-500 bg-opacity-10 hover:bg-opacity-20"
+                  className="flex items-center gap-x-2 rounded-lg bg-gray-500 bg-opacity-10 px-4 py-3 hover:bg-opacity-20"
                 >
                   <img
                     src={chosenOutput.logoURI}
-                    className="w-5 h-5 rounded-full"
+                    className="h-5 w-5 rounded-full"
                     alt={chosenOutput.symbol}
                   />
                   <div className="font-semibold" translate={"no"}>
@@ -549,23 +578,25 @@ const Swap = () => {
                   <ChevronDownIcon className={"h-5"} />
                 </button>
               )}
-              <div className="font-semibold mr-3 text-gray-300 text-lg">
+              <div className="mr-3 text-lg font-semibold text-gray-300">
                 {routes.length > 0
                   ? routes[0].outAmount / 10 ** (chosenOutput as any).decimals
                   : 0.0}
               </div>
             </div>
-            <div className={"text-center text-gray-500 text-xs my-4"}>
+            <div className={"my-4 text-center text-xs text-gray-500"}>
               {getValidatedRouteText()}
             </div>
             <RadioGroup
               className={
-                "mt-6 max-h-[11rem] -mx-4 px-4 scrollbar-thin scrollbar-thumb-purple-2 scrollbar-thumb-rounded-full"
+                "scrollbar-thumb-rounded-full -mx-4 mt-6 max-h-[11rem] px-4 scrollbar-thin scrollbar-thumb-purple-2"
               }
               value={selected}
               onChange={setSelected}
             >
-              <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
+              <RadioGroup.Label className="sr-only">
+                Server size
+              </RadioGroup.Label>
               <div className="space-y-4">
                 {routes.length > 0 &&
                   routes.map((route: any) => (
@@ -574,17 +605,17 @@ const Swap = () => {
                       value={route}
                       className={({ active, checked }) =>
                         `${active
-                          ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
+                          ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
                           : ""
                         } ${checked
                           ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
                           : "border-2 border-transparent bg-white bg-opacity-5"
-                        } relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
+                        } relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
                       }
                     >
                       {({ active, checked }) => (
                         <>
-                          <div className="flex justify-between items-center w-full">
+                          <div className="flex w-full items-center justify-between">
                             <div className="text-sm">
                               <RadioGroup.Label
                                 as="p"
@@ -617,9 +648,9 @@ const Swap = () => {
               </div>
             </RadioGroup>
             {isRoutePending && routes.length > 0 && (
-              <div className="w-[100%] min-h-[11rem] mt-[-11rem] z-[10] grid place-items-center backdrop-blur-[2px]">
+              <div className="z-[10] mt-[-11rem] grid min-h-[11rem] w-[100%] place-items-center backdrop-blur-[2px]">
                 <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white w-[48px] h-[48px] ml-[6px] mt-[0px]"
+                  className="-ml-1 mr-3 ml-[6px] mt-[0px] h-5 h-[48px] w-5 w-[48px] animate-spin text-white"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -646,7 +677,7 @@ const Swap = () => {
             <div className="space-y-2 md:space-y-4">
               <div className="flex items-center justify-between text-xs">
                 <div className="text-black-50 dark:text-white-50">Rate</div>
-                <div className="flex cursor-pointer text-black-50 dark:text-white-50 text-xs align-center text-right">
+                <div className="text-black-50 dark:text-white-50 align-center flex cursor-pointer text-right text-xs">
                   <span className="min-w-[9.5rem] max-w-full whitespace-nowrap">
                     {rate == "0" ? 0 : 1} {chosenInput?.symbol} ≈ {rate}
                     {chosenOutput?.symbol}
