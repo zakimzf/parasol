@@ -8,13 +8,9 @@ import Link from "next/link";
 
 const idos = [
   {
-    name: "Jane Cooper",
-    title: "Regional Paradigm Technician",
-    role: "Admin",
-    email: "janecooper@example.com",
-    telephone: "+1-202-555-0170",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+    id: "lol",
+    name: "Secretum",
+    description: "Revolutionary Secure Messaging & Trading Dapp powered by Solana."
   },
 ]
 const TokenClaiming = () =>
@@ -89,19 +85,44 @@ const TokenClaiming = () =>
       <section>
         <Container>
           <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {idos.map((person) => (
-              <li key={person.email} className="col-span-1 card">
+            {idos.map((ido) => (
+              <li key={ido.id} className="col-span-1 card">
                 <div className="w-full flex items-center justify-between p-6 space-x-6">
                   <div className="flex-1 truncate">
                     <div className="flex items-center space-x-3">
-                      <h3 className="font-medium truncate">{person.name}</h3>
+                      <h3 className="font-medium truncate">{ido.name}</h3>
                       <span className="flex-shrink-0 inline-block px-2 py-0.5 text-xs font-medium bg-purple-2 rounded-full">
-                        {person.role}
+                        Finished
                       </span>
                     </div>
-                    <p className="mt-1 text-sm truncate">{person.title}</p>
+                    <p className="mt-1 text-sm truncate">{ido.description}</p>
+                    <div className={"grid grid-cols-2 gap-x-3 gap-y-6 mt-3"}>
+                      <div>
+                        <div className="flex text-sm font-medium items-center gap-x-3">
+                          <span>Purchased</span>
+                          <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                          <span className={"flex gap-x-1 items-center"}>50$</span>
+                        </div>
+                        <div className="flex text-sm font-medium items-center gap-x-3">
+                          <span>Released</span>
+                          <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                          <span className={"flex gap-x-1 items-center"}>25%</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div className="flex text-sm font-medium items-center gap-x-3">
+                          <span>Claimed</span>
+                          <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                          <span className={"flex gap-x-1 items-center"}>25$</span>
+                        </div>
+                        <div className="flex text-sm font-medium items-center gap-x-3">
+                          <span>Claimable</span>
+                          <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                          <span className={"flex gap-x-1 items-center"}>30$</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <img className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0" src={person.imageUrl} alt="" />
                 </div>
                 <div className={"flex border-t border-gray-800 divide-x divide-gray-800"}>
                   <button className={"flex flex-1 py-4 gap-x-2 justify-center items-center"}>
