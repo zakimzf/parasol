@@ -1,10 +1,11 @@
 import Container from "../../components/container";
-import { Menu, Transition } from "@headlessui/react"
-import React, { Fragment } from "react"
-import { ChevronDownIcon, HandIcon, InformationCircleIcon } from "@heroicons/react/outline";
+import React, { Fragment, useContext, useEffect, useState } from "react"
+import { CheckIcon, ChevronDownIcon, HandIcon, InformationCircleIcon } from "@heroicons/react/outline";
 import Head from "next/head";
 import Layout from "../../components/layout";
 import Link from "next/link";
+import { NftContext } from "../../context/NftContext";
+import { Listbox, Transition } from "@headlessui/react";
 
 const idos = [
   {
@@ -13,18 +14,23 @@ const idos = [
     description: "Revolutionary Secure Messaging & Trading Dapp powered by Solana."
   },
 ]
-const TokenClaiming = () =>
-  <>
+const TokenClaiming = () => {
+  const { nfts } = useContext(NftContext);
+
+  useEffect(() => setSelectedNft(nfts[0]), [nfts]);
+
+  const [selectedNft, setSelectedNft] = useState<any>();
+  return <>
     <Head>
       <title>Parasol Finance ($PSOL) | Tokens Claiming</title>
-      <meta name="title" content="Parasol Finance ($PSOL) | Tokens Claiming" />
+      <meta name="title" content="Parasol Finance ($PSOL) | Tokens Claiming"/>
       {/*<meta property="og:image" content="/assets/preview/seeding.png" />*/}
       {/*<meta property="twitter:image" content="/assets/preview/seeding.png" />*/}
     </Head>
     <section>
       <Container>
         <div className={"grid md:grid-cols-5 pt-10 pb-16"}>
-          <div className={"flex gap-x-2 items-center"} />
+          <div className={"flex gap-x-2 items-center"}/>
           <div className={"col-span-3"}>
             <div className="text-center">
               <h2 className="text-base font-semibold tracking-wider mb-3 text-purple-400 uppercase">Parasol Finance</h2>
@@ -34,49 +40,52 @@ const TokenClaiming = () =>
               </p>
             </div>
           </div>
-          <div className={"flex gap-x-2 md:justify-end items-center justify-center mt-5"}>
-            <Menu as="div" className="relative inline-block text-left">
-              <div>
-                <Menu.Button className={"flex gap-x-3 items-center border-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer focus:outline-none"}>
-                  {/*<Menu.Button className="flex gap-x-3 items-center bg-white bg-opacity-5 hover:bg-opacity-10 p-3 rounded-lg">*/}
+          <div className={"relative flex gap-x-2 md:justify-end items-center justify-center mt-5"}>
+            {selectedNft && (
+              <Listbox value={selectedNft} onChange={setSelectedNft}>
+                <Listbox.Button className={"relative flex gap-x-3 items-center border-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer focus:outline-none"}>
                   <div className="flex items-center">
                     <div className="mr-4">
-                      <img className="w-12 h-12 rounded-md" src="https://parasol.finance/assets/nft-access-keys/covers/MoonWalker.png" alt="PSOL KEY #404" />
+                      <img className="w-12 h-12 rounded-md" src={selectedNft.image} alt={selectedNft.name}/>
                     </div>
                     <div className={"text-left"}>
-                      <p className="text-xs">PSOL KEY #404</p>
-                      <h2 className="text-lg whitespace-nowrap">MoonWalker</h2>
+                      <p className="text-xs">{selectedNft.name}</p>
+                      <h2 className="text-lg whitespace-nowrap">{selectedNft.attributes[0].value}</h2>
                     </div>
                   </div>
-                  <ChevronDownIcon className={"h-5 w-5 text-purple-2"} />
-                </Menu.Button>
-              </div>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="focus:outline-none absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5">
-                  <div className="px-1 py-1 ">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          className={`${
-                            active ? "bg-violet-500 text-white" : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          Edit
-                        </button>
-                      )}
-                    </Menu.Item>
-                  </div>
-                </Menu.Items>
-              </Transition>
-            </Menu>
+                  <ChevronDownIcon className={"h-5 w-5 text-purple-2"}/>
+                </Listbox.Button>
+                <Transition
+                  as={Fragment}
+                  leave="transition ease-in duration-100"
+                  leaveFrom="opacity-100"
+                  leaveTo="opacity-0"
+                >
+                  <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    {nfts.map((nft: any) => (
+                      <Listbox.Option
+                        key={nft.name}
+                        className={({ active }) => `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-purple-2 text-white" : "text-gray-900"}`}
+                        value={nft}>
+                        {({ selected }) => (
+                          <>
+                            <span
+                              className={`block truncate ${selected ? "font-medium" : "font-normal"}`}>
+                              {nft.attributes[0].value} - {nft.name}
+                            </span>
+                            {selected ? (
+                              <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-purple-2">
+                                <CheckIcon className="h-5 w-5" aria-hidden="true" />
+                              </span>
+                            ) : null}
+                          </>
+                        )}
+                      </Listbox.Option>
+                    ))}
+                  </Listbox.Options>
+                </Transition>
+              </Listbox>
+            )}
           </div>
         </div>
       </Container>
@@ -100,24 +109,24 @@ const TokenClaiming = () =>
                       <div>
                         <div className="flex text-sm font-medium items-center gap-x-3">
                           <span>Purchased</span>
-                          <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                          <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
                           <span className={"flex gap-x-1 items-center"}>50$</span>
                         </div>
                         <div className="flex text-sm font-medium items-center gap-x-3">
                           <span>Released</span>
-                          <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                          <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
                           <span className={"flex gap-x-1 items-center"}>25%</span>
                         </div>
                       </div>
                       <div>
                         <div className="flex text-sm font-medium items-center gap-x-3">
                           <span>Claimed</span>
-                          <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                          <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
                           <span className={"flex gap-x-1 items-center"}>25$</span>
                         </div>
                         <div className="flex text-sm font-medium items-center gap-x-3">
                           <span>Claimable</span>
-                          <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                          <span className="flex-1 h-1 border-b border-dashed border-gray-400"/>
                           <span className={"flex gap-x-1 items-center"}>30$</span>
                         </div>
                       </div>
@@ -126,12 +135,12 @@ const TokenClaiming = () =>
                 </div>
                 <div className={"flex border-t border-gray-800 divide-x divide-gray-800"}>
                   <button className={"flex flex-1 py-4 gap-x-2 justify-center items-center"}>
-                    <HandIcon className="w-5 h-5" aria-hidden="true" />
+                    <HandIcon className="w-5 h-5" aria-hidden="true"/>
                     <span>Claim Tokens</span>
                   </button>
                   <Link href={"/projects/x"}>
                     <a className={"flex flex-1 py-4 gap-x-2 justify-center items-center"}>
-                      <InformationCircleIcon className="w-5 h-5" aria-hidden="true" />
+                      <InformationCircleIcon className="w-5 h-5" aria-hidden="true"/>
                       <span>IDO Details</span>
                     </a>
                   </Link>
@@ -142,6 +151,7 @@ const TokenClaiming = () =>
         </Container>
       </section>
     </Layout>
-  </>
+  </>;
+}
 
 export default TokenClaiming;
