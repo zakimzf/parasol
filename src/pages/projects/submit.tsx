@@ -26,7 +26,7 @@ const exchanges = [
 
 const packages = [
   { name: "Basic", description: "IDO Listing only without Ads.", price: 2100, fees: 3 },
-  { name: "Pro", description: "IDO Listing and Ads", price: 10500, fees: 2 },
+  { name: "Pro", description: "IDO Listing and Ads.", price: 10500, fees: 2 },
   { name: "Ultimate", description: "IDO Listing, Ads and AMA.", price: 21000, fees: 1 }
 ];
 
@@ -49,7 +49,7 @@ const SubmitProject = () => {
   const submitBtnRef: any = useRef(null);
 
   const idosCollectionRef = collection(db, "ido-metadata");
-  const [coverFile, setcoverFile] = useState<any>();
+  const [coverFile, setCoverFile] = useState<any>();
   const [loading, setLoading] = useState(false)
 
   const [values, setValues] = useState<any>({
@@ -310,7 +310,7 @@ const SubmitProject = () => {
     delete _errors["projectCover"];
     setErrors(_errors);
 
-    setcoverFile(file[0]);
+    setCoverFile(file[0]);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
