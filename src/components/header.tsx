@@ -410,7 +410,7 @@ const Header = () => {
           </Popover.Group>
           <div className="hidden md:flex items-center gap-x-5 justify-end md:flex-1 lg:w-0">
             <a
-              href={"https://coinmarketcap.com/fr/currencies/parasol-finance/"}
+              href={"https://coinmarketcap.com/currencies/parasol-finance/"}
               target={"_blank"}
               rel={"noreferrer"}
               className={"rounded-full bg-white-bg-opacity-60 px-4 py-2 font-medium flex items-center text-sm gap-x-2"}>
