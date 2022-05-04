@@ -176,7 +176,7 @@ const ProjectCard = ({
                     setReminder(true);
                     setProjectKey(id);
                   }}
-                  className="button py-3 !bg-none bg-purple-2 bg-opacity-60 flex-1 gap-x-1 text-base whitespace-nowrap">
+                  className="button py-3 !bg-none bg-purple-2 bg-opacity-60 hover:text-white flex-1 gap-x-1 text-base whitespace-nowrap">
                   <BellIcon className={"w-5 h-5"} />
                   Set a Reminder
                 </button>

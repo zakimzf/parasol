@@ -12,7 +12,7 @@ const Apply = () => (
       </p>
       <div className="mt-8 flex justify-center gap-x-3">
         <Link href={"/projects/submit"} passHref>
-          <a className={"button text-base !bg-none bg-purple-2"}>
+          <a className={"button text-base !bg-none hover:bg-white bg-purple-2"}>
             <PaperAirplaneIcon className={"w-5 h-5"} />
             <span className={"lg:hidden"}>Submit Project</span>
             <span className={"hidden lg:block"}>Submit Your Project</span>
