@@ -206,8 +206,8 @@ const Header = () => {
                 );
               }}
             </Popover>
-            <Link href={"/staking"}>
-              <a className="font-bold text-sm hover:text-gray-300">Staking</a>
+            <Link href={"/tiers"}>
+              <a className="font-bold text-sm hover:text-gray-300">NFT Access Keys</a>
             </Link>
             <Popover className="relative">
               {({ open = true }) => {
@@ -612,9 +612,9 @@ const Header = () => {
                     );
                   }}
                 </Popover>
-                <Link href={"/staking"}>
+                <Link href={"/tiers"}>
                   <a className="font-bold text-sm hover:text-gray-300 text-white">
-                    Staking
+                    NFT Access Keys
                   </a>
                 </Link>
                 <Popover className="relative">
