@@ -182,7 +182,7 @@ const ProjectCard = ({
                 </button>
               ) : (
                 <Link href={`/projects/${id}/participate`} passHref>
-                  <button disabled={status === "FINISHED" || new Date() > endTime} className={`button ${status === "FINISHED" || new Date() > endTime ? "opacity-80 cursor-not-allowed" : ""} bg-[#5d5774] py-3 flex-1 text-base whitespace-nowrap`}>
+                  <button disabled={status === "FINISHED" || new Date() > endTime} className={`button ${status === "FINISHED" || new Date() > endTime ? "opacity-80 cursor-not-allowed" : ""} py-3 flex-1 text-base whitespace-nowrap`}>
                     <CollectionIcon className={"w-5 h-5"} />
                     Participate in IDO
                   </button>
