@@ -289,14 +289,14 @@ const ProjectDetails = () => {
                     </Tab.Group>
                   </SRLWrapper>
                   <div className={"mt-12"}>
-                    <Disqus.DiscussionEmbed
+                    {/*<Disqus.DiscussionEmbed
                       shortname={"parasol-finance"}
                       config={{
                         url: window.location.href,
                         identifier: ido.tokenAddress,
                         title: ido.name
                       }}
-                    />
+                    />*/}
                   </div>
                 </div>
                 <div className="md:col-span-3">
