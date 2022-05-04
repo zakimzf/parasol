@@ -1,15 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import Link from "next/link";
-import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-
-import Container from "../../components/container";
-import NftCard from "../../components/cards/nft-card";
-import { NftContext } from "../../context/NftContext";
-import { Keypair } from "@solana/web3.js";
-import { NftKind } from "parasol-finance-sdk";
 import Head from "next/head";
-import { globalErrorHandle, notification } from "../../utils/functions";
+import Link from "next/link";
+
+import { Keypair } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { NftKind } from "parasol-finance-sdk";
+import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
+
+import { Loading } from "components"
+import Container from "components/container";
+import NftCard from "components/cards/nft-card";
+import { NftContext } from "context/NftContext";
+import { globalErrorHandle, notification } from "utils/functions";
 
 const Tiers = function () {
   const { connection } = useConnection();
@@ -165,7 +167,7 @@ const Tiers = function () {
                   data={t.data && t.data}
                 />
               ))
-              : ""}
+              : <Loading />}
           </div>
         </Container>
       </section>
