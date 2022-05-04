@@ -53,3 +53,4 @@ yarn-error.log*
 .yarnrc.yml
 
 .editorconfig
+.prettierrc.json
