@@ -135,10 +135,9 @@ const TokenClaiming = () => {
                         <Listbox.Option
                           key={nft.name}
                           className={({ active }) =>
-                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                              active
-                                ? "bg-purple-2 text-white"
-                                : "text-gray-900"
+                            `relative cursor-default select-none py-2 pl-10 pr-4 ${active
+                              ? "bg-purple-2 text-white"
+                              : "text-gray-900"
                             }`
                           }
                           value={nft}
@@ -146,9 +145,8 @@ const TokenClaiming = () => {
                           {({ selected }) => (
                             <>
                               <span
-                                className={`block truncate ${
-                                  selected ? "font-medium" : "font-normal"
-                                }`}
+                                className={`block truncate ${selected ? "font-medium" : "font-normal"
+                                  }`}
                               >
                                 {nft.attributes[0].value} - {nft.name}
                               </span>
