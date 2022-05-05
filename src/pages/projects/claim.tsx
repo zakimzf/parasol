@@ -146,7 +146,7 @@ const TokenClaiming = () => {
                             <>
                               <span
                                 className={`block truncate ${selected ? "font-medium" : "font-normal"
-                                  }`}
+                                }`}
                               >
                                 {nft.attributes[0].value} - {nft.name}
                               </span>
