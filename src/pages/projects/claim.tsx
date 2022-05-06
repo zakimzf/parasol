@@ -249,7 +249,7 @@ const TokenClaiming = () => {
                           <HandIcon className="h-5 w-5" aria-hidden="true" />
                           <span>Claim Tokens</span>
                         </button>
-                        <Link href="/projects/x">
+                        <Link href={`/projects/${participatedReceipt.project}`}>
                           <a className="flex flex-1 items-center justify-center gap-x-2 py-4">
                             <InformationCircleIcon
                               className="h-5 w-5"
