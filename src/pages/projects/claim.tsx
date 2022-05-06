@@ -214,9 +214,8 @@ const TokenClaiming = () => {
                                 <span>Released</span>
                                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                                 <span className="flex items-center gap-x-1">
-                                  {participatedReceipt.allowanceFeeBasisPoints *
-                                    100}
-                                  %
+                                  {participatedReceipt.status === "PUBLISHED" ? "N/A" : <>{participatedReceipt.allowanceFeeBasisPoints *
+                                    100}%</>}
                                 </span>
                               </div>
                             </div>
@@ -233,8 +232,11 @@ const TokenClaiming = () => {
                                 <span>Claimable</span>
                                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                                 <span className="flex items-center gap-x-1">
-                                  {participatedReceipt.claimableAmount.toLocaleString()}
-                                  ${participatedReceipt.symbol}
+                                  {participatedReceipt.status === "PUBLISHED" ? "N/A" :
+                                    <>{participatedReceipt.claimableAmount.toLocaleString()}
+                                      ${participatedReceipt.symbol}
+                                    </>
+                                  }
                                 </span>
                               </div>
                             </div>
