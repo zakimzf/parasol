@@ -26,7 +26,7 @@ const Projects = () => {
   const finishedProjects = projects
     .filter((e) => e.status === "FINISHED" || new Date() > e.endTime)
     .slice(0, 9);
-    
+
   const draftProjects = projects
     .filter((e: any) => e.status === "DRAFT")
     .filter((e: any) => e.owner == walletAddress)
@@ -39,14 +39,14 @@ const Projects = () => {
     }
     getProjects();
   }, [])
-  
+
   return (
     <>
       <Head>
         <title>Parasol Finance ($PSOL) | Projects Seeding</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding"/>
-        <meta property="og:image" content="/assets/preview/projects.png"/>
-        <meta property="twitter:image" content="/assets/preview/projects.png"/>
+        <meta name="title" content="Parasol Finance ($PSOL) | Projects Seeding" />
+        <meta property="og:image" content="/assets/preview/projects.png" />
+        <meta property="twitter:image" content="/assets/preview/projects.png" />
       </Head>
       <Heading
         tagline={"Parasol Launchpad"}
@@ -79,6 +79,7 @@ const Projects = () => {
                         status={project.status}
                         startTime={project.startTime}
                         endTime={project.endTime}
+                        salePrice={project.salePrice}
                       />
                     ))}
                   </div>
@@ -104,6 +105,7 @@ const Projects = () => {
                         status={project.status}
                         startTime={project.startTime}
                         endTime={project.endTime}
+                        salePrice={project.salePrice}
                       />
                     ))}
                   </div>
@@ -114,7 +116,7 @@ const Projects = () => {
             ) : (
               <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
                 {[0, 1, 2, 3, 4, 5].map(key => (
-                  <ProjectCard key={key} loading={true}/>
+                  <ProjectCard key={key} loading={true} />
                 ))}
               </div>
             )}
@@ -145,6 +147,7 @@ const Projects = () => {
                         status={project.status}
                         startTime={project.startTime}
                         endTime={project.endTime}
+                        salePrice={project.salePrice}
                       />
                     ))}
                   </div>
