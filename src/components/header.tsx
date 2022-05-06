@@ -8,6 +8,7 @@ import {
   BookOpenIcon,
   CollectionIcon,
   FolderAddIcon,
+  HandIcon,
   MailIcon,
   MenuIcon,
   XIcon,
@@ -69,27 +70,37 @@ const Header = () => {
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
-                      <Popover.Panel className="absolute z-20 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
+                      <Popover.Panel className="absolute z-20 -ml-4 mt-3 transform px-2 w-screen max-w-lg sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
                         <div className="rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-                          <div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-8 sm:p-8">
-                            <Link href={"/projects"}>
-                              <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
-                                <CollectionIcon
-                                  className="flex-shrink-0 h-6 w-6 text-purple-2"
-                                  aria-hidden="true"
-                                />
-                                <div className="ml-4">
-                                  <p className="text-base font-medium text-white">
+                          <div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-y-3 sm:p-5">
+                            <div className={"flex gap-x-2"}>
+                              <Link href={"/projects"}>
+                                <a className={"p-3 pr-5 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"}>
+                                  <CollectionIcon
+                                    className="flex-shrink-0 h-6 w-6 text-purple-2"
+                                    aria-hidden="true"
+                                  />
+                                  <div className="ml-4">
+                                    <p className="text-base font-medium text-white">
                                     Upcoming &amp; Live Projects
-                                  </p>
-                                  <p className="mt-1 text-sm text-gray-300">
-                                    All the new projects of Parasol Finance
-                                  </p>
-                                </div>
-                              </a>
-                            </Link>
+                                    </p>
+                                    <p className="mt-1 text-sm text-gray-300">
+                                    All the IDOs running of Parasol Finance.
+                                    </p>
+                                  </div>
+                                </a>
+                              </Link>
+                              <div className="flex flex-1 gap-x-2 justify-center items-center">
+                                <Link href={"/projects/claim"}>
+                                  <a className={"flex gap-x-2 bg-white bg-opacity-5 hover:bg-opacity-10 rounded-lg px-4 py-3"}>
+                                    <HandIcon className={"w-6 h-6 text-purple-2"} />
+                                    Claim
+                                  </a>
+                                </Link>
+                              </div>
+                            </div>
                             <Link href={"/tiers"}>
-                              <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                              <a className="p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   className={
@@ -112,7 +123,7 @@ const Header = () => {
                                     NFT Access Keys
                                   </p>
                                   <p className="mt-1 text-sm text-gray-300">
-                                    Our unique tiers system using NFTs
+                                    Our unique tiers system using NFTs.
                                   </p>
                                 </div>
                               </a>
