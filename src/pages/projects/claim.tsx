@@ -36,6 +36,9 @@ const TokenClaiming = () => {
     if (wallet.connected) {
       getParticipateReceiptsInfo();
     }
+    else {
+      setSelectedNft(false)
+    }
   }, [selectedNft, wallet]);
 
   const claimToken = async (participatedReceipt: any) => {
@@ -173,7 +176,7 @@ const TokenClaiming = () => {
       <Layout>
         <section>
           <Container>
-            {participatedReceipts ? (
+            {(participatedReceipts && wallet.connected) ? (
               <ul
                 role="list"
                 className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
@@ -261,7 +264,7 @@ const TokenClaiming = () => {
                 )}
               </ul>
             ) : (
-              wallet.connected && <Loading />
+              selectedNft ? <Loading /> : <div className="text-center font-extrabold text-[28px]">There is no project to claim tokens</div>
             )}
           </Container>
         </section>
