@@ -149,7 +149,7 @@ const TokenClaiming = () => {
                             <>
                               <span
                                 className={`block truncate ${selected ? "font-medium" : "font-normal"
-                                  }`}
+                                }`}
                               >
                                 {nft.attributes[0].value} - {nft.name}
                               </span>
@@ -214,7 +214,7 @@ const TokenClaiming = () => {
                                 <span>Released</span>
                                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                                 <span className="flex items-center gap-x-1">
-                                  {participatedReceipt.status === 'PUBLISHED' ? 'N/A' : <>{participatedReceipt.allowanceFeeBasisPoints *
+                                  {participatedReceipt.status === "PUBLISHED" ? "N/A" : <>{participatedReceipt.allowanceFeeBasisPoints *
                                     100}%</>}
                                 </span>
                               </div>
@@ -232,7 +232,7 @@ const TokenClaiming = () => {
                                 <span>Claimable</span>
                                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                                 <span className="flex items-center gap-x-1">
-                                  {participatedReceipt.status === 'PUBLISHED' ? 'N/A' :
+                                  {participatedReceipt.status === "PUBLISHED" ? "N/A" :
                                     <>{participatedReceipt.claimableAmount.toLocaleString()}
                                       ${participatedReceipt.symbol}
                                     </>
