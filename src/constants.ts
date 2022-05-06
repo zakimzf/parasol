@@ -13,6 +13,7 @@ export interface Project {
   status: string,
   startTime: Date;
   endTime: Date;
+  salePrice: number;
 }
 
 export const people = [
