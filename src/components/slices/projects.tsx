@@ -26,6 +26,7 @@ const Projects = () => {
     }
     getProjects();
   }, [])
+
   return (
     <section>
       <Container>
@@ -101,6 +102,7 @@ const Projects = () => {
                     status={project.status}
                     startTime={project.startTime}
                     endTime={project.endTime}
+                    salePrice={project.salePrice}
                   />
                 ))}
               </div>
@@ -113,17 +115,17 @@ const Projects = () => {
         ) : (
           <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
             {[0, 1, 2].map(key => (
-              <ProjectCard key={key} loading={true}/>
+              <ProjectCard key={key} loading={true} />
             ))}
           </div>
         )}
         <div className={"flex justify-center pt-12"}>
-        	<Link href={"/projects"}>
-        		<a className={"button text-sm !bg-none border border-gray-600 text-gray-400"}>
-        			View All Projects
-        			<ChevronDoubleRightIcon className={"w-4"}/>
-        		</a>
-        	</Link>
+          <Link href={"/projects"}>
+            <a className={"button text-sm !bg-none border border-gray-600 text-gray-400"}>
+              View All Projects
+              <ChevronDoubleRightIcon className={"w-4"} />
+            </a>
+          </Link>
         </div>
       </Container>
     </section>
