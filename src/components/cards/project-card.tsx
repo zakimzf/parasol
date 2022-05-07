@@ -23,6 +23,7 @@ type ProjectDetails = {
   status?: string,
   startTime?: any;
   endTime?: any;
+  salePrice?: number
 };
 
 type CountdownProps = {
@@ -43,27 +44,12 @@ const ProjectCard = ({
   featured,
   logo,
   cover,
-  price,
   status,
   startTime,
-  endTime
+  endTime,
+  salePrice
 }: ProjectDetails) => {
   const { setReminder, setProjectKey } = useReminderModal();
-  const { provider, config } = useContext(NftContext);
-  const [details, setDetails] = useState<any>();
-  useEffect(() => {
-    const getProjectDetails = async () => {
-      try {
-        const nftStore = await new NftStore(provider, config).build();
-        const projectId: any = id;
-        const project = await new Project(provider, nftStore, new PublicKey(projectId)).build();
-        const projectDetails = await project.data();
-        setDetails(projectDetails);
-      }
-      catch (err) { }
-    }
-    if (id) getProjectDetails();
-  }, [id])
 
   return (
     <Card>
@@ -146,16 +132,14 @@ const ProjectCard = ({
             </h2>
             <p className="text text-gray-300 mb-3 flex-1 line-clamp-2" title={description?.toString()}>{description}</p>
             <div className="flex-col space-y-3 mt-3 mb-8">
-              {details && (
-                <div className="flex font-medium items-center text-gray-300 gap-x-3">
-                  <span>Token Price</span>
-                  <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
-                  <span className={"flex gap-x-1 items-center"}>
-                    ${details.salePrice}
-                    <img className="w-4" src={"/assets/logos/usdc-logo.svg"} alt="USDC" />
-                  </span>
-                </div>
-              )}
+              <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                <span>Token Price</span>
+                <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                <span className={"flex gap-x-1 items-center"}>
+                  ${salePrice}
+                  <img className="w-4" src={"/assets/logos/usdc-logo.svg"} alt="USDC" />
+                </span>
+              </div>
               <div className="flex font-medium items-center text-gray-300 gap-x-3">
                 <div className="flex items-center gap-x-1">
                   IDO Start Date
@@ -176,13 +160,13 @@ const ProjectCard = ({
                     setReminder(true);
                     setProjectKey(id);
                   }}
-                  className="button py-3 !bg-none bg-purple-2 bg-opacity-60 flex-1 gap-x-1 text-base whitespace-nowrap">
+                  className="button py-3 !bg-none bg-purple-2 bg-opacity-60 hover:text-white flex-1 gap-x-1 text-base whitespace-nowrap">
                   <BellIcon className={"w-5 h-5"} />
                   Set a Reminder
                 </button>
               ) : (
                 <Link href={`/projects/${id}/participate`} passHref>
-                  <button disabled={status === "FINISHED" || new Date() > endTime} className={`button ${status === "FINISHED" || new Date() > endTime ? "opacity-80 cursor-not-allowed" : ""} bg-[#5d5774] py-3 flex-1 text-base whitespace-nowrap`}>
+                  <button disabled={status === "FINISHED" || new Date() > endTime} className={`button ${status === "FINISHED" || new Date() > endTime ? "opacity-80 cursor-not-allowed" : ""} py-3 flex-1 text-base whitespace-nowrap`}>
                     <CollectionIcon className={"w-5 h-5"} />
                     Participate in IDO
                   </button>

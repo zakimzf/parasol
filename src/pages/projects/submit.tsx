@@ -1,6 +1,5 @@
-import React, { Fragment, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { Listbox, RadioGroup, Transition } from "@headlessui/react"
-import { CheckIcon, SelectorIcon } from "@heroicons/react/solid"
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { RadioGroup } from "@headlessui/react"
 import Container from "../../components/container";
 import Heading from "../../components/heading";
 import NumberFormat from "react-number-format";
@@ -26,7 +25,7 @@ const exchanges = [
 
 const packages = [
   { name: "Basic", description: "IDO Listing only without Ads.", price: 2100, fees: 3 },
-  { name: "Pro", description: "IDO Listing and Ads", price: 10500, fees: 2 },
+  { name: "Pro", description: "IDO Listing and Ads.", price: 10500, fees: 2 },
   { name: "Ultimate", description: "IDO Listing, Ads and AMA.", price: 21000, fees: 1 }
 ];
 
@@ -49,7 +48,7 @@ const SubmitProject = () => {
   const submitBtnRef: any = useRef(null);
 
   const idosCollectionRef = collection(db, "ido-metadata");
-  const [coverFile, setcoverFile] = useState<any>();
+  const [coverFile, setCoverFile] = useState<any>();
   const [loading, setLoading] = useState(false)
 
   const [values, setValues] = useState<any>({
@@ -310,7 +309,7 @@ const SubmitProject = () => {
     delete _errors["projectCover"];
     setErrors(_errors);
 
-    setcoverFile(file[0]);
+    setCoverFile(file[0]);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
@@ -638,7 +637,7 @@ const SubmitProject = () => {
 
                   <div className="sm:col-span-3 relative">
                     <label htmlFor="startTime" className="block text-sm font-medium text-blue-gray-900">
-                      IDO Start Date &amp; Time <span className="text-purple-2">*</span>
+                      IDO Start Date &amp; Time (Your browser timezone) <span className="text-purple-2">*</span>
                     </label>
                     <input onChange={handleChange} value={values.startTime}
                       type="datetime-local"
@@ -665,92 +664,92 @@ const SubmitProject = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
-                  <div className="sm:col-span-6">
-                    <h2 className="text-xl font-medium text-blue-gray-900">3. About Liquidity</h2>
-                    <p className="mt-1 text-sm text-blue-gray-500">
-                      Calculate the amount of token for your IDO, and the liquidity.
-                    </p>
-                  </div>
-
-                  <div className="md:col-span-6 relative">
-                    <Listbox value={values.dex} onChange={handleChange}>
-                      {({ open }) => (
-                        <>
-                          <Listbox.Label className="block text-sm font-medium text-blue-gray-900">Select your Target AMM (Dex):</Listbox.Label>
-                          <div className="mt-1 relative">
-                            <Listbox.Button
-                              className="w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg px-3 py-2 text-left cursor-default">
-                              <span className="block truncate">{values.dex.name}</span>
-                              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                              </span>
-                            </Listbox.Button>
-
-                            <Transition
-                              show={open}
-                              as={Fragment}
-                              leave="transition ease-in duration-100"
-                              leaveFrom="opacity-100"
-                              leaveTo="opacity-0"
-                            >
-                              <Listbox.Options
-                                className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                                {exchanges.map((dex) => (
-                                  <Listbox.Option
-                                    key={dex.id}
-                                    className={({ active }) => `${active ? "text-white bg-purple-2" : "text-gray-900"} cursor-default select-none relative py-2 pl-3 pr-9`}
-                                    value={dex}
-                                  >
-                                    {({ selected, active }) => (
-                                      <>
-                                        <span
-                                          className={`${selected ? "font-semibold" : "font-normal"} block truncate`}>
-                                          {dex.name}
-                                        </span>
-                                        {selected ? (
-                                          <span className={`${active ? "text-white" : "text-purple-2"} absolute inset-y-0 right-0 flex items-center pr-4`}>
-                                            <CheckIcon className="h-5 w-5" aria-hidden="true" />
-                                          </span>
-                                        ) : null}
-                                      </>
-                                    )}
-                                  </Listbox.Option>
-                                ))}
-                              </Listbox.Options>
-                            </Transition>
-                          </div>
-                        </>
-                      )}
-                    </Listbox>
-
-                    {errors.dex && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.dex}</div></>}
-                  </div>
-
-                  <div className="sm:col-span-6">
-                    <div className="sm:col-span-3 relative">
-                      <label htmlFor="liquidity" className="block text-sm font-medium text-blue-gray-900">
-                        Percentage of the Pool for the Liquidity
-                      </label>
-                      <input
-                        onChange={handleChange}
-                        value={values.liquidity}
-                        name="liquidity"
-                        type={"range"}
-                        className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"
-                      />
-                      {errors.liquidity && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                        <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />
-                      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.liquidity}</div></>}
-                    </div>
-                    <p className={`mt-3 text-sm text-blue-gray-500 ${parseInt(values.liquidity) < 50 && "font-bold text-yellow-500"}`}>
-                      We recommend not less than 50% of the pool to be sent in liquidity.
-                    </p>
-                  </div>
-
-                </div>
+                {/*<div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">*/}
+                {/*  <div className="sm:col-span-6">*/}
+                {/*    <h2 className="text-xl font-medium text-blue-gray-900">3. About Liquidity</h2>*/}
+                {/*    <p className="mt-1 text-sm text-blue-gray-500">*/}
+                {/*      Calculate the amount of token for your IDO, and the liquidity.*/}
+                {/*    </p>*/}
+                {/*  </div>*/}
+                
+                {/*  <div className="md:col-span-6 relative">*/}
+                {/*    <Listbox value={values.dex} onChange={handleChange}>*/}
+                {/*      {({ open }) => (*/}
+                {/*        <>*/}
+                {/*          <Listbox.Label className="block text-sm font-medium text-blue-gray-900">Select your Target AMM (Dex):</Listbox.Label>*/}
+                {/*          <div className="mt-1 relative">*/}
+                {/*            <Listbox.Button*/}
+                {/*              className="w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg px-3 py-2 text-left cursor-default">*/}
+                {/*              <span className="block truncate">{values.dex.name}</span>*/}
+                {/*              <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">*/}
+                {/*                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />*/}
+                {/*              </span>*/}
+                {/*            </Listbox.Button>*/}
+                
+                {/*            <Transition*/}
+                {/*              show={open}*/}
+                {/*              as={Fragment}*/}
+                {/*              leave="transition ease-in duration-100"*/}
+                {/*              leaveFrom="opacity-100"*/}
+                {/*              leaveTo="opacity-0"*/}
+                {/*            >*/}
+                {/*              <Listbox.Options*/}
+                {/*                className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">*/}
+                {/*                {exchanges.map((dex) => (*/}
+                {/*                  <Listbox.Option*/}
+                {/*                    key={dex.id}*/}
+                {/*                    className={({ active }) => `${active ? "text-white bg-purple-2" : "text-gray-900"} cursor-default select-none relative py-2 pl-3 pr-9`}*/}
+                {/*                    value={dex}*/}
+                {/*                  >*/}
+                {/*                    {({ selected, active }) => (*/}
+                {/*                      <>*/}
+                {/*                        <span*/}
+                {/*                          className={`${selected ? "font-semibold" : "font-normal"} block truncate`}>*/}
+                {/*                          {dex.name}*/}
+                {/*                        </span>*/}
+                {/*                        {selected ? (*/}
+                {/*                          <span className={`${active ? "text-white" : "text-purple-2"} absolute inset-y-0 right-0 flex items-center pr-4`}>*/}
+                {/*                            <CheckIcon className="h-5 w-5" aria-hidden="true" />*/}
+                {/*                          </span>*/}
+                {/*                        ) : null}*/}
+                {/*                      </>*/}
+                {/*                    )}*/}
+                {/*                  </Listbox.Option>*/}
+                {/*                ))}*/}
+                {/*              </Listbox.Options>*/}
+                {/*            </Transition>*/}
+                {/*          </div>*/}
+                {/*        </>*/}
+                {/*      )}*/}
+                {/*    </Listbox>*/}
+                
+                {/*    {errors.dex && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">*/}
+                {/*      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />*/}
+                {/*    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.dex}</div></>}*/}
+                {/*  </div>*/}
+                
+                {/*  <div className="sm:col-span-6">*/}
+                {/*    <div className="sm:col-span-3 relative">*/}
+                {/*      <label htmlFor="liquidity" className="block text-sm font-medium text-blue-gray-900">*/}
+                {/*        Percentage of the Pool for the Liquidity*/}
+                {/*      </label>*/}
+                {/*      <input*/}
+                {/*        onChange={handleChange}*/}
+                {/*        value={values.liquidity}*/}
+                {/*        name="liquidity"*/}
+                {/*        type={"range"}*/}
+                {/*        className="mt-1 block w-full bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2"*/}
+                {/*      />*/}
+                {/*      {errors.liquidity && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">*/}
+                {/*        <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />*/}
+                {/*      </div><div className="mt-2 text-sm text-red-600 sm:col-span-6">{errors.liquidity}</div></>}*/}
+                {/*    </div>*/}
+                {/*    <p className={`mt-3 text-sm text-blue-gray-500 ${parseInt(values.liquidity) < 50 && "font-bold text-yellow-500"}`}>*/}
+                {/*      We recommend not less than 50% of the pool to be sent in liquidity.*/}
+                {/*    </p>*/}
+                {/*  </div>*/}
+                
+                {/*</div>*/}
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
                   <div className="sm:col-span-6">

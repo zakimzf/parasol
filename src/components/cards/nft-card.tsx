@@ -147,7 +147,7 @@ const NftCard = ({
             {connected ? (
               <>
                 <ShoppingBagIcon className="w-5" />
-                Buy NFT Access Key
+                Mint NFT Access Key
               </>
             ) : (
               <>Connect Wallet</>
