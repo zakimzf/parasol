@@ -58,13 +58,19 @@ const Migrate = () => {
         "Successfully migrated the NFT.",
         "Transaction Success"
       );
-    }
-    catch (err: any) {
-      globalErrorHandle(err);
-    }
 
-    setNfts([]);
-    getNFTList();
+      setNfts([]);
+      getNFTList();
+    }
+    catch (error: any) {
+      console.log(error.message, "error");
+      notification(
+        "danger",
+        error.message,
+        "Transaction Error"
+      );
+      // globalErrorHandle(error);
+    }
   };
 
   return (
