@@ -1,19 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
+import Head from "next/head";
+import Link from "next/link";
+
+import { PublicKey } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import {
   ArrowLeftIcon,
   CheckIcon,
   SwitchVerticalIcon,
 } from "@heroicons/react/outline";
-import Link from "next/link";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import { NftContext } from "../../context/NftContext";
-
-import Card from "../../components/card";
-import { useWalletModal } from "../../components/wallet-connector";
-import { PublicKey } from "@solana/web3.js";
-import { globalErrorHandle, notification } from "../../utils/functions";
-import Head from "next/head";
 import { RadioGroup } from "@headlessui/react";
+
+import { NftContext } from "context/NftContext";
+import Card from "components/card";
+import { useWalletModal } from "components/wallet-connector";
+import { globalErrorHandle, notification } from "utils/functions";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
@@ -53,11 +54,7 @@ const Migrate = () => {
     }
     catch (error: any) {
       console.log(error.message, "error");
-      notification(
-        "danger",
-        error.message,
-        "Transaction Error"
-      );
+      notification("danger", error.message, "Transaction Error");
       // globalErrorHandle(error);
     }
   };
@@ -73,17 +70,17 @@ const Migrate = () => {
         <meta property="og:image" content="/assets/preview/tiers.png" />
         <meta property="twitter:image" content="/assets/preview/tiers.png" />
       </Head>
-      <section className={"py-6"}>
-        <div className={"mx-auto max-w-md px-6 lg:px-0 space-y-6"}>
-          <Link href={"/tiers"}>
-            <a className="inline-flex gap-x-2 items-center py-3 rounded-lg text-gray-300">
-              <ArrowLeftIcon className={"w-4"} />
+      <section className="py-6">
+        <div className="mx-auto max-w-md space-y-6 px-6 lg:px-0">
+          <Link href="/tiers">
+            <a className="inline-flex items-center gap-x-2 rounded-lg py-3 text-gray-300">
+              <ArrowLeftIcon className="w-4" />
               Back
             </a>
           </Link>
           <Card padded={true}>
-            <div className={"space-y-6"}>
-              <div className={"prose prose-lg prose-invert"}>
+            <div className="space-y-6">
+              <div className="prose prose-lg prose-invert">
                 <h2>Redeem NFT</h2>
                 <p>
                   You can burn your NFT and get back the amount of PSOL you
@@ -93,7 +90,7 @@ const Migrate = () => {
                   Be careful about vesting, if you redeem quickly after the
                   purchase you will incur penalties, please refer to the NFT
                   page{" "}
-                  <Link href={"/tiers"}>
+                  <Link href="/tiers">
                     <a>here</a>
                   </Link>
                   .
@@ -101,7 +98,7 @@ const Migrate = () => {
               </div>
               {nfts.length > 0 ? (
                 <div>
-                  <label className="block text-sm mb-3 font-medium text-blue-gray-900">
+                  <label className="text-blue-gray-900 mb-3 block text-sm font-medium">
                     Available NFT Access Keys
                   </label>
                   <RadioGroup value={selected} onChange={setSelected}>
@@ -114,36 +111,39 @@ const Migrate = () => {
                           key={nft.name}
                           value={nft}
                           className={({ active, checked }) =>
-                            `${active
-                              ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
-                              : ""
-                            } ${checked
-                              ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                              : "border-2 border-transparent bg-white bg-opacity-5"
-                            } relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none`
+                            `${
+                              active
+                                ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
+                                : ""
+                            } ${
+                              checked
+                                ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                                : "border-2 border-transparent bg-white bg-opacity-5"
+                            } relative flex cursor-pointer rounded-lg p-3 shadow-md focus:outline-none`
                           }
                         >
                           {({ active, checked }) => (
                             <>
-                              <div className="flex items-center justify-between w-full">
+                              <div className="flex w-full items-center justify-between">
                                 <div className="flex items-center">
                                   <div className="text-sm">
                                     <RadioGroup.Label
                                       as="p"
-                                      className={`font-medium ${checked ? "text-white" : ""
+                                      className={`font-medium ${
+                                        checked ? "text-white" : ""
                                       }`}
                                     >
                                       <div className="flex items-center">
                                         <div className="mr-4">
                                           <img
-                                            className={"w-12 h-12 rounded-md"}
+                                            className="h-12 w-12 rounded-md"
                                             src={nft.image}
                                             alt={nft.name}
                                           />
                                         </div>
                                         <div>
                                           <p className="text-xs">{nft.name}</p>
-                                          <h2 className="text-lg whitespace-nowrap">
+                                          <h2 className="whitespace-nowrap text-lg">
                                             {nft.attributes[0].value}
                                           </h2>
                                         </div>
@@ -153,7 +153,7 @@ const Migrate = () => {
                                 </div>
                                 {checked && (
                                   <div className="flex-shrink-0 text-purple-2">
-                                    <CheckIcon className="w-6 h-6" />
+                                    <CheckIcon className="h-6 w-6" />
                                   </div>
                                 )}
                               </div>
@@ -165,9 +165,9 @@ const Migrate = () => {
                   </RadioGroup>
                 </div>
               ) : (
-                <div className={"prose prose-lg prose-invert"}>
-                  <Link href={"/tiers"}>
-                    <a className="inline-flex gap-x-2 items-centertext-gray-200">
+                <div className="prose prose-lg prose-invert">
+                  <Link href="/tiers">
+                    <a className="items-centertext-gray-200 inline-flex gap-x-2">
                       No NFT Access Key. Please buy your NFT here.
                     </a>
                   </Link>
@@ -176,8 +176,8 @@ const Migrate = () => {
               {wallet.connected ? (
                 [
                   nfts.length > 0 ? (
-                    <button className={"w-full button"} onClick={redeemNFT}>
-                      <SwitchVerticalIcon className={"w-5 h-5"} />
+                    <button className="button w-full" onClick={redeemNFT}>
+                      <SwitchVerticalIcon className="h-5 w-5" />
                       Redeem My NFT
                     </button>
                   ) : (
@@ -187,12 +187,12 @@ const Migrate = () => {
               ) : (
                 <button
                   onClick={() => walletModal.setVisible(true)}
-                  className="w-full button"
+                  className="button w-full"
                   disabled={isPending}
                 >
                   {isPending ? (
                     <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white w-[28px] h-[28px] ml-[6px] mt-[0px]"
+                      className="-ml-1 mr-3 ml-[6px] mt-[0px] h-5 h-[28px] w-5 w-[28px] animate-spin text-white"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -213,7 +213,7 @@ const Migrate = () => {
                     </svg>
                   ) : (
                     <svg
-                      className="w-4 h-4"
+                      className="h-4 w-4"
                       viewBox="0 0 96 86"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
