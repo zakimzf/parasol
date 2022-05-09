@@ -51,7 +51,8 @@ const Migrate = () => {
 
       setNfts([]);
       getNFTList();
-    } catch (error: any) {
+    }
+    catch (error: any) {
       console.log(error.message, "error");
       notification("danger", error.message, "Transaction Error");
       // globalErrorHandle(error);
