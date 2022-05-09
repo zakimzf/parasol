@@ -348,7 +348,7 @@ input[type="range"]::-ms-fill-upper {
     position: relative;
     width: 100%;
     height: 2em;
-    background-color: rgba(#fefefe, 0.8);
+    background-color: rgb(228 228 228 / 70%);
     &.side-a,
     &.side-b {
       width: 2em;
@@ -384,7 +384,7 @@ input[type="range"]::-ms-fill-upper {
 
 .growing-bar {
   transition: all 0.3s ease-in-out;
-  background-color: rgba(#7939ff, 0.6);
+  background-color: rgb(177 101 254 / 70%);
   width: 100%;
   height: 2em;
 }

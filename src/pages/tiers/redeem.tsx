@@ -202,8 +202,7 @@ const Migrate = () => {
               {selected ? (
                 <div className="pt-3">
                   <div className="text-center font-bold">
-                    Dynamic Vesting Period(
-                    {vestingPeriod.toFixed(0)}
+                    Dynamic Vesting Period ({vestingPeriod.toFixed(0)}
                     %)
                   </div>
                   <div className="chart">
