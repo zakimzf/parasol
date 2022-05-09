@@ -15,6 +15,7 @@ import { NftContext } from "context/NftContext";
 import Card from "components/card";
 import { useWalletModal } from "components/wallet-connector";
 import { globalErrorHandle, notification } from "utils/functions";
+import { Loading } from "components";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
@@ -22,15 +23,37 @@ const Migrate = () => {
   const walletModal = useWalletModal();
 
   const { nfts, setNfts, user, wallet, getNFTList } = useContext(NftContext);
+  const [selected, setSelected] = useState<any>();
   const [isPending, setPending] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => setSelected(nfts[0]), [nfts]);
+  let vestingPeriod = 0;
+
+  useEffect(() => {
+    setSelected(nfts[0]);
+    return setLoading(false);
+  }, [nfts]);
 
   useEffect(() => {
     setPending(walletModal.visible);
   }, [walletModal.visible]);
 
-  const [selected, setSelected] = useState<any>();
+  useEffect(() => {
+    if (wallet.connected && user) {
+      getNFTList();
+    }
+    else {
+      return setLoading(true);
+    }
+  }, [user, wallet.connected]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  vestingPeriod = (selected?.vestedDuration / selected?.releaseDuration) * 100;
+
+  console.log(selected, "selected");
 
   const redeemNFT = async () => {
     const mintAddress = new PublicKey(selected.mint);
@@ -173,13 +196,15 @@ const Migrate = () => {
                   </Link>
                 </div>
               )}
-              {wallet.connected ? (
-                <div className="pt-6">
+              {selected ? (
+                <div className="pt-3">
                   <div className="text-center font-bold">
-                    Dynamic Vesting Period(12%)
+                    Dynamic Vesting Period(
+                    {vestingPeriod.toFixed(0)}
+                    %)
                   </div>
                   <div className="chart">
-                    <div className="bar bar-75">
+                    <div className={`bar bar-${vestingPeriod.toFixed(0)}`}>
                       <div className="face top">
                         <div className="growing-bar"></div>
                       </div>
@@ -203,7 +228,10 @@ const Migrate = () => {
               {wallet.connected ? (
                 [
                   nfts.length > 0 ? (
-                    <button className="button w-full" onClick={redeemNFT}>
+                    <button
+                      className="button relative top-[-16px] w-full"
+                      onClick={redeemNFT}
+                    >
                       <SwitchVerticalIcon className="h-5 w-5" />
                       Redeem My NFT
                     </button>
