@@ -378,7 +378,7 @@ input[type="range"]::-ms-fill-upper {
   }
   .floor {
     box-shadow: 0 0.1em 0.6em rgba(0, 0, 0, 0.3),
-      0.6em -0.5em 3em rgba(0, 0, 0, 0.3), 1em -1em 8em #fefefe;
+      0.6em -0.5em 3em rgba(0, 0, 0, 0.3), 0 0 4em rgba(255, 255, 255, 0.3);
   }
 }
 

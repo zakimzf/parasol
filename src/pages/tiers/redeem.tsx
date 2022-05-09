@@ -51,8 +51,7 @@ const Migrate = () => {
 
       setNfts([]);
       getNFTList();
-    }
-    catch (error: any) {
+    } catch (error: any) {
       console.log(error.message, "error");
       notification("danger", error.message, "Transaction Error");
       // globalErrorHandle(error);
@@ -79,7 +78,7 @@ const Migrate = () => {
             </a>
           </Link>
           <Card padded={true}>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="prose prose-lg prose-invert">
                 <h2>Redeem NFT</h2>
                 <p>
@@ -174,21 +173,26 @@ const Migrate = () => {
                 </div>
               )}
               {wallet.connected ? (
-                <div className="chart">
-                  <div className="bar bar-75">
-                    <div className="face top">
-                      <div className="growing-bar"></div>
-                    </div>
-                    <div className="face side-0">
-                      <div className="growing-bar"></div>
-                    </div>
-                    <div className="face floor">
-                      <div className="growing-bar"></div>
-                    </div>
-                    <div className="face side-a"></div>
-                    <div className="face side-b"></div>
-                    <div className="face side-1">
-                      <div className="growing-bar"></div>
+                <div className="pt-6">
+                  <div className="text-center font-bold">
+                    Dynamic Vesting Period(12%)
+                  </div>
+                  <div className="chart">
+                    <div className="bar bar-75">
+                      <div className="face top">
+                        <div className="growing-bar"></div>
+                      </div>
+                      <div className="face side-0">
+                        <div className="growing-bar"></div>
+                      </div>
+                      <div className="face floor">
+                        <div className="growing-bar"></div>
+                      </div>
+                      <div className="face side-a"></div>
+                      <div className="face side-b"></div>
+                      <div className="face side-1">
+                        <div className="growing-bar"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
