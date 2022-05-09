@@ -174,6 +174,28 @@ const Migrate = () => {
                 </div>
               )}
               {wallet.connected ? (
+                <div className="chart">
+                  <div className="bar bar-75">
+                    <div className="face top">
+                      <div className="growing-bar"></div>
+                    </div>
+                    <div className="face side-0">
+                      <div className="growing-bar"></div>
+                    </div>
+                    <div className="face floor">
+                      <div className="growing-bar"></div>
+                    </div>
+                    <div className="face side-a"></div>
+                    <div className="face side-b"></div>
+                    <div className="face side-1">
+                      <div className="growing-bar"></div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+              {wallet.connected ? (
                 [
                   nfts.length > 0 ? (
                     <button className="button w-full" onClick={redeemNFT}>
