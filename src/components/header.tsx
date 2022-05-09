@@ -14,7 +14,7 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import WalletConnect from "./wallet-connector/WalletConnect"
+import WalletConnect from "./wallet-connector/WalletConnect";
 import { recentPosts, toolsMenu } from "../constants/header";
 import Logo from "/public/assets/logos/parasol-logo-inverted-rgb.svg";
 import NumberFormat from "react-number-format";
@@ -22,39 +22,41 @@ import NumberFormat from "react-number-format";
 const Header = () => {
   const [psolPrice, setPsolPrice] = useState<number>(0);
   useEffect(() => {
-    fetch("https://api.coingecko.com/api/v3/simple/price?ids=parasol-finance&vs_currencies=usd")
+    fetch(
+      "https://api.coingecko.com/api/v3/simple/price?ids=parasol-finance&vs_currencies=usd"
+    )
       .then((response) => response.json())
       .then((psol) => setPsolPrice(psol["parasol-finance"]["usd"]));
   });
   return (
     <Popover className="relative">
-      <div className="max-w-7xl md:mt-6 text-gray-200 mx-auto px-5">
-        <div className="flex justify-between items-center py-6 md:justify-start md:space-x-10">
-          <div className="flex justify-start lg:w-0 lg:flex-1 min-w-[249px]">
+      <div className="mx-auto max-w-7xl px-5 text-gray-200 lg:mt-6">
+        <div className="flex items-center justify-between py-6 lg:justify-start lg:space-x-10">
+          <div className="flex min-w-[249px] justify-start lg:w-0 lg:flex-1">
             <Link href={"/"}>
               <a>
-                <Image src={Logo} className="h-5" alt="logo"/>
+                <Image src={Logo} className="h-5" alt="logo" />
               </a>
             </Link>
           </div>
-          <div className="-mr-2 -my-2 md:hidden">
-            <Popover.Button className="bg-[#231f38] shadow-xl shadow-half-strong border border-gray-800 rounded-md p-2 inline-flex items-center justify-center text-white hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-2">
+          <div className="-my-2 -mr-2 lg:hidden">
+            <Popover.Button className="inline-flex items-center justify-center rounded-md border border-gray-800 bg-[#231f38] p-2 text-white shadow-xl shadow-half-strong hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-2">
               <span className="sr-only">Open menu</span>
-              <MenuIcon className="h-6 w-6" aria-hidden="true"/>
+              <MenuIcon className="h-6 w-6" aria-hidden="true" />
             </Popover.Button>
           </div>
           <Popover.Group
             as="nav"
-            className="hidden md:flex items-baseline space-x-10"
+            className="hidden items-baseline space-x-10 lg:flex"
           >
             <Link href={"/swap"}>
-              <a className="font-bold text-sm hover:text-gray-300">Swap</a>
+              <a className="text-sm font-bold hover:text-gray-300">Swap</a>
             </Link>
             <Popover className="relative">
               {({ open = true }) => {
                 return (
                   <>
-                    <Popover.Button className="group inline-flex gap-x-1 items-center font-bold text-sm hover:text-gray-300">
+                    <Popover.Button className="group inline-flex items-center gap-x-1 text-sm font-bold hover:text-gray-300">
                       <span>Launchpad</span>
                       <ChevronDownIcon
                         className={"h-5 w-5 group-hover:text-gray-300"}
@@ -70,41 +72,51 @@ const Header = () => {
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
-                      <Popover.Panel className="absolute z-20 -ml-4 mt-3 transform px-2 w-screen max-w-lg sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
-                        <div className="rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+                      <Popover.Panel className="absolute z-20 -ml-4 mt-3 w-screen max-w-lg transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
+                        <div className="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-y-3 sm:p-5">
                             <div className={"flex gap-x-2"}>
                               <Link href={"/projects"}>
-                                <a className={"p-3 pr-5 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"}>
+                                <a
+                                  className={
+                                    "flex items-start rounded-lg p-3 pr-5 hover:bg-white hover:bg-opacity-5"
+                                  }
+                                >
                                   <CollectionIcon
-                                    className="flex-shrink-0 h-6 w-6 text-purple-2"
+                                    className="h-6 w-6 flex-shrink-0 text-purple-2"
                                     aria-hidden="true"
                                   />
                                   <div className="ml-4">
                                     <p className="text-base font-medium text-white">
-                                    Upcoming &amp; Live Projects
+                                      Upcoming &amp; Live Projects
                                     </p>
                                     <p className="mt-1 text-sm text-gray-300">
-                                    All the IDOs running of Parasol Finance.
+                                      All the IDOs running of Parasol Finance.
                                     </p>
                                   </div>
                                 </a>
                               </Link>
-                              <div className="flex flex-1 gap-x-2 justify-center items-center">
+                              <div className="flex flex-1 items-center justify-center gap-x-2">
                                 <Link href={"/projects/claim"}>
-                                  <a className={"flex gap-x-2 bg-white bg-opacity-5 hover:bg-opacity-10 rounded-lg px-4 py-3"}>
-                                    <HandIcon className={"w-6 h-6 text-purple-2"} />
+                                  <a
+                                    className={
+                                      "flex gap-x-2 rounded-lg bg-white bg-opacity-5 px-4 py-3 hover:bg-opacity-10"
+                                    }
+                                  >
+                                    <HandIcon
+                                      className={"h-6 w-6 text-purple-2"}
+                                    />
                                     Claim
                                   </a>
                                 </Link>
                               </div>
                             </div>
-                            <Link href={"/tiers"}>
-                              <a className="p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">
+                            {/* <Link href={"/tiers"}>
+                              <a className="flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   className={
-                                    "flex-shrink-0 h-6 w-6 text-purple-2"
+                                    "h-6 w-6 flex-shrink-0 text-purple-2"
                                   }
                                   viewBox="0 0 161.382 185.671"
                                 >
@@ -127,7 +139,7 @@ const Header = () => {
                                   </p>
                                 </div>
                               </a>
-                            </Link>
+                            </Link> */}
                             {/*                <Link href={"/projects/seeding"}>*/}
                             {/*                  <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">*/}
                             {/*                    <svg*/}
@@ -191,19 +203,21 @@ const Header = () => {
                             {/*  </a>*/}
                             {/*</Link>*/}
                           </div>
-                          <div className="py-4 bg-[#2a2542] sm:px-8 sm:py-6">
+                          <div className="bg-[#2a2542] py-4 sm:px-8 sm:py-6">
                             <div className="flow-root">
                               <Link href={"/projects/submit"}>
                                 <a
                                   className="flex items-start font-medium text-gray-200"
-                                  rel="noreferrer">
-                                  <FolderAddIcon className="h-6 w-6 text-purple-2"/>
+                                  rel="noreferrer"
+                                >
+                                  <FolderAddIcon className="h-6 w-6 text-purple-2" />
                                   <div className="ml-3">
                                     <p className="text-base font-medium text-white">
                                       Submit Your Project
                                     </p>
                                     <p className="mt-1 text-sm text-gray-300">
-                                      You can launch your project in a few clicks
+                                      You can launch your project in a few
+                                      clicks
                                     </p>
                                   </div>
                                 </a>
@@ -218,13 +232,15 @@ const Header = () => {
               }}
             </Popover>
             <Link href={"/tiers"}>
-              <a className="font-bold text-sm hover:text-gray-300">NFT Access Keys</a>
+              <a className="text-sm font-bold hover:text-gray-300">
+                NFT Access Keys
+              </a>
             </Link>
             <Popover className="relative">
               {({ open = true }) => {
                 return (
                   <>
-                    <Popover.Button className="group inline-flex gap-x-1 items-center font-bold text-sm hover:text-gray-300">
+                    <Popover.Button className="group inline-flex items-center gap-x-1 text-sm font-bold hover:text-gray-300">
                       <span>Tools</span>
                       <ChevronDownIcon
                         className={"h-5 w-5 group-hover:text-gray-300"}
@@ -240,17 +256,17 @@ const Header = () => {
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
-                      <Popover.Panel className="absolute z-20 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
-                        <div className="rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+                      <Popover.Panel className="absolute z-20 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
+                        <div className="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5">
                           <div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-8 sm:p-8">
                             {toolsMenu.map((item) => (
                               <a
                                 key={item.name}
                                 href={"https://forms.gle/eWqpaPdGMX8joTem9"}
-                                className="-m-3 p-3 p flex items-start rounded-lg hover:bg-white hover:bg-opacity-5"
+                                className="p -m-3 flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5"
                               >
                                 <item.icon
-                                  className="flex-shrink-0 h-6 w-6 text-purple-2"
+                                  className="h-6 w-6 flex-shrink-0 text-purple-2"
                                   aria-hidden="true"
                                 />
                                 <div className="ml-4">
@@ -276,7 +292,7 @@ const Header = () => {
                 <>
                   <Popover.Button
                     className={
-                      "group inline-flex items-center font-bold text-sm hover:text-white"
+                      "group inline-flex items-center text-sm font-bold hover:text-white"
                     }
                   >
                     <span>More</span>
@@ -294,8 +310,8 @@ const Header = () => {
                     leaveFrom="opacity-100 translate-y-0"
                     leaveTo="opacity-0 translate-y-1"
                   >
-                    <Popover.Panel className="absolute z-20 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-md sm:px-0">
-                      <div className="rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+                    <Popover.Panel className="absolute left-1/2 z-20 mt-3 w-screen max-w-md -translate-x-1/2 transform px-2 sm:px-0">
+                      <div className="overflow-hidden rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5">
                         <div className="relative grid gap-6 bg-[#231f38] px-5 py-6 sm:gap-8 sm:p-8">
                           {/*<Link href={"/about"}>*/}
                           {/*  <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">*/}
@@ -312,9 +328,11 @@ const Header = () => {
                           {/*  </a>*/}
                           {/*</Link>*/}
                           <Link href={"/frequently-asked-questions"}>
-                            <a className="flex items-start -m-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-5">
+                            <a className="-m-3 flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5">
                               <AnnotationIcon
-                                className={"flex-shrink-0 h-6 w-6 text-purple-2"}
+                                className={
+                                  "h-6 w-6 flex-shrink-0 text-purple-2"
+                                }
                               />
                               <div className="ml-4">
                                 <p className="text-base font-medium text-white">
@@ -328,10 +346,10 @@ const Header = () => {
                           </Link>
                           <a
                             href="https://docs.parasol.finance/"
-                            className="flex items-start -m-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-5"
+                            className="-m-3 flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5"
                           >
                             <BookOpenIcon
-                              className={"flex-shrink-0 h-6 w-6 text-purple-2"}
+                              className={"h-6 w-6 flex-shrink-0 text-purple-2"}
                             />
                             <div className="ml-4">
                               <p className="text-base font-medium text-white">
@@ -344,11 +362,11 @@ const Header = () => {
                           </a>
                           <a
                             href="https://parasol-finance.medium.com/"
-                            className="flex items-start -m-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-5"
+                            className="-m-3 flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              className={"flex-shrink-0 h-6 w-6 text-purple-2"}
+                              className={"h-6 w-6 flex-shrink-0 text-purple-2"}
                               viewBox="0 0 24 24"
                             >
                               <path
@@ -366,9 +384,11 @@ const Header = () => {
                             </div>
                           </a>
                           <Link href={"/contact"}>
-                            <a className="flex items-start -m-3 p-3 rounded-lg hover:bg-white hover:bg-opacity-5">
+                            <a className="-m-3 flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5">
                               <MailIcon
-                                className={"flex-shrink-0 h-6 w-6 text-purple-2"}
+                                className={
+                                  "h-6 w-6 flex-shrink-0 text-purple-2"
+                                }
                               />
                               <div className="ml-4">
                                 <p className="text-base font-medium text-white">
@@ -381,14 +401,17 @@ const Header = () => {
                             </a>
                           </Link>
                         </div>
-                        <div className="px-5 py-5 bg-[#2a2542] sm:px-8 sm:py-8">
+                        <div className="bg-[#2a2542] px-5 py-5 sm:px-8 sm:py-8">
                           <div>
-                            <h3 className="text-sm tracking-wide font-medium text-white uppercase">
+                            <h3 className="text-sm font-medium uppercase tracking-wide text-white">
                               Recent Posts
                             </h3>
                             <ul role="list" className="mt-4 space-y-4">
                               {recentPosts.map((post) => (
-                                <li key={post.id} className="text-base truncate">
+                                <li
+                                  key={post.id}
+                                  className="truncate text-base"
+                                >
                                   <a
                                     href={post.href}
                                     className="font-medium text-white"
@@ -419,16 +442,28 @@ const Header = () => {
               )}
             </Popover>
           </Popover.Group>
-          <div className="hidden md:flex items-center gap-x-5 justify-end md:flex-1 lg:w-0">
+          <div className="hidden items-center justify-end gap-x-5 lg:flex lg:w-0 lg:flex-1">
             <a
               href={"https://coinmarketcap.com/currencies/parasol-finance/"}
               target={"_blank"}
               rel={"noreferrer"}
-              className={"rounded-full bg-white-bg-opacity-60 px-4 py-2 font-medium flex items-center text-sm gap-x-2"}>
-              <img src={"/assets/logos/parasol-logo-mark-full-color-rgb.svg"} className={"w-4 h-4"} alt={"psol-logo"}/>
-              <NumberFormat value={psolPrice} displayType={"text"} prefix={"$"} decimalScale={4}/>
+              className={
+                "bg-white-bg-opacity-60 flex items-center gap-x-2 rounded-full px-4 py-2 text-sm font-medium"
+              }
+            >
+              <img
+                src={"/assets/logos/parasol-logo-mark-full-color-rgb.svg"}
+                className={"h-4 w-4"}
+                alt={"psol-logo"}
+              />
+              <NumberFormat
+                value={psolPrice}
+                displayType={"text"}
+                prefix={"$"}
+                decimalScale={4}
+              />
             </a>
-            <WalletConnect Width={"origin"}/>
+            <WalletConnect Width={"origin"} />
           </div>
         </div>
       </div>
@@ -443,33 +478,33 @@ const Header = () => {
       >
         <Popover.Panel
           focus
-          className="absolute top-0 inset-x-0 transition transform origin-top-right md:hidden z-50 bg-header-color"
+          className="absolute inset-x-0 top-0 z-50 origin-top-right transform bg-header-color transition lg:hidden"
         >
-          <div className="shadow-lg ring-1 ring-black ring-opacity-5 bg-header-color">
-            <div className="pt-6 px-5">
+          <div className="bg-header-color shadow-lg ring-1 ring-black ring-opacity-5">
+            <div className="px-5 pt-6">
               <div className="flex items-center justify-between">
                 <div className="flex justify-start lg:w-0 lg:flex-1">
                   <Link href={"/"}>
                     <a>
-                      <Image src={Logo} className="h-5" alt="logo"/>
+                      <Image src={Logo} className="h-5" alt="logo" />
                     </a>
                   </Link>
                 </div>
                 <div className="-mr-2">
-                  <Popover.Button className="bg-[#231f38] shadow-xl shadow-half-strong border border-gray-800 rounded-md p-2 inline-flex items-center justify-center text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-2">
+                  <Popover.Button className="inline-flex items-center justify-center rounded-md border border-gray-800 bg-[#231f38] p-2 text-white shadow-xl shadow-half-strong focus:outline-none focus:ring-2 focus:ring-inset focus:ring-purple-2">
                     <span className="sr-only">Close menu</span>
-                    <XIcon className="h-6 w-6" aria-hidden="true"/>
+                    <XIcon className="h-6 w-6" aria-hidden="true" />
                   </Popover.Button>
                 </div>
               </div>
             </div>
-            <div className="pb-6 px-6">
+            <div className="px-6 pb-6">
               <div className="mt-5 w-full">
-                <WalletConnect Width={"full"}/>
+                <WalletConnect Width={"full"} />
               </div>
               <div className="flex flex-col gap-6">
                 <Link href={"/swap"}>
-                  <a className="font-bold text-sm pt-6 hover:text-white text-white">
+                  <a className="pt-6 text-sm font-bold text-white hover:text-white">
                     Swap
                   </a>
                 </Link>
@@ -477,7 +512,7 @@ const Header = () => {
                   {({ open = true }) => {
                     return (
                       <>
-                        <Popover.Button className="group inline-flex gap-x-1 items-center font-bold text-sm hover:text-white text-white">
+                        <Popover.Button className="group inline-flex items-center gap-x-1 text-sm font-bold text-white hover:text-white">
                           <span>Launchpad</span>
                           <ChevronDownIcon
                             className={"h-5 w-5 group-hover:text-white"}
@@ -493,13 +528,13 @@ const Header = () => {
                           leaveFrom="opacity-100 translate-y-0"
                           leaveTo="opacity-0 translate-y-1"
                         >
-                          <Popover.Panel className="z-20 transform w-screen">
+                          <Popover.Panel className="z-20 w-screen transform">
                             <div className="overflow-hidden">
                               <div className="relative grid gap-6 py-4">
                                 <Link href={"/projects"}>
                                   <a className="flex items-start rounded-lg">
                                     <CollectionIcon
-                                      className="flex-shrink-0 h-6 w-6 text-purple-2"
+                                      className="h-6 w-6 flex-shrink-0 text-purple-2"
                                       aria-hidden="true"
                                     />
                                     <div className="ml-4">
@@ -512,15 +547,19 @@ const Header = () => {
                                     </div>
                                   </a>
                                 </Link>
-                                <Link href={"/tiers"}>
+                                {/* <Link href={"/tiers"}>
                                   <a className="flex items-start rounded-lg">
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
-                                      className={"flex-shrink-0 h-6 w-6 text-purple-2"}
-                                      viewBox="0 0 161.382 185.671">
+                                      className={
+                                        "h-6 w-6 flex-shrink-0 text-purple-2"
+                                      }
+                                      viewBox="0 0 161.382 185.671"
+                                    >
                                       <g
                                         id="layer1"
-                                        transform="translate(-26.12 -62.248)">
+                                        transform="translate(-26.12 -62.248)"
+                                      >
                                         <path
                                           d="M66.5,224.731l-40.3-23.242-.037-46.373-.037-46.373L65.988,85.637c21.927-12.709,40.095-23.218,40.372-23.353.537-.262,1.685.388,38.366,21.736,3.59,2.089,14.662,8.512,24.606,14.273l18.08,10.475.044,46.3.044,46.3L162.94,215.58c-13.509,7.817-31.584,18.28-40.166,23.25s-15.686,9.061-15.787,9.09S88.666,237.514,66.5,224.731Zm56.974,2.71L158.353,207.2,177.8,195.909l-.044-41.024-.044-41.024-19.667-11.392c-10.817-6.266-26.692-15.464-35.278-20.44s-15.709-9.086-15.829-9.132-16.172,9.151-35.67,20.439L35.815,113.859l.04,41.087.04,41.087,35.527,20.513,35.527,20.513.545-.331c.3-.182,7.49-4.362,15.979-9.288ZM88.062,216.4l-4.807-3.193V96.9l11.738-7.015c6.591-3.939,11.847-6.973,11.988-6.919s6.838,3.955,14.889,8.672l14.639,8.576-.929,1.442c-.511.793-1.712,2.672-2.669,4.176s-1.8,2.8-1.866,2.882-5.545-3-12.167-6.85c-9.065-5.269-12.115-6.962-12.342-6.851-.166.081-3.289,1.849-6.941,3.929l-6.639,3.782v46.145l17.859.045,17.859.045.046,5.953.046,5.953H92.958l-.045,29.365L92.869,219.6Zm-17.148-9.77c-3.026-1.764-3.456-2.071-3.627-2.585-.107-.321-3.443-12.783-7.414-27.694l-7.221-27.111-.045,23.362c-.025,12.849-.079,23.362-.121,23.362-.106,0-8.074-4.588-8.345-4.806-.175-.14-.22-7.183-.22-34.154V123.031l4.275-2.412c2.351-1.327,4.3-2.386,4.333-2.355s.366,1.117.743,2.412c.758,2.6,4.556,15.009,8.477,27.689l2.543,8.225.088-23.726.088-23.726,5.1-2.8c2.8-1.54,5.124-2.8,5.159-2.8s.064,23.654.064,52.564c0,41.942-.045,52.561-.22,52.547-.121-.009-1.766-.917-3.654-2.018Zm77.6-44.224,0-42.554-1.629-1.054c-5.5-3.561-10.889-7.182-10.889-7.319,0-.088,1.123-1.875,2.5-3.971,1.8-2.751,2.569-3.784,2.757-3.711.143.055,7.2,4.481,15.672,9.836l15.411,9.735v5.519a53.2,53.2,0,0,1-.144,5.519c-.079,0-3-1.948-6.482-4.328l-6.338-4.328-.088,36.715-.088,36.715-5.2,2.891c-2.862,1.59-5.263,2.891-5.336,2.891s-.134-19.149-.135-42.553Z"
                                           fill="currentColor"
@@ -536,7 +575,7 @@ const Header = () => {
                                       </p>
                                     </div>
                                   </a>
-                                </Link>
+                                </Link> */}
                                 {/*                <Link href={"/projects/seeding"}>*/}
                                 {/*                  <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">*/}
                                 {/*                    <svg*/}
@@ -604,13 +643,14 @@ const Header = () => {
                                 {/*</Link>*/}
                                 <Link href={"/projects/submit"}>
                                   <a className="flex items-start rounded-lg">
-                                    <FolderAddIcon className="h-6 w-6 text-purple-2"/>
+                                    <FolderAddIcon className="h-6 w-6 text-purple-2" />
                                     <div className="ml-4">
                                       <p className="text-base font-medium text-white">
-                                      Submit Your Project
+                                        Submit Your Project
                                       </p>
                                       <p className="mt-1 text-sm text-white">
-                                      You can launch your project in a few clicks
+                                        You can launch your project in a few
+                                        clicks
                                       </p>
                                     </div>
                                   </a>
@@ -624,7 +664,7 @@ const Header = () => {
                   }}
                 </Popover>
                 <Link href={"/tiers"}>
-                  <a className="font-bold text-sm hover:text-gray-300 text-white">
+                  <a className="text-sm font-bold text-white hover:text-gray-300">
                     NFT Access Keys
                   </a>
                 </Link>
@@ -632,7 +672,7 @@ const Header = () => {
                   {({ open = true }) => {
                     return (
                       <>
-                        <Popover.Button className="group inline-flex gap-x-1 items-center font-bold text-sm hover:text-white text-white">
+                        <Popover.Button className="group inline-flex items-center gap-x-1 text-sm font-bold text-white hover:text-white">
                           <span>Tools</span>
                           <ChevronDownIcon
                             className={"h-5 w-5 group-hover:text-white"}
@@ -655,9 +695,10 @@ const Header = () => {
                                   <a
                                     key={item.name}
                                     href={"https://forms.gle/eWqpaPdGMX8joTem9"}
-                                    className="flex items-start rounded-lg">
+                                    className="flex items-start rounded-lg"
+                                  >
                                     <item.icon
-                                      className="flex-shrink-0 h-6 w-6 text-purple-2"
+                                      className="h-6 w-6 flex-shrink-0 text-purple-2"
                                       aria-hidden="true"
                                     />
                                     <div className="ml-4">
@@ -682,7 +723,10 @@ const Header = () => {
                   {() => (
                     <>
                       <Popover.Button
-                        className={"group inline-flex items-center font-bold text-sm hover:text-white text-white"}>
+                        className={
+                          "group inline-flex items-center text-sm font-bold text-white hover:text-white"
+                        }
+                      >
                         <span>More</span>
                         <ChevronDownIcon
                           className={"ml-1 h-5 w-5 group-hover:text-white"}
@@ -698,13 +742,13 @@ const Header = () => {
                         leaveFrom="opacity-100 translate-y-0"
                         leaveTo="opacity-0 translate-y-1"
                       >
-                        <Popover.Panel className="z-100 transform w-screen">
+                        <Popover.Panel className="z-100 w-screen transform">
                           <div className="overflow-hidden">
                             <div className="relative grid gap-6 py-4">
-                              <Link href={"/projects"}>
+                              {/* <Link href={"/projects"}>
                                 <a className="flex items-start rounded-lg">
                                   <CollectionIcon
-                                    className="flex-shrink-0 h-6 w-6 text-purple-2"
+                                    className="h-6 w-6 flex-shrink-0 text-purple-2"
                                     aria-hidden="true"
                                   />
                                   <div className="ml-4">
@@ -721,11 +765,15 @@ const Header = () => {
                                 <a className="flex items-start rounded-lg">
                                   <svg
                                     xmlns="http://www.w3.org/2000/svg"
-                                    className={"flex-shrink-0 h-6 w-6 text-purple-2"}
-                                    viewBox="0 0 161.382 185.671">
+                                    className={
+                                      "h-6 w-6 flex-shrink-0 text-purple-2"
+                                    }
+                                    viewBox="0 0 161.382 185.671"
+                                  >
                                     <g
                                       id="layer1"
-                                      transform="translate(-26.12 -62.248)">
+                                      transform="translate(-26.12 -62.248)"
+                                    >
                                       <path
                                         d="M66.5,224.731l-40.3-23.242-.037-46.373-.037-46.373L65.988,85.637c21.927-12.709,40.095-23.218,40.372-23.353.537-.262,1.685.388,38.366,21.736,3.59,2.089,14.662,8.512,24.606,14.273l18.08,10.475.044,46.3.044,46.3L162.94,215.58c-13.509,7.817-31.584,18.28-40.166,23.25s-15.686,9.061-15.787,9.09S88.666,237.514,66.5,224.731Zm56.974,2.71L158.353,207.2,177.8,195.909l-.044-41.024-.044-41.024-19.667-11.392c-10.817-6.266-26.692-15.464-35.278-20.44s-15.709-9.086-15.829-9.132-16.172,9.151-35.67,20.439L35.815,113.859l.04,41.087.04,41.087,35.527,20.513,35.527,20.513.545-.331c.3-.182,7.49-4.362,15.979-9.288ZM88.062,216.4l-4.807-3.193V96.9l11.738-7.015c6.591-3.939,11.847-6.973,11.988-6.919s6.838,3.955,14.889,8.672l14.639,8.576-.929,1.442c-.511.793-1.712,2.672-2.669,4.176s-1.8,2.8-1.866,2.882-5.545-3-12.167-6.85c-9.065-5.269-12.115-6.962-12.342-6.851-.166.081-3.289,1.849-6.941,3.929l-6.639,3.782v46.145l17.859.045,17.859.045.046,5.953.046,5.953H92.958l-.045,29.365L92.869,219.6Zm-17.148-9.77c-3.026-1.764-3.456-2.071-3.627-2.585-.107-.321-3.443-12.783-7.414-27.694l-7.221-27.111-.045,23.362c-.025,12.849-.079,23.362-.121,23.362-.106,0-8.074-4.588-8.345-4.806-.175-.14-.22-7.183-.22-34.154V123.031l4.275-2.412c2.351-1.327,4.3-2.386,4.333-2.355s.366,1.117.743,2.412c.758,2.6,4.556,15.009,8.477,27.689l2.543,8.225.088-23.726.088-23.726,5.1-2.8c2.8-1.54,5.124-2.8,5.159-2.8s.064,23.654.064,52.564c0,41.942-.045,52.561-.22,52.547-.121-.009-1.766-.917-3.654-2.018Zm77.6-44.224,0-42.554-1.629-1.054c-5.5-3.561-10.889-7.182-10.889-7.319,0-.088,1.123-1.875,2.5-3.971,1.8-2.751,2.569-3.784,2.757-3.711.143.055,7.2,4.481,15.672,9.836l15.411,9.735v5.519a53.2,53.2,0,0,1-.144,5.519c-.079,0-3-1.948-6.482-4.328l-6.338-4.328-.088,36.715-.088,36.715-5.2,2.891c-2.862,1.59-5.263,2.891-5.336,2.891s-.134-19.149-.135-42.553Z"
                                         fill="currentColor"
@@ -741,7 +789,7 @@ const Header = () => {
                                     </p>
                                   </div>
                                 </a>
-                              </Link>
+                              </Link> */}
                               {/*                <Link href={"/projects/seeding"}>*/}
                               {/*                  <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">*/}
                               {/*                    <svg*/}
@@ -805,7 +853,7 @@ const Header = () => {
                                 <a className="flex items-start rounded-lg">
                                   <AnnotationIcon
                                     className={
-                                      "flex-shrink-0 h-6 w-6 text-purple-2"
+                                      "h-6 w-6 flex-shrink-0 text-purple-2"
                                     }
                                   />
                                   <div className="ml-4">
@@ -820,10 +868,11 @@ const Header = () => {
                               </Link>
                               <a
                                 href="https://docs.parasol.finance/"
-                                className="flex items-start rounded-lg">
+                                className="flex items-start rounded-lg"
+                              >
                                 <BookOpenIcon
                                   className={
-                                    "flex-shrink-0 h-6 w-6 text-purple-2"
+                                    "h-6 w-6 flex-shrink-0 text-purple-2"
                                   }
                                 />
                                 <div className="ml-4">
@@ -837,11 +886,15 @@ const Header = () => {
                               </a>
                               <a
                                 href="https://parasol-finance.medium.com/"
-                                className="flex items-start rounded-lg">
+                                className="flex items-start rounded-lg"
+                              >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
-                                  className={"flex-shrink-0 h-6 w-6 text-purple-2"}
-                                  viewBox="0 0 24 24">
+                                  className={
+                                    "h-6 w-6 flex-shrink-0 text-purple-2"
+                                  }
+                                  viewBox="0 0 24 24"
+                                >
                                   <path
                                     d="M4.285 7.269a.733.733 0 0 0-.24-.619l-1.77-2.133v-.32h5.498l4.25 9.32 3.736-9.32H21v.319l-1.515 1.451a.45.45 0 0 0-.168.425v10.666a.448.448 0 0 0 .168.425l1.479 1.451v.319h-7.436v-.319l1.529-1.487c.152-.15.152-.195.152-.424V8.401L10.95 19.218h-.575L5.417 8.401v7.249c-.041.305.06.612.275.833L7.684 18.9v.319H2.036V18.9l1.992-2.417a.971.971 0 0 0 .257-.833V7.269z"
                                     fill={"currentColor"}
@@ -860,7 +913,7 @@ const Header = () => {
                                 <a className="flex items-start rounded-lg">
                                   <MailIcon
                                     className={
-                                      "flex-shrink-0 h-6 w-6 text-purple-2"
+                                      "h-6 w-6 flex-shrink-0 text-purple-2"
                                     }
                                   />
                                   <div className="ml-4">
@@ -868,7 +921,8 @@ const Header = () => {
                                       Contact Us
                                     </p>
                                     <p className="mt-1 text-sm text-white">
-                                      Something to tell us, please fill the form.
+                                      Something to tell us, please fill the
+                                      form.
                                     </p>
                                   </div>
                                 </a>
@@ -876,14 +930,14 @@ const Header = () => {
                             </div>
                             <div className="mt-3">
                               <div>
-                                <h3 className="text-sm tracking-wide font-medium text-white uppercase">
+                                <h3 className="text-sm font-medium uppercase tracking-wide text-white">
                                   Recent Posts
                                 </h3>
                                 <ul role="list" className="mt-4 space-y-4">
                                   {recentPosts.map((post) => (
                                     <li
                                       key={post.id}
-                                      className="text-base truncate"
+                                      className="truncate text-base"
                                     >
                                       <a
                                         href={post.href}

@@ -5,13 +5,13 @@ import FloatingParasol from "../utils/floating-illustration";
 
 const Hero = () => (
   <section id="hero" className="mt-6">
-    <div className="mx-auto max-w-7xl px-5 py-6 grid grid-cols-12 gap-0">
-      <div className="col-span-12 lg:col-span-6 text-center lg:text-left lg:flex lg:items-center">
+    <div className="mx-auto grid max-w-7xl grid-cols-12 gap-0 px-5 py-6">
+      <div className="col-span-12 text-center lg:col-span-6 lg:flex lg:items-center lg:text-left">
         <div className="pb-3">
           <a
             href="https://solana.com/"
             target="_blank"
-            className="inline-flex items-center text-white bg-pink-600 bg-opacity-0 rounded-full p-1 pr-2 sm:text-base lg:text-sm xl:text-base hover:text-gray-200"
+            className="inline-flex items-center rounded-full bg-pink-600 bg-opacity-0 p-1 pr-2 text-white hover:text-gray-200 sm:text-base lg:text-sm xl:text-base"
             rel="noreferrer"
           >
             <svg
@@ -27,7 +27,7 @@ const Hero = () => (
             </svg>
             <span className="ml-4 text-sm">Built on Solana Blockchain</span>
             <svg
-              className="ml-2 w-5 h-5 text-gray-500"
+              className="ml-2 h-5 w-5 text-gray-500"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
               fill="currentColor"
@@ -40,25 +40,25 @@ const Hero = () => (
               />
             </svg>
           </a>
-          <h1 className="mt-4 text-4xl tracking-tight font-extrabold text-white sm:mt-5 sm:leading-none lg:mt-7 lg:text-4xl xl:text-6xl">
+          <h1 className="mt-4 text-4xl font-extrabold tracking-tight text-white sm:mt-5 sm:leading-none lg:mt-7 lg:text-4xl xl:text-6xl">
             <span className="md:block">The First Community</span>
-            <span className="text-transparent bg-clip-text bg-purple-2 leading-normal whitespace-nowrap grid sm:block">
+            <span className="grid whitespace-nowrap bg-purple-2 bg-clip-text leading-normal text-transparent sm:block">
               <span className="text-white">Governed</span> IDO Platform
             </span>
           </h1>
-          <p className="mt-7 text-base text-gray-200 font-medium text-xl">
+          <p className="mt-7 text-base text-xl font-medium text-gray-200">
             Parasol Finance is the first-ever community governed IDO platform
             built on Solana with the needs of both projects and investors alike.
           </p>
-          <div className="flex justify-center mt-6 sm:justify-between">
-            <p className="text-gray-200 text-lg font-bold mb-3 truncate">
+          <div className="mt-6 flex justify-center sm:justify-between">
+            <p className="mb-3 truncate text-lg font-bold text-gray-200">
               The first launchpad with a NFT allocation system.
             </p>
           </div>
-          <div className="mt-8 grid lg:flex gap-3 grid-cols-1 lg:grid-cols-2 justify-start">
+          <div className="mt-8 grid grid-cols-1 justify-start gap-3 lg:flex lg:grid-cols-2">
             <Link href={"/projects"}>
-              <a className="button px-8 bg-none bg-purple-2 py-3 text-base">
-                <CollectionIcon className={"w-5 h-5"} />
+              <a className="button bg-purple-2 bg-none px-8 py-3 text-base text-white hover:bg-white hover:text-purple-2">
+                <CollectionIcon className={"h-5 w-5"} />
                 Browse Upcoming IDOs
               </a>
             </Link>
@@ -69,11 +69,12 @@ const Hero = () => (
             {/*  </a>*/}
             {/*</Link>*/}
             <Link href={"/swap"}>
-              <a className="button border border-white bg-none except py-3 text-base">
+              <a className="button except border border-white bg-none py-3 text-base">
                 <svg
-                  className="w-5 h-5"
+                  className="h-5 w-5"
                   xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 125.5752 144.6496">
+                  viewBox="0 0 125.5752 144.6496"
+                >
                   <g>
                     <path
                       fill="currentColor"
@@ -111,7 +112,7 @@ const Hero = () => (
           </div>
         </div>
       </div>
-      <div className="relative- mt-20 sm:mt-24 lg:mt-0 lg:col-span-6 hidden lg:flex justify-end">
+      <div className="relative- mt-20 hidden justify-end sm:mt-24 lg:col-span-6 lg:mt-0 lg:flex">
         <FloatingParasol />
       </div>
     </div>
