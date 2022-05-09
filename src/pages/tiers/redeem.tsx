@@ -32,18 +32,23 @@ const Migrate = () => {
   useEffect(() => {
     setSelected(nfts[0]);
     return setLoading(false);
-  }, [nfts]);
+  }, [nfts, wallet.connected]);
 
   useEffect(() => {
     setPending(walletModal.visible);
   }, [walletModal.visible]);
 
   useEffect(() => {
-    if (wallet.connected && user) {
-      getNFTList();
+    if (wallet.connected) {
+      if (user) {
+        getNFTList();
+      }
+      else {
+        return setLoading(true);
+      }
     }
     else {
-      return setLoading(true);
+      setNfts([]);
     }
   }, [user, wallet.connected]);
 
@@ -52,8 +57,6 @@ const Migrate = () => {
   }
 
   vestingPeriod = (selected?.vestedDuration / selected?.releaseDuration) * 100;
-
-  console.log(selected, "selected");
 
   const redeemNFT = async () => {
     const mintAddress = new PublicKey(selected.mint);
