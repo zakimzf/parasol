@@ -15,6 +15,7 @@ import { NftContext } from "context/NftContext";
 import Card from "components/card";
 import { useWalletModal } from "components/wallet-connector";
 import { globalErrorHandle, notification } from "utils/functions";
+import { Loading } from "components";
 
 const Migrate = () => {
   const { sendTransaction } = useWallet();
@@ -22,15 +23,40 @@ const Migrate = () => {
   const walletModal = useWalletModal();
 
   const { nfts, setNfts, user, wallet, getNFTList } = useContext(NftContext);
+  const [selected, setSelected] = useState<any>();
   const [isPending, setPending] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
-  useEffect(() => setSelected(nfts[0]), [nfts]);
+  let vestingPeriod = 0;
+
+  useEffect(() => {
+    setSelected(nfts[0]);
+    return setLoading(false);
+  }, [nfts, wallet.connected]);
 
   useEffect(() => {
     setPending(walletModal.visible);
   }, [walletModal.visible]);
 
-  const [selected, setSelected] = useState<any>();
+  useEffect(() => {
+    if (wallet.connected) {
+      if (user) {
+        getNFTList();
+      }
+      else {
+        return setLoading(true);
+      }
+    }
+    else {
+      setNfts([]);
+    }
+  }, [user, wallet.connected]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  vestingPeriod = (selected?.vestedDuration / selected?.releaseDuration) * 100;
 
   const redeemNFT = async () => {
     const mintAddress = new PublicKey(selected.mint);
@@ -79,7 +105,7 @@ const Migrate = () => {
             </a>
           </Link>
           <Card padded={true}>
-            <div className="space-y-6">
+            <div className="space-y-4">
               <div className="prose prose-lg prose-invert">
                 <h2>Redeem NFT</h2>
                 <p>
@@ -173,10 +199,41 @@ const Migrate = () => {
                   </Link>
                 </div>
               )}
+              {selected ? (
+                <div className="pt-3">
+                  <div className="text-center font-bold">
+                    Dynamic Vesting Period ({vestingPeriod.toFixed(0)}
+                    %)
+                  </div>
+                  <div className="chart">
+                    <div className={`bar bar-${vestingPeriod.toFixed(0)}`}>
+                      <div className="face top">
+                        <div className="growing-bar"></div>
+                      </div>
+                      <div className="face side-0">
+                        <div className="growing-bar"></div>
+                      </div>
+                      <div className="face floor">
+                        <div className="growing-bar"></div>
+                      </div>
+                      <div className="face side-a"></div>
+                      <div className="face side-b"></div>
+                      <div className="face side-1">
+                        <div className="growing-bar"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
               {wallet.connected ? (
                 [
                   nfts.length > 0 ? (
-                    <button className="button w-full" onClick={redeemNFT}>
+                    <button
+                      className="button relative top-[-16px] w-full"
+                      onClick={redeemNFT}
+                    >
                       <SwitchVerticalIcon className="h-5 w-5" />
                       Redeem My NFT
                     </button>
