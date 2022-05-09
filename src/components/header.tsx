@@ -111,7 +111,7 @@ const Header = () => {
                                 </Link>
                               </div>
                             </div>
-                            <Link href={"/tiers"}>
+                            {/* <Link href={"/tiers"}>
                               <a className="flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -139,7 +139,7 @@ const Header = () => {
                                   </p>
                                 </div>
                               </a>
-                            </Link>
+                            </Link> */}
                             {/*                <Link href={"/projects/seeding"}>*/}
                             {/*                  <a className="flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">*/}
                             {/*                    <svg*/}
@@ -231,9 +231,11 @@ const Header = () => {
                 );
               }}
             </Popover>
-            {/* <Link href={"/tiers"}>
-              <a className="font-bold text-sm hover:text-gray-300">NFT Access Keys</a>
-            </Link> */}
+            <Link href={"/tiers"}>
+              <a className="text-sm font-bold hover:text-gray-300">
+                NFT Access Keys
+              </a>
+            </Link>
             <Popover className="relative">
               {({ open = true }) => {
                 return (
@@ -545,7 +547,7 @@ const Header = () => {
                                     </div>
                                   </a>
                                 </Link>
-                                <Link href={"/tiers"}>
+                                {/* <Link href={"/tiers"}>
                                   <a className="flex items-start rounded-lg">
                                     <svg
                                       xmlns="http://www.w3.org/2000/svg"
@@ -573,7 +575,7 @@ const Header = () => {
                                       </p>
                                     </div>
                                   </a>
-                                </Link>
+                                </Link> */}
                                 {/*                <Link href={"/projects/seeding"}>*/}
                                 {/*                  <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">*/}
                                 {/*                    <svg*/}
@@ -743,7 +745,7 @@ const Header = () => {
                         <Popover.Panel className="z-100 w-screen transform">
                           <div className="overflow-hidden">
                             <div className="relative grid gap-6 py-4">
-                              <Link href={"/projects"}>
+                              {/* <Link href={"/projects"}>
                                 <a className="flex items-start rounded-lg">
                                   <CollectionIcon
                                     className="h-6 w-6 flex-shrink-0 text-purple-2"
@@ -787,7 +789,7 @@ const Header = () => {
                                     </p>
                                   </div>
                                 </a>
-                              </Link>
+                              </Link> */}
                               {/*                <Link href={"/projects/seeding"}>*/}
                               {/*                  <a className="-m-3 p-3 flex items-start rounded-lg hover:bg-white hover:bg-opacity-5">*/}
                               {/*                    <svg*/}
