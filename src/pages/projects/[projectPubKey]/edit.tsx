@@ -55,7 +55,7 @@ const EditProject = () => {
         errors[name] = "";
       }
     }
-    
+
     setValues({ ...values, [name]: value });
   };
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -148,7 +148,7 @@ const EditProject = () => {
         // Sign the bytes using the wallet
         const signature = await signMessage(message);
         // Verify that the bytes were signed using the private key that matches the known public key
-        
+
         if (!sign.detached.verify(message, signature, publicKey.toBytes()))
           throw new Error("Invalid signature!");
         // await setDoc(doc(idosCollectionRef, values.projectKey), values);
@@ -169,7 +169,7 @@ const EditProject = () => {
       setLoading(false);
       notification("danger", "Unable to sign the transaction.", "Transaction Error");
     }
-    
+
     setLoading(false);
   }
 
@@ -180,7 +180,7 @@ const EditProject = () => {
       setProject(project);
       const data = await project.data()
       data.projectKey = projectPubKey;
-      
+
       if (wallet.connected && data && data.owner == walletAddress) {
         data.startTime = data.startTime.toISOString().slice(0, -5);
         data.endTime = data.endTime.toISOString().slice(0, -5);
@@ -188,7 +188,7 @@ const EditProject = () => {
       }
       else router.push("/404");
     };
-    
+
     if (projectPubKey && provider && config && wallet.connected) getDataByTokenAddress();
   }, [projectPubKey, provider, config, wallet.connected]);
 
@@ -482,7 +482,7 @@ const EditProject = () => {
                             <span>USDC</span>
                           </div>
                         </div>
-                        <div className="prose prose-lg prose-invert">
+                        <div className="prose prose-lg prose-invert break-all">
                           <p>
                             {(!values.description.trim() &&
                               "Project Description") ||

@@ -342,7 +342,7 @@ const ProjectDetails = () => {
                             <span>USDC</span>
                           </div>
                         </div>
-                        <div className="prose prose-lg prose-invert">
+                        <div className="prose prose-lg prose-invert break-all">
                           <p>{ido.description}</p>
                         </div>
                         <div className="flex-col space-y-3">
