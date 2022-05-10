@@ -49,17 +49,17 @@ const Swap = () => {
   const [rate, setRate] = useState("0");
 
   const cluster: WalletAdapterNetwork = getWalletAdapterNetwork(
-    process.env.NETWORK
+    process.env.NEXT_PUBLIC_NETWORK
   );
 
   useEffect(() => {
     getPlatformFeeAccounts(
       connection,
       // The platform fee account owner. Need to fetch this from the env
-      new PublicKey(process.env.PLATFORM_FEE_ADDRESS as any)
+      new PublicKey(process.env.NEXT_PUBLIC_PLATFORM_FEE_ADDRESS as any)
     ).then((r) => {
       setPlatformFeeAndAccounts({
-        feeBps: +(process.env.PLATFORM_FEE_PERCENTAGE as any) * 100,
+        feeBps: +(process.env.NEXT_PUBLIC_PLATFORM_FEE_PERCENTAGE as any) * 100,
         feeAccounts: r,
       });
     });
@@ -311,7 +311,8 @@ const Swap = () => {
         <button
           id="swap-btn"
           onClick={startSwap}
-          className={`mt-6 flex w-full items-center justify-center gap-x-2 rounded-lg bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium ${isPending || !swapStatus ? "opacity-50" : ""
+          className={`mt-6 flex w-full items-center justify-center gap-x-2 rounded-lg bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium ${
+            isPending || !swapStatus ? "opacity-50" : ""
           }`}
           disabled={isPending || !swapStatus}
         >
@@ -484,7 +485,8 @@ const Swap = () => {
               </div>
             </div>
             <div
-              className={`flex items-stretch justify-between rounded-xl bg-white bg-opacity-5 px-2 py-3 ${balanceAvailable ? "outline-hidden" : "outline outline-red-700"
+              className={`flex items-stretch justify-between rounded-xl bg-white bg-opacity-5 px-2 py-3 ${
+                balanceAvailable ? "outline-hidden" : "outline outline-red-700"
               }`}
             >
               {chosenInput && (
@@ -554,7 +556,8 @@ const Swap = () => {
               </div>
             </div>
             <div
-              className={`flex items-center justify-between rounded-xl bg-white bg-opacity-5 px-2 py-3 ${balanceAvailable ? "outline-hidden" : "outline outline-red-700"
+              className={`flex items-center justify-between rounded-xl bg-white bg-opacity-5 px-2 py-3 ${
+                balanceAvailable ? "outline-hidden" : "outline outline-red-700"
               }`}
             >
               {/* <div className="relative flex justify-between items-center py-3"> */}
@@ -604,12 +607,14 @@ const Swap = () => {
                       key={route.marketInfos[0].amm.label}
                       value={route}
                       className={({ active, checked }) =>
-                        `${active
-                          ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
-                          : ""
-                        } ${checked
-                          ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                          : "border-2 border-transparent bg-white bg-opacity-5"
+                        `${
+                          active
+                            ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
+                            : ""
+                        } ${
+                          checked
+                            ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                            : "border-2 border-transparent bg-white bg-opacity-5"
                         } relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
                       }
                     >
@@ -619,7 +624,8 @@ const Swap = () => {
                             <div className="text-sm">
                               <RadioGroup.Label
                                 as="p"
-                                className={`font-medium ${checked ? "text-white" : ""
+                                className={`font-medium ${
+                                  checked ? "text-white" : ""
                                 }`}
                               >
                                 {route.marketInfos[0].amm.label}
@@ -638,7 +644,7 @@ const Swap = () => {
                             <div>
                               {chosenOutput &&
                                 route.outAmount /
-                                10 ** chosenOutput.decimals}{" "}
+                                  10 ** chosenOutput.decimals}{" "}
                             </div>
                           </div>
                         </>
@@ -714,7 +720,7 @@ const Swap = () => {
                 </div>
                 <div className="text-black-50 dark:text-white-50">
                   0.5 {chosenInput?.symbol} (
-                  {process.env.PLATFORM_FEE_PERCENTAGE as any}%)
+                  {process.env.NEXT_PUBLIC_PLATFORM_FEE_PERCENTAGE as any}%)
                 </div>
               </div>
               <div className="flex items-center justify-between text-xs">

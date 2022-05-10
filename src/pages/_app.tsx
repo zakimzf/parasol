@@ -33,7 +33,7 @@ import "nprogress/nprogress.css";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   const network: WalletAdapterNetwork = getWalletAdapterNetwork(
-    process.env.NETWORK
+    process.env.NEXT_PUBLIC_NETWORK
   );
 
   const endpoint = useMemo(() => process.env.NEXT_PUBLIC_CUSTOM_RPC || clusterApiUrl(network), [network]);
@@ -150,16 +150,19 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
             </WalletModalProvider>
           </WalletProvider>
         </ConnectionProvider>
-        <Script src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID" strategy="afterInteractive"/>
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-6VTVXVGNCD');
-        `}
-        </Script>
+        {process.env.NEXT_PUBLIC_NETWORK == "devnet" &&
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_KEY}`} strategy="afterInteractive" />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){window.dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-6VTVXVGNCD');
+              `}
+            </Script>
+          </>
+        }
       </body>
     </>
   );
