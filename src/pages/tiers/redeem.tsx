@@ -58,6 +58,10 @@ const Migrate = () => {
 
   vestingPeriod = (selected?.vestedDuration / selected?.releaseDuration) * 100;
 
+  if (vestingPeriod < 0) {
+    vestingPeriod = 0
+  }
+
   const redeemNFT = async () => {
     const mintAddress = new PublicKey(selected.mint);
     try {
@@ -137,14 +141,12 @@ const Migrate = () => {
                           key={nft.name}
                           value={nft}
                           className={({ active, checked }) =>
-                            `${
-                              active
-                                ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
-                                : ""
-                            } ${
-                              checked
-                                ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                                : "border-2 border-transparent bg-white bg-opacity-5"
+                            `${active
+                              ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
+                              : ""
+                            } ${checked
+                              ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                              : "border-2 border-transparent bg-white bg-opacity-5"
                             } relative flex cursor-pointer rounded-lg p-3 shadow-md focus:outline-none`
                           }
                         >
@@ -155,8 +157,7 @@ const Migrate = () => {
                                   <div className="text-sm">
                                     <RadioGroup.Label
                                       as="p"
-                                      className={`font-medium ${
-                                        checked ? "text-white" : ""
+                                      className={`font-medium ${checked ? "text-white" : ""
                                       }`}
                                     >
                                       <div className="flex items-center">
