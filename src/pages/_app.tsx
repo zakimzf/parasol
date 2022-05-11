@@ -150,7 +150,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
             </WalletModalProvider>
           </WalletProvider>
         </ConnectionProvider>
-        {process.env.NEXT_PUBLIC_NETWORK == "devnet" &&
+        {process.env.NEXT_PUBLIC_NETWORK == "mainnet" &&
           <>
             <Script src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS_KEY}`} strategy="afterInteractive" />
             <Script id="google-analytics" strategy="afterInteractive">
@@ -158,7 +158,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){window.dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', 'G-6VTVXVGNCD');
+                gtag('config', ${process.env.GOOGLE_ANALYTICS_KEY});
               `}
             </Script>
           </>
