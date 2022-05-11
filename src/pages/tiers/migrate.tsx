@@ -7,6 +7,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react";
 import { ArrowLeftIcon, CheckIcon, UploadIcon } from "@heroicons/react/outline";
 
+import { Loading } from "components";
 import Card from "components/card";
 import { useWalletModal } from "components/wallet-connector";
 import { NftContext } from "context/NftContext";
@@ -17,28 +18,40 @@ const Migrate = () => {
   const { connection } = useConnection();
   const walletModal = useWalletModal();
 
-  const { nfts, setNfts, wallet, migrator } = React.useContext(NftContext);
+  const { nfts, setNfts, wallet, migrator, getNFTList } =
+    React.useContext(NftContext);
+  const [selected, setSelected] = useState<any>();
   const [isPending, setPending] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!wallet.connected) return;
-    if (migrator) {
-      getNFTList();
-    }
-  }, [wallet.connected]);
-
-  useEffect(() => setSelected(nfts[0]), [nfts]);
+    setSelected(nfts[0]);
+    return setLoading(false);
+  }, [nfts, wallet.connected]);
 
   useEffect(() => {
     setPending(walletModal.visible);
   }, [walletModal.visible]);
 
-  const [selected, setSelected] = useState<any>();
+  useEffect(() => {
+    if (wallet.connected) {
+      if (migrator) {
+        getNFTList();
+      }
+      else {
+        return setLoading(true);
+      }
+    }
+    else {
+      setNfts([]);
+    }
+  }, [migrator, wallet.connected]);
 
-  const getNFTList = async () => {
-    const nftsmetadata = await migrator.getNFTList();
-    setNfts(nftsmetadata);
-  };
+  console.log(migrator, "migrator");
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const upgradeNFT = async () => {
     const mintAddress = new PublicKey(selected.mint);
