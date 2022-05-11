@@ -112,7 +112,7 @@ const Migrate = () => {
                     <RadioGroup.Label className="sr-only">
                       Server size
                     </RadioGroup.Label>
-                    <div className="space-y-2">
+                    <div className="h-[335px] space-y-2 overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-parasol">
                       {nfts.map((nft: any) => (
                         <RadioGroup.Option
                           key={nft.name}
