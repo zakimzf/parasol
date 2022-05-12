@@ -37,17 +37,13 @@ const Migrate = () => {
     if (wallet.connected) {
       if (migrator) {
         getNFTList();
-      }
-      else {
+      } else {
         return setLoading(true);
       }
-    }
-    else {
+    } else {
       setNfts([]);
     }
   }, [migrator, wallet.connected]);
-
-  console.log(migrator, "migrator");
 
   if (isLoading) {
     return <Loading />;
@@ -75,8 +71,7 @@ const Migrate = () => {
 
       setNfts([]);
       getNFTList();
-    }
-    catch (error: any) {
+    } catch (error: any) {
       console.log(error.message, "error");
       notification("danger", error.message, "Transaction Error");
       // globalErrorHandle(error);
