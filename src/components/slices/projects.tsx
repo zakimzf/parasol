@@ -1,17 +1,23 @@
-import { ChevronDoubleRightIcon, ChevronDownIcon, ClockIcon, CollectionIcon } from "@heroicons/react/outline";
-
-import Container from "../container";
 import React, { Fragment, useContext, useEffect, useState } from "react";
-import { NftContext } from "../../context/NftContext";
-import { Project } from "../../constants";
-import { RpcHelper } from "parasol-finance-sdk";
 import Link from "next/link";
-import ProjectCard from "../cards/project-card";
+
+import { RpcHelper } from "parasol-finance-sdk";
+import {
+  ChevronDoubleRightIcon,
+  ChevronDownIcon,
+  ClockIcon,
+  CollectionIcon,
+} from "@heroicons/react/outline";
 import { Menu, Transition } from "@headlessui/react";
+
+import Container from "components/container";
+import ProjectCard from "components/cards/project-card";
+import { NftContext } from "context/NftContext";
+import { Project } from "../../constants";
 
 const Projects = () => {
   const { provider } = useContext(NftContext);
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<Project[]>([]);
   const [status, setStatus] = useState<string>("PUBLISHED");
   const filteredProjects = projects
     .filter((e: any) => e.status === status)
@@ -22,31 +28,28 @@ const Projects = () => {
   useEffect(() => {
     const getProjects = async () => {
       const helper = new RpcHelper(provider);
-      await helper.getProjectList().then((p: any) => setProjects(p))
-    }
+      await helper.getProjectList().then((p: any) => setProjects(p));
+    };
     getProjects();
-  }, [])
+  }, []);
 
   return (
     <section>
       <Container>
-        <div className={"flex items-center gap-x-6 mb-12"}>
-          <div className={"truncate flex-1"}>
-            <a className="text-3xl mb-1 font-extrabold text-white tracking-tight sm:text-4xl">
+        <div className="mb-12 flex items-center gap-x-6">
+          <div className="flex-1 truncate">
+            <a className="mb-1 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
               Upcoming IDOs
             </a>
-            <p className="truncate text-sm lg:text-base text-gray-200">
+            <p className="truncate text-sm text-gray-200 lg:text-base">
               We only display IDOs that are featured or have been balloted.
             </p>
           </div>
           <Menu as="div" className="relative inline-block text-left">
             <div>
-              <Menu.Button className="flex gap-x-2 items-center uppercase bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
-                <span className={"hidden lg:block"}>Filter by Status</span>
-                <ChevronDownIcon
-                  className="w-5 h-5"
-                  aria-hidden="true"
-                />
+              <Menu.Button className="flex items-center gap-x-2 rounded-lg bg-white bg-opacity-5 px-5 py-3 uppercase text-gray-200 hover:bg-opacity-10">
+                <span className="hidden lg:block">Filter by Status</span>
+                <ChevronDownIcon className="h-5 w-5" aria-hidden="true" />
               </Menu.Button>
             </div>
             <Transition
@@ -58,14 +61,17 @@ const Projects = () => {
               leaveFrom="transform opacity-100 scale-100"
               leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="absolute z-30 right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <Menu.Items className="absolute right-0 z-30 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1">
                   <Menu.Item>
                     {({ active }) => (
                       <button
                         onClick={() => setStatus("PUBLISHED")}
-                        className={`${active ? "bg-purple-2 text-white" : "text-gray-900"} group flex rounded-md items-center gap-x-3 w-full px-3 py-2 text-sm`}>
-                        <CollectionIcon className={"w-5 h-5"} />
+                        className={`${
+                          active ? "bg-purple-2 text-white" : "text-gray-900"
+                        } group flex w-full items-center gap-x-3 rounded-md px-3 py-2 text-sm`}
+                      >
+                        <CollectionIcon className="h-5 w-5" />
                         Upcoming IDOs
                       </button>
                     )}
@@ -76,8 +82,11 @@ const Projects = () => {
                     {({ active }) => (
                       <button
                         onClick={() => setStatus("FINISHED")}
-                        className={`${active ? "bg-purple-2 text-white" : "text-gray-900"} group flex rounded-md items-center gap-x-3 w-full px-3 py-2 text-sm`}>
-                        <ClockIcon className={"w-5 h-5"} />
+                        className={`${
+                          active ? "bg-purple-2 text-white" : "text-gray-900"
+                        } group flex w-full items-center gap-x-3 rounded-md px-3 py-2 text-sm`}
+                      >
+                        <ClockIcon className="h-5 w-5" />
                         Finished IDOs
                       </button>
                     )}
@@ -90,7 +99,7 @@ const Projects = () => {
         {projects.length > 0 ? (
           <>
             {filteredProjects.length > 0 ? (
-              <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:grid-cols-3">
                 {filteredProjects.map((project, index) => (
                   <ProjectCard
                     key={index}
@@ -107,23 +116,27 @@ const Projects = () => {
                 ))}
               </div>
             ) : (
-              <h1 className={"py-12 font-medium text-gray-300 text-center"}>
+              <h1 className="py-12 text-center font-medium text-gray-300">
                 There is no IDO corresponding to these criteria.
               </h1>
             )}
           </>
         ) : (
-          <div className="grid gap-7 grid-cols-1 lg:grid-cols-2 lg:grid-cols-3">
-            {[0, 1, 2].map(key => (
+          <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:grid-cols-3">
+            {[0, 1, 2].map((key) => (
               <ProjectCard key={key} loading={true} />
             ))}
           </div>
         )}
-        <div className={"flex justify-center pt-12"}>
-          <Link href={"/projects"}>
-            <a className={"button text-sm !bg-none border border-gray-600 text-gray-400"}>
+        <div className="flex justify-center pt-12">
+          <Link href="/projects">
+            <a
+              className={
+                "button border border-gray-600 !bg-none text-sm text-gray-400 hover:text-purple-2"
+              }
+            >
               View All Projects
-              <ChevronDoubleRightIcon className={"w-4"} />
+              <ChevronDoubleRightIcon className="w-4" />
             </a>
           </Link>
         </div>
