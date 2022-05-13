@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ShoppingBagIcon } from "@heroicons/react/outline";
 import { useWalletModal } from "components/wallet-connector";
 
-import Logo from "assets/logos/parasol-logo-mark-full-color-rgb.svg";
+import Logo from "/public/assets/logos/parasol-logo-mark-full-color-rgb.svg";
 
 type NftDetails = {
   owned?: boolean,

@@ -20,7 +20,7 @@ import { ChevronDownIcon } from "@heroicons/react/solid";
 import WalletConnect from "./wallet-connector/WalletConnect";
 import { recentPosts, toolsMenu } from "constants/header";
 
-import Logo from "assets/logos/parasol-logo-inverted-rgb.svg";
+import Logo from "/public/assets/logos/parasol-logo-inverted-rgb.svg";
 
 const Header = () => {
   const [psolPrice, setPsolPrice] = useState<number>(0);
