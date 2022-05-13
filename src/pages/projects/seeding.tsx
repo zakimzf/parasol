@@ -1,12 +1,14 @@
-import Container from "../../components/container";
-import Heading from "../../components/heading";
+import React from "react";
+import Head from "next/head";
+
 import { Timestamp } from "firebase/firestore";
-import Apply from "../../components/slices/apply";
 import moment from "moment";
 import { ChevronDoubleUpIcon } from "@heroicons/react/outline";
-import Head from "next/head";
-import React from "react";
-import Layout from "../../components/layout";
+
+import Container from "components/container";
+import Heading from "components/heading";
+import Layout from "components/layout";
+import Apply from "components/slices/apply";
 
 const projects = [
   {
@@ -71,7 +73,7 @@ const Seeding = () =>
       <meta property="twitter:image" content="/assets/preview/seeding.png" />
     </Head>
     <Heading tagline={"Parasol Finance"} title={"Projects Seeding"}
-      description={"Vote for the new projects that have just arrived."}/>
+      description={"Vote for the new projects that have just arrived."} />
     <Layout>
       <section>
         <Container>
@@ -84,19 +86,19 @@ const Seeding = () =>
                     <thead className="">
                       <tr>
                         <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold sm:pl-6">
-                        Project Name + Description
+                          Project Name + Description
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold">
-                        Status
+                          Status
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold">
-                        Current Votes
+                          Current Votes
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold">
-                        Submit Date
+                          Submit Date
                         </th>
                         <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold">
-                        End Date
+                          End Date
                         </th>
                         <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                           <span className="sr-only">Edit</span>
@@ -108,7 +110,7 @@ const Seeding = () =>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
                             <div className="h-10 w-10 flex-shrink-0">
-                              <img className="h-10 w-10 rounded-full" src={project.projectIcon} alt=""/>
+                              <img className="h-10 w-10 rounded-full" src={project.projectIcon} alt="" />
                             </div>
                             <div className="ml-4">
                               <div className="font-medium">
@@ -120,7 +122,7 @@ const Seeding = () =>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm">
                           <span className="inline-flex rounded-full bg-purple-2 px-2 text-xs font-semibold leading-5">
-                          Active
+                            Active
                           </span>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm">
@@ -137,7 +139,7 @@ const Seeding = () =>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <a href="#" className="button p-1 gap-x-1 text-sm bg-none bg-purple-2 rounded-md">
                             <ChevronDoubleUpIcon className={"w-3"} />
-                          Vote
+                            Vote
                           </a>
                         </td>
                       </tr>)}
@@ -149,7 +151,7 @@ const Seeding = () =>
           </div>
         </Container>
       </section>
-      <Apply/>
+      <Apply />
     </Layout>
   </>
 

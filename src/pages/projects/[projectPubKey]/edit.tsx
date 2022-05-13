@@ -1,19 +1,21 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState, } from "react";
-import NumberFormat from "react-number-format";
-import axios from "axios";
-import { ExclamationCircleIcon, PencilAltIcon } from "@heroicons/react/outline";
-import { collection, doc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
-import { useWalletModal } from "../../../components/wallet-connector";
-import { errClasses, notification, validURL, } from "../../../utils/functions";
-import Container from "../../../components/container";
-import { db } from "../../../utils/firebase";
+
+import axios from "axios";
 import { sign } from "tweetnacl";
+import NumberFormat from "react-number-format";
+import TextareaAutosize from "react-textarea-autosize";
 import { NftStore, Project } from "parasol-finance-sdk";
-import { NftContext } from "../../../context/NftContext";
 import { PublicKey } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { collection, doc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { ExclamationCircleIcon, PencilAltIcon } from "@heroicons/react/outline";
+
+import { useWalletModal } from "components/wallet-connector";
+import Container from "components/container";
+import { NftContext } from "context/NftContext";
+import { errClasses, notification, validURL, } from "utils/functions";
+import { db } from "utils/firebase";
 
 const EditProject = () => {
   const router = useRouter();

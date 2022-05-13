@@ -1,8 +1,9 @@
 import React, { FC, Fragment, useEffect, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { TOKEN_LIST_URL } from "@jup-ag/core";
-import { SearchIcon } from "@heroicons/react/outline";
+
 import { PublicKey } from "@solana/web3.js";
+import { Dialog, Transition } from "@headlessui/react";
+import { SearchIcon } from "@heroicons/react/outline";
+import { TOKEN_LIST_URL } from "@jup-ag/core";
 
 import { Token } from "./constants";
 import { TokenChooserMode, useTokenModal } from "./useTokenModal";

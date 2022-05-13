@@ -1,15 +1,16 @@
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 
-import Card from "../card";
+import Countdown from "react-countdown";
+import { NftStore, Project } from "parasol-finance-sdk";
+import { PublicKey } from "@solana/web3.js";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { BellIcon, CollectionIcon } from "@heroicons/react/outline";
-import Countdown from "react-countdown";
-import { useReminderModal } from "../reminder-modal/useReminderModal";
-import React, { useContext, useEffect, useState } from "react";
-import { isToday } from "../../utils/functions";
-import { NftStore, Project } from "parasol-finance-sdk";
-import { NftContext } from "../../context/NftContext";
-import { PublicKey } from "@solana/web3.js";
+
+import Card from "components/card";
+import { useReminderModal } from "components/reminder-modal/useReminderModal";
+import { NftContext } from "context/NftContext";
+import { isToday } from "utils/functions";
 
 type ProjectDetails = {
   id?: String;

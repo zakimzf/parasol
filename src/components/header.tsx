@@ -1,8 +1,10 @@
 import * as React from "react";
 import { Fragment, useEffect, useState } from "react";
-import { Popover, Transition } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
+
+import NumberFormat from "react-number-format";
+import { Popover, Transition } from "@headlessui/react";
 import {
   AnnotationIcon,
   BookOpenIcon,
@@ -14,10 +16,11 @@ import {
   XIcon,
 } from "@heroicons/react/outline";
 import { ChevronDownIcon } from "@heroicons/react/solid";
+
 import WalletConnect from "./wallet-connector/WalletConnect";
-import { recentPosts, toolsMenu } from "../constants/header";
-import Logo from "/public/assets/logos/parasol-logo-inverted-rgb.svg";
-import NumberFormat from "react-number-format";
+import { recentPosts, toolsMenu } from "constants/header";
+
+import Logo from "assets/logos/parasol-logo-inverted-rgb.svg";
 
 const Header = () => {
   const [psolPrice, setPsolPrice] = useState<number>(0);

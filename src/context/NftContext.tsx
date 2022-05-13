@@ -1,9 +1,8 @@
 import React, { createContext, useEffect, useState } from "react";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-
-import { AnchorProvider, Migrator, NftKind, NftStore, NftStoreConfig, ProjectKind, RpcHelper, User } from "parasol-finance-sdk";
 
 import { PublicKey } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { AnchorProvider, Migrator, NftKind, NftStore, NftStoreConfig, ProjectKind, RpcHelper, User } from "parasol-finance-sdk";
 
 interface Context {
   setNfts: (n: any) => void;
@@ -21,7 +20,7 @@ interface Context {
 }
 
 export const NftContext = createContext<Context>({
-  setNfts: () => {},
+  setNfts: () => { },
   nfts: [],
   provider: null,
   nftStore: null,
@@ -32,7 +31,7 @@ export const NftContext = createContext<Context>({
   migrator: null,
   wallet: null,
   config: null,
-  getNFTList: () => {},
+  getNFTList: () => { },
 });
 
 export const NftProvider: React.FC<React.ReactNode> = ({ children }: any) => {
@@ -65,10 +64,10 @@ export const NftProvider: React.FC<React.ReactNode> = ({ children }: any) => {
     const nftStore = await new NftStore(provider, config).build();
     setNftStore(nftStore);
 
-    const nftKinds = await Promise.all([0,1,2,3].map((tier) => new NftKind(provider, tier).build()));
+    const nftKinds = await Promise.all([0, 1, 2, 3].map((tier) => new NftKind(provider, tier).build()));
     setNftKinds(nftKinds);
 
-    const projectKinds = await Promise.all([0,1,2].map((tier) => new ProjectKind(provider, tier).build()));
+    const projectKinds = await Promise.all([0, 1, 2].map((tier) => new ProjectKind(provider, tier).build()));
     setProjectKinds(projectKinds);
 
     const user = await new User(provider, nftStore).build();

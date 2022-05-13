@@ -1,7 +1,9 @@
 import React, { FC, Fragment, useCallback, useMemo } from "react";
+
 import { Dialog, Transition } from "@headlessui/react";
 import { useWallet, Wallet } from "@solana/wallet-adapter-react";
 import { WalletName, WalletReadyState } from "@solana/wallet-adapter-base";
+
 import { WalletListItem } from "./WalletListItem";
 import { useWalletModal } from "./useWalletModal";
 
@@ -31,7 +33,7 @@ export const WalletModal: FC = () => {
   const handleWalletClick = useCallback((event: any, walletName: WalletName) => {
     select(walletName);
     setVisible(false);
-  }, [ select, setVisible ]);
+  }, [select, setVisible]);
 
   return (
     <Transition.Root show={visible} as={Fragment}>
@@ -47,10 +49,10 @@ export const WalletModal: FC = () => {
             leaveFrom="opacity-100"
             leaveTo="opacity-0">
             <Dialog.Overlay
-              className="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-30 transition-opacity"/>
+              className="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-30 transition-opacity" />
           </Transition.Child>
           <span className="hidden sm:inline-block sm:align-middle sm:h-screen"
-						  aria-hidden="true">&#8203;</span>
+            aria-hidden="true">&#8203;</span>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

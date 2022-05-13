@@ -1,4 +1,10 @@
 import React, { FC, useEffect, useMemo, useState } from "react";
+import { AppProps } from "next/app";
+import Head from "next/head";
+import Script from "next/script";
+import Router, { useRouter } from "next/router";
+
+import { clusterApiUrl } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { ConnectionProvider, WalletProvider, } from "@solana/wallet-adapter-react";
 import {
@@ -10,25 +16,20 @@ import {
   SolletWalletAdapter,
   TorusWalletAdapter,
 } from "@solana/wallet-adapter-wallets";
-import { clusterApiUrl } from "@solana/web3.js";
-import { AppProps } from "next/app";
-import Head from "next/head";
-import Script from "next/script";
 import SimpleReactLightbox from "simple-react-lightbox";
 import { Toaster } from "react-hot-toast";
-
-import Header from "../components/header";
-import AnnounceBar from "../components/slices/announce-bar";
-import Footer from "../components/footer";
-import { TokenModalProvider } from "../components/token-chooser/TokenModalProvider";
-import { getWalletAdapterNetwork } from "../core/solana-network";
-import { WalletModalProvider } from "../components/wallet-connector";
-import { ReminderModalProvider } from "../components/reminder-modal/ReminderModalProvider";
-import { NftProvider } from "../context/NftContext";
-import Router, { useRouter } from "next/router";
 import NProgress from "nprogress";
 
-import "../styles/globals.scss";
+import Header from "components/header";
+import AnnounceBar from "components/slices/announce-bar";
+import Footer from "components/footer";
+import { TokenModalProvider } from "components/token-chooser/TokenModalProvider";
+import { getWalletAdapterNetwork } from "core/solana-network";
+import { WalletModalProvider } from "components/wallet-connector";
+import { ReminderModalProvider } from "components/reminder-modal/ReminderModalProvider";
+import { NftProvider } from "context/NftContext";
+
+import "styles/globals.scss";
 import "nprogress/nprogress.css";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {

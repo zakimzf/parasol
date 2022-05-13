@@ -1,7 +1,8 @@
 import Link from "next/link";
+
 import { CollectionIcon } from "@heroicons/react/outline";
 
-import FloatingParasol from "../utils/floating-illustration";
+import FloatingParasol from "components/utils/floating-illustration";
 
 const Hero = () => (
   <section id="hero" className="mt-6">

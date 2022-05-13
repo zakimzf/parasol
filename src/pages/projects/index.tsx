@@ -1,14 +1,16 @@
-import Container from "../../components/container";
-import Heading from "../../components/heading";
-import Apply from "../../components/slices/apply";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { RpcHelper } from "parasol-finance-sdk";
-import { NftContext } from "../../context/NftContext";
 import Head from "next/head";
-import { Project } from "../../constants";
-import ProjectCard from "../../components/cards/project-card";
-import Layout from "../../components/layout";
+
+import { RpcHelper } from "parasol-finance-sdk";
 import { useWallet } from "@solana/wallet-adapter-react";
+
+import ProjectCard from "components/cards/project-card";
+import Container from "components/container";
+import Heading from "components/heading";
+import Layout from "components/layout";
+import Apply from "components/slices/apply";
+import { NftContext } from "context/NftContext";
+import { Project } from "../../constants";
 
 const Projects = () => {
   const { publicKey } = useWallet();
