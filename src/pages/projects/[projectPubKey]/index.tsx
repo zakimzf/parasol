@@ -22,7 +22,7 @@ import Container from "components/container";
 import { useReminderModal } from "components/reminder-modal/useReminderModal";
 import Card from "components/card";
 import { NftContext } from "context/NftContext";
-import { getBase64 } from "utils/functions";
+import { getBase64, isToday } from "utils/functions";
 
 const EditorJs = dynamic(() => import("components/editorjs"), {
   ssr: false,
@@ -105,6 +105,8 @@ const ProjectDetails = () => {
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+  console.log(ido, "ido");
 
   return (
     <>
@@ -371,6 +373,16 @@ const ProjectDetails = () => {
                                 prefix={"$"}
                               />
                             </span>
+                          </div>
+                          <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                            <span>Start Time</span>
+                            <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                            <span>{ido.startTime.toLocaleDateString()} {isToday(ido.startTime) && ido.startTime.toLocaleTimeString()}</span>
+                          </div>
+                          <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                            <span>End Time</span>
+                            <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                            <span>{ido.endTime.toLocaleDateString()} {isToday(ido.endTime) && ido.endTime.toLocaleTimeString()}</span>
                           </div>
                         </div>
                         {ido.saleTotalAmount > 0 && (

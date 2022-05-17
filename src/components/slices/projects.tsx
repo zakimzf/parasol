@@ -33,6 +33,8 @@ const Projects = () => {
     getProjects();
   }, []);
 
+  console.log(projects);
+
   return (
     <section>
       <Container>
@@ -67,8 +69,7 @@ const Projects = () => {
                     {({ active }) => (
                       <button
                         onClick={() => setStatus("PUBLISHED")}
-                        className={`${
-                          active ? "bg-purple-2 text-white" : "text-gray-900"
+                        className={`${active ? "bg-purple-2 text-white" : "text-gray-900"
                         } group flex w-full items-center gap-x-3 rounded-md px-3 py-2 text-sm`}
                       >
                         <CollectionIcon className="h-5 w-5" />
@@ -82,8 +83,7 @@ const Projects = () => {
                     {({ active }) => (
                       <button
                         onClick={() => setStatus("FINISHED")}
-                        className={`${
-                          active ? "bg-purple-2 text-white" : "text-gray-900"
+                        className={`${active ? "bg-purple-2 text-white" : "text-gray-900"
                         } group flex w-full items-center gap-x-3 rounded-md px-3 py-2 text-sm`}
                       >
                         <ClockIcon className="h-5 w-5" />
@@ -112,6 +112,7 @@ const Projects = () => {
                     startTime={project.startTime}
                     endTime={project.endTime}
                     salePrice={project.salePrice}
+                    isFeatured={project.isFeatured}
                   />
                 ))}
               </div>

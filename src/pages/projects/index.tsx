@@ -17,7 +17,6 @@ const Projects = () => {
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
-  // const [status, setStatus] = useState<string>("PUBLISHED");
 
   const filteredProjects = projects
     .filter((e) => e.status === "PUBLISHED")
@@ -41,6 +40,10 @@ const Projects = () => {
     }
     getProjects();
   }, [])
+
+  console.log(projects, "projects");
+  console.log(projects[0], "projects");
+  console.log(projects[0]?.isFeatured, "featured");
 
   return (
     <>
@@ -82,6 +85,7 @@ const Projects = () => {
                         startTime={project.startTime}
                         endTime={project.endTime}
                         salePrice={project.salePrice}
+                        isFeatured={project.isFeatured}
                       />
                     ))}
                   </div>
@@ -108,6 +112,7 @@ const Projects = () => {
                         startTime={project.startTime}
                         endTime={project.endTime}
                         salePrice={project.salePrice}
+                        isFeatured={project.isFeatured}
                       />
                     ))}
                   </div>
@@ -150,6 +155,7 @@ const Projects = () => {
                         startTime={project.startTime}
                         endTime={project.endTime}
                         salePrice={project.salePrice}
+                        isFeatured={project.isFeatured}
                       />
                     ))}
                   </div>
