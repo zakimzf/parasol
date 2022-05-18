@@ -1,11 +1,13 @@
-import Container from "../components/container";
+import React, { useContext, useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
+
 import { ExternalLinkIcon, TrendingUpIcon } from "@heroicons/react/outline";
 import { useWallet } from "@solana/wallet-adapter-react";
-import React, { useContext, useEffect, useMemo } from "react";
-import Layout from "../components/layout";
-import { NftContext } from "../context/NftContext";
-import { useRouter } from "next/router";
+
+import Container from "components/container";
+import Layout from "components/layout";
+import { NftContext } from "context/NftContext";
 
 const Profile = function () {
   const { publicKey } = useWallet();

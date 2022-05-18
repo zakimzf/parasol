@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { CheckCircleIcon, DownloadIcon, UploadIcon, } from "@heroicons/react/outline";
-import { RadioGroup } from "@headlessui/react";
-
-import Container from "../components/container";
-import Card from "../components/card";
-
-import Heading from "../components/heading";
-import { NftContext } from "../context/NftContext";
-import { useWalletModal } from "../components/wallet-connector";
-import { notification } from "../utils/functions";
 import Head from "next/head";
+
+import { RadioGroup } from "@headlessui/react";
+import { CheckCircleIcon, DownloadIcon, UploadIcon, } from "@heroicons/react/outline";
 import { ArrowCircleDownIcon, EmojiHappyIcon, ScaleIcon } from "@heroicons/react/solid";
+
+import Container from "components/container";
+import Card from "components/card";
+import Heading from "components/heading";
+import { useWalletModal } from "components/wallet-connector";
+import { NftContext } from "context/NftContext";
+import { notification } from "utils/functions";
 
 const operations = [
   { id: 0, title: "Stake", description: "Lock your $PSOL for 90 days." },
