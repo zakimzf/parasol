@@ -33,8 +33,6 @@ const Projects = () => {
     getProjects();
   }, []);
 
-  console.log(projects);
-
   return (
     <section>
       <Container>

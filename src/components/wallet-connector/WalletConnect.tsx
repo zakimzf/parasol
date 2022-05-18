@@ -33,7 +33,6 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
     const nftStore = await new NftStore(provider, config).build();
     const user = await new User(provider, nftStore).build();
     if (user) setNfts(await user.getNFTList());
-    console.log(nfts)
   }
 
   useEffect(() => {

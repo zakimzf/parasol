@@ -41,10 +41,6 @@ const Projects = () => {
     getProjects();
   }, [])
 
-  console.log(projects, "projects");
-  console.log(projects[0], "projects");
-  console.log(projects[0]?.isFeatured, "featured");
-
   return (
     <>
       <Head>
