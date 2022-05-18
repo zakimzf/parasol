@@ -4,10 +4,8 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*/",
-        destination: `${process.env.NEXT_PUBLIC_DOMAIN ||
-          location.protocol + "//" + location.host
-          }/:path*`
-      }
+        destination: `${process.env.NEXT_PUBLIC_DOMAIN || location.protocol + "//" + location.host}/:path*`,
+      },
     ]
   },
   reactStrictMode: true,
@@ -15,12 +13,12 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.md$/,
       use: "raw-loader"
-    })
+    });
     if (!isServer) {
-      config.resolve.fallback.fs = false
+      config.resolve.fallback.fs = false;
     }
-    return config
-  }
-}
+    return config;
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
