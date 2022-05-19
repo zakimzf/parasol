@@ -8,12 +8,11 @@ import {
   ChevronDoubleUpIcon,
   ChevronDownIcon,
 } from "@heroicons/react/outline";
+import { Listbox, Transition } from "@headlessui/react";
 
 import Container from "components/container";
-import Heading from "components/heading";
 import Layout from "components/layout";
 import Apply from "components/slices/apply";
-import { Listbox, Transition } from "@headlessui/react";
 import { NftContext } from "context/NftContext";
 
 const projects = [
