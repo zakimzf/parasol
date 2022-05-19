@@ -28,11 +28,6 @@ const Header = () => {
   const [menuValue, setMenuValue] = useState("");
 
   useEffect(() => {
-    console.log(isShowing, "isShowing");
-    console.log(menuValue, "menuValue");
-  }, [isShowing]);
-
-  useEffect(() => {
     fetch(
       "https://api.coingecko.com/api/v3/simple/price?ids=parasol-finance&vs_currencies=usd"
     )
