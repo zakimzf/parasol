@@ -1,12 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  rewrites () {
+  rewrites() {
     return [
       {
         source: "/api/:path*/",
-        destination: `${process.env.NEXT_PUBLIC_DOMAIN || location.protocol + "//" + location.host}/:path*`,
+        destination: `${
+          process.env.NEXT_PUBLIC_DOMAIN ||
+          location.protocol + "//" + location.host
+        }/:path*`,
       },
-    ]
+    ];
   },
   serverRuntimeConfig: {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -20,7 +23,7 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.md$/,
-      use: "raw-loader"
+      use: "raw-loader",
     });
     if (!isServer) {
       config.resolve.fallback.fs = false;

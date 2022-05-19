@@ -37,7 +37,7 @@ const TokenClaiming = () => {
       getParticipateReceiptsInfo();
     }
     else {
-      setSelectedNft(false)
+      setSelectedNft(false);
     }
   }, [selectedNft, wallet]);
 
@@ -138,9 +138,10 @@ const TokenClaiming = () => {
                         <Listbox.Option
                           key={nft.name}
                           className={({ active }) =>
-                            `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                              ? "bg-purple-2 text-white"
-                              : "text-gray-900"
+                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                              active
+                                ? "bg-purple-2 text-white"
+                                : "text-gray-900"
                             }`
                           }
                           value={nft}
@@ -148,7 +149,8 @@ const TokenClaiming = () => {
                           {({ selected }) => (
                             <>
                               <span
-                                className={`block truncate ${selected ? "font-medium" : "font-normal"
+                                className={`block truncate ${
+                                  selected ? "font-medium" : "font-normal"
                                 }`}
                               >
                                 {nft.attributes[0].value} - {nft.name}
@@ -176,7 +178,7 @@ const TokenClaiming = () => {
       <Layout>
         <section>
           <Container>
-            {(participatedReceipts && wallet.connected) ? (
+            {participatedReceipts && wallet.connected ? (
               <ul
                 role="list"
                 className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
@@ -214,8 +216,16 @@ const TokenClaiming = () => {
                                 <span>Released</span>
                                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                                 <span className="flex items-center gap-x-1">
-                                  {participatedReceipt.status === "PUBLISHED" ? "N/A" : <>{participatedReceipt.allowanceFeeBasisPoints *
-                                    100}%</>}
+                                  {participatedReceipt.status ===
+                                  "PUBLISHED" ? (
+                                      "N/A"
+                                    ) : (
+                                      <>
+                                        {participatedReceipt.allowanceFeeBasisPoints *
+                                        100}
+                                      %
+                                      </>
+                                    )}
                                 </span>
                               </div>
                             </div>
@@ -232,11 +242,15 @@ const TokenClaiming = () => {
                                 <span>Claimable</span>
                                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                                 <span className="flex items-center gap-x-1">
-                                  {participatedReceipt.status === "PUBLISHED" ? "N/A" :
-                                    <>{participatedReceipt.claimableAmount.toLocaleString()}
+                                  {participatedReceipt.status ===
+                                  "PUBLISHED" ? (
+                                      "N/A"
+                                    ) : (
+                                      <>
+                                        {participatedReceipt.claimableAmount.toLocaleString()}
                                       ${participatedReceipt.symbol}
-                                    </>
-                                  }
+                                      </>
+                                    )}
                                 </span>
                               </div>
                             </div>
@@ -265,8 +279,12 @@ const TokenClaiming = () => {
                   )
                 )}
               </ul>
+            ) : selectedNft ? (
+              <Loading />
             ) : (
-              selectedNft ? <Loading /> : <div className="text-center font-extrabold text-[28px]">There is no project to claim tokens</div>
+              <div className="text-center text-[28px] font-extrabold">
+                There is no project to claim tokens
+              </div>
             )}
           </Container>
         </section>
