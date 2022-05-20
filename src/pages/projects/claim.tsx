@@ -1,4 +1,10 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, {
+  Fragment,
+  useContext,
+  useEffect,
+  useState,
+  useEvent,
+} from "react";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -19,16 +25,24 @@ import Container from "components/container";
 import Layout from "components/layout";
 import { NftContext } from "context/NftContext";
 import { globalErrorHandle, notification } from "utils/functions";
+import { whitelists } from "utils/tempdata/whitelist";
 
 const TokenClaiming = () => {
-  const { sendTransaction } = useWallet();
+  const { sendTransaction, publicKey } = useWallet();
   const { connection } = useConnection();
 
   const [selectedNft, setSelectedNft] = useState<any>();
+  const [whitelistFlag, setWhitelistFlag] = useState(false);
   const [participatedReceipts, setParticipatedReceipt] = useState<any>();
   const { nfts, wallet, user } = useContext(NftContext);
 
-  let mintAddress: PublicKey;
+  useEffect(() => {
+    whitelists.map((whitelist) => {
+      if (publicKey?.toString() === whitelist.address) {
+        setWhitelistFlag(true);
+      }
+    });
+  }, [publicKey]);
 
   useEffect(() => setSelectedNft(nfts[0]), [nfts]);
 
@@ -40,6 +54,8 @@ const TokenClaiming = () => {
       setSelectedNft(false);
     }
   }, [selectedNft, wallet]);
+
+  let mintAddress: PublicKey;
 
   const claimToken = async (participatedReceipt: any) => {
     mintAddress = new PublicKey(selectedNft.mint);
@@ -104,6 +120,20 @@ const TokenClaiming = () => {
                 <p className="mt-5 text-sm text-gray-200 lg:text-base">
                   You can claim your tokens after participating in IDOs here.
                 </p>
+                {whitelistFlag && (
+                  <p className="@lg:text-base mt-5 text-sm text-gray-200">
+                    If you particiapted to Acadex network IDO, please fillup{" "}
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLScnu7oxQSIV8Pt4GHnlJbpusMXUzDLfg626nRkxYeC2jGPFNg/viewform"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-purple-500 underline"
+                    >
+                      this form
+                    </a>
+                    , with a link to the google form
+                  </p>
+                )}
               </div>
             </div>
             <div className="relative mt-5 flex items-center justify-center gap-x-2 md:justify-end">

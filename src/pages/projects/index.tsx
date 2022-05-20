@@ -41,6 +41,8 @@ const Projects = () => {
     getProjects();
   }, [])
 
+  console.log(projects,"projects")
+
   return (
     <>
       <Head>
