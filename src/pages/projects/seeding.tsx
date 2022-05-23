@@ -74,7 +74,6 @@ const projects = [
 
 const Seeding = () => {
   const [selectedNft, setSelectedNft] = useState<any>();
-  const [participatedReceipts, setParticipatedReceipt] = useState<any>();
   const { nfts, wallet, user } = useContext(NftContext);
 
   useEffect(() => setSelectedNft(nfts[0]), [nfts]);

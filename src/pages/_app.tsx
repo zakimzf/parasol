@@ -136,7 +136,7 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
                   gutter={0} />
               </div>
               <Header />
-              <main role="main" className={"relative-"}>
+              <main role="main" className={"relative"}>
                 <SimpleReactLightbox>
                   <TokenModalProvider>
                     <ReminderModalProvider>
