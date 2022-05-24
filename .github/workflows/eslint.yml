@@ -11,12 +11,12 @@ name: ESLint
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
     # The branches below must be a subset of the branches above
-    branches: [ master ]
+    branches: [master]
   schedule:
-    - cron: '25 5 * * 2'
+    - cron: "25 5 * * 2"
 
 jobs:
   eslint:
@@ -31,14 +31,14 @@ jobs:
 
       - name: Install ESLint
         run: |
-          npm install eslint@8.10.0
+          npm install eslint@8.16.0
           npm install @microsoft/eslint-formatter-sarif@2.1.7
 
       - name: Run ESLint
         run: npx eslint .
           --config .eslintrc.json
           --ext .js,.jsx,.ts,.tsx
-          --format @microsoft/eslint-formatter-sarif 
+          --format @microsoft/eslint-formatter-sarif
           --output-file eslint-results.sarif
         continue-on-error: true
 
