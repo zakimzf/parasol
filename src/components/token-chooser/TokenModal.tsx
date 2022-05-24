@@ -10,51 +10,56 @@ import { TokenChooserMode, useTokenModal } from "./useTokenModal";
 
 export const TokenModal: FC = () => {
   const { visible, setVisible, mode, setInput, setOutput } = useTokenModal();
-  const [value, setValue] = useState("")
-  const [tokens, setTokens] = useState<Token[]>([])
+  const [value, setValue] = useState("");
+  const [tokens, setTokens] = useState<Token[]>([]);
   useEffect(() => {
     fetch(TOKEN_LIST_URL["mainnet-beta"])
-      .then(response => response.json())
-      .then(result => setTokens(result))
-  }, [])
-  const filteredTokens = tokens
-    .filter(token => {
-      if (!value) return true
-      if (token.name.toLowerCase().includes(value.toLowerCase())
-        || token.symbol.toLowerCase().includes(value.toLowerCase())
-        || token.address.includes(value)) return true
-    });
+      .then((response) => response.json())
+      .then((result) => setTokens(result));
+  }, []);
+  const filteredTokens = tokens.filter((token) => {
+    if (!value) return true;
+    if (
+      token.name.toLowerCase().includes(value.toLowerCase()) ||
+      token.symbol.toLowerCase().includes(value.toLowerCase()) ||
+      token.address.includes(value)
+    )
+      return true;
+  });
   const close = () => {
-    setVisible(false)
-    setValue("")
+    setVisible(false);
+    setValue("");
   };
   let featuredTokens = [
     {
       name: "SOL",
-      icon: tokens.find(x => x.symbol === "SOL")?.logoURI,
-      address: tokens.find(x => x.symbol === "SOL")?.address
+      icon: tokens.find((x) => x.symbol === "SOL")?.logoURI,
+      address: tokens.find((x) => x.symbol === "SOL")?.address,
     },
     {
       name: "PSOL",
-      icon: tokens.find(x => x.symbol === "PSOL")?.logoURI,
-      address: tokens.find(x => x.symbol === "PSOL")?.address
+      icon: tokens.find((x) => x.symbol === "PSOL")?.logoURI,
+      address: tokens.find((x) => x.symbol === "PSOL")?.address,
     },
     {
       name: "USDC",
-      icon: tokens.find(x => x.symbol === "USDC")?.logoURI,
-      address: tokens.find(x => x.symbol === "USDC")?.address
+      icon: tokens.find((x) => x.symbol === "USDC")?.logoURI,
+      address: tokens.find((x) => x.symbol === "USDC")?.address,
     },
     {
       name: "USDT",
-      icon: tokens.find(x => x.symbol === "USDT")?.logoURI,
-      address: tokens.find(x => x.symbol === "USDT")?.address
-    }
-  ]
+      icon: tokens.find((x) => x.symbol === "USDT")?.logoURI,
+      address: tokens.find((x) => x.symbol === "USDT")?.address,
+    },
+  ];
   return (
     <Transition.Root show={visible} as={Fragment}>
-      <Dialog as="div" className="fixed z-10 inset-0 overflow-y-auto" onClose={close}>
-        <div
-          className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+      <Dialog
+        as="div"
+        className="fixed inset-0 z-10 overflow-y-auto"
+        onClose={close}
+      >
+        <div className="flex min-h-screen items-end justify-center px-4 pt-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -62,12 +67,16 @@ export const TokenModal: FC = () => {
             enterTo="opacity-100"
             leave="ease-in duration-200"
             leaveFrom="opacity-100"
-            leaveTo="opacity-0">
-            <Dialog.Overlay
-              className="fixed inset-0 bg-black backdrop-blur-sm bg-opacity-30 transition-opacity" />
+            leaveTo="opacity-0"
+          >
+            <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm transition-opacity" />
           </Transition.Child>
-          <span className="hidden sm:inline-block sm:align-middle sm:h-screen"
-            aria-hidden="true">&#8203;</span>
+          <span
+            className="hidden sm:inline-block sm:h-screen sm:align-middle"
+            aria-hidden="true"
+          >
+            &#8203;
+          </span>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -75,68 +84,95 @@ export const TokenModal: FC = () => {
             enterTo="opacity-100 translate-y-0 sm:scale-100"
             leave="ease-in duration-200"
             leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95">
-            <div
-              className="inline-block align-bottom rounded-xl text-left overflow-hidden shadow-strong transform transition-all sm:align-middle sm:max-w-sm sm:w-full">
-              <div className="bg-[#231f38] text-gray-100 p-5 sm:py-7">
-                <div className="flex gap-x-2 items-center mb-6 px-3">
+            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          >
+            <div className="inline-block transform overflow-hidden rounded-xl text-left align-bottom shadow-strong transition-all sm:w-full sm:max-w-sm sm:align-middle">
+              <div className="bg-[#231f38] p-5 text-gray-100 sm:py-7">
+                <div className="mb-6 flex items-center gap-x-2 px-3">
                   <SearchIcon className={"w-6 text-gray-400"} />
-                  <input type={"search"}
+                  <input
+                    type={"search"}
                     spellCheck={"false"}
-                    onChange={e => setValue(e.target.value)}
-                    className={"w-full bg-transparent p-1 border-0 outline-0 focus:outline-none focus:ring-0"}
-                    placeholder={"Search by token or address"} />
+                    onChange={(e) => setValue(e.target.value)}
+                    className={
+                      "w-full border-0 bg-transparent p-1 outline-0 focus:outline-none focus:ring-0"
+                    }
+                    placeholder={"Search by token or address"}
+                  />
                 </div>
-                <div className={"flex gap-x-2 justify-around mb-4"}>
-                  {featuredTokens.map(token => (
+                <div className={"mb-4 flex justify-around gap-x-2"}>
+                  {featuredTokens.map((token) => (
                     <button
-                      key={token.address}
+                      key={`${token.address} ${token.address}`}
                       onClick={() => {
                         if (mode == TokenChooserMode.Input) {
-                          setInput(new PublicKey(token.address || ""))
+                          setInput(new PublicKey(token.address || ""));
                         }
                         else {
-                          setOutput(new PublicKey(token.address || ""))
+                          setOutput(new PublicKey(token.address || ""));
                         }
-                        close()
+                        close();
                       }}
-                      className={"flex items-center text-xs gap-x-2 p-2 border-opacity-20 bg-white bg-opacity-5 rounded-md hover:border-purple-2 hover:bg-purple-2 hover:bg-opacity-5"}>
-                      <img className={"w-4"} src={token?.icon} alt={token.name} />
+                      className={
+                        "flex items-center gap-x-2 rounded-md border-opacity-20 bg-white bg-opacity-5 p-2 text-xs hover:border-purple-2 hover:bg-purple-2 hover:bg-opacity-5"
+                      }
+                    >
+                      <img
+                        className={"w-4"}
+                        src={token?.icon}
+                        alt={token.name}
+                      />
                       {token.name}
                     </button>
                   ))}
                 </div>
                 <div
-                  className={"max-h-[30rem] scrollbar-thin scrollbar-thumb-purple-2 scrollbar-thumb-rounded-full"}>
+                  className={
+                    "scrollbar-thumb-rounded-full max-h-[30rem] scrollbar-thin scrollbar-thumb-purple-2"
+                  }
+                >
                   <div className="relative grid gap-y-2">
-                    {filteredTokens.length > 0 ? filteredTokens.map((token) => (
-                      <button
-                        key={token.address}
-                        onClick={() => {
-                          if (mode == TokenChooserMode.Input) {
-                            setInput(new PublicKey(token.address))
-                          }
-                          else {
-                            setOutput(new PublicKey(token.address))
-                          }
-                          close()
-                        }}
-                        className="p-3 flex gap-x-4 items-center text-left rounded-lg focus:outline-none -focus:ring focus:ring-purple-2 hover:bg-white hover:bg-opacity-5 focus:bg-white focus:bg-opacity-5">
-                        <img
-                          onError={({ currentTarget }) => {
-                            currentTarget.onerror = null;
-                            currentTarget.src = "/assets/icons/no-token.png"
+                    {filteredTokens.length > 0 ? (
+                      filteredTokens.map((token) => (
+                        <button
+                          key={token.address}
+                          onClick={() => {
+                            if (mode == TokenChooserMode.Input) {
+                              setInput(new PublicKey(token.address));
+                            }
+                            else {
+                              setOutput(new PublicKey(token.address));
+                            }
+                            close();
                           }}
-                          src={token.logoURI}
-                          className="w-6 h-6"
-                          alt={token.name} />
-                        <span
-                          className={"flex-1 w-0 max-w-xs font-medium truncate"}>{token.name}</span>
-                        <span className="text-sm text-gray-400">
-                          {token.symbol}
-                        </span>
-                      </button>
-                    )) : <span className={"text-gray-300 pt-6 pb-3"}>No results found.</span>}
+                          className="-focus:ring flex items-center gap-x-4 rounded-lg p-3 text-left hover:bg-white hover:bg-opacity-5 focus:bg-white focus:bg-opacity-5 focus:outline-none focus:ring-purple-2"
+                        >
+                          <img
+                            onError={({ currentTarget }) => {
+                              currentTarget.onerror = null;
+                              currentTarget.src = "/assets/icons/no-token.png";
+                            }}
+                            src={token.logoURI}
+                            className="h-6 w-6"
+                            alt={token.name}
+                          />
+                          <span
+                            className={
+                              "w-0 max-w-xs flex-1 truncate font-medium"
+                            }
+                          >
+                            {token.name}
+                          </span>
+                          <span className="text-sm text-gray-400">
+                            {token.symbol}
+                          </span>
+                        </button>
+                      ))
+                    ) : (
+                      <span className={"pt-6 pb-3 text-gray-300"}>
+                        No results found.
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -145,5 +181,5 @@ export const TokenModal: FC = () => {
         </div>
       </Dialog>
     </Transition.Root>
-  )
-}
+  );
+};

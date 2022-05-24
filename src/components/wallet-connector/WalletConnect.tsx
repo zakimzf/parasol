@@ -138,33 +138,34 @@ const WalletConnect = ({ Width }: WalletConnectDetail) => {
               <Menu.Item>
                 <ul className="max-h-[190px] space-y-4 overflow-y-auto scrollbar-thin scrollbar-thumb-parasol">
                   {nfts.map((nft: any) => (
-                    <>
-                      <div className="relative flex focus:outline-none">
-                        <div className="flex w-full items-center justify-between">
-                          <div className="flex items-center">
-                            <div className="text-sm">
-                              <p className="font-medium text-white">
-                                <div className="flex items-center overflow-y-auto">
-                                  <div className="mr-4">
-                                    <img
-                                      className={"h-12 w-12 rounded-md"}
-                                      src={nft.image}
-                                      alt={nft.name}
-                                    />
-                                  </div>
-                                  <div>
-                                    <p className="text-xs">{nft.name}</p>
-                                    <h2 className="whitespace-nowrap text-lg">
-                                      {nft.attributes[0].value}
-                                    </h2>
-                                  </div>
+                    <div
+                      className="relative flex focus:outline-none"
+                      key={nft.image}
+                    >
+                      <div className="flex w-full items-center justify-between">
+                        <div className="flex items-center">
+                          <div className="text-sm">
+                            <p className="font-medium text-white">
+                              <div className="flex items-center overflow-y-auto">
+                                <div className="mr-4">
+                                  <img
+                                    className={"h-12 w-12 rounded-md"}
+                                    src={nft.image}
+                                    alt={nft.name}
+                                  />
                                 </div>
-                              </p>
-                            </div>
+                                <div>
+                                  <p className="text-xs">{nft.name}</p>
+                                  <h2 className="whitespace-nowrap text-lg">
+                                    {nft.attributes[0].value}
+                                  </h2>
+                                </div>
+                              </div>
+                            </p>
                           </div>
                         </div>
                       </div>
-                    </>
+                    </div>
                   ))}
                 </ul>
               </Menu.Item>
