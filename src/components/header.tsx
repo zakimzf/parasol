@@ -163,7 +163,7 @@ const Header = () => {
                                 </div>
                               </a>
                             </Link> */}
-                            <Link href={"/projects/seeding"}>
+                            {/* <Link href={"/projects/seeding"}>
                               <a className="flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5">
                                 <svg
                                   className={
@@ -202,7 +202,7 @@ const Header = () => {
                                 </div>
                               </a>
                             </Link>
-                            <div className="w-full border-t border-white border-opacity-10" />
+                            <div className="w-full border-t border-white border-opacity-10" /> */}
                             {/* <Link href="/tiers" passHref>
                               <a className="-m-3 flex items-center rounded-lg p-3 hover:bg-white hover:bg-opacity-5">
                                 <img
@@ -613,7 +613,7 @@ const Header = () => {
                                     </div>
                                   </a>
                                 </Link> */}
-                                <Link href={"/projects/seeding"}>
+                                {/* <Link href={"/projects/seeding"}>
                                   <a className="-m-3 flex items-start rounded-lg p-3 hover:bg-white hover:bg-opacity-5">
                                     <svg
                                       className={
@@ -651,7 +651,7 @@ const Header = () => {
                                       </p>
                                     </div>
                                   </a>
-                                </Link>
+                                </Link> */}
                                 {/* <div className="w-full border-t border-white border-opacity-10" />
                                 <Link href="/tiers" passHref>
                                   <a className="-m-3 flex items-center rounded-lg p-3 hover:bg-white hover:bg-opacity-5">
