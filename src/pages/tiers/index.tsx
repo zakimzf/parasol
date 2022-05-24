@@ -7,6 +7,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { NftKind } from "parasol-finance-sdk";
 import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
 
+import { Loading } from "components";
 import Container from "components/container";
 import NftCard from "components/cards/nft-card";
 import { NftContext } from "context/NftContext";
@@ -149,8 +150,8 @@ const Tiers = function () {
       <section>
         <Container fluid={false}>
           <div className="grid grid-cols-1 gap-x-7 sm:grid-cols-2 lg:grid-cols-4">
-            {fetchTiers
-              ? tiers.map((t: any, index: any) => (
+            {fetchTiers ? (
+              tiers.map((t: any, index: any) => (
                 <NftCard
                   owned={activeNft(nfts, t)}
                   key={t.id}
@@ -166,7 +167,9 @@ const Tiers = function () {
                   data={t.data && t.data}
                 />
               ))
-              : ""}
+            ) : (
+              <Loading />
+            )}
           </div>
         </Container>
       </section>
