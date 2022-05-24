@@ -246,7 +246,7 @@ const Footer = () => (
           rights reserved.
         </p>
         <p className="flex flex-1 items-center justify-end gap-x-3 text-center lg:text-right">
-          <div>
+          <span>
             Build with
             <svg
               className="mx-2 mb-1 inline h-5 w-5 text-purple-2"
@@ -261,7 +261,7 @@ const Footer = () => (
               />
             </svg>
             in Europe
-          </div>
+          </span>
           <span>|</span>
           <a
             className={"inline-flex items-center justify-center gap-x-1"}
@@ -284,7 +284,7 @@ const Footer = () => (
             Official GitHub
           </a>
           <span>|</span>
-          <div>
+          <span>
             Crafted by{" "}
             <a
               href={"https://twitter.com/thisisclint21"}
@@ -294,7 +294,7 @@ const Footer = () => (
             >
               Clint ⚡️
             </a>
-          </div>
+          </span>
         </p>
       </div>
     </div>
