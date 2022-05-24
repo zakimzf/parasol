@@ -1,13 +1,13 @@
 import getConfig from "next/config";
 
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
 import { getStorage } from "firebase/storage";
 
 const { serverRuntimeConfig } = getConfig();
 
 const firebaseConfig = {
-  apiKey: serverRuntimeConfig.apiKey,
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
@@ -15,7 +15,13 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = initializeApp(firebaseConfig);
+let app;
+try {
+  app = getApp();
+}
+catch (e) {
+  app = initializeApp(firebaseConfig);
+}
 
 export const db = getFirestore(app);
 export const storage = getStorage(app);
