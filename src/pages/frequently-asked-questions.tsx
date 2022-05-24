@@ -1,9 +1,11 @@
+import React from "react";
+import Head from "next/head";
+
 import { Disclosure } from "@headlessui/react"
 import { ChevronDoubleRightIcon, ChevronDownIcon } from "@heroicons/react/outline"
-import Head from "next/head";
-import Heading from "../components/heading";
-import Container from "../components/container";
-import React from "react";
+
+import Container from "components/container";
+import Heading from "components/heading";
 
 const faqs = [
   {
@@ -57,12 +59,12 @@ const FrequentlyAskedQuestion = () => (
   <>
     <Head>
       <title>Parasol Finance ($PSOL) | Frequently Asked Questions</title>
-      <meta name="title" content="Parasol Finance ($PSOL) | Frequently Asked Questions"/>
-      <meta property="og:image" content="/assets/preview/faq.png"/>
-      <meta property="twitter:image" content="/assets/preview/faq.png"/>
+      <meta name="title" content="Parasol Finance ($PSOL) | Frequently Asked Questions" />
+      <meta property="og:image" content="/assets/preview/faq.png" />
+      <meta property="twitter:image" content="/assets/preview/faq.png" />
     </Head>
     <Heading tagline={"Getting Help"} title={"Frequently Asked Questions"}
-      description={"The most common questions are answered below."}/>
+      description={"The most common questions are answered below."} />
     <section>
       <div className={"max-w-3xl mx-auto xs:px-5"}>
         <dl className="mt-6 space-y-6 divide-y divide-gray-500">
@@ -76,7 +78,7 @@ const FrequentlyAskedQuestion = () => (
                     <span className="ml-6 h-7 flex items-center">
                       <ChevronDownIcon
                         className={`h-6 w-6 transform ${open ? "-rotate-180" : "rotate-0"}`}
-                        aria-hidden="true"/>
+                        aria-hidden="true" />
                     </span>
                   </Disclosure.Button>
                 </dt>
@@ -95,7 +97,7 @@ const FrequentlyAskedQuestion = () => (
           <a href={"https://docs.parasol.finance/parasol-ecosystem/frequently-asked-questions"}
             className={"flex items-center justify-center gap-x-1 g-purple-2 text-white bg-transparent border border-white px-7 py-3 text-base font-medium rounded-md"}>
             See The Full FAQ
-            <ChevronDoubleRightIcon className={"w-4"}/>
+            <ChevronDoubleRightIcon className={"w-4"} />
           </a>
         </div>
       </Container>

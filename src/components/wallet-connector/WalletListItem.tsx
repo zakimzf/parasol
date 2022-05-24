@@ -1,6 +1,7 @@
+import React, { FC, MouseEventHandler } from "react";
+
 import { WalletReadyState } from "@solana/wallet-adapter-base";
 import { Wallet } from "@solana/wallet-adapter-react";
-import React, { FC, MouseEventHandler } from "react";
 
 export interface WalletListItemProps {
   handleClick: MouseEventHandler<HTMLButtonElement>;

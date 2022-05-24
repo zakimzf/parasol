@@ -7,7 +7,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { NftKind } from "parasol-finance-sdk";
 import { SwitchVerticalIcon, UploadIcon } from "@heroicons/react/outline";
 
-import { Loading } from "components"
+import { Loading } from "components";
 import Container from "components/container";
 import NftCard from "components/cards/nft-card";
 import { NftContext } from "context/NftContext";
@@ -108,38 +108,38 @@ const Tiers = function () {
       </Head>
       <section>
         <Container>
-          <div className={"grid md:grid-cols-3 pt-10 pb-16"}>
-            <div className={"flex gap-x-2 items-center"} />
+          <div className="grid pt-10 pb-16 md:grid-cols-3">
+            <div className="flex items-center gap-x-2" />
             <div>
               <div className="text-center">
-                <h2 className="text-base font-semibold tracking-wider mb-3 text-purple-400 uppercase">
+                <h2 className="mb-3 text-base font-semibold uppercase tracking-wider text-purple-400">
                   An Unique System
                 </h2>
                 <a
                   id="features"
-                  className="text-3xl font-extrabold text-white tracking-tight sm:text-4xl"
+                  className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl"
                 >
                   Our NFT Access Keys
                 </a>
-                <p className="mt-5 max-w-prose mx-auto text-sm lg:text-base text-gray-200">
+                <p className="mx-auto mt-5 max-w-prose text-sm text-gray-200 lg:text-base">
                   Ready to Buy your NFT Access Key using $PSOL token?
                 </p>
               </div>
             </div>
             <div
               className={
-                "flex gap-x-2 md:justify-end items-center justify-center mt-5"
+                "mt-5 flex items-center justify-center gap-x-2 md:justify-end"
               }
             >
-              <Link href={"/tiers/migrate"}>
-                <a className="flex gap-x-2 items-center bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
-                  <UploadIcon className={"w-4"} />
+              <Link href="/tiers/migrate">
+                <a className="flex items-center gap-x-2 rounded-lg bg-white bg-opacity-5 px-5 py-3 text-gray-200 hover:bg-opacity-10">
+                  <UploadIcon className="w-4" />
                   Migrate
                 </a>
               </Link>
-              <Link href={"/tiers/redeem"}>
-                <a className="flex gap-x-2 items-center bg-white bg-opacity-5 hover:bg-opacity-10 px-5 py-3 rounded-lg text-gray-200">
-                  <SwitchVerticalIcon className={"w-4"} />
+              <Link href="/tiers/redeem">
+                <a className="flex items-center gap-x-2 rounded-lg bg-white bg-opacity-5 px-5 py-3 text-gray-200 hover:bg-opacity-10">
+                  <SwitchVerticalIcon className="w-4" />
                   Redeem
                 </a>
               </Link>
@@ -149,9 +149,9 @@ const Tiers = function () {
       </section>
       <section>
         <Container fluid={false}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-7">
-            {fetchTiers
-              ? tiers.map((t: any, index: any) => (
+          <div className="grid grid-cols-1 gap-x-7 sm:grid-cols-2 lg:grid-cols-4">
+            {fetchTiers ? (
+              tiers.map((t: any, index: any) => (
                 <NftCard
                   owned={activeNft(nfts, t)}
                   key={t.id}
@@ -167,18 +167,20 @@ const Tiers = function () {
                   data={t.data && t.data}
                 />
               ))
-              : <Loading />}
+            ) : (
+              <Loading />
+            )}
           </div>
         </Container>
       </section>
-      <section className={"mt-12"}>
+      <section className="mt-12">
         <Container>
-          <div className="relative z-10 text-center py-10 mb-8 md:mb-2 md:px-6">
+          <div className="relative z-10 mb-8 py-10 text-center md:mb-2 md:px-6">
             <div className="text-base">
-              <h2 className="leading-6 text-purple-400 font-semibold tracking-wide uppercase">
+              <h2 className="font-semibold uppercase leading-6 tracking-wide text-purple-400">
                 NFTs as Tiers System
               </h2>
-              <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight sm:text-4xl">
+              <p className="mt-2 text-3xl font-extrabold leading-8 tracking-tight sm:text-4xl">
                 The Vital Concepts Behind Parasol
               </p>
             </div>
@@ -186,7 +188,7 @@ const Tiers = function () {
           <div className="relative">
             <div className="relative pb-6">
               <div className="lg:grid lg:grid-cols-2 lg:gap-6">
-                <div className="prose prose-invert prose-lg lg:max-w-none">
+                <div className="prose prose-lg prose-invert lg:max-w-none">
                   <p>
                     Non-fungible tokens, or NFTs, are the latest cryptocurrency
                     phenomenon to go mainstream in the industry. Non-fungible
@@ -204,7 +206,7 @@ const Tiers = function () {
                     to Parasol Finance’s utility NFTs.
                   </p>
                 </div>
-                <div className="prose prose-invert prose-lg lg:mt-0">
+                <div className="prose prose-lg prose-invert lg:mt-0">
                   <p>
                     Parasol Finance is adopting a unique and never-before-seen
                     mechanism for our upcoming IDO launchpad.

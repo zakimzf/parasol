@@ -1,9 +1,11 @@
 import React, { FC, Fragment, useRef, useState } from "react";
-import { Dialog, Transition } from "@headlessui/react";
-import { useReminderModal } from "./useReminderModal";
-import { BellIcon } from "@heroicons/react/outline";
-import { db } from "../../utils/firebase";
+
 import { addDoc, collection } from "firebase/firestore";
+import { Dialog, Transition } from "@headlessui/react";
+import { BellIcon } from "@heroicons/react/outline";
+
+import { useReminderModal } from "./useReminderModal";
+import { db } from "utils/firebase";
 
 export const ReminderModal: FC = () => {
   const { reminder, setReminder, projectKey, setProjectKey } = useReminderModal();

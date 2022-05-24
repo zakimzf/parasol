@@ -1,5 +1,5 @@
-import Container from "../components/container";
-import Heading from "../components/heading";
+import Container from "components/container";
+import Heading from "components/heading";
 
 const assets = [
   {

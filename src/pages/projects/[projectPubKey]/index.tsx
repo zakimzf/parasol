@@ -13,13 +13,13 @@ import dynamic from "next/dynamic";
 
 import axios from "axios";
 import Disqus from "disqus-react";
+import { NftStore, Project } from "parasol-finance-sdk";
 import Countdown from "react-countdown";
 import { useDropzone } from "react-dropzone";
 import NumberFormat from "react-number-format";
 import { SRLWrapper } from "simple-react-lightbox";
 import { PublicKey } from "@solana/web3.js";
 import { useWallet } from "@solana/wallet-adapter-react";
-import { NftStore, Project } from "parasol-finance-sdk";
 import { Tab } from "@headlessui/react";
 import {
   ExternalLinkIcon,
@@ -41,7 +41,7 @@ import Container from "components/container";
 import { useWalletModal } from "components/wallet-connector";
 import { useReminderModal } from "components/reminder-modal/useReminderModal";
 import { NftContext } from "context/NftContext";
-import { getBase64 } from "utils/functions";
+import { getBase64, isToday } from "utils/functions";
 
 const EditorJs = dynamic(() => import("components/editorjs"), {
   ssr: false,
@@ -98,12 +98,9 @@ const ProjectDetails = () => {
               .catch((errors) => {
                 // react on errors.
               });
-          }
-          else setIdo(data);
-        }
-        else await router.push("/404");
-      }
-      catch {
+          } else setIdo(data);
+        } else await router.push("/404");
+      } catch {
         await router.push("/404");
       }
     };
@@ -149,6 +146,8 @@ const ProjectDetails = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
   });
+
+  console.log(ido, "ido");
 
   return (
     <>
@@ -252,9 +251,10 @@ const ProjectDetails = () => {
                               {({ selected }) => (
                                 <a
                                   href="#details"
-                                  className={`${selected
-                                    ? "border-purple-2 text-purple-2"
-                                    : "border-transparent hover:border-purple-2 hover:text-purple-2"
+                                  className={`${
+                                    selected
+                                      ? "border-purple-2 text-purple-2"
+                                      : "border-transparent hover:border-purple-2 hover:text-purple-2"
                                   } text-sm" border-b-2 px-1 pt-2 pb-3 font-medium`}
                                   aria-current={selected ? "page" : undefined}
                                 >
@@ -266,9 +266,10 @@ const ProjectDetails = () => {
                               {({ selected }) => (
                                 <a
                                   href="#token"
-                                  className={`${selected
-                                    ? "border-purple-2 text-purple-2"
-                                    : "border-transparent hover:border-purple-2 hover:text-purple-2"
+                                  className={`${
+                                    selected
+                                      ? "border-purple-2 text-purple-2"
+                                      : "border-transparent hover:border-purple-2 hover:text-purple-2"
                                   } text-sm" border-b-2 px-1 pt-2 pb-3 font-medium`}
                                   aria-current={selected ? "page" : undefined}
                                 >
@@ -281,9 +282,10 @@ const ProjectDetails = () => {
                                 {({ selected }) => (
                                   <a
                                     href="#wp"
-                                    className={`${selected
-                                      ? "border-purple-2 text-purple-2"
-                                      : "border-transparent hover:border-purple-2 hover:text-purple-2"
+                                    className={`${
+                                      selected
+                                        ? "border-purple-2 text-purple-2"
+                                        : "border-transparent hover:border-purple-2 hover:text-purple-2"
                                     } text-sm" flex items-center gap-x-1 border-b-2 px-1 pt-2 pb-3 font-medium`}
                                     aria-current={selected ? "page" : undefined}
                                   >
@@ -312,24 +314,24 @@ const ProjectDetails = () => {
                         <Tab.Panel>
                           <div className="markdown prose prose-lg prose-invert">
                             {(walletAddress && walletAddress == ido.owner) ||
-                              ido.content ? (
-                                <EditorJs
-                                  content={ido.content || "{}"}
-                                  isOwner={
-                                    (walletAddress &&
+                            ido.content ? (
+                              <EditorJs
+                                content={ido.content || "{}"}
+                                isOwner={
+                                  (walletAddress &&
                                     walletAddress == ido.owner) ||
                                   false
-                                  }
-                                  projectPubKey={projectPubKey}
-                                  coverFile={coverFile}
-                                  isCoverUpdated={tempCover != ""}
-                                  oldCover={ido.cover}
-                                  loading={loading}
-                                  setLoading={setLoading}
-                                />
-                              ) : (
-                                <p>This IDO has no content at the moment.</p>
-                              )}
+                                }
+                                projectPubKey={projectPubKey}
+                                coverFile={coverFile}
+                                isCoverUpdated={tempCover != ""}
+                                oldCover={ido.cover}
+                                loading={loading}
+                                setLoading={setLoading}
+                              />
+                            ) : (
+                              <p>This IDO has no content at the moment.</p>
+                            )}
                           </div>
                         </Tab.Panel>
                         <Tab.Panel className="pt-6">
@@ -488,7 +490,7 @@ const ProjectDetails = () => {
                             <span>USDC</span>
                           </div>
                         </div>
-                        <div className="prose prose-lg prose-invert">
+                        <div className="prose prose-lg prose-invert break-all">
                           <p>{ido.description}</p>
                         </div>
                         <div className="flex-col space-y-3">
@@ -516,6 +518,24 @@ const ProjectDetails = () => {
                               />
                             </span>
                           </div>
+                          <div className="flex items-center gap-x-3 font-medium text-gray-300">
+                            <span>Start Time</span>
+                            <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
+                            <span>
+                              {ido.startTime.toLocaleDateString()}{" "}
+                              {isToday(ido.startTime) &&
+                                ido.startTime.toLocaleTimeString()}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-x-3 font-medium text-gray-300">
+                            <span>End Time</span>
+                            <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
+                            <span>
+                              {ido.endTime.toLocaleDateString()}{" "}
+                              {isToday(ido.endTime) &&
+                                ido.endTime.toLocaleTimeString()}
+                            </span>
+                          </div>
                         </div>
                         {ido.saleTotalAmount > 0 && (
                           <div className="space-y-2">
@@ -541,10 +561,11 @@ const ProjectDetails = () => {
                             <div className="flex h-2 overflow-hidden rounded bg-purple-2 bg-opacity-30 text-xs">
                               <div
                                 style={{
-                                  width: `${ido.saleTotalAmount / ido.hardCap > 0.1
-                                    ? (ido.saleTotalAmount / ido.hardCap) *
-                                    100
-                                    : 5
+                                  width: `${
+                                    ido.saleTotalAmount / ido.hardCap > 0.1
+                                      ? (ido.saleTotalAmount / ido.hardCap) *
+                                        100
+                                      : 5
                                   }%`,
                                 }}
                                 className="flex flex-col justify-center whitespace-nowrap bg-purple-2 text-center text-white shadow-none"

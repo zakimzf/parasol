@@ -14,6 +14,7 @@ export interface Project {
   startTime: Date;
   endTime: Date;
   salePrice: number;
+  isFeatured: boolean
 }
 
 export const people = [

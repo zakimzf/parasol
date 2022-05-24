@@ -1,20 +1,21 @@
-import { DownloadIcon, MailOpenIcon } from "@heroicons/react/outline";
-import Link from "next/link";
-
-import Container from "../components/container";
-import Team from "../components/slices/team";
-import Layout from "../components/layout";
-import Hiring from "../components/slices/hiring";
-import Head from "next/head";
 import React from "react";
+import Link from "next/link";
+import Head from "next/head";
+
+import { DownloadIcon, MailOpenIcon } from "@heroicons/react/outline";
+
+import Container from "components/container";
+import Layout from "components/layout";
+import Hiring from "components/slices/hiring";
+import Team from "components/slices/team";
 
 const About = () =>
   <>
     <Head>
       <title>Parasol Finance ($PSOL) | About Us</title>
       <meta name="title" content="Parasol Finance ($PSOL) | About Us" />
-      <meta property="og:image" content="/assets/preview/about.png"/>
-      <meta property="twitter:image" content="/assets/preview/about.png"/>
+      <meta property="og:image" content="/assets/preview/about.png" />
+      <meta property="twitter:image" content="/assets/preview/about.png" />
     </Head>
     <Layout>
       <section className={"relative pt-12"}>
@@ -24,10 +25,10 @@ const About = () =>
               <h1>
                 <span
                   className="block text-sm font-semibold uppercase tracking-wide text-gray-300 sm:text-base lg:text-sm xl:text-base">
-                Our Vision
+                  Our Vision
                 </span>
                 <span className="mt-1 block text-4xl tracking-tight font-extrabold sm:text-5xl xl:text-6xl">
-                The <span className={"text-purple-2"}>future</span> is already here with <span
+                  The <span className={"text-purple-2"}>future</span> is already here with <span
                     className="text-purple-2">Parasol</span>.
                 </span>
               </h1>

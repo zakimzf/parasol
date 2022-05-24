@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 import { PaperAirplaneIcon } from "@heroicons/react/solid";
 
 const Apply = () => (
@@ -19,7 +20,7 @@ const Apply = () => (
           </a>
         </Link>
         <a href={"https://docs.parasol.finance/"} target={"_blank"} className={"button text-base"} rel="noreferrer">
-            Learn More
+          Learn More
         </a>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import React, { FC, useState } from "react";
+
 import { PublicKey } from "@solana/web3.js";
 
 import { TokenModal } from "./TokenModal";
