@@ -20,6 +20,11 @@ const nextConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   },
   reactStrictMode: true,
+  images: {
+    loader: "imgix",
+    path: process.env.NEXT_PUBLIC_DOMAIN,
+    domains: ["www.arweave.net", process.env.NEXT_PUBLIC_DOMAIN],
+  },
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.md$/,
