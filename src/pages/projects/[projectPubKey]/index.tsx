@@ -98,9 +98,12 @@ const ProjectDetails = () => {
               .catch((errors) => {
                 // react on errors.
               });
-          } else setIdo(data);
-        } else await router.push("/404");
-      } catch {
+          }
+          else setIdo(data);
+        }
+        else await router.push("/404");
+      }
+      catch {
         await router.push("/404");
       }
     };
@@ -315,23 +318,23 @@ const ProjectDetails = () => {
                           <div className="markdown prose prose-lg prose-invert">
                             {(walletAddress && walletAddress == ido.owner) ||
                             ido.content ? (
-                              <EditorJs
-                                content={ido.content || "{}"}
-                                isOwner={
-                                  (walletAddress &&
+                                <EditorJs
+                                  content={ido.content || "{}"}
+                                  isOwner={
+                                    (walletAddress &&
                                     walletAddress == ido.owner) ||
                                   false
-                                }
-                                projectPubKey={projectPubKey}
-                                coverFile={coverFile}
-                                isCoverUpdated={tempCover != ""}
-                                oldCover={ido.cover}
-                                loading={loading}
-                                setLoading={setLoading}
-                              />
-                            ) : (
-                              <p>This IDO has no content at the moment.</p>
-                            )}
+                                  }
+                                  projectPubKey={projectPubKey}
+                                  coverFile={coverFile}
+                                  isCoverUpdated={tempCover != ""}
+                                  oldCover={ido.cover}
+                                  loading={loading}
+                                  setLoading={setLoading}
+                                />
+                              ) : (
+                                <p>This IDO has no content at the moment.</p>
+                              )}
                           </div>
                         </Tab.Panel>
                         <Tab.Panel className="pt-6">
