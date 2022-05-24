@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { CheckCircleIcon, DownloadIcon, UploadIcon, } from "@heroicons/react/outline";
-import { RadioGroup } from "@headlessui/react";
-
-import Container from "../components/container";
-import Card from "../components/card";
-
-import Heading from "../components/heading";
-import { NftContext } from "../context/NftContext";
-import { useWalletModal } from "../components/wallet-connector";
-import { notification } from "../utils/functions";
 import Head from "next/head";
-import { ArrowCircleDownIcon, EmojiHappyIcon, ScaleIcon } from "@heroicons/react/solid";
+
+import { RadioGroup } from "@headlessui/react";
+import {
+  CheckCircleIcon,
+  DownloadIcon,
+  UploadIcon,
+} from "@heroicons/react/outline";
+import {
+  ArrowCircleDownIcon,
+  EmojiHappyIcon,
+  ScaleIcon,
+} from "@heroicons/react/solid";
+
+import Container from "components/container";
+import Card from "components/card";
+import Heading from "components/heading";
+import { useWalletModal } from "components/wallet-connector";
+import { NftContext } from "context/NftContext";
+import { notification } from "utils/functions";
 
 const operations = [
   { id: 0, title: "Stake", description: "Lock your $PSOL for 90 days." },
@@ -77,7 +85,11 @@ const Staking = () => {
       }
     }
     else {
-      notification("information", "Please connect your wallet before.", "Connection Required");
+      notification(
+        "information",
+        "Please connect your wallet before.",
+        "Connection Required"
+      );
     }
   };
   const getHalfAmount = () => {
@@ -89,7 +101,11 @@ const Staking = () => {
       }
     }
     else {
-      notification("information", "Please connect your wallet before.", "Connection Required");
+      notification(
+        "information",
+        "Please connect your wallet before.",
+        "Connection Required"
+      );
     }
   };
 
@@ -116,13 +132,19 @@ const Staking = () => {
     <div className="relative overflow-hidden">
       <Head>
         <title>Parasol Finance ($PSOL) | Staking $PSOL</title>
-        <meta name="title" content="Parasol Finance ($PSOL) | Staking $PSOL"/>
-        <meta property="og:image" content="/assets/preview/staking.png"/>
-        <meta property="twitter:image" content="/assets/preview/staking.png"/>
+        <meta name="title" content="Parasol Finance ($PSOL) | Staking $PSOL" />
+        <meta property="og:image" content="/assets/preview/staking.png" />
+        <meta property="twitter:image" content="/assets/preview/staking.png" />
       </Head>
-      <div className={"absolute flex flex-col justify-center items-center inset-0 filter backdrop-blur-md z-10"}>
-        <h1 className={"text-4xl mb-2 font-bold"}>Coming Soon</h1>
-        <p className={"text-lg font-medium"}>This feature is not yet available but should be soon.</p>
+      <div
+        className={
+          "absolute inset-0 z-10 flex flex-col items-center justify-center filter backdrop-blur-md"
+        }
+      >
+        <h1 className={"mb-2 text-4xl font-bold"}>Coming Soon</h1>
+        <p className={"text-lg font-medium"}>
+          This feature is not yet available but should be soon.
+        </p>
       </div>
       <Heading
         tagline={"Parasol Finance"}
@@ -136,17 +158,17 @@ const Staking = () => {
               Key Advantages to Stake Your $PSOL.
             </h3>
             <p className="mt-3 text-lg">
-              By staking your $PSOL tokens, you will earn Airdrops on all
-              future IDOs on the platform.
+              By staking your $PSOL tokens, you will earn Airdrops on all future
+              IDOs on the platform.
             </p>
             <dl className="mt-10 space-y-10">
               {advantages.map((item) => (
                 <div key={item.id} className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-purple-2 text-white">
-                      <item.icon className="h-6 w-6" aria-hidden="true"/>
+                    <div className="absolute flex h-12 w-12 items-center justify-center rounded-md bg-purple-2 text-white">
+                      <item.icon className="h-6 w-6" aria-hidden="true" />
                     </div>
-                    <p className="ml-16 text-lg leading-6 font-medium">
+                    <p className="ml-16 text-lg font-medium leading-6">
                       {item.name}
                     </p>
                   </dt>
@@ -157,21 +179,21 @@ const Staking = () => {
               ))}
             </dl>
           </div>
-          <div className={"flex flex-col col-span-3"}>
+          <div className={"col-span-3 flex flex-col"}>
             <Card padded={true}>
-              <h2 className="flex gap-x-2 items-center text-2xl font-bold">
+              <h2 className="flex items-center gap-x-2 text-2xl font-bold">
                 {selectedOperation.id == 0 ? "Stake" : "Unstake"} PSOL Tokens
               </h2>
               <p className="mt-3 text-lg">
                 By staking your $PSOL tokens, you will earn Airdrops on all
                 future IDOs on the platform.
               </p>
-              <div className={"flex mt-6 justify-between items-end mb-4"}>
+              <div className={"mt-6 mb-4 flex items-end justify-between"}>
                 <label className="text-sm font-medium">Stake Amount:</label>
-                <div className="flex gap-x-2 items-center text-xs font-medium">
+                <div className="flex items-center gap-x-2 text-xs font-medium">
                   <button
                     className={
-                      "bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"
+                      "rounded-full bg-gray-500 bg-opacity-50 px-2 py-[2px] text-[9px] font-bold uppercase text-gray-400 hover:bg-opacity-30"
                     }
                     onClick={getHalfAmount}
                   >
@@ -179,7 +201,7 @@ const Staking = () => {
                   </button>
                   <button
                     className={
-                      "bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"
+                      "rounded-full bg-gray-500 bg-opacity-50 px-2 py-[2px] text-[9px] font-bold uppercase text-gray-400 hover:bg-opacity-30"
                     }
                     onClick={getMaxAmount}
                   >
@@ -188,7 +210,7 @@ const Staking = () => {
                 </div>
               </div>
               <div
-                className={`flex justify-between items-stretch bg-white bg-opacity-5 rounded-xl px-4 py-3 ${
+                className={`flex items-stretch justify-between rounded-xl bg-white bg-opacity-5 px-4 py-3 ${
                   balanceAvailable
                     ? "outline-hidden"
                     : "outline outline-red-700"
@@ -196,11 +218,11 @@ const Staking = () => {
               >
                 <button
                   type="button"
-                  className="gap-x-2 py-2 px-2 rounded-lg flex items-center"
+                  className="flex items-center gap-x-2 rounded-lg py-2 px-2"
                 >
                   <img
                     src={"/assets/logos/parasol-logo-mark-reverse-rgb.svg"}
-                    className="w-5 h-5 rounded-full"
+                    className="h-5 w-5 rounded-full"
                     alt={"PSOL"}
                   />
                   <div className="font-semibold" translate={"no"}>
@@ -215,12 +237,12 @@ const Staking = () => {
                   }
                   inputMode="decimal"
                   className={
-                    "bg-transparent outline-0 ring-0 border-transparent font-semibold text-right text-gray-300 text-lg w-full"
+                    "w-full border-transparent bg-transparent text-right text-lg font-semibold text-gray-300 outline-0 ring-0"
                   }
                 />
               </div>
               {!balanceAvailable ? (
-                <div className="text-center text-red-500 text-xs my-4">
+                <div className="my-4 text-center text-xs text-red-500">
                   Your balance is not enough to stake/unstake this amount
                 </div>
               ) : (
@@ -244,16 +266,16 @@ const Staking = () => {
                           checked ? "border-transparent" : "border-gray-300"
                         } ${
                           active ? "border-purple-2" : ""
-                        } relative border-2 rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none`
+                        } relative flex cursor-pointer rounded-lg border-2 p-4 shadow-sm focus:outline-none`
                       }
                     >
                       {({ checked, active }) => (
                         <>
-                          <div className="flex-1 flex">
+                          <div className="flex flex-1">
                             <div className="flex flex-col">
                               <RadioGroup.Label
                                 as="span"
-                                className="block font-bold text-sm font-medium "
+                                className="block text-sm font-bold font-medium "
                               >
                                 {mailingList.title}
                               </RadioGroup.Label>
@@ -272,10 +294,8 @@ const Staking = () => {
                           />
                           <div
                             className={`${
-                              checked
-                                ? "border-purple-2"
-                                : "border-transparent"
-                            } border-2 absolute -inset-px rounded-lg pointer-events-none`}
+                              checked ? "border-purple-2" : "border-transparent"
+                            } pointer-events-none absolute -inset-px rounded-lg border-2`}
                             aria-hidden="true"
                           />
                         </>
@@ -287,20 +307,27 @@ const Staking = () => {
               {wallet.connected ? (
                 <button
                   id="stake-btn"
-                  className={`w-full button mt-8 ${!balanceAvailable ? "opacity-50" : ""}`}
-                  disabled={!balanceAvailable}>
-                  {selectedOperation.id == 0 ? <UploadIcon className={"w-6"}/> : <DownloadIcon className={"w-6"}/>}
+                  className={`button mt-8 w-full ${
+                    !balanceAvailable ? "opacity-50" : ""
+                  }`}
+                  disabled={!balanceAvailable}
+                >
+                  {selectedOperation.id == 0 ? (
+                    <UploadIcon className={"w-6"} />
+                  ) : (
+                    <DownloadIcon className={"w-6"} />
+                  )}
                   {selectedOperation.id == 0 ? "Stake" : "Unstake"} Your $PSOL
                 </button>
               ) : (
                 <button
                   onClick={() => walletModal.setVisible(true)}
-                  className="flex items-center justify-center w-full bg-gradient-to-r from-purple-1 to-purple-2 mt-6 px-5 py-4 gap-x-2 text-lg font-medium rounded-lg"
+                  className="mt-6 flex w-full items-center justify-center gap-x-2 rounded-lg bg-gradient-to-r from-purple-1 to-purple-2 px-5 py-4 text-lg font-medium"
                   disabled={isPending}
                 >
                   {isPending ? (
                     <svg
-                      className="animate-spin -ml-1 mr-3 h-5 w-5 text-white w-[28px] h-[28px] ml-[6px] mt-[0px]"
+                      className="-ml-1 mr-3 ml-[6px] mt-[0px] h-5 h-[28px] w-5 w-[28px] animate-spin text-white"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -321,7 +348,7 @@ const Staking = () => {
                     </svg>
                   ) : (
                     <svg
-                      className="w-4 h-4"
+                      className="h-4 w-4"
                       viewBox="0 0 96 86"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"

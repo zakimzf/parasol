@@ -59,7 +59,7 @@ const Migrate = () => {
   vestingPeriod = (selected?.vestedDuration / selected?.releaseDuration) * 100;
 
   if (vestingPeriod < 0) {
-    vestingPeriod = 0
+    vestingPeriod = 0;
   }
 
   const redeemNFT = async () => {
@@ -135,7 +135,7 @@ const Migrate = () => {
                     <RadioGroup.Label className="sr-only">
                       Server size
                     </RadioGroup.Label>
-                    <div className="space-y-2">
+                    <div className="max-h-[335px] space-y-2 overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-parasol">
                       {nfts.map((nft: any) => (
                         <RadioGroup.Option
                           key={nft.name}
@@ -157,7 +157,7 @@ const Migrate = () => {
                                   <div className="text-sm">
                                     <RadioGroup.Label
                                       as="p"
-                                      className={`font-medium ${checked ? "text-white" : ""
+                                      className={`font-medium ${checked ? "text-purple-2" : "text-white"
                                       }`}
                                     >
                                       <div className="flex items-center">

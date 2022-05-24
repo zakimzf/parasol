@@ -1,22 +1,23 @@
+import React, { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 
-import Card from "../card";
+import Countdown from "react-countdown";
+import { NftStore, Project } from "parasol-finance-sdk";
+import { PublicKey } from "@solana/web3.js";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 import { BellIcon, CollectionIcon } from "@heroicons/react/outline";
-import Countdown from "react-countdown";
-import { useReminderModal } from "../reminder-modal/useReminderModal";
-import React, { useContext, useEffect, useState } from "react";
-import { isToday } from "../../utils/functions";
-import { NftStore, Project } from "parasol-finance-sdk";
-import { NftContext } from "../../context/NftContext";
-import { PublicKey } from "@solana/web3.js";
+
+import Card from "components/card";
+import { useReminderModal } from "components/reminder-modal/useReminderModal";
+import { NftContext } from "context/NftContext";
+import { isToday } from "utils/functions";
 
 type ProjectDetails = {
   id?: String;
   loading?: boolean;
   logo?: string;
   cover?: string;
-  featured?: boolean,
+  isFeatured?: boolean,
   name?: String;
   description?: String;
   price?: number
@@ -41,7 +42,7 @@ const ProjectCard = ({
   loading,
   name,
   description,
-  featured,
+  isFeatured,
   logo,
   cover,
   status,
@@ -128,7 +129,7 @@ const ProjectCard = ({
               <Link href={`/projects/${id}`}>
                 <a>{name}</a>
               </Link>
-              {(featured || true) && <BadgeCheckIcon className={"h-6 -ml-1 text-purple-2"} />}
+              {isFeatured && <BadgeCheckIcon className={"h-6 -ml-1 text-purple-2"} />}
             </h2>
             <p className="text text-gray-300 mb-3 flex-1 line-clamp-2" title={description?.toString()}>{description}</p>
             <div className="flex-col space-y-3 mt-3 mb-8">

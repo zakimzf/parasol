@@ -1,23 +1,25 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { RadioGroup } from "@headlessui/react"
-import Container from "../../components/container";
-import Heading from "../../components/heading";
-import NumberFormat from "react-number-format";
-import axios from "axios";
-import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
-import { db, storage } from "../../utils/firebase";
-import { errClasses, isTokenAddressExist, notification, validURL } from "../../utils/functions";
-import { collection, doc, setDoc, Timestamp, } from "firebase/firestore";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
-import { useDropzone } from "react-dropzone";
-import { useWalletModal } from "../../components/wallet-connector";
+
+import axios from "axios";
+import { collection, doc, setDoc, Timestamp, } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import Card from "../../components/card";
-import { Keypair, PublicKey } from "@solana/web3.js";
-import { NftContext } from "../../context/NftContext";
 import { NftStore, Project } from "parasol-finance-sdk";
+import { useDropzone } from "react-dropzone";
+import NumberFormat from "react-number-format";
+import TextareaAutosize from "react-textarea-autosize";
+import { Keypair, PublicKey } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { RadioGroup } from "@headlessui/react"
+import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/outline";
+
+import Card from "components/card";
+import Container from "components/container";
+import Heading from "components/heading";
+import { useWalletModal } from "components/wallet-connector";
+import { NftContext } from "context/NftContext";
+import { errClasses, isTokenAddressExist, notification, validURL } from "utils/functions";
+import { db, storage } from "utils/firebase";
 
 const exchanges = [
   { id: 1, name: "Raydium | One of the Biggest Solana AMM" },
@@ -207,7 +209,7 @@ const SubmitProject = () => {
           lpFeeBasisPoints: Number(values.liquidity) / 100,
           startTime: new Date(values.startTime),
           endTime: new Date(values.endTime),
-          uri: `${process.env.DOMAIN_URL}/api/projects/${projectPubKey?.toBase58()}`,
+          uri: `${process.env.NEXT_PUBLIC_DOMAIN}/api/projects/${projectPubKey?.toBase58()}`,
         }
 
         const tx = await project.create(args, user);
@@ -226,13 +228,17 @@ const SubmitProject = () => {
             await router.push(`/projects/${values.projectKey}`);
           }
           catch (error: any) {
+            console.log(error, "error1")
+            console.log(error.message, "errormsg1")
             if (error.message == "User rejected the request.") { }
             else notification("danger", "Unable to create an IDO.", "Transaction Failed");
             setLoading(false);
           }
         })
       }
-      catch (error) {
+      catch (error: any) {
+        console.log(error, "error2")
+        console.log(error.message, "errormsg2")
         setLoading(false);
         notification("danger", "Unable to create an IDO.", "Transaction Failed");
       }
@@ -671,7 +677,7 @@ const SubmitProject = () => {
                 {/*      Calculate the amount of token for your IDO, and the liquidity.*/}
                 {/*    </p>*/}
                 {/*  </div>*/}
-                
+
                 {/*  <div className="md:col-span-6 relative">*/}
                 {/*    <Listbox value={values.dex} onChange={handleChange}>*/}
                 {/*      {({ open }) => (*/}
@@ -685,7 +691,7 @@ const SubmitProject = () => {
                 {/*                <SelectorIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />*/}
                 {/*              </span>*/}
                 {/*            </Listbox.Button>*/}
-                
+
                 {/*            <Transition*/}
                 {/*              show={open}*/}
                 {/*              as={Fragment}*/}
@@ -722,12 +728,12 @@ const SubmitProject = () => {
                 {/*        </>*/}
                 {/*      )}*/}
                 {/*    </Listbox>*/}
-                
+
                 {/*    {errors.dex && <><div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">*/}
                 {/*      <ExclamationCircleIcon className="h-5 w-5 text-red-500" aria-hidden="true" />*/}
                 {/*    </div><div className="mt-2 text-sm text-red-600 md:col-span-6">{errors.dex}</div></>}*/}
                 {/*  </div>*/}
-                
+
                 {/*  <div className="sm:col-span-6">*/}
                 {/*    <div className="sm:col-span-3 relative">*/}
                 {/*      <label htmlFor="liquidity" className="block text-sm font-medium text-blue-gray-900">*/}
@@ -748,7 +754,7 @@ const SubmitProject = () => {
                 {/*      We recommend not less than 50% of the pool to be sent in liquidity.*/}
                 {/*    </p>*/}
                 {/*  </div>*/}
-                
+
                 {/*</div>*/}
 
                 <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">

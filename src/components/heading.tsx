@@ -1,4 +1,4 @@
-import Container from "./container";
+import Container from "components/container";
 
 type HeadingDetails = {
   tagline?: string,

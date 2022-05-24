@@ -24,7 +24,7 @@ import {
   HandIcon,
 } from "@heroicons/react/outline";
 
-import { Loading } from "components"
+import { Loading } from "components";
 
 import Card from "components/card";
 import Container from "components/container";
@@ -43,7 +43,7 @@ const EditorJs = dynamic(() => import("components/editorjs"), {
   ssr: false,
 });
 
-import USDC_logo from "assets/logos/usdc-logo.svg"
+import USDC_logo from "assets/logos/usdc-logo.svg";
 
 const nftAllocation: any = {
   Dreamer: 210,
@@ -243,11 +243,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
           {ido.startTime >= Date.now() && (
             <div
               className={
-                "absolute flex flex-col items-center pt-52 pb-12 inset-0 filter backdrop-blur-md z-10"
+                "absolute inset-0 z-10 flex flex-col items-center pt-52 pb-12 filter backdrop-blur-md"
               }
             >
-              <h1 className={"text-4xl mb-3 font-bold"}>Scheduled IDO</h1>
-              <p className={"text-lg mb-6 font-medium"}>
+              <h1 className={"mb-3 text-4xl font-bold"}>Scheduled IDO</h1>
+              <p className={"mb-6 text-lg font-medium"}>
                 This IDO is not yet launched, come back later.
               </p>
               <button
@@ -255,9 +255,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   setReminder(true);
                   setProjectKey("lol");
                 }}
-                className="button py-3 text-base whitespace-nowrap"
+                className="button whitespace-nowrap py-3 text-base"
               >
-                <BellIcon className={"w-5 h-5"} />
+                <BellIcon className={"h-5 w-5"} />
                 Set a Reminder
               </button>
             </div>
@@ -265,28 +265,28 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
           <Container>
             <div className={"px-0"}>
               <Layout short={true}>
-                <div className="grid md:grid-cols-8 gap-y-6 lg:gap-y-0">
-                  <div className="md:col-span-5 pt-10 md:pr-16">
+                <div className="grid gap-y-6 md:grid-cols-8 lg:gap-y-0">
+                  <div className="pt-10 md:col-span-5 md:pr-16">
                     <Link href={`/projects/${projectPubKey}`}>
-                      <a className="inline-flex gap-x-2 items-center rounded-lg text-gray-300">
+                      <a className="inline-flex items-center gap-x-2 rounded-lg text-gray-300">
                         <ArrowLeftIcon className={"w-4"} />
                         Back to Project
                       </a>
                     </Link>
-                    <h1 className="flex gap-x-3 text-4xl tracking-tight font-extrabold text-white mt-5 sm:leading-none lg:text-5xl xl:text-6xl">
+                    <h1 className="mt-5 flex gap-x-3 text-4xl font-extrabold tracking-tight text-white sm:leading-none lg:text-5xl xl:text-6xl">
                       <span className={"text-purple-2"}>{ido.name}</span>
                       <span>Presale</span>
                       {ido.isFeatured && (
-                        <BadgeCheckIcon className={"w-8 h-8 text-purple-2"} />
+                        <BadgeCheckIcon className={"h-8 w-8 text-purple-2"} />
                       )}
                     </h1>
-                    <p className="mt-6 prose prose-lg prose-invert line-clamp-5">
+                    <p className="prose prose-lg prose-invert mt-6 line-clamp-5">
                       {ido.description}
                     </p>
-                    <p className="mt-8 text-sm text-white uppercase tracking-wide font-semibold sm:mt-10">
+                    <p className="mt-8 text-sm font-semibold uppercase tracking-wide text-white sm:mt-10">
                       Token Sale Details
                     </p>
-                    <div className="flex gap-x-12 flex-col my-3 gap-y-4 mxm:flex-row">
+                    <div className="my-3 flex flex-col gap-x-12 gap-y-4 mxm:flex-row">
                       {ido.symbol && (
                         <div className="flex items-center">
                           {ido.icon && (
@@ -296,7 +296,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           )}
                           <div>
                             <p className="text-sm">Token Symbol</p>
-                            <h4 className="text-xl whitespace-nowrap">
+                            <h4 className="whitespace-nowrap text-xl">
                               ${ido.symbol}
                             </h4>
                           </div>
@@ -305,14 +305,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       <div className="flex items-center">
                         <div className="mr-4">
                           <img
-                            className={"w-10 h-10"}
+                            className={"h-10 w-10"}
                             src={"/assets/logos/usdc-logo.svg"}
                             alt={"USDC"}
                           />
                         </div>
                         <div>
                           <p className="text-sm">Token Price</p>
-                          <h4 className="text-xl whitespace-nowrap">
+                          <h4 className="whitespace-nowrap text-xl">
                             <NumberFormat
                               value={ido.salePrice}
                               displayType={"text"}
@@ -325,14 +325,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                       <div className="flex items-center">
                         <div className="mr-4">
                           <img
-                            className={"w-10 h-10"}
+                            className={"h-10 w-10"}
                             src={"/assets/logos/usdc-logo.svg"}
                             alt={"USDC"}
                           />
                         </div>
                         <div>
                           <p className="text-sm">Hard Cap</p>
-                          <h4 className="text-xl whitespace-nowrap">
+                          <h4 className="whitespace-nowrap text-xl">
                             <NumberFormat
                               value={ido.hardCap}
                               displayType={"text"}
@@ -345,7 +345,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                     </div>
                     <div
                       className={
-                        "flex gap-x-10 mt-12 flex-col gap-y-4 mxm:flex-row"
+                        "mt-12 flex flex-col gap-x-10 gap-y-4 mxm:flex-row"
                       }
                     >
                       {ido.websiteUrl && (
@@ -396,10 +396,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   <div className="md:col-span-3">
                     <Card padded={true}>
                       <div className="p-2">
-                        <h2 className="flex gap-x-2 items-center text-3xl font-bold">
+                        <h2 className="flex items-center gap-x-2 text-3xl font-bold">
                           Participate Now!
                         </h2>
-                        <p className="text-lg text-gray-300 line-clamp-2 mt-5 font-medium">
+                        <p className="mt-5 text-lg font-medium text-gray-300 line-clamp-2">
                           To participate in the IDO, please enter your desired
                           amount and choose your NFT.
                         </p>
@@ -408,10 +408,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             setAllocationDetails(!allocationDetails)
                           }
                           className={
-                            "flex cursor-pointer justify-between gap-x-2 mt-3"
+                            "mt-3 flex cursor-pointer justify-between gap-x-2"
                           }
                         >
-                          <div className={"text-purple-2 font-medium"}>
+                          <div className={"font-medium text-purple-2"}>
                             Your IDO&apos;s allocation is{" "}
                             <NumberFormat
                               value={allocation - participatedAmount}
@@ -425,10 +425,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           {allocation != 0 && (
                             <div
                               className={
-                                "flex gap-x-2 items-center justify-end w-16"
+                                "flex w-16 items-center justify-end gap-x-2"
                               }
                             >
-                              <div className="bg-gray-400 h-2 flex-1 rounded-full">
+                              <div className="h-2 flex-1 rounded-full bg-gray-400">
                                 <div
                                   style={{
                                     width: `${(
@@ -436,7 +436,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                       100
                                     ).toFixed(0)}%`,
                                   }}
-                                  className="bg-purple-2 h-2 rounded-full"
+                                  className="h-2 rounded-full bg-purple-2"
                                 />
                               </div>
                               <p className={"text-xs"}>
@@ -451,10 +451,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         </div>
                         {allocationDetails && allocation != 0 && (
                           <div
-                            className={"mt-3 text-sm space-y-2 text-gray-300"}
+                            className={"mt-3 space-y-2 text-sm text-gray-300"}
                           >
                             <p className={"flex items-center gap-x-1"}>
-                              <ChevronRightIcon className={"w-3 h-3"} />
+                              <ChevronRightIcon className={"h-3 w-3"} />
                               You initially received an allocation of{" "}
                               <NumberFormat
                                 value={allocation}
@@ -465,7 +465,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               />
                             </p>
                             <p className={"flex items-center gap-x-1"}>
-                              <ChevronRightIcon className={"w-3 h-3"} />
+                              <ChevronRightIcon className={"h-3 w-3"} />
                               You have participated in the amount of{" "}
                               <NumberFormat
                                 value={participatedAmount}
@@ -479,7 +479,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                         )}
                         <div className={"mt-6"}>
                           <div
-                            className={"flex justify-between items-end mb-4"}
+                            className={"mb-4 flex items-end justify-between"}
                           >
                             <label
                               htmlFor="amount"
@@ -487,14 +487,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             >
                               Participation Amount
                             </label>
-                            <div className="flex gap-x-2 items-center text-xs font-medium">
+                            <div className="flex items-center gap-x-2 text-xs font-medium">
                               <label>
                                 Balance: {usdcBalance.toLocaleString("en-US")}{" "}
                                 USDC
                               </label>
                               <button
                                 className={
-                                  "bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"
+                                  "rounded-full bg-gray-500 bg-opacity-50 px-2 py-[2px] text-[9px] font-bold uppercase text-gray-400 hover:bg-opacity-30"
                                 }
                                 onClick={() => getMax(0.5)}
                               >
@@ -502,7 +502,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               </button>
                               <button
                                 className={
-                                  "bg-gray-500 text-[9px] bg-opacity-50 uppercase font-bold text-gray-400 px-2 py-[2px] rounded-full hover:bg-opacity-30"
+                                  "rounded-full bg-gray-500 bg-opacity-50 px-2 py-[2px] text-[9px] font-bold uppercase text-gray-400 hover:bg-opacity-30"
                                 }
                                 onClick={() => getMax(1)}
                               >
@@ -510,7 +510,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               </button>
                             </div>
                           </div>
-                          <div className="mt-2 relative rounded-md shadow-sm">
+                          <div className="relative mt-2 rounded-md shadow-sm">
                             <input
                               readOnly={
                                 walletAddress === undefined ||
@@ -522,17 +522,17 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               id="amount"
                               onChange={(e) => setAmount(e.target.value)}
                               value={amount}
-                              className="w-full p-3 block placeholder:text-gray-300 bg-[#231f38] bg-opacity-50 shadow-xl shadow-half-strong border border-gray-800 rounded-lg sm:text-sm focus:ring-purple-2 focus:border-purple-2 pr-12"
+                              className="block w-full rounded-lg border border-gray-800 bg-[#231f38] bg-opacity-50 p-3 pr-12 shadow-xl shadow-half-strong placeholder:text-gray-300 focus:border-purple-2 focus:ring-purple-2 sm:text-sm"
                               placeholder="0.00"
                               aria-describedby="price-currency"
                             />
-                            <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                               <span
-                                className="flex gap-x-1 items-center text-gray-300 sm:text-sm"
+                                className="flex items-center gap-x-1 text-gray-300 sm:text-sm"
                                 id="price-currency"
                               >
                                 <img
-                                  className={"w-4 h-4"}
+                                  className={"h-4 w-4"}
                                   src={"/assets/logos/usdc-logo.svg"}
                                   alt={"USDC"}
                                 />
@@ -542,7 +542,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                           </div>
                         </div>
                         <RadioGroup
-                          className={"mt-6"}
+                          className="mt-6 max-h-[335px] overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-parasol"
                           value={nftMint}
                           onChange={(nft) => setNftAndAllocation(nft)}
                         >
@@ -557,17 +557,17 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                   value={nft}
                                   className={({ active, checked }) =>
                                     `${active
-                                      ? "ring-2-ring-offset-2 ring-offset-purple-1 ring-purple-1 ring-opacity-60"
+                                      ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
                                       : ""
                                     } ${checked
                                       ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
                                       : "border-2 border-transparent bg-white bg-opacity-5"
-                                    } relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none`
+                                    } relative flex cursor-pointer rounded-lg p-3 shadow-md focus:outline-none`
                                   }
                                 >
                                   {({ active, checked }) => (
                                     <>
-                                      <div className="flex items-center justify-between w-full">
+                                      <div className="flex w-full items-center justify-between">
                                         <div className="flex items-center">
                                           <div className="text-sm">
                                             <RadioGroup.Label
@@ -579,7 +579,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                                 <div className="mr-4">
                                                   <img
                                                     className={
-                                                      "w-12 h-12 rounded-md"
+                                                      "h-12 w-12 rounded-md"
                                                     }
                                                     src={nft.image}
                                                     alt={nft.name}
@@ -589,7 +589,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                                   <p className="text-xs">
                                                     {nft.name}
                                                   </p>
-                                                  <h2 className="text-lg whitespace-nowrap">
+                                                  <h2 className="whitespace-nowrap text-lg">
                                                     {nft.attributes[0].value}
                                                   </h2>
                                                 </div>
@@ -599,7 +599,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                         </div>
                                         {checked && (
                                           <div className="flex-shrink-0 text-purple-2">
-                                            <CheckIcon className="w-6 h-6" />
+                                            <CheckIcon className="h-6 w-6" />
                                           </div>
                                         )}
                                       </div>
@@ -609,8 +609,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               ))
                             ) : (
                               <Link href={"/tiers"}>
-                                <a className="border hover:ring-2 hover:ring-purple-2 border-purple-2 bg-purple-2 bg-opacity-5 relative rounded-lg shadow-md p-3 cursor-pointer flex focus:outline-none">
-                                  <div className="flex items-center justify-between w-full">
+                                <a className="relative flex cursor-pointer rounded-lg border border-purple-2 bg-purple-2 bg-opacity-5 p-3 shadow-md hover:ring-2 hover:ring-purple-2 focus:outline-none">
+                                  <div className="flex w-full items-center justify-between">
                                     <div className="flex items-center">
                                       <div className="text-sm">
                                         <p className="font-medium text-white">
@@ -618,7 +618,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                             <div className="mr-4">
                                               {/*<Image width={32} height={32} src={Logo} className="h-5" alt="logo" />*/}
                                               <img
-                                                className="w-12 h-12 rounded-md"
+                                                className="h-12 w-12 rounded-md"
                                                 src="https://parasol.finance/assets/nft-access-keys/covers/Dreamer.png"
                                                 alt="PSOL KEY #2"
                                               />
@@ -628,7 +628,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                                 You don&apos;t have an NFT
                                                 currently.
                                               </p>
-                                              <h2 className="text-xs whitespace-nowrap mxm:text-lg">
+                                              <h2 className="whitespace-nowrap text-xs mxm:text-lg">
                                                 Buy your NFT Access Key!
                                               </h2>
                                             </div>
@@ -638,14 +638,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                               You don&apos;t have an NFT
                                               currently.
                                             </p>
-                                            <h2 className="text-lg whitespace-nowrap">
+                                            <h2 className="whitespace-nowrap text-lg">
                                               Buy your NFT Access Key!
                                             </h2>
                                           </div>
                                         </p>
                                       </div>
                                     </div>
-                                    <div className="flex-shrink-0 text-purple-2 px-3">
+                                    <div className="flex-shrink-0 px-3 text-purple-2">
                                       <ArrowRightIcon className={"w-5"} />
                                     </div>
                                   </div>
@@ -662,14 +662,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               loading
                             }
                             className={`w-full ${nfts.length == 0
-                              ? "opacity-70 cursor-not-allowed"
+                              ? "cursor-not-allowed opacity-70"
                               : ""
-                            } mt-8 button`}
+                            } button mt-8`}
                             onClick={submitParticipation}
                           >
                             {!loading ? (
                               <>
-                                <HandIcon className={"w-6 h-6"} />
+                                <HandIcon className={"h-6 w-6"} />
                                 Participate Now
                               </>
                             ) : (
@@ -681,7 +681,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                             onClick={() =>
                               walletAddress ?? walletModal.setVisible(true)
                             }
-                            className={"w-full mt-8 button"}
+                            className={"button mt-8 w-full"}
                           >
                             Connect Wallet
                           </button>
@@ -691,11 +691,11 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                   </div>
                 </div>
                 {ido.content && (
-                  <div className={"flex gap-x-12 flex-col mxm:flex-row"}>
+                  <div className={"flex flex-col gap-x-12 mxm:flex-row"}>
                     <div className={"w-48"}>
                       <ul
                         role="list"
-                        className="pt-4 divide-y-divide-gray-200-divide-opacity-10"
+                        className="divide-y-divide-gray-200-divide-opacity-10 pt-4"
                       >
                         {JSON.parse(ido.content).blocks.map((block: any) => {
                           if (
@@ -710,9 +710,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                 >
                                   <p
                                     className={`${block.data.level > 2 ? "pl-3-" : ""
-                                    } flex items-center gap-x-1 text-sm font-medium text-gray-300 hover:text-gray-200  hover:translate-x-3 duration-300`}
+                                    } flex items-center gap-x-1 text-sm font-medium text-gray-300 duration-300  hover:translate-x-3 hover:text-gray-200`}
                                   >
-                                    <ChevronRightIcon className={"w-3 h-3"} />
+                                    <ChevronRightIcon className={"h-3 w-3"} />
                                     <span className={"flex-1 truncate"}>
                                       {block.data.text}
                                     </span>
@@ -747,9 +747,9 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
             </div>
           </Container>
         </>
-      ) :
+      ) : (
         <Loading />
-      }
+      )}
     </section>
   );
 };

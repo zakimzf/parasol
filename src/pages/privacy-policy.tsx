@@ -1,7 +1,7 @@
 import Markdown from "markdown-to-jsx";
 
-import Heading from "../components/heading";
-import PRIVACY_POLICY from "../content/privacy-policy.md";
+import Heading from "components/heading";
+import PRIVACY_POLICY from "content/privacy-policy.md";
 
 const PrivacyPolicy = () => (
   <>

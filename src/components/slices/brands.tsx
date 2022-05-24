@@ -1,4 +1,4 @@
-import Container from "../container";
+import Container from "components/container";
 
 const SolanaLogo = (
   <svg xmlns="http://www.w3.org/2000/svg" fill={"#DDDDDD"} viewBox="0 0 646 96">

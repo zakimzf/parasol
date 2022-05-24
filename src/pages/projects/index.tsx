@@ -1,21 +1,22 @@
-import Container from "../../components/container";
-import Heading from "../../components/heading";
-import Apply from "../../components/slices/apply";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { RpcHelper } from "parasol-finance-sdk";
-import { NftContext } from "../../context/NftContext";
 import Head from "next/head";
-import { Project } from "../../constants";
-import ProjectCard from "../../components/cards/project-card";
-import Layout from "../../components/layout";
+
+import { RpcHelper } from "parasol-finance-sdk";
 import { useWallet } from "@solana/wallet-adapter-react";
+
+import ProjectCard from "components/cards/project-card";
+import Container from "components/container";
+import Heading from "components/heading";
+import Layout from "components/layout";
+import Apply from "components/slices/apply";
+import { NftContext } from "context/NftContext";
+import { Project } from "../../constants";
 
 const Projects = () => {
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { provider } = useContext(NftContext);
   const [projects, setProjects] = useState<Project[]>([])
-  // const [status, setStatus] = useState<string>("PUBLISHED");
 
   const filteredProjects = projects
     .filter((e) => e.status === "PUBLISHED")
@@ -39,6 +40,8 @@ const Projects = () => {
     }
     getProjects();
   }, [])
+
+  console.log(projects,"projects")
 
   return (
     <>
@@ -80,6 +83,7 @@ const Projects = () => {
                         startTime={project.startTime}
                         endTime={project.endTime}
                         salePrice={project.salePrice}
+                        isFeatured={project.isFeatured}
                       />
                     ))}
                   </div>
@@ -106,6 +110,7 @@ const Projects = () => {
                         startTime={project.startTime}
                         endTime={project.endTime}
                         salePrice={project.salePrice}
+                        isFeatured={project.isFeatured}
                       />
                     ))}
                   </div>
@@ -148,6 +153,7 @@ const Projects = () => {
                         startTime={project.startTime}
                         endTime={project.endTime}
                         salePrice={project.salePrice}
+                        isFeatured={project.isFeatured}
                       />
                     ))}
                   </div>

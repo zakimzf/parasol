@@ -1,28 +1,30 @@
 import React, { Fragment, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { useRouter } from "next/router";
-import axios from "axios";
 import dynamic from "next/dynamic";
-import { useWallet } from "@solana/wallet-adapter-react";
-import { useWalletModal } from "../../../components/wallet-connector";
 import Head from "next/head";
-import Container from "../../../components/container";
 import Link from "next/link";
-import { BadgeCheckIcon, BellIcon, CloudUploadIcon, PencilAltIcon, SaveAsIcon } from "@heroicons/react/outline";
-import { SRLWrapper } from "simple-react-lightbox";
-import { Tab } from "@headlessui/react";
-import { ExternalLinkIcon, FireIcon, XCircleIcon } from "@heroicons/react/solid";
-import NumberFormat from "react-number-format";
+import { useRouter } from "next/router";
+
+import axios from "axios";
 import Disqus from "disqus-react";
+import { NftStore, Project } from "parasol-finance-sdk";
+import NumberFormat from "react-number-format";
 import Countdown from "react-countdown";
 import { useDropzone } from "react-dropzone";
-import { getBase64 } from "../../../utils/functions";
-import { NftStore, Project } from "parasol-finance-sdk";
-import { NftContext } from "../../../context/NftContext";
+import { SRLWrapper } from "simple-react-lightbox";
 import { PublicKey } from "@solana/web3.js";
-import { useReminderModal } from "../../../components/reminder-modal/useReminderModal";
-import Card from "../../../components/card";
+import { useWallet } from "@solana/wallet-adapter-react";
+import { Tab } from "@headlessui/react";
+import { BadgeCheckIcon, BellIcon, CloudUploadIcon, PencilAltIcon, SaveAsIcon } from "@heroicons/react/outline";
+import { ExternalLinkIcon, FireIcon, XCircleIcon } from "@heroicons/react/solid";
 
-const EditorJs = dynamic(() => import("../../../components/editorjs"), {
+import { useWalletModal } from "components/wallet-connector";
+import Container from "components/container";
+import { useReminderModal } from "components/reminder-modal/useReminderModal";
+import Card from "components/card";
+import { NftContext } from "context/NftContext";
+import { getBase64, isToday } from "utils/functions";
+
+const EditorJs = dynamic(() => import("components/editorjs"), {
   ssr: false,
 });
 
@@ -103,6 +105,8 @@ const ProjectDetails = () => {
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+
+  console.log(ido, "ido");
 
   return (
     <>
@@ -342,7 +346,7 @@ const ProjectDetails = () => {
                             <span>USDC</span>
                           </div>
                         </div>
-                        <div className="prose prose-lg prose-invert">
+                        <div className="prose prose-lg prose-invert break-all">
                           <p>{ido.description}</p>
                         </div>
                         <div className="flex-col space-y-3">
@@ -369,6 +373,16 @@ const ProjectDetails = () => {
                                 prefix={"$"}
                               />
                             </span>
+                          </div>
+                          <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                            <span>Start Time</span>
+                            <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                            <span>{ido.startTime.toLocaleDateString()} {isToday(ido.startTime) && ido.startTime.toLocaleTimeString()}</span>
+                          </div>
+                          <div className="flex font-medium items-center text-gray-300 gap-x-3">
+                            <span>End Time</span>
+                            <span className="flex-1 h-1 border-b border-dashed border-gray-400" />
+                            <span>{ido.endTime.toLocaleDateString()} {isToday(ido.endTime) && ido.endTime.toLocaleTimeString()}</span>
                           </div>
                         </div>
                         {ido.saleTotalAmount > 0 && (

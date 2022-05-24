@@ -1,19 +1,21 @@
 import React, { useCallback, useContext, useEffect, useMemo, useState, } from "react";
-import NumberFormat from "react-number-format";
-import axios from "axios";
-import { ExclamationCircleIcon, PencilAltIcon } from "@heroicons/react/outline";
-import { collection, doc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import TextareaAutosize from "react-textarea-autosize";
 import { useRouter } from "next/router";
-import { useWalletModal } from "../../../components/wallet-connector";
-import { errClasses, notification, validURL, } from "../../../utils/functions";
-import Container from "../../../components/container";
-import { db } from "../../../utils/firebase";
+
+import axios from "axios";
 import { sign } from "tweetnacl";
+import NumberFormat from "react-number-format";
+import TextareaAutosize from "react-textarea-autosize";
 import { NftStore, Project } from "parasol-finance-sdk";
-import { NftContext } from "../../../context/NftContext";
 import { PublicKey } from "@solana/web3.js";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { collection, doc, setDoc, Timestamp, updateDoc } from "firebase/firestore";
+import { ExclamationCircleIcon, PencilAltIcon } from "@heroicons/react/outline";
+
+import { useWalletModal } from "components/wallet-connector";
+import Container from "components/container";
+import { NftContext } from "context/NftContext";
+import { errClasses, notification, validURL, } from "utils/functions";
+import { db } from "utils/firebase";
 
 const EditProject = () => {
   const router = useRouter();
@@ -55,7 +57,7 @@ const EditProject = () => {
         errors[name] = "";
       }
     }
-    
+
     setValues({ ...values, [name]: value });
   };
   const handleSubmit = async (e: { preventDefault: () => void }) => {
@@ -148,7 +150,7 @@ const EditProject = () => {
         // Sign the bytes using the wallet
         const signature = await signMessage(message);
         // Verify that the bytes were signed using the private key that matches the known public key
-        
+
         if (!sign.detached.verify(message, signature, publicKey.toBytes()))
           throw new Error("Invalid signature!");
         // await setDoc(doc(idosCollectionRef, values.projectKey), values);
@@ -169,7 +171,7 @@ const EditProject = () => {
       setLoading(false);
       notification("danger", "Unable to sign the transaction.", "Transaction Error");
     }
-    
+
     setLoading(false);
   }
 
@@ -180,7 +182,7 @@ const EditProject = () => {
       setProject(project);
       const data = await project.data()
       data.projectKey = projectPubKey;
-      
+
       if (wallet.connected && data && data.owner == walletAddress) {
         data.startTime = data.startTime.toISOString().slice(0, -5);
         data.endTime = data.endTime.toISOString().slice(0, -5);
@@ -188,7 +190,7 @@ const EditProject = () => {
       }
       else router.push("/404");
     };
-    
+
     if (projectPubKey && provider && config && wallet.connected) getDataByTokenAddress();
   }, [projectPubKey, provider, config, wallet.connected]);
 
@@ -482,7 +484,7 @@ const EditProject = () => {
                             <span>USDC</span>
                           </div>
                         </div>
-                        <div className="prose prose-lg prose-invert">
+                        <div className="prose prose-lg prose-invert break-all">
                           <p>
                             {(!values.description.trim() &&
                               "Project Description") ||

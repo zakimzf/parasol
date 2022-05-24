@@ -19,16 +19,24 @@ import Container from "components/container";
 import Layout from "components/layout";
 import { NftContext } from "context/NftContext";
 import { globalErrorHandle, notification } from "utils/functions";
+import { whitelists } from "utils/tempdata/whitelist";
 
 const TokenClaiming = () => {
-  const { sendTransaction } = useWallet();
+  const { sendTransaction, publicKey } = useWallet();
   const { connection } = useConnection();
 
   const [selectedNft, setSelectedNft] = useState<any>();
+  const [whitelistFlag, setWhitelistFlag] = useState(false);
   const [participatedReceipts, setParticipatedReceipt] = useState<any>();
   const { nfts, wallet, user } = useContext(NftContext);
 
-  let mintAddress: PublicKey;
+  useEffect(() => {
+    whitelists.map((whitelist) => {
+      if (publicKey?.toString() === whitelist.address) {
+        setWhitelistFlag(true);
+      }
+    });
+  }, [publicKey]);
 
   useEffect(() => setSelectedNft(nfts[0]), [nfts]);
 
@@ -37,9 +45,11 @@ const TokenClaiming = () => {
       getParticipateReceiptsInfo();
     }
     else {
-      setSelectedNft(false)
+      setSelectedNft(false);
     }
   }, [selectedNft, wallet]);
+
+  let mintAddress: PublicKey;
 
   const claimToken = async (participatedReceipt: any) => {
     mintAddress = new PublicKey(selectedNft.mint);
@@ -104,6 +114,20 @@ const TokenClaiming = () => {
                 <p className="mt-5 text-sm text-gray-200 lg:text-base">
                   You can claim your tokens after participating in IDOs here.
                 </p>
+                {whitelistFlag && (
+                  <p className="@lg:text-base mt-5 text-sm text-gray-200">
+                    If you particiapted to Acadex network IDO, please fillup{" "}
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLScnu7oxQSIV8Pt4GHnlJbpusMXUzDLfg626nRkxYeC2jGPFNg/viewform"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-purple-500 underline"
+                    >
+                      this form
+                    </a>
+                    , with a link to the google form
+                  </p>
+                )}
               </div>
             </div>
             <div className="relative mt-5 flex items-center justify-center gap-x-2 md:justify-end">
@@ -138,9 +162,10 @@ const TokenClaiming = () => {
                         <Listbox.Option
                           key={nft.name}
                           className={({ active }) =>
-                            `relative cursor-default select-none py-2 pl-10 pr-4 ${active
-                              ? "bg-purple-2 text-white"
-                              : "text-gray-900"
+                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                              active
+                                ? "bg-purple-2 text-white"
+                                : "text-gray-900"
                             }`
                           }
                           value={nft}
@@ -148,7 +173,8 @@ const TokenClaiming = () => {
                           {({ selected }) => (
                             <>
                               <span
-                                className={`block truncate ${selected ? "font-medium" : "font-normal"
+                                className={`block truncate ${
+                                  selected ? "font-medium" : "font-normal"
                                 }`}
                               >
                                 {nft.attributes[0].value} - {nft.name}
@@ -176,7 +202,7 @@ const TokenClaiming = () => {
       <Layout>
         <section>
           <Container>
-            {(participatedReceipts && wallet.connected) ? (
+            {participatedReceipts && wallet.connected ? (
               <ul
                 role="list"
                 className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
@@ -214,8 +240,16 @@ const TokenClaiming = () => {
                                 <span>Released</span>
                                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                                 <span className="flex items-center gap-x-1">
-                                  {participatedReceipt.status === "PUBLISHED" ? "N/A" : <>{participatedReceipt.allowanceFeeBasisPoints *
-                                    100}%</>}
+                                  {participatedReceipt.status ===
+                                  "PUBLISHED" ? (
+                                      "N/A"
+                                    ) : (
+                                      <>
+                                        {participatedReceipt.allowanceFeeBasisPoints *
+                                        100}
+                                      %
+                                      </>
+                                    )}
                                 </span>
                               </div>
                             </div>
@@ -232,11 +266,15 @@ const TokenClaiming = () => {
                                 <span>Claimable</span>
                                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                                 <span className="flex items-center gap-x-1">
-                                  {participatedReceipt.status === "PUBLISHED" ? "N/A" :
-                                    <>{participatedReceipt.claimableAmount.toLocaleString()}
+                                  {participatedReceipt.status ===
+                                  "PUBLISHED" ? (
+                                      "N/A"
+                                    ) : (
+                                      <>
+                                        {participatedReceipt.claimableAmount.toLocaleString()}
                                       ${participatedReceipt.symbol}
-                                    </>
-                                  }
+                                      </>
+                                    )}
                                 </span>
                               </div>
                             </div>
@@ -265,8 +303,12 @@ const TokenClaiming = () => {
                   )
                 )}
               </ul>
+            ) : selectedNft ? (
+              <Loading />
             ) : (
-              selectedNft ? <Loading /> : <div className="text-center font-extrabold text-[28px]">There is no project to claim tokens</div>
+              <div className="text-center text-[28px] font-extrabold">
+                There is no project to claim tokens
+              </div>
             )}
           </Container>
         </section>

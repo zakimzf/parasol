@@ -7,6 +7,7 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { RadioGroup } from "@headlessui/react";
 import { ArrowLeftIcon, CheckIcon, UploadIcon } from "@heroicons/react/outline";
 
+import { Loading } from "components";
 import Card from "components/card";
 import { useWalletModal } from "components/wallet-connector";
 import { NftContext } from "context/NftContext";
@@ -17,28 +18,38 @@ const Migrate = () => {
   const { connection } = useConnection();
   const walletModal = useWalletModal();
 
-  const { nfts, setNfts, wallet, migrator } = React.useContext(NftContext);
+  const { nfts, setNfts, wallet, migrator, getNFTList } =
+    React.useContext(NftContext);
+  const [selected, setSelected] = useState<any>();
   const [isPending, setPending] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (!wallet.connected) return;
-    if (migrator) {
-      getNFTList();
-    }
-  }, [wallet.connected]);
-
-  useEffect(() => setSelected(nfts[0]), [nfts]);
+    setSelected(nfts[0]);
+    return setLoading(false);
+  }, [nfts, wallet.connected]);
 
   useEffect(() => {
     setPending(walletModal.visible);
   }, [walletModal.visible]);
 
-  const [selected, setSelected] = useState<any>();
+  useEffect(() => {
+    if (wallet.connected) {
+      if (migrator) {
+        getNFTList();
+      }
+      else {
+        return setLoading(true);
+      }
+    }
+    else {
+      setNfts([]);
+    }
+  }, [migrator, wallet.connected]);
 
-  const getNFTList = async () => {
-    const nftsmetadata = await migrator.getNFTList();
-    setNfts(nftsmetadata);
-  };
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const upgradeNFT = async () => {
     const mintAddress = new PublicKey(selected.mint);
@@ -112,20 +123,18 @@ const Migrate = () => {
                     <RadioGroup.Label className="sr-only">
                       Server size
                     </RadioGroup.Label>
-                    <div className="space-y-2">
+                    <div className="max-h-[335px] space-y-2 overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-parasol">
                       {nfts.map((nft: any) => (
                         <RadioGroup.Option
                           key={nft.name}
                           value={nft}
                           className={({ active, checked }) =>
-                            `${
-                              active
-                                ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
-                                : ""
-                            } ${
-                              checked
-                                ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                                : "border-2 border-transparent bg-white bg-opacity-5"
+                            `${active
+                              ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
+                              : ""
+                            } ${checked
+                              ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                              : "border-2 border-transparent bg-white bg-opacity-5"
                             } relative flex cursor-pointer rounded-lg p-3 shadow-md focus:outline-none`
                           }
                         >
@@ -136,8 +145,7 @@ const Migrate = () => {
                                   <div className="text-sm">
                                     <RadioGroup.Label
                                       as="p"
-                                      className={`font-medium ${
-                                        checked ? "text-white" : ""
+                                      className={`font-medium ${checked ? "text-white" : ""
                                       }`}
                                     >
                                       <div className="flex items-center">
