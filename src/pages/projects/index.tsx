@@ -10,13 +10,13 @@ import Heading from "components/heading";
 import Layout from "components/layout";
 import Apply from "components/slices/apply";
 import { NftContext } from "context/NftContext";
-import { Project } from "../../constants";
+import { ProjectDetails } from "../../constants";
 
 const Projects = () => {
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
   const { provider } = useContext(NftContext);
-  const [projects, setProjects] = useState<Project[]>([])
+  const [projects, setProjects] = useState<ProjectDetails[]>([])
 
   const filteredProjects = projects
     .filter((e) => e.status === "PUBLISHED")
@@ -41,8 +41,8 @@ const Projects = () => {
     getProjects();
   }, [])
 
-  console.log(projects,"projects")
-
+  console.log(projects, "projects");
+  
   return (
     <>
       <Head>
@@ -84,6 +84,7 @@ const Projects = () => {
                         endTime={project.endTime}
                         salePrice={project.salePrice}
                         isFeatured={project.isFeatured}
+                        hardCap={project.hardCap}
                       />
                     ))}
                   </div>
@@ -111,6 +112,7 @@ const Projects = () => {
                         endTime={project.endTime}
                         salePrice={project.salePrice}
                         isFeatured={project.isFeatured}
+                        hardCap={project.hardCap}
                       />
                     ))}
                   </div>
@@ -154,6 +156,7 @@ const Projects = () => {
                         endTime={project.endTime}
                         salePrice={project.salePrice}
                         isFeatured={project.isFeatured}
+                        hardCap={project.hardCap}
                       />
                     ))}
                   </div>

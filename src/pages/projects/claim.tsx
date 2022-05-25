@@ -68,7 +68,6 @@ const TokenClaiming = () => {
       getParticipateReceiptsInfo();
     }
     catch (error: any) {
-      console.log(error, "error");
       globalErrorHandle(error);
     }
   };

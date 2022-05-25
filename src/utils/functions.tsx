@@ -152,6 +152,7 @@ export const slugify = (text: any) => {
 };
 
 export const globalErrorHandle = (err: any) => {
+  console.log(err, "err")
   const error = programErrors.find((item) =>
     err.message.endsWith(item.code.toString(16))
   );

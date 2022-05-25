@@ -3,18 +3,20 @@ let Alex = require("../public/assets/team/alex.png");
 let Anthony = require("../public/assets/team/anthony.png");
 let Tom = require("../public/assets/team/tom.png");
 
-export interface Project {
-  id: string;
-  name: string;
-  logo: string;
-  description: string;
-  cover: string;
-  symbol: string;
-  status: string,
-  startTime: Date;
-  endTime: Date;
-  salePrice: number;
-  isFeatured: boolean
+export interface ProjectDetails {
+  id?: string;
+  loading?: boolean;
+  name?: string;
+  logo?: string;
+  description?: string;
+  cover?: string;
+  symbol?: string;
+  status?: string,
+  startTime?: any;
+  endTime?: any;
+  salePrice?: number;
+  isFeatured?: boolean;
+  hardCap?: number;
 }
 
 export const people = [

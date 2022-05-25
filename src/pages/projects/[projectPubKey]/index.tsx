@@ -150,8 +150,6 @@ const ProjectDetails = () => {
     onDrop,
   });
 
-  console.log(ido, "ido");
-
   return (
     <>
       <Head>
@@ -498,11 +496,11 @@ const ProjectDetails = () => {
                         </div>
                         <div className="flex-col space-y-3">
                           <div className="flex items-center gap-x-3 font-medium text-gray-300">
-                            <span>Hard Cap</span>
+                            <span>Token Price</span>
                             <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                             <span>
                               <NumberFormat
-                                value={ido.hardCap}
+                                value={ido.salePrice}
                                 displayType="text"
                                 thousandSeparator={true}
                                 prefix="$"
@@ -510,11 +508,11 @@ const ProjectDetails = () => {
                             </span>
                           </div>
                           <div className="flex items-center gap-x-3 font-medium text-gray-300">
-                            <span>Price per Token</span>
+                            <span>Hard Cap</span>
                             <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                             <span>
                               <NumberFormat
-                                value={ido.salePrice}
+                                value={ido.hardCap}
                                 displayType="text"
                                 thousandSeparator={true}
                                 prefix="$"
