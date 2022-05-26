@@ -16,13 +16,8 @@ const ProjectProvider = ({ children }: any) => {
         await helper?.getProjectList().then((p: any) => setProjects(p));
         setLastTimestamp(Date.now());
       }
-      else {
-        console.log(projects, "forth");
-      }
     })();
   }, [helper]);
-
-  console.log(lastTimestamp, "lastTimestamp");
 
   return (
     <>
