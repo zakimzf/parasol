@@ -20,8 +20,13 @@ type CountdownProps = {
   seconds: number;
 };
 
-const countdownRenderer = ({ days, hours, minutes, seconds }: CountdownProps) =>
-  days == 0 ? (
+const countdownRenderer = ({
+  days,
+  hours,
+  minutes,
+  seconds,
+}: CountdownProps) => {
+  return days == 0 ? (
     <span>
       {hours}h {minutes}m {seconds}s
     </span>
@@ -30,6 +35,7 @@ const countdownRenderer = ({ days, hours, minutes, seconds }: CountdownProps) =>
       {days} Days - {hours}h {minutes}m {seconds}s
     </span>
   );
+};
 
 const ProjectCard = ({
   id,
@@ -76,10 +82,17 @@ const ProjectCard = ({
           {startSaleFlag || endSaleFlag || false ? (
             <div className="absolute bottom-0 z-10 flex w-full items-center justify-center bg-white bg-opacity-10 py-1 font-bold">
               <div className={startSaleFlag ? "flex" : "hidden"}>
-                IDO starts in
+                IDO starts in &nbsp;
               </div>
-              <div className={endSaleFlag ? "flex" : "hidden"}>IDO ends in</div>
-              <Countdown date={startTime} renderer={countdownRenderer} />
+              <div className={endSaleFlag ? "flex" : "hidden"}>
+                IDO ends in &nbsp;
+              </div>
+              {endSaleFlag && (
+                <Countdown date={endTime} renderer={countdownRenderer} />
+              )}
+              {startSaleFlag && (
+                <Countdown date={startTime} renderer={countdownRenderer} />
+              )}
             </div>
           ) : (
             ""
