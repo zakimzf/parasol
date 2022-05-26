@@ -3,6 +3,7 @@ import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
+import useSWR from "swr";
 import NumberFormat from "react-number-format";
 import { Popover, Transition } from "@headlessui/react";
 import {
@@ -23,17 +24,23 @@ import { recentPosts, toolsMenu } from "constants/header";
 import Logo from "/public/assets/logos/parasol-logo-inverted-rgb.svg";
 
 const Header = () => {
-  const [psolPrice, setPsolPrice] = useState<number>(0);
+  const [psolPrice, setPsolPrice] = useState<any>(0);
   const [isShowing, setIsShowing] = useState(false);
   const [menuValue, setMenuValue] = useState("");
 
+  const fetcher = (url: any) =>
+    fetch(url)
+      .then((res) => res.json())
+      .then((psol) => psol["parasol-finance"]["usd"]);
+
+  const { data } = useSWR(
+    "https://api.coingecko.com/api/v3/simple/price?ids=parasol-finance&vs_currencies=usd",
+    fetcher
+  );
+
   useEffect(() => {
-    fetch(
-      "https://api.coingecko.com/api/v3/simple/price?ids=parasol-finance&vs_currencies=usd"
-    )
-      .then((response) => response.json())
-      .then((psol) => setPsolPrice(psol["parasol-finance"]["usd"]));
-  });
+    setPsolPrice(data);
+  }, [data]);
 
   const handleMouseEnter = (value: string) => {
     setIsShowing(true);

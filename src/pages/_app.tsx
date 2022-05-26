@@ -34,6 +34,7 @@ import { NftProvider } from "context/NftContext";
 
 import "styles/globals.scss";
 import "nprogress/nprogress.css";
+import ProjectProvider from "context/ProjectContext";
 
 const App: FC<AppProps> = ({ Component, pageProps }) => {
   const network: WalletAdapterNetwork = getWalletAdapterNetwork(
@@ -170,11 +171,13 @@ const App: FC<AppProps> = ({ Component, pageProps }) => {
             <SimpleReactLightbox>
               <TokenModalProvider>
                 <ReminderModalProvider>
-                  <NftProvider {...pageProps}>
-                    <Component
-                      {...pageProps}
-                      setBackgroundCover={setBackgroundCover}
-                    />
+                  <NftProvider>
+                    <ProjectProvider>
+                      <Component
+                        {...pageProps}
+                        setBackgroundCover={setBackgroundCover}
+                      />
+                    </ProjectProvider>
                   </NftProvider>
                 </ReminderModalProvider>
               </TokenModalProvider>

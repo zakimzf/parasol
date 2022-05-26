@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
 
+import useSWRImmutable from "swr/immutable";
 import { PublicKey } from "@solana/web3.js";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -49,7 +50,8 @@ const Swap = () => {
   const [rate, setRate] = useState("0");
 
   const cluster: WalletAdapterNetwork = getWalletAdapterNetwork(
-    process.env.NEXT_PUBLIC_NETWORK
+    // process.env.NEXT_PUBLIC_NETWORK
+    "mainnet"
   );
 
   useEffect(() => {
@@ -63,10 +65,13 @@ const Swap = () => {
         feeAccounts: r,
       });
     });
-    fetch(TOKEN_LIST_URL[cluster])
-      .then((response) => response.json())
-      .then((result) => setTokens(result));
   }, [cluster, connection]);
+
+  const fetcher = (url: any) =>
+    fetch(url)
+      .then((res) => res.json())
+      .then((result) => setTokens(result));
+  useSWRImmutable(TOKEN_LIST_URL[cluster], fetcher);
 
   useEffect(() => {
     if (wallet.publicKey) {
