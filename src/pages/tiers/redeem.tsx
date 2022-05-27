@@ -44,7 +44,7 @@ const Migrate = () => {
         getNFTList();
       }
       else {
-        return setLoading(true);
+        setLoading(true);
       }
     }
     else {

@@ -18,7 +18,7 @@ const Migrate = () => {
   const { connection } = useConnection();
   const walletModal = useWalletModal();
 
-  const { nfts, setNfts, wallet, migrator, getNFTList } =
+  const { nfts, setNfts, wallet, migrator } =
     React.useContext(NftContext);
   const [selected, setSelected] = useState<any>();
   const [isPending, setPending] = useState(false);
@@ -34,17 +34,20 @@ const Migrate = () => {
   }, [walletModal.visible]);
 
   useEffect(() => {
-    if (wallet.connected) {
-      if (migrator) {
-        getNFTList();
+    (async () => {
+      if (wallet.connected) {
+        if (migrator) {
+          const nftsMetadata = await migrator.getNFTList();
+          setNfts(nftsMetadata);
+        }
+        else {
+          setLoading(true);
+        }
       }
       else {
-        return setLoading(true);
+        setNfts([]);
       }
-    }
-    else {
-      setNfts([]);
-    }
+    })()
   }, [migrator, wallet.connected]);
 
   if (isLoading) {
@@ -71,8 +74,8 @@ const Migrate = () => {
         "Transaction Success"
       );
 
-      setNfts([]);
-      getNFTList();
+      const nftsMetadata = await migrator.getNFTList();
+      setNfts(nftsMetadata);
     }
     catch (error: any) {
       console.log(error.message, "error");
