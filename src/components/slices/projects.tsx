@@ -13,11 +13,11 @@ import { Menu, Transition } from "@headlessui/react";
 import Container from "components/container";
 import ProjectCard from "components/cards/project-card";
 import { NftContext } from "context/NftContext";
-import { Project } from "../../constants";
+import { ProjectDetails } from "../../constants";
 
 const Projects = () => {
   const { provider } = useContext(NftContext);
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<ProjectDetails[]>([]);
   const [status, setStatus] = useState<string>("PUBLISHED");
   const filteredProjects = projects
     .filter((e: any) => e.status === status)
@@ -67,7 +67,8 @@ const Projects = () => {
                     {({ active }) => (
                       <button
                         onClick={() => setStatus("PUBLISHED")}
-                        className={`${active ? "bg-purple-2 text-white" : "text-gray-900"
+                        className={`${
+                          active ? "bg-purple-2 text-white" : "text-gray-900"
                         } group flex w-full items-center gap-x-3 rounded-md px-3 py-2 text-sm`}
                       >
                         <CollectionIcon className="h-5 w-5" />
@@ -81,7 +82,8 @@ const Projects = () => {
                     {({ active }) => (
                       <button
                         onClick={() => setStatus("FINISHED")}
-                        className={`${active ? "bg-purple-2 text-white" : "text-gray-900"
+                        className={`${
+                          active ? "bg-purple-2 text-white" : "text-gray-900"
                         } group flex w-full items-center gap-x-3 rounded-md px-3 py-2 text-sm`}
                       >
                         <ClockIcon className="h-5 w-5" />
@@ -111,6 +113,7 @@ const Projects = () => {
                     endTime={project.endTime}
                     salePrice={project.salePrice}
                     isFeatured={project.isFeatured}
+                    hardCap={project.hardCap}
                   />
                 ))}
               </div>

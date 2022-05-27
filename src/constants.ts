@@ -3,18 +3,20 @@ let Alex = require("../public/assets/team/alex.png");
 let Anthony = require("../public/assets/team/anthony.png");
 let Tom = require("../public/assets/team/tom.png");
 
-export interface Project {
-  id: string;
-  name: string;
-  logo: string;
-  description: string;
-  cover: string;
-  symbol: string;
-  status: string,
-  startTime: Date;
-  endTime: Date;
-  salePrice: number;
-  isFeatured: boolean
+export interface ProjectDetails {
+  id?: string;
+  loading?: boolean;
+  name?: string;
+  logo?: string;
+  description?: string;
+  cover?: string;
+  symbol?: string;
+  status?: string;
+  startTime?: any;
+  endTime?: any;
+  salePrice?: number;
+  isFeatured?: boolean;
+  hardCap?: number;
 }
 
 export const people = [
@@ -26,7 +28,7 @@ export const people = [
     linkedin: "https://www.linkedin.com/in/sadovskij/",
     github: "https://github.com/litasio",
     telegram: "https://t.me/LITASio",
-    discord: null
+    discord: null,
   },
   {
     name: "Clint.Network",
@@ -35,7 +37,7 @@ export const people = [
     twitter: "https://twitter.com/thisisclint21",
     linkedin: "https://www.linkedin.com/in/clintnetwork/",
     github: "https://github.com/clintnetwork",
-    telegram: "https://t.me/clintnetwork"
+    telegram: "https://t.me/clintnetwork",
   },
   {
     name: "Anthony C.",
@@ -44,7 +46,7 @@ export const people = [
     twitter: null,
     linkedin: "https://www.linkedin.com/in/ac011/",
     github: "https://github.com/t0nii4/",
-    telegram: "https://t.me/X10011"
+    telegram: "https://t.me/X10011",
   },
   {
     name: "Tom P.",
@@ -54,6 +56,6 @@ export const people = [
     linkedin: null,
     github: "https://github.com/Leperle/",
     telegram: "https://t.me/BBRNetwork",
-    discord: "https://discordapp.com/users/Parasol.Finance#8225"
+    discord: "https://discordapp.com/users/Parasol.Finance#8225",
   },
-]
+];
