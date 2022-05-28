@@ -182,7 +182,7 @@ const ProjectCard = ({
                 <span>Token Price</span>
                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                 <span className="flex items-center gap-x-1">
-                  ${salePrice}
+                  ${salePrice?.toLocaleString()}
                   <img
                     src="/assets/logos/usdc-logo.svg"
                     alt="USDC"
@@ -194,7 +194,7 @@ const ProjectCard = ({
                 <span>HardCap</span>
                 <span className="h-1 flex-1 border-b border-dashed border-gray-400" />
                 <span className="flex items-center gap-x-1">
-                  ${hardCap}
+                  ${hardCap?.toLocaleString()}
                   <img
                     className="w-4"
                     src="/assets/logos/usdc-logo.svg"

@@ -1,12 +1,7 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import Head from "next/head";
 
+import { RpcHelper } from "parasol-finance-sdk";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 import ProjectCard from "components/cards/project-card";
@@ -15,36 +10,42 @@ import Heading from "components/heading";
 import Layout from "components/layout";
 import Apply from "components/slices/apply";
 import { NftContext } from "context/NftContext";
-import { useProjectData } from "context/ProjectContext";
+import { ProjectDetails } from "../../constants";
 
 const Projects = () => {
   const { publicKey } = useWallet();
   const walletAddress = useMemo(() => publicKey?.toBase58(), [publicKey]);
-  const { helper } = useContext(NftContext);
-  const { projects, setProjects, lastTimestamp, setLastTimestamp } =
-    useProjectData();
-
-  if (Date.now() - lastTimestamp > 3600000) {
-    (async () => {
-      await helper?.getProjectList().then((p: any) => setProjects(p));
-      setLastTimestamp(Date.now());
-    })();
-  }
+  const { provider } = useContext(NftContext);
+  const [projects, setProjects] = useState<ProjectDetails[]>([]);
 
   const filteredProjects = projects
-    .filter((e: any) => e.status === "PUBLISHED")
-    .filter((e: any) => e.endTime > new Date())
+    .filter((e) => e.status === "PUBLISHED")
+    .filter((e) => e.endTime > new Date())
     .sort((x: any, y: any) => x.startTime.getTime() - y.startTime.getTime())
     .slice(0, 9);
 
   const finishedProjects = projects
-    .filter((e: any) => e.status === "FINISHED" || new Date() > e.endTime)
+    .filter(
+      (e) =>
+        e.status === "FINISHED" ||
+        (e.status === "PUBLISHED" && new Date() > e.endTime)
+    )
     .slice(0, 9);
 
   const draftProjects = projects
     .filter((e: any) => e.status === "DRAFT")
     .filter((e: any) => e.owner == walletAddress)
     .sort((x: any, y: any) => x.startTime.getTime() - y.startTime.getTime());
+
+  useEffect(() => {
+    const getProjects = async () => {
+      const helper = new RpcHelper(provider);
+      await helper.getProjectList().then((p: any) => setProjects(p));
+    };
+    getProjects();
+  }, []);
+
+  console.log(projects, "projects");
 
   return (
     <>
@@ -77,7 +78,7 @@ const Projects = () => {
                 </div>
                 {draftProjects.length > 0 && (
                   <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:grid-cols-3">
-                    {draftProjects.map((project: any, index: any) => (
+                    {draftProjects.map((project, index) => (
                       <ProjectCard
                         key={index}
                         id={project.id}
@@ -105,7 +106,7 @@ const Projects = () => {
               <>
                 {filteredProjects.length > 0 ? (
                   <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:grid-cols-3">
-                    {filteredProjects.map((project: any, index: any) => (
+                    {filteredProjects.map((project, index) => (
                       <ProjectCard
                         key={index}
                         id={project.id}
@@ -152,7 +153,7 @@ const Projects = () => {
                 </div>
                 {finishedProjects.length > 0 && (
                   <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:grid-cols-3">
-                    {finishedProjects.map((project: any, index: any) => (
+                    {finishedProjects.map((project, index) => (
                       <ProjectCard
                         key={index}
                         id={project.id}
