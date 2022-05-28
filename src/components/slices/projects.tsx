@@ -1,7 +1,6 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import Link from "next/link";
 
-import { RpcHelper } from "parasol-finance-sdk";
 import {
   ChevronDoubleRightIcon,
   ChevronDownIcon,
@@ -13,25 +12,26 @@ import { Menu, Transition } from "@headlessui/react";
 import Container from "components/container";
 import ProjectCard from "components/cards/project-card";
 import { NftContext } from "context/NftContext";
-import { ProjectDetails } from "../../constants";
+import { useProjectData } from "context/ProjectContext";
 
 const Projects = () => {
-  const { provider } = useContext(NftContext);
-  const [projects, setProjects] = useState<ProjectDetails[]>([]);
+  const { provider, helper } = useContext(NftContext);
   const [status, setStatus] = useState<string>("PUBLISHED");
+  const { projects, setProjects, lastTimestamp, setLastTimestamp } =
+    useProjectData();
+
   const filteredProjects = projects
     .filter((e: any) => e.status === status)
     .filter((e: any) => e.endTime > new Date())
     .sort((x: any, y: any) => x.startTime.getTime() - y.startTime.getTime())
     .slice(0, 3);
 
-  useEffect(() => {
-    const getProjects = async () => {
-      const helper = new RpcHelper(provider);
-      await helper.getProjectList().then((p: any) => setProjects(p));
-    };
-    getProjects();
-  }, []);
+  if (Date.now() - lastTimestamp > 3600000) {
+    (async () => {
+      await helper?.getProjectList().then((p: any) => setProjects(p));
+      setLastTimestamp(Date.now());
+    })();
+  }
 
   return (
     <section>
@@ -39,7 +39,7 @@ const Projects = () => {
         <div className="mb-12 flex items-center gap-x-6">
           <div className="flex-1 truncate">
             <a className="mb-1 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Upcoming IDOs
+              Upcoming & Live IDOs
             </a>
             <p className="truncate text-sm text-gray-200 lg:text-base">
               We only display IDOs that are featured or have been balloted.
@@ -100,7 +100,7 @@ const Projects = () => {
           <>
             {filteredProjects.length > 0 ? (
               <div className="grid grid-cols-1 gap-7 lg:grid-cols-2 lg:grid-cols-3">
-                {filteredProjects.map((project, index) => (
+                {filteredProjects.map((project: any, index: any) => (
                   <ProjectCard
                     key={index}
                     id={project.id}
