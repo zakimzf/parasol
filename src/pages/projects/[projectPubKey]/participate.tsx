@@ -215,7 +215,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
     setNftMint(nft);
     setallocation(
       nftAllocation[nft.attributes[0].value] *
-      projectData.allocationFeeBasisPoints
+        projectData.allocationFeeBasisPoints
     );
   };
 
@@ -230,7 +230,7 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
       setNftMint(nfts[0]);
       setallocation(
         nftAllocation[nfts[0].attributes[0].value] *
-        projectData_.allocationFeeBasisPoints
+          projectData_.allocationFeeBasisPoints
       );
     };
     if (nfts && nfts[0] && !nftsReady && project) initNfts();
@@ -556,12 +556,14 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                   key={nft.name}
                                   value={nft}
                                   className={({ active, checked }) =>
-                                    `${active
-                                      ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
-                                      : ""
-                                    } ${checked
-                                      ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
-                                      : "border-2 border-transparent bg-white bg-opacity-5"
+                                    `${
+                                      active
+                                        ? "ring-2-ring-offset-2 ring-purple-1 ring-opacity-60 ring-offset-purple-1"
+                                        : ""
+                                    } ${
+                                      checked
+                                        ? "border-2 border-purple-2 bg-purple-2 bg-opacity-5"
+                                        : "border-2 border-transparent bg-white bg-opacity-5"
                                     } relative flex cursor-pointer rounded-lg p-3 shadow-md focus:outline-none`
                                   }
                                 >
@@ -572,7 +574,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                           <div className="text-sm">
                                             <RadioGroup.Label
                                               as="p"
-                                              className={`font-medium ${checked ? "text-white" : ""
+                                              className={`font-medium ${
+                                                checked ? "text-white" : ""
                                               }`}
                                             >
                                               <div className="flex items-center">
@@ -633,15 +636,6 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                               </h2>
                                             </div>
                                           </div>
-                                          <div>
-                                            <p className="text-xs">
-                                              You don&apos;t have an NFT
-                                              currently.
-                                            </p>
-                                            <h2 className="whitespace-nowrap text-lg">
-                                              Buy your NFT Access Key!
-                                            </h2>
-                                          </div>
                                         </p>
                                       </div>
                                     </div>
@@ -661,9 +655,10 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                               ido.startTime > Date.now() ||
                               loading
                             }
-                            className={`w-full ${nfts.length == 0
-                              ? "cursor-not-allowed opacity-70"
-                              : ""
+                            className={`w-full ${
+                              nfts.length == 0
+                                ? "cursor-not-allowed opacity-70"
+                                : ""
                             } button mt-8`}
                             onClick={submitParticipation}
                           >
@@ -709,7 +704,8 @@ const ProjectParticipate = ({ setBackgroundCover }: any) => {
                                   className="block focus:outline-none"
                                 >
                                   <p
-                                    className={`${block.data.level > 2 ? "pl-3-" : ""
+                                    className={`${
+                                      block.data.level > 2 ? "pl-3-" : ""
                                     } flex items-center gap-x-1 text-sm font-medium text-gray-300 duration-300  hover:translate-x-3 hover:text-gray-200`}
                                   >
                                     <ChevronRightIcon className={"h-3 w-3"} />
