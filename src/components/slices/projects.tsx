@@ -15,7 +15,7 @@ import { NftContext } from "context/NftContext";
 import { useProjectData } from "context/ProjectContext";
 
 const Projects = () => {
-  const { provider, helper } = useContext(NftContext);
+  const { helper } = useContext(NftContext);
   const [status, setStatus] = useState<string>("PUBLISHED");
   const { projects, setProjects, lastTimestamp, setLastTimestamp } =
     useProjectData();
